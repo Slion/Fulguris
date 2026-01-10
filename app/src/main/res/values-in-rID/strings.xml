@@ -64,7 +64,11 @@
     <string name="agent_hide_device">Sembunyikan perangkat</string>
     <string name="title_search_engine">Mesin penelusuran</string>
     <string name="action_ok">Oke</string>
-    <string name="unknown_file_size">Ukuran tak diketahui</string>
+    <string name="dialog_download_title">Unduh file?</string>
+    <string name="dialog_download_message"><![CDATA[<b>%1$s</b> akan disimpan ke folder unduhan Anda<br /><br />Tipe: %2$s<br />Ukuran: %3$s]]></string>
+    <string name="download_as_format">Unduh sebagai %1$s</string>
+    <string name="unknown_file_size">tidak diketahui</string>
+    <string name="unknown_file_type">tidak diketahui</string>
     <string name="action_cancel">Batal</string>
     <string name="title_warning">Peringatan</string>
     <string name="title_user_agent">Agen pengguna</string>

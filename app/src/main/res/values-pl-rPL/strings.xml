@@ -64,7 +64,11 @@
     <string name="agent_hide_device">Ukryj urządzenie</string>
     <string name="title_search_engine">Wyszukiwarka</string>
     <string name="action_ok">OK</string>
-    <string name="unknown_file_size">Nieznany rozmiar</string>
+    <string name="dialog_download_title">Pobrać plik?</string>
+    <string name="dialog_download_message"><![CDATA[<b>%1$s</b> zostanie zapisany w folderze pobierania<br /><br />Typ: %2$s<br />Rozmiar: %3$s]]></string>
+    <string name="download_as_format">Pobierz jako %1$s</string>
+    <string name="unknown_file_size">nieznany</string>
+    <string name="unknown_file_type">nieznany</string>
     <string name="action_cancel">Anuluj</string>
     <string name="title_warning">Ostrzeżenie</string>
     <string name="title_user_agent">Przedstawiaj się jako</string>

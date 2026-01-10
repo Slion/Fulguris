@@ -64,7 +64,11 @@
     <string name="agent_hide_device">Skrýt zařízení</string>
     <string name="title_search_engine">Výchozí vyhledávač</string>
     <string name="action_ok">OK</string>
-    <string name="unknown_file_size">Neznámá velikost</string>
+    <string name="dialog_download_title">Stáhnout soubor?</string>
+    <string name="dialog_download_message"><![CDATA[<b>%1$s</b> bude uložen do složky stahování<br /><br />Typ: %2$s<br />Velikost: %3$s]]></string>
+    <string name="download_as_format">Stáhnout jako %1$s</string>
+    <string name="unknown_file_size">neznámý</string>
+    <string name="unknown_file_type">neznámý</string>
     <string name="action_cancel">Zrušit</string>
     <string name="title_warning">Varování</string>
     <string name="title_user_agent">Uživatelský agent</string>

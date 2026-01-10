@@ -64,7 +64,11 @@
     <string name="agent_hide_device">Скрыть устройство</string>
     <string name="title_search_engine">Поисковая система</string>
     <string name="action_ok">ОК</string>
-    <string name="unknown_file_size">Неизвестный размер</string>
+    <string name="dialog_download_title">Скачать файл?</string>
+    <string name="dialog_download_message"><![CDATA[<b>%1$s</b> будет сохранён в папку загрузок<br /><br />Тип: %2$s<br />Размер: %3$s]]></string>
+    <string name="download_as_format">Скачать как %1$s</string>
+    <string name="unknown_file_size">неизвестно</string>
+    <string name="unknown_file_type">неизвестно</string>
     <string name="action_cancel">Отмена</string>
     <string name="title_warning">Внимание</string>
     <string name="title_user_agent">Агент пользователя</string>

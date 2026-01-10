@@ -64,7 +64,11 @@
     <string name="agent_hide_device">Skjul enhed</string>
     <string name="title_search_engine">Søgemaskine</string>
     <string name="action_ok">OK</string>
-    <string name="unknown_file_size">Ukendt størrelse</string>
+    <string name="dialog_download_title">Hent fil?</string>
+    <string name="dialog_download_message"><![CDATA[<b>%1$s</b> vil blive gemt i din downloadmappe<br /><br />Type: %2$s<br />Størrelse: %3$s]]></string>
+    <string name="download_as_format">Download som %1$s</string>
+    <string name="unknown_file_size">ukendt</string>
+    <string name="unknown_file_type">ukendt</string>
     <string name="action_cancel">Annuller</string>
     <string name="title_warning">Advarsel</string>
     <string name="title_user_agent">Brugeragent</string>

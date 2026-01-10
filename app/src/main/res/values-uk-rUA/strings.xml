@@ -64,7 +64,11 @@
     <string name="agent_hide_device">Приховати пристрій</string>
     <string name="title_search_engine">Пошуковий рушій</string>
     <string name="action_ok">Гаразд</string>
-    <string name="unknown_file_size">Невідомий розмір</string>
+    <string name="dialog_download_title">Завантажити файл?</string>
+    <string name="dialog_download_message"><![CDATA[<b>%1$s</b> буде збережено в папку завантажень<br /><br />Тип: %2$s<br />Розмір: %3$s]]></string>
+    <string name="download_as_format">Завантажити як %1$s</string>
+    <string name="unknown_file_size">невідомо</string>
+    <string name="unknown_file_type">невідомо</string>
     <string name="action_cancel">Скасувати</string>
     <string name="title_warning">Попередження</string>
     <string name="title_user_agent">Агент користувача</string>

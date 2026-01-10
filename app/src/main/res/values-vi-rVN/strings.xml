@@ -64,7 +64,11 @@
     <string name="agent_hide_device">Ẩn thiết bị</string>
     <string name="title_search_engine">Công cụ tìm kiếm</string>
     <string name="action_ok">ỪA</string>
-    <string name="unknown_file_size">Không rõ kích thước</string>
+    <string name="dialog_download_title">Tải xuống tệp?</string>
+    <string name="dialog_download_message"><![CDATA[<b>%1$s</b> sẽ được lưu vào thư mục tải xuống của bạn<br /><br />Loại: %2$s<br />Kích thước: %3$s]]></string>
+    <string name="download_as_format">Tải xuống dưới dạng %1$s</string>
+    <string name="unknown_file_size">không rõ</string>
+    <string name="unknown_file_type">không rõ</string>
     <string name="action_cancel">Hủy</string>
     <string name="title_warning">Cảnh báo</string>
     <string name="title_user_agent">Tác nhân người dùng</string>

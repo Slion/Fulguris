@@ -64,7 +64,11 @@
     <string name="agent_hide_device">Eszköz elrejtése</string>
     <string name="title_search_engine">Keresőmotor</string>
     <string name="action_ok">OK</string>
-    <string name="unknown_file_size">Ismeretlen méret</string>
+    <string name="dialog_download_title">Fájl letöltése?</string>
+    <string name="dialog_download_message"><![CDATA[A(z) <b>%1$s</b> a letöltések mappába lesz mentve<br /><br />Típus: %2$s<br />Méret: %3$s]]></string>
+    <string name="download_as_format">Letöltés mint %1$s</string>
+    <string name="unknown_file_size">ismeretlen</string>
+    <string name="unknown_file_type">ismeretlen</string>
     <string name="action_cancel">Mégse</string>
     <string name="title_warning">Figyelmeztetés</string>
     <string name="title_user_agent">Felhasználói ügynök</string>

@@ -64,7 +64,11 @@
     <string name="agent_hide_device">Verstecke Gerät</string>
     <string name="title_search_engine">Suchmaschine</string>
     <string name="action_ok">OK</string>
-    <string name="unknown_file_size">Unbekannte Größe</string>
+    <string name="dialog_download_title">Datei herunterladen?</string>
+    <string name="dialog_download_message"><![CDATA[<b>%1$s</b> wird in Ihrem Download-Ordner gespeichert<br /><br />Typ: %2$s<br />Größe: %3$s]]></string>
+    <string name="download_as_format">Herunterladen als %1$s</string>
+    <string name="unknown_file_size">unbekannt</string>
+    <string name="unknown_file_type">unbekannt</string>
     <string name="action_cancel">Abbrechen</string>
     <string name="title_warning">Warnung</string>
     <string name="title_user_agent">User-Agent</string>

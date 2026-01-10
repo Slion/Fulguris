@@ -64,7 +64,11 @@
     <string name="agent_hide_device">隐藏设备</string>
     <string name="title_search_engine">搜索引擎</string>
     <string name="action_ok">确定</string>
-    <string name="unknown_file_size">未知大小</string>
+    <string name="dialog_download_title">下载文件？</string>
+    <string name="dialog_download_message"><![CDATA[<b>%1$s</b> 将保存到您的下载文件夹<br /><br />类型：%2$s<br />大小：%3$s]]></string>
+    <string name="download_as_format">下载为 %1$s</string>
+    <string name="unknown_file_size">未知</string>
+    <string name="unknown_file_type">未知</string>
     <string name="action_cancel">取消</string>
     <string name="title_warning">警告</string>
     <string name="title_user_agent">用户代理</string>

@@ -64,7 +64,11 @@
     <string name="agent_hide_device">Sakrij uređaj</string>
     <string name="title_search_engine">Pretražnik</string>
     <string name="action_ok">U redu</string>
-    <string name="unknown_file_size">Nepoznata veličina</string>
+    <string name="dialog_download_title">Preuzeti datoteku?</string>
+    <string name="dialog_download_message"><![CDATA[<b>%1$s</b> će biti spremljen u vašu mapu preuzimanja<br /><br />Tip: %2$s<br />Veličina: %3$s]]></string>
+    <string name="download_as_format">Preuzmi kao %1$s</string>
+    <string name="unknown_file_size">nepoznato</string>
+    <string name="unknown_file_type">nepoznato</string>
     <string name="action_cancel">Otkaži</string>
     <string name="title_warning">Pažnja</string>
     <string name="title_user_agent">Identifikacija</string>

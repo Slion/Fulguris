@@ -64,7 +64,11 @@
     <string name="agent_hide_device">Ocultar dispositivo</string>
     <string name="title_search_engine">Motor de pesquisa</string>
     <string name="action_ok">OK</string>
-    <string name="unknown_file_size">Tamanho desconhecido</string>
+    <string name="dialog_download_title">Transferir ficheiro?</string>
+    <string name="dialog_download_message"><![CDATA[<b>%1$s</b> será guardado na pasta de transferências<br /><br />Tipo: %2$s<br />Tamanho: %3$s]]></string>
+    <string name="download_as_format">Transferir como %1$s</string>
+    <string name="unknown_file_size">desconhecido</string>
+    <string name="unknown_file_type">desconhecido</string>
     <string name="action_cancel">Cancelar</string>
     <string name="title_warning">Aviso</string>
     <string name="title_user_agent">Agente</string>

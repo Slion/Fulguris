@@ -64,7 +64,11 @@
     <string name="agent_hide_device">Hide device</string>
     <string name="title_search_engine">Søkemotor</string>
     <string name="action_ok">OK</string>
-    <string name="unknown_file_size">Ukjent størrelse</string>
+    <string name="dialog_download_title">Last ned fil?</string>
+    <string name="dialog_download_message"><![CDATA[<b>%1$s</b> vil bli lagret i nedlastingsmappen din<br /><br />Type: %2$s<br />Størrelse: %3$s]]></string>
+    <string name="download_as_format">Last ned som %1$s</string>
+    <string name="unknown_file_size">ukjent</string>
+    <string name="unknown_file_type">ukjent</string>
     <string name="action_cancel">Avbryt</string>
     <string name="title_warning">Advarsel</string>
     <string name="title_user_agent">Brukeragent</string>

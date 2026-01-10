@@ -64,7 +64,11 @@
     <string name="agent_hide_device">Hide device</string>
     <string name="title_search_engine">Search engine</string>
     <string name="action_ok">OK</string>
-    <string name="unknown_file_size">Unknown size</string>
+    <string name="dialog_download_title">Descarregar fitxer?</string>
+    <string name="dialog_download_message"><![CDATA[<b>%1$s</b> es desarà a la carpeta de descàrregues<br /><br />Tipus: %2$s<br />Mida: %3$s]]></string>
+    <string name="download_as_format">Descarrega com %1$s</string>
+    <string name="unknown_file_size">desconegut</string>
+    <string name="unknown_file_type">desconegut</string>
     <string name="action_cancel">Cancel</string>
     <string name="title_warning">Warning</string>
     <string name="title_user_agent">User agent</string>

@@ -51,7 +51,11 @@
     <string name="action_blank">खाली पेज</string>
     <string name="action_reset">रीसेट करें</string>
     <string name="title_search_engine">खोज इंजन</string>
-    <string name="unknown_file_size">अज्ञात आकार</string>
+    <string name="dialog_download_title">फ़ाइल डाउनलोड करें?</string>
+    <string name="dialog_download_message"><![CDATA[<b>%1$s</b> आपके डाउनलोड फ़ोल्डर में सहेजी जाएगी<br /><br />प्रकार: %2$s<br />आकार: %3$s]]></string>
+    <string name="download_as_format">%1$s के रूप में डाउनलोड करें</string>
+    <string name="unknown_file_size">अज्ञात</string>
+    <string name="unknown_file_type">अज्ञात</string>
     <string name="action_cancel">रद्द करें</string>
     <string name="title_warning">चेतावनी</string>
     <string name="title_user_agent">यूज़र एजेंट</string>

@@ -64,7 +64,11 @@
     <string name="agent_hide_device">Hide device</string>
     <string name="title_search_engine">Μηχανή Αναζήτησης</string>
     <string name="action_ok">OK</string>
-    <string name="unknown_file_size">Άγνωστο μέγεθος</string>
+    <string name="dialog_download_title">Λήψη αρχείου;</string>
+    <string name="dialog_download_message"><![CDATA[Το <b>%1$s</b> θα αποθηκευτεί στον φάκελο λήψεων<br /><br />Τύπος: %2$s<br />Μέγεθος: %3$s]]></string>
+    <string name="download_as_format">Λήψη ως %1$s</string>
+    <string name="unknown_file_size">άγνωστο</string>
+    <string name="unknown_file_type">άγνωστο</string>
     <string name="action_cancel">Ακύρωση</string>
     <string name="title_warning">Προσοχή</string>
     <string name="title_user_agent">Παράγοντας χρήστη</string>

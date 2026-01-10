@@ -64,7 +64,11 @@
     <string name="agent_hide_device">Hide device</string>
     <string name="title_search_engine">เครื่องมือค้นหา</string>
     <string name="action_ok">ตกลง</string>
-    <string name="unknown_file_size">ขนาดไม่ทราบ</string>
+    <string name="dialog_download_title">ดาวน์โหลดไฟล์?</string>
+    <string name="dialog_download_message"><![CDATA[<b>%1$s</b> จะถูกบันทึกในโฟลเดอร์ดาวน์โหลดของคุณ<br /><br />ประเภท: %2$s<br />ขนาด: %3$s]]></string>
+    <string name="download_as_format">ดาวน์โหลดเป็น %1$s</string>
+    <string name="unknown_file_size">ไม่ทราบ</string>
+    <string name="unknown_file_type">ไม่ทราบ</string>
     <string name="action_cancel">ยกเลิก</string>
     <string name="title_warning">คำเตือน</string>
     <string name="title_user_agent">ตัวแทนผู้ใช้</string>

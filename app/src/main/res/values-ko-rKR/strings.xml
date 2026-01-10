@@ -64,7 +64,11 @@
     <string name="agent_hide_device">기기 숨기기</string>
     <string name="title_search_engine">검색 엔진</string>
     <string name="action_ok">확인</string>
-    <string name="unknown_file_size">크기 모름</string>
+    <string name="dialog_download_title">파일을 다운로드하시겠습니까?</string>
+    <string name="dialog_download_message"><![CDATA[<b>%1$s</b>이(가) 다운로드 폴더에 저장됩니다<br /><br />유형: %2$s<br />크기: %3$s]]></string>
+    <string name="download_as_format">%1$s로 다운로드</string>
+    <string name="unknown_file_size">알 수 없음</string>
+    <string name="unknown_file_type">알 수 없음</string>
     <string name="action_cancel">취소</string>
     <string name="title_warning">경고</string>
     <string name="title_user_agent">사용자 에이전트</string>

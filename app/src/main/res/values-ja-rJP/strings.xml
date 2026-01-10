@@ -64,7 +64,11 @@
     <string name="agent_hide_device">端末を隠す</string>
     <string name="title_search_engine">検索エンジン</string>
     <string name="action_ok">OK</string>
-    <string name="unknown_file_size">サイズ不明</string>
+    <string name="dialog_download_title">ファイルをダウンロードしますか？</string>
+    <string name="dialog_download_message"><![CDATA[<b>%1$s</b> はダウンロードフォルダに保存されます<br /><br />種類: %2$s<br />サイズ: %3$s]]></string>
+    <string name="download_as_format">%1$s としてダウンロード</string>
+    <string name="unknown_file_size">不明</string>
+    <string name="unknown_file_type">不明</string>
     <string name="action_cancel">キャンセル</string>
     <string name="title_warning">警告</string>
     <string name="title_user_agent">ユーザーエージェント</string>

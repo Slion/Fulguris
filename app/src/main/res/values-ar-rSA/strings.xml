@@ -64,7 +64,11 @@
     <string name="agent_hide_device">إخفاء الجهاز</string>
     <string name="title_search_engine">محرك البحث</string>
     <string name="action_ok">حسنا</string>
-    <string name="unknown_file_size">حجم غير معروف</string>
+    <string name="dialog_download_title">تنزيل الملف؟</string>
+    <string name="dialog_download_message"><![CDATA[سيتم حفظ <b>%1$s</b> في مجلد التنزيلات<br /><br />النوع: %2$s<br />الحجم: %3$s]]></string>
+    <string name="download_as_format">تنزيل بصيغة %1$s</string>
+    <string name="unknown_file_size">غير معروف</string>
+    <string name="unknown_file_type">غير معروف</string>
     <string name="action_cancel">إلغاء</string>
     <string name="title_warning">تحذير</string>
     <string name="title_user_agent">وكيل المستخدم</string>

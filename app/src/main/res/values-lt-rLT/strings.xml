@@ -64,7 +64,11 @@
     <string name="agent_hide_device">Hide device</string>
     <string name="title_search_engine">Search engine</string>
     <string name="action_ok">Gerai</string>
-    <string name="unknown_file_size">Unknown size</string>
+    <string name="dialog_download_title">Atsisiųsti failą?</string>
+    <string name="dialog_download_message"><![CDATA[<b>%1$s</b> bus išsaugotas atsisiuntimų aplanke<br /><br />Tipas: %2$s<br />Dydis: %3$s]]></string>
+    <string name="download_as_format">Atsisiųsti kaip %1$s</string>
+    <string name="unknown_file_size">nežinoma</string>
+    <string name="unknown_file_type">nežinoma</string>
     <string name="action_cancel">Atšaukti</string>
     <string name="title_warning">Warning</string>
     <string name="title_user_agent">User agent</string>

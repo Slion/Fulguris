@@ -64,7 +64,11 @@
     <string name="agent_hide_device">Hide device</string>
     <string name="title_search_engine">Hakukone</string>
     <string name="action_ok">OK</string>
-    <string name="unknown_file_size">Tuntematon koko</string>
+    <string name="dialog_download_title">Lataa tiedosto?</string>
+    <string name="dialog_download_message"><![CDATA[<b>%1$s</b> tallennetaan latauskansioon<br /><br />Tyyppi: %2$s<br />Koko: %3$s]]></string>
+    <string name="download_as_format">Lataa muodossa %1$s</string>
+    <string name="unknown_file_size">tuntematon</string>
+    <string name="unknown_file_type">tuntematon</string>
     <string name="action_cancel">Peruuta</string>
     <string name="title_warning">Varoitus</string>
     <string name="title_user_agent">Käyttäjäagentti</string>

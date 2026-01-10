@@ -64,7 +64,11 @@
     <string name="agent_hide_device">Dölj enheten</string>
     <string name="title_search_engine">Sökmotor</string>
     <string name="action_ok">OK</string>
-    <string name="unknown_file_size">Okänd storlek</string>
+    <string name="dialog_download_title">Ladda ner fil?</string>
+    <string name="dialog_download_message"><![CDATA[<b>%1$s</b> kommer att sparas i din nedladdningsmapp<br /><br />Typ: %2$s<br />Storlek: %3$s]]></string>
+    <string name="download_as_format">Ladda ner som %1$s</string>
+    <string name="unknown_file_size">okänd</string>
+    <string name="unknown_file_type">okänd</string>
     <string name="action_cancel">Avbryt</string>
     <string name="title_warning">Varning</string>
     <string name="title_user_agent">Använderagent</string>

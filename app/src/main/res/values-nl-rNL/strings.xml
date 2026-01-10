@@ -64,7 +64,11 @@
     <string name="agent_hide_device">Apparaat verbergen</string>
     <string name="title_search_engine">Zoekmachine</string>
     <string name="action_ok">Oké</string>
-    <string name="unknown_file_size">Onbekende grootte</string>
+    <string name="dialog_download_title">Bestand downloaden?</string>
+    <string name="dialog_download_message"><![CDATA[<b>%1$s</b> wordt opgeslagen in uw downloadmap<br /><br />Type: %2$s<br />Grootte: %3$s]]></string>
+    <string name="download_as_format">Downloaden als %1$s</string>
+    <string name="unknown_file_size">onbekend</string>
+    <string name="unknown_file_type">onbekend</string>
     <string name="action_cancel">Annuleer</string>
     <string name="title_warning">Waarschuwing</string>
     <string name="title_user_agent">Useragent</string>

@@ -64,7 +64,11 @@
     <string name="agent_hide_device">Hide device</string>
     <string name="title_search_engine">ᱥᱮᱸᱫᱽᱨᱟ ᱤᱧᱡᱤᱱ</string>
     <string name="action_ok">OK</string>
-    <string name="unknown_file_size">ᱵᱟᱝ ᱵᱟᱰᱟᱭ ᱢᱟᱯ</string>
+    <string name="dialog_download_title">ᱨᱮᱫ ᱰᱟᱣᱱᱞᱳᱰ ᱥᱮ?</string>
+    <string name="dialog_download_message"><![CDATA[<b>%1$s</b> ᱟᱢᱟᱜ ᱰᱟᱣᱱᱞᱳᱰ ᱯᱷᱳᱞᱰᱟᱨ ᱨᱮ ᱥᱟᱧᱪᱟᱣ ᱦᱩᱭᱩᱜᱼᱟ<br /><br />ᱴᱟᱭᱤᱯ: %2$s<br />ᱢᱟᱯ: %3$s]]></string>
+    <string name="download_as_format">%1$s ᱞᱮᱠᱟᱛᱮ ᱰᱟᱣᱱᱞᱳᱰ ᱢᱮ</string>
+    <string name="unknown_file_size">ᱵᱟᱝ ᱵᱟᱲᱟᱭ</string>
+    <string name="unknown_file_type">ᱵᱟᱝ ᱵᱟᱲᱟᱭ</string>
     <string name="action_cancel">ᱵᱟᱹᱰᱨᱟᱹ</string>
     <string name="title_warning">ᱦᱩᱥᱤᱭᱟᱹᱨ</string>
     <string name="title_user_agent">ᱵᱮᱵᱷᱟᱨᱤᱭᱟᱹ ᱮᱡᱮᱱᱴ</string>

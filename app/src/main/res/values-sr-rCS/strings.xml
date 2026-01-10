@@ -64,7 +64,11 @@
     <string name="agent_hide_device">Sakrij uređaj</string>
     <string name="title_search_engine">Motor pretrage</string>
     <string name="action_ok">U redu</string>
-    <string name="unknown_file_size">Nepoznata veličina</string>
+    <string name="dialog_download_title">Преузети датотеку?</string>
+    <string name="dialog_download_message"><![CDATA[<b>%1$s</b> ће бити сачуван у вашу фасциклу преузимања<br /><br />Тип: %2$s<br />Величина: %3$s]]></string>
+    <string name="download_as_format">Преузми као %1$s</string>
+    <string name="unknown_file_size">непознато</string>
+    <string name="unknown_file_type">непознато</string>
     <string name="action_cancel">Odustani</string>
     <string name="title_warning">Upozorenje</string>
     <string name="title_user_agent">Identifikacija</string>
