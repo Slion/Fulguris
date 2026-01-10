@@ -347,6 +347,7 @@ class MenuPopupWindow : PopupWindow {
             iBinding.menuItemShare.isVisible = false
             iBinding.menuItemPrint.isVisible = false
             iBinding.menuItemAddToHome.isVisible = false
+            iBinding.menuItemLaunchApp.isVisible = false
         }
 
         // Rules based on current tab state
@@ -365,6 +366,7 @@ class MenuPopupWindow : PopupWindow {
                     iBinding.menuItemAdBlock.isVisible = false
                     iBinding.menuItemTranslate.isVisible = false
                     iBinding.menuItemForceReload.isVisible = false
+                    iBinding.menuItemLaunchApp.isVisible = false
                 }
 
                 // Hide ad block if not enabled in settings
@@ -385,6 +387,7 @@ class MenuPopupWindow : PopupWindow {
      * Shows app icon and label when only one app is available, otherwise uses defaults from MenuItem.
      */
     private fun updateLaunchAppMenuItem(url: String) {
+
         val context = contentView.context
         val intent = android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse(url))
         val packageManager = context.packageManager
