@@ -375,29 +375,43 @@ private fun decodeHeaderField(field: String, encoding: String): String {
 
 /**
  * Compare the filename extension with the mime type and change it if necessary.
+ * See: https://github.com/Slion/Fulguris/issues/564
+ *
+ * Logic:
+ * - If original extension is unknown to Android: append MIME type extension (e.g., file.bcpkg -> file.bcpkg.zip)
+ * - If original extension matches MIME type: keep as-is
+ * - If original extension doesn't match MIME type: replace with correct extension
  */
 private fun changeExtension(filename: String, mimeType: String?): String {
-    var extension: String? = null
-    val dotIndex = filename.lastIndexOf('.')
-
-    if (mimeType != null) {
-        val mimeTypeMap = MimeTypeMap.getSingleton()
-        // Compare the last segment of the extension against the mime type.
-        // If there's a mismatch, discard the entire extension.
-        val typeFromExt = mimeTypeMap.getMimeTypeFromExtension(filename.substringAfterLast('.'))
-        if (typeFromExt?.equals(mimeType, ignoreCase = true) != false) {
-            extension = mimeTypeMap.getExtensionFromMimeType(mimeType)?.let { ".$it" }
-            // Check if the extension needs to be changed
-            if (extension != null && filename.endsWith(extension, ignoreCase = true)) {
-                return filename
-            }
-        }
+    if (mimeType == null) {
+        return filename
     }
 
-    return if (extension != null) {
-        filename.substring(0, dotIndex) + extension
-    } else {
-        filename
+    val mimeTypeMap = MimeTypeMap.getSingleton()
+    val originalExtension = filename.substringAfterLast('.', "")
+    val dotIndex = filename.lastIndexOf('.')
+
+    // Get MIME type for the original extension
+    val typeFromExt = mimeTypeMap.getMimeTypeFromExtension(originalExtension)
+
+    // Get the correct extension for the MIME type
+    val correctExtension = mimeTypeMap.getExtensionFromMimeType(mimeType)?.let { ".$it" }
+
+    return when {
+        // Original extension is unknown to Android - append MIME type extension
+        typeFromExt == null && correctExtension != null -> {
+            filename + correctExtension
+        }
+        // Original extension matches MIME type - keep it
+        typeFromExt?.equals(mimeType, ignoreCase = true) == true -> {
+            filename
+        }
+        // Extension doesn't match MIME type - replace with correct one
+        correctExtension != null && dotIndex >= 0 -> {
+            filename.substring(0, dotIndex) + correctExtension
+        }
+        // No valid extension found - keep original
+        else -> filename
     }
 }
 
