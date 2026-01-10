@@ -65,7 +65,7 @@
     <string name="title_search_engine">Zoekmachine</string>
     <string name="action_ok">Oké</string>
     <string name="dialog_download">Wilt u dit bestand downloaden? (%1$s)</string>
-    <string name="unknown_size">Onbekende grootte</string>
+    <string name="unknown_file_size">Onbekende grootte</string>
     <string name="action_cancel">Annuleer</string>
     <string name="title_warning">Waarschuwing</string>
     <string name="title_user_agent">Useragent</string>

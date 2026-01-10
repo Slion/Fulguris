@@ -65,7 +65,7 @@
     <string name="title_search_engine">محرك البحث</string>
     <string name="action_ok">حسنا</string>
     <string name="dialog_download">هل ترغب في تحميل هذا الملف؟ %1$s</string>
-    <string name="unknown_size">حجم غير معروف</string>
+    <string name="unknown_file_size">حجم غير معروف</string>
     <string name="action_cancel">إلغاء</string>
     <string name="title_warning">تحذير</string>
     <string name="title_user_agent">وكيل المستخدم</string>

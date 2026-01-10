@@ -12,8 +12,6 @@ import fulguris.extensions.KDuration
 import fulguris.extensions.makeSnackbar
 import fulguris.extensions.snackbar
 import fulguris.settings.preferences.UserPreferences
-import fulguris.utils.Utils
-import fulguris.utils.guessFileName
 import android.Manifest
 import android.app.Activity
 import android.app.Dialog
@@ -21,7 +19,6 @@ import android.app.DownloadManager
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Build
 import android.text.format.Formatter
@@ -29,6 +26,7 @@ import android.view.Gravity
 import android.webkit.DownloadListener
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.text.parseAsHtml
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.EntryPointAccessors
 import fulguris.app
@@ -189,41 +187,74 @@ class LightningDownloadListener     //Injector.getInjector(context).inject(this)
         url: String, userAgent: String,
         contentDisposition: String, mimetype: String, contentLength: Long
     ) {
-        val fileName = guessFileName(url, contentDisposition, mimetype, null)
-        val downloadSize: String
-        downloadSize = if (contentLength > 0) {
+        // Get original filename WITHOUT extension changes to check for mismatches
+        val originalFileName = fulguris.utils.guessFileNameWithoutExtensionChange(url, contentDisposition, mimetype, null)
+
+        val downloadSize: String = if (contentLength > 0) {
             Formatter.formatFileSize(mActivity, contentLength)
         } else {
-            mActivity.getString(R.string.unknown_size)
+            mActivity.getString(R.string.unknown_file_size)
         }
-        val dialogClickListener =
-            DialogInterface.OnClickListener { dialog: DialogInterface?, which: Int ->
-                when (which) {
-                    DialogInterface.BUTTON_POSITIVE -> downloadHandler.onDownloadStart(
-                        mActivity,
-                        userPreferences,
-                        url,
-                        userAgent,
-                        contentDisposition,
-                        mimetype,
-                        downloadSize
-                    )
-                    DialogInterface.BUTTON_NEGATIVE -> {}
+
+        // Check if there's an extension mismatch using the ORIGINAL filename
+        val (hasMismatch, correctedFilename) = fulguris.utils.hasExtensionMismatch(originalFileName, mimetype)
+
+        val builder = MaterialAlertDialogBuilder(mActivity)
+
+        // Build descriptive message following MD3 guidelines
+        val fileType = if (mimetype.isNotEmpty()) {
+            mimetype
+        } else {
+            mActivity.getString(R.string.unknown_file_type)
+        }
+
+        // Parameters: filename, type, size (size is last)
+        val message = mActivity.getString(R.string.dialog_download_message, originalFileName, fileType, downloadSize)
+
+        // Use question as title per MD3 guidelines
+        val dialog: Dialog = builder.setTitle(R.string.dialog_download_title)
+            .setMessage(message.parseAsHtml())
+            .setPositiveButton(
+                mActivity.resources.getString(R.string.action_download)
+            ) { _, _ ->
+                downloadHandler.onDownloadStart(
+                    mActivity,
+                    userPreferences,
+                    url,
+                    userAgent,
+                    contentDisposition,
+                    mimetype,
+                    downloadSize
+                )
+            }
+            .apply {
+                // Add neutral button if there's an extension mismatch
+                if (hasMismatch && correctedFilename != null) {
+                    // Extract just the extension for the button label
+                    val correctedExt = correctedFilename.substringAfterLast('.').uppercase()
+                    setNeutralButton(
+                        mActivity.getString(R.string.download_as_format, correctedExt)
+                    ) { _, _ ->
+                        // Download with corrected filename
+                        downloadHandler.onDownloadStartWithFilename(
+                            mActivity,
+                            userPreferences,
+                            url,
+                            userAgent,
+                            contentDisposition,
+                            mimetype,
+                            downloadSize,
+                            correctedFilename
+                        )
+                    }
                 }
             }
-        val builder = MaterialAlertDialogBuilder(mActivity) // dialog
-        val message = mActivity.getString(R.string.dialog_download, downloadSize)
-        val dialog: Dialog = builder.setTitle(fileName)
-            .setMessage(message)
-            .setPositiveButton(
-                mActivity.resources.getString(R.string.action_download),
-                dialogClickListener
-            )
             .setNegativeButton(
-                mActivity.resources.getString(R.string.action_cancel),
-                dialogClickListener
-            ).launch()
-        Timber.d("Downloading: $fileName")
+                mActivity.resources.getString(R.string.action_cancel)
+            ) { _, _ -> }
+            .launch()
+        Timber.d("Downloading: $originalFileName (mimetype: $mimetype, hasMismatch: $hasMismatch, correctedFilename: $correctedFilename)")
     }
 
 }
+

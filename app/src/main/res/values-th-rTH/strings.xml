@@ -65,7 +65,7 @@
     <string name="title_search_engine">เครื่องมือค้นหา</string>
     <string name="action_ok">ตกลง</string>
     <string name="dialog_download">คุณต้องการดาวน์โหลดไฟล์นี้หรือไม่? (%1$s)</string>
-    <string name="unknown_size">ขนาดไม่ทราบ</string>
+    <string name="unknown_file_size">ขนาดไม่ทราบ</string>
     <string name="action_cancel">ยกเลิก</string>
     <string name="title_warning">คำเตือน</string>
     <string name="title_user_agent">ตัวแทนผู้ใช้</string>

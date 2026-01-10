@@ -252,6 +252,32 @@ fun guessFileName(
     } ?: fileName
 }
 
+/**
+ * Similar to guessFileName but returns the filename WITHOUT applying extension changes.
+ * This is used to check for extension mismatches before deciding whether to modify the filename.
+ */
+fun guessFileNameWithoutExtensionChange(
+    url: String?,
+    contentDisposition: String?,
+    mimeType: String?,
+    destinationDirectory: String?
+): String {
+    val extractedFileName = extractFileNameFromUrl(contentDisposition, url)
+
+    val fileName = if (extractedFileName.contains('.')) {
+        // Keep original extension
+        extractedFileName
+    } else {
+        // Only add extension if there isn't one
+        val sanitizedMimeType = sanitizeMimeType(mimeType)
+        extractedFileName + createExtension(sanitizedMimeType)
+    }
+
+    return destinationDirectory?.let {
+        uniqueFileName(Environment.getExternalStoragePublicDirectory(destinationDirectory), fileName)
+    } ?: fileName
+}
+
 // Some site add extra information after the mimetype, for example 'application/pdf; qs=0.001'
 // we just want to extract the mimeType and ignore the rest.
 fun sanitizeMimeType(mimeType: String?): String? {
@@ -371,6 +397,53 @@ private fun decodeHeaderField(field: String, encoding: String): String {
     }
 
     return stream.toString(encoding)
+}
+
+/**
+ * Check if the filename extension matches the MIME type.
+ *
+ * @return Pair<Boolean, String?> - First: true if there's a mismatch, Second: the corrected filename if mismatch exists
+ */
+fun hasExtensionMismatch(filename: String, mimeType: String?): Pair<Boolean, String?> {
+    if (mimeType == null || !filename.contains('.')) {
+        return Pair(false, null)
+    }
+
+    val mimeTypeMap = MimeTypeMap.getSingleton()
+    val originalExtension = filename.substringAfterLast('.', "")
+    val typeFromExt = mimeTypeMap.getMimeTypeFromExtension(originalExtension)
+    val correctExtension = mimeTypeMap.getExtensionFromMimeType(mimeType)?.let { ".$it" }
+
+    // Check if there's a mismatch
+    val hasMismatch = when {
+        // Unknown extension with known MIME type - mismatch
+        typeFromExt == null && correctExtension != null -> true
+        // Known extension that doesn't match MIME type - mismatch
+        typeFromExt != null && !typeFromExt.equals(mimeType, ignoreCase = true) -> true
+        // Everything else - no mismatch
+        else -> false
+    }
+
+    if (!hasMismatch || correctExtension == null) {
+        return Pair(false, null)
+    }
+
+    // Generate corrected filename
+    val correctedFilename = when {
+        // Unknown extension - append
+        typeFromExt == null -> filename + correctExtension
+        // Known but wrong extension - replace
+        else -> {
+            val dotIndex = filename.lastIndexOf('.')
+            if (dotIndex >= 0) {
+                filename.substring(0, dotIndex) + correctExtension
+            } else {
+                filename
+            }
+        }
+    }
+
+    return Pair(true, correctedFilename)
 }
 
 /**

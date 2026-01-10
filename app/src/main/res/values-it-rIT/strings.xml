@@ -65,7 +65,7 @@
     <string name="title_search_engine">Motore di ricerca</string>
     <string name="action_ok">OK</string>
     <string name="dialog_download">Vuoi scaricarlo? (%1$s)</string>
-    <string name="unknown_size">Dimensione sconosciuta</string>
+    <string name="unknown_file_size">Dimensione sconosciuta</string>
     <string name="action_cancel">Annulla</string>
     <string name="title_warning">Attenzione</string>
     <string name="title_user_agent">User Agent</string>

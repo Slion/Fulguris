@@ -65,7 +65,7 @@
     <string name="title_search_engine">Arama motoru</string>
     <string name="action_ok">Tamam</string>
     <string name="dialog_download">Bu dosyayı indirmek istiyor musunuz? (%1$s)</string>
-    <string name="unknown_size">Bilinmeyen boyut</string>
+    <string name="unknown_file_size">Bilinmeyen boyut</string>
     <string name="action_cancel">İptal</string>
     <string name="title_warning">Uyarı</string>
     <string name="title_user_agent">Kullanıcı aracısı</string>

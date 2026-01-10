@@ -65,7 +65,7 @@
     <string name="title_search_engine">Công cụ tìm kiếm</string>
     <string name="action_ok">ỪA</string>
     <string name="dialog_download">Bạn có muốn tải xuống tệp này? (%1$s)</string>
-    <string name="unknown_size">Không rõ kích thước</string>
+    <string name="unknown_file_size">Không rõ kích thước</string>
     <string name="action_cancel">Hủy</string>
     <string name="title_warning">Cảnh báo</string>
     <string name="title_user_agent">Tác nhân người dùng</string>

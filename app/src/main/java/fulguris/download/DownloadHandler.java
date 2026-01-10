@@ -135,6 +135,31 @@ public class DownloadHandler {
         onDownloadStartNoStream(context, manager, url, userAgent, contentDisposition, mimeType, contentSize);
     }
 
+    /**
+     * Notify the host application a download should be done with a specific filename.
+     * This variant allows overriding the filename that would normally be guessed from the URL.
+     *
+     * @param context            The context in which the download was requested.
+     * @param manager            User preferences
+     * @param url                The full url to the content that should be downloaded
+     * @param userAgent          User agent of the downloading application.
+     * @param contentDisposition Content-disposition http header, if present.
+     * @param mimeType           The mimeType of the content reported by the server
+     * @param contentSize        The size of the content
+     * @param customFilename     The filename to use instead of guessing from URL
+     */
+    public void onDownloadStartWithFilename(@NonNull Activity context, @NonNull UserPreferences manager,
+                                            @NonNull String url, String userAgent,
+                                            @Nullable String contentDisposition, String mimeType,
+                                            @NonNull String contentSize, @NonNull String customFilename) {
+        Timber.d("DOWNLOAD: Trying to download from URL: %s with custom filename: %s", url, customFilename);
+        Timber.d("DOWNLOAD: Content disposition: %s", contentDisposition);
+        Timber.d("DOWNLOAD: MimeType: %s", mimeType);
+        Timber.d("DOWNLOAD: Custom filename: %s", customFilename);
+
+        onDownloadStartNoStreamWithFilename(context, manager, url, userAgent, contentDisposition, mimeType, contentSize, customFilename);
+    }
+
     // This is to work around the fact that java.net.URI throws Exceptions
     // instead of just encoding URL's properly
     // Helper method for onDownloadStartNoStream
@@ -302,6 +327,115 @@ public class DownloadHandler {
             }
             ba.showSnackbar( context.getString(R.string.download_pending) + '\n' + iFilename);
         }
+
+        // save download in database
+        WebBrowser browserActivity = (WebBrowser) context;
+        WebPageTab view = browserActivity.getTabModel().getCurrentTab();
+
+        if (view != null && !view.isIncognito()) {
+            downloadsRepository.addDownloadIfNotExists(new DownloadEntry(url, iFilename, contentSize))
+                .subscribeOn(databaseScheduler)
+                .subscribe(aBoolean -> {
+                    if (!aBoolean) {
+                        Timber.d("error saving download to database");
+                    }
+                });
+        }
+    }
+
+    /**
+     * Variant of onDownloadStartNoStream that accepts a custom filename.
+     * This is used when the user explicitly chooses to download with a corrected extension.
+     */
+    private void onDownloadStartNoStreamWithFilename(@NonNull final Activity context, @NonNull UserPreferences preferences,
+                                                      @NonNull String url, String userAgent,
+                                                      String contentDisposition, @Nullable String mimetype,
+                                                      @NonNull String contentSize, @NonNull String customFilename) {
+        // Use the custom filename instead of guessing
+        iFilename = customFilename;
+
+        // Continue with the same logic as onDownloadStartNoStream
+        WebBrowserActivity ba = (WebBrowserActivity)context;
+
+        // Check to see if we have an SDCard
+        String status = Environment.getExternalStorageState();
+        if (!status.equals(Environment.MEDIA_MOUNTED)) {
+            int title;
+            String msg;
+
+            // Check to see if the SDCard is busy, same as the music app
+            if (status.equals(Environment.MEDIA_SHARED)) {
+                msg = context.getString(R.string.download_sdcard_busy_dlg_msg);
+                title = R.string.download_sdcard_busy_dlg_title;
+            } else {
+                msg = context.getString(R.string.download_no_sdcard_dlg_msg);
+                title = R.string.download_no_sdcard_dlg_title;
+            }
+
+            Dialog dialog = AlertDialogExtensionsKt.launch(new MaterialAlertDialogBuilder(context)
+                .setTitle(title)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setMessage(msg)
+                .setPositiveButton(R.string.action_ok, null));
+            return;
+        }
+
+        WebAddress webAddress;
+        try {
+            webAddress = new WebAddress(url);
+            webAddress = new WebAddress(webAddress.toString());
+        } catch (Exception e) {
+            // Use the default save path for explicit downloads
+            Timber.e(e, "Exception while trying to parse url '" + url + '\'');
+            ba.showSnackbar( R.string.problem_download);
+            return;
+        }
+
+        String addressString = webAddress.toString();
+        Uri uri = Uri.parse(addressString);
+        final DownloadManager.Request request;
+        try {
+            request = new DownloadManager.Request(uri);
+        } catch (IllegalArgumentException e) {
+            ba.showSnackbar( R.string.cannot_download);
+            return;
+        }
+
+        String location = preferences.getDownloadDirectory();
+        location = FileUtils.addNecessarySlashes(location);
+        Uri downloadFolder = Uri.parse(location);
+
+        if (!isWriteAccessAvailable(downloadFolder)) {
+            ba.showSnackbar( R.string.problem_location_download);
+            return;
+        }
+
+        // Use the custom filename directly, no need to change extension again
+        String newMimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(Utils.guessFileExtension(iFilename));
+        Timber.d("New mimetype: %s", newMimeType);
+        request.setMimeType(newMimeType);
+        request.setDestinationUri(Uri.parse(Constants.FILE + location + iFilename));
+
+        request.setVisibleInDownloadsUi(true);
+        request.allowScanningByMediaScanner();
+        request.setDescription(webAddress.getHost());
+        String cookies = CookieManager.getInstance().getCookie(url);
+        request.addRequestHeader(COOKIE_REQUEST_HEADER, cookies);
+        request.addRequestHeader(REFERER_REQUEST_HEADER, url);
+        request.addRequestHeader(USERAGENT_REQUEST_HEADER, userAgent);
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE);
+
+        Timber.d("Valid mimetype, attempting to download with custom filename: %s", iFilename);
+        try {
+            iDownloadId = downloadManager.enqueue(request);
+        } catch (IllegalArgumentException e) {
+            Timber.e(e,"Unable to enqueue request");
+            ba.showSnackbar( R.string.cannot_download);
+        } catch (SecurityException e) {
+            Timber.e(e, "Download failed: cannot write to location");
+            ba.showSnackbar( R.string.problem_location_download);
+        }
+        ba.showSnackbar( context.getString(R.string.download_pending) + '\n' + iFilename);
 
         // save download in database
         WebBrowser browserActivity = (WebBrowser) context;

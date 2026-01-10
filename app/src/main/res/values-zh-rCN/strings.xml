@@ -65,7 +65,7 @@
     <string name="title_search_engine">搜索引擎</string>
     <string name="action_ok">确定</string>
     <string name="dialog_download">你想要下载这个文件吗？ (%1$s)</string>
-    <string name="unknown_size">未知大小</string>
+    <string name="unknown_file_size">未知大小</string>
     <string name="action_cancel">取消</string>
     <string name="title_warning">警告</string>
     <string name="title_user_agent">用户代理</string>

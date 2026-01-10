@@ -65,7 +65,7 @@
     <string name="title_search_engine">Pretražnik</string>
     <string name="action_ok">U redu</string>
     <string name="dialog_download">Želite li preuzeti ovu datoteku? (%1$s)</string>
-    <string name="unknown_size">Nepoznata veličina</string>
+    <string name="unknown_file_size">Nepoznata veličina</string>
     <string name="action_cancel">Otkažite</string>
     <string name="title_warning">Upozorenje</string>
     <string name="title_user_agent">User agent</string>

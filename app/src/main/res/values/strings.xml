@@ -66,8 +66,11 @@
     <string name="agent_hide_device">Hide device</string>
     <string name="title_search_engine">Search engine</string>
     <string name="action_ok">OK</string>
-    <string name="dialog_download">Do you want to download this file? (%1$s)</string>
-    <string name="unknown_size">Unknown size</string>
+    <string name="dialog_download_title">Download file?</string>
+    <string name="dialog_download_message"><![CDATA[<b>%1$s</b> will be saved to your downloads folder<br /><br />Type: %2$s<br />Size: %3$s]]></string>
+    <string name="download_as_format">Download as %1$s</string>
+    <string name="unknown_file_size">unknown</string>
+    <string name="unknown_file_type">unknown</string>
     <string name="action_cancel">Cancel</string>
     <string name="title_warning">Warning</string>
     <string name="title_user_agent">User agent</string>

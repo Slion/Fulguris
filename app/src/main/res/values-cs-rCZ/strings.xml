@@ -65,7 +65,7 @@
     <string name="title_search_engine">Výchozí vyhledávač</string>
     <string name="action_ok">OK</string>
     <string name="dialog_download">Chcete stáhnout tento soubor? (%1$s)</string>
-    <string name="unknown_size">Neznámá velikost</string>
+    <string name="unknown_file_size">Neznámá velikost</string>
     <string name="action_cancel">Zrušit</string>
     <string name="title_warning">Varování</string>
     <string name="title_user_agent">Uživatelský agent</string>

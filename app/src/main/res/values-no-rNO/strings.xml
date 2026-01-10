@@ -65,7 +65,7 @@
     <string name="title_search_engine">Søkemotor</string>
     <string name="action_ok">OK</string>
     <string name="dialog_download">Vil du laste ned denne filen? (%1$s)</string>
-    <string name="unknown_size">Ukjent størrelse</string>
+    <string name="unknown_file_size">Ukjent størrelse</string>
     <string name="action_cancel">Avbryt</string>
     <string name="title_warning">Advarsel</string>
     <string name="title_user_agent">Brukeragent</string>
