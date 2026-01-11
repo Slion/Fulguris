@@ -308,7 +308,7 @@ public class DownloadHandler {
                         case SUCCESS:
                             iDownloadId = result.iDownloadId;
                             iFilename = result.iFilename;
-                            ba.showSnackbar( context.getString(R.string.download_pending)  + '\n' + iFilename);
+                            ba.showSnackbar( context.getString(R.string.download_pending)  + ' ' + iFilename);
                             break;
                     }
                 });
@@ -325,7 +325,7 @@ public class DownloadHandler {
                 // because the system can only handle Environment.getExternal... as a path
                 ba.showSnackbar( R.string.problem_location_download);
             }
-            ba.showSnackbar( context.getString(R.string.download_pending) + '\n' + iFilename);
+            ba.showSnackbar( context.getString(R.string.download_pending) + ' ' + iFilename);
         }
 
         // save download in database
@@ -435,7 +435,7 @@ public class DownloadHandler {
             Timber.e(e, "Download failed: cannot write to location");
             ba.showSnackbar( R.string.problem_location_download);
         }
-        ba.showSnackbar( context.getString(R.string.download_pending) + '\n' + iFilename);
+        ba.showSnackbar( context.getString(R.string.download_pending) + ' ' + iFilename);
 
         // save download in database
         WebBrowser browserActivity = (WebBrowser) context;
