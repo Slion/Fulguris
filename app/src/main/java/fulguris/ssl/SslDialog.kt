@@ -38,9 +38,9 @@ fun Activity.showSslDialog(sslCertificate: SslCertificate, sslState: SslState) {
         }
     }
 
-    val icon = createSslDrawableForState(sslState)
+    val iconRes = getSslIconRes(sslState)
 
-    BrowserDialog.show(this, icon, to.cName, true,
+    BrowserDialog.show(this, iconRes, to.cName, true,
         DialogTab(show=true, items=arrayOf(
             DialogItem(title = R.string.ssl_info_issued_by, text = by.dName) {
                 cm.copyToClipboard(by.dName)

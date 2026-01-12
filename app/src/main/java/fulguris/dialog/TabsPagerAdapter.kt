@@ -82,10 +82,13 @@ class TabsPagerAdapter(
     }
 
     override fun getPageTitle(position: Int): CharSequence {
-        if (tabs[position].title == 0) {
-            return ""
+        val tab = tabs[position]
+        // Use dynamic text if set, otherwise use string resource
+        return when {
+            tab.text.isNotEmpty() -> tab.text
+            tab.title != 0 -> context.getString(tab.title)
+            else -> ""
         }
-        return context.getString(tabs[position].title)
     }
 
     /**

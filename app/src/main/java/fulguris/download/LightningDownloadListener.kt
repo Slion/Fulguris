@@ -114,16 +114,18 @@ class LightningDownloadListener     //Injector.getInjector(context).inject(this)
                 // notificationId is a unique int for each notification that you must define
                 notificationManager.notify(0, builder.build())
 
-                //Show a snackbar with a link to open the downloaded file
+                //Show a snackbar with a link to open the downloads list
                 if (success) {
-                    val i = downloadsIntent
                     mActivity.makeSnackbar(
                         contentTitle,
                         KDuration,
                         if (mActivity.configPrefs.toolbarsBottom) Gravity.TOP else Gravity.BOTTOM
                     ).setAction(
                         R.string.show
-                    ) { context.startActivity(i) }.show()
+                    ) {
+                        @Suppress("USELESS_CAST")
+                        (mActivity as WebBrowserActivity).openDownloads()
+                    }.show()
                 } else {
                     mActivity.snackbar(
                         contentTitle,

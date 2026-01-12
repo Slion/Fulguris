@@ -20,7 +20,6 @@ import fulguris.list.RecyclerViewDialogItemAdapter
 import fulguris.list.RecyclerViewStringAdapter
 import android.app.Dialog
 import android.content.Context
-import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.EditText
@@ -142,19 +141,20 @@ object BrowserDialog {
      */
     @JvmStatic
     fun show(aContext: Context, @StringRes aTitle: Int, aHideSingleTab: Boolean, vararg aTabs: DialogTab) {
-        show(aContext,null, aContext.getString(aTitle), aHideSingleTab,*aTabs)
+        show(aContext, 0, aContext.getString(aTitle), aHideSingleTab, *aTabs)
     }
 
     /**
      * Build and show a tabbed dialog based on the provided parameters.
      *
      * @param aContext The activity requesting that dialog.
+     * @param aIconRes The dialog icon resource id.
      * @param aTitle The dialog title.
      * @param aHideSingleTab Set to true to hide tab layout when a single tab is visible.
      * @param aTabs Define our dialog's tabs.
      */
     @JvmStatic
-    fun show(aContext: Context, aIcon: Drawable?, aTitle: String?, aHideSingleTab: Boolean, vararg aTabs: DialogTab) {
+    fun show(aContext: Context, @androidx.annotation.DrawableRes aIconRes: Int, aTitle: String?, aHideSingleTab: Boolean, vararg aTabs: DialogTab) {
         val builder = MaterialAlertDialogBuilder(aContext)
 
         // Inflate our layout
@@ -196,7 +196,10 @@ object BrowserDialog {
         }
         // Our layout is setup, just hook it to our dialog
         dialog.setView(layout)
-        dialog.setIcon(aIcon)
+        // Set icon if provided
+        if (aIconRes != 0) {
+            dialog.setIcon(aIconRes)
+        }
         // Create all the dialog views
         dialog.create()
         // Show it first as invisible then dismiss and actually show it

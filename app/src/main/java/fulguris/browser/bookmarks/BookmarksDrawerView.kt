@@ -189,10 +189,11 @@ class BookmarksDrawerView @JvmOverloads constructor(
      *
      */
     private fun showBookmarkMenu(bookmark: Bookmark): Boolean {
-        (context as Activity?)?.let {
+        val activity = context as? Activity
+        if (activity != null) {
             when (bookmark) {
-                is Bookmark.Folder -> bookmarksDialogBuilder.showBookmarkFolderLongPressedDialog(it, webBrowser, bookmark)
-                is Bookmark.Entry -> bookmarksDialogBuilder.showLongPressedDialogForBookmarkUrl(it, webBrowser, bookmark)
+                is Bookmark.Folder -> bookmarksDialogBuilder.showBookmarkFolderLongPressedDialog(activity, webBrowser, bookmark)
+                is Bookmark.Entry -> bookmarksDialogBuilder.showLongPressedDialogForBookmarkUrl(activity, webBrowser, bookmark)
             }
         }
         return true

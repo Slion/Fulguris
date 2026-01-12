@@ -4008,13 +4008,10 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     }
 
     /**
-     * Display downloads folder one way or another
+     * Display downloads in bottom sheet
      */
-    private fun openDownloads() {
-        startActivity(Utils.getIntentForDownloads(this, userPreferences.downloadDirectory))
-        // Our built-in downloads list did not display downloaded items properly
-        // Not sure why, consider fixing it or just removing it altogether at some point
-        //tabsManager.newTab(downloadPageInitializer,true)
+    fun openDownloads() {
+        iBottomSheet.setLayout(R.layout.fragment_downloads).show()
     }
 
     /**

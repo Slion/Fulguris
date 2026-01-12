@@ -29,7 +29,8 @@ import androidx.annotation.StringRes
  * Define a tab in our dialog
  *
  * @param icon Drawable resource identifier. Will be used to set this tab icon.
- * @param title This tab text title.
+ * @param title This tab text title as a string resource ID.
+ * @param text This tab text title as a dynamic string. Takes precedence over title if set.
  * @param show Tells if this tab should be visible.
  * @param items List of items used to populate this tab content view.
  */
@@ -38,6 +39,7 @@ class DialogTab(
     val icon: Int = 0,
     @param:StringRes
     val title: Int = 0,
+    val text: String = "",
     val show: Boolean = true,
     vararg items: DialogItem
 ) {

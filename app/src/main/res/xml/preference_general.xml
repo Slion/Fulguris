@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:key="non-default-test">
 
     <Preference
@@ -59,40 +60,6 @@
             app:enumClassName="fulguris.enums.IncomingViewAction" />
 
     </x.PreferenceCategory>
-
-    <x.PreferenceCategory
-        android:title="@string/settings_network"
-        app:singleLineTitle="false">
-
-        <Preference
-            android:key="@string/pref_key_network_engine"
-            android:title="@string/pref_title_network_engine"
-            android:summary="@string/pref_summary_network_engine"
-            app:icon="@drawable/ic_network_node_outline"
-            app:singleLineTitle="false" />
-
-        <x.EditTextPreference
-            app:key="@string/pref_key_network_cache_size"
-            app:title="@string/pref_title_network_cache_size"
-            app:dialogMessage="@string/pref_message_network_cache_size"
-            app:dialogIcon="@drawable/ic_storage_outline"
-            app:defaultValue="50"
-            app:icon="@drawable/ic_storage_outline"
-            app:singleLineTitle="false"
-            android:inputType="number"
-            app:suffixText=" MB"
-            app:textGravity="right"
-            app:enabled="false" />
-
-        <Preference
-            android:key="@string/pref_key_clear_network_cache"
-            android:title="@string/pref_title_clear_cache"
-            app:icon="@drawable/ic_delete"
-            app:singleLineTitle="false"
-            app:enabled="false" />
-
-    </x.PreferenceCategory>
-
 
     <x.PreferenceCategory android:title="@string/tabs">
 
@@ -179,8 +146,50 @@
     </x.PreferenceCategory>
 
     <x.PreferenceCategory
-        android:title="@string/settings_advanced"
+        android:title="@string/settings_network"
         app:singleLineTitle="false">
+
+        <Preference
+            android:key="@string/pref_key_network_engine"
+            android:title="@string/pref_title_network_engine"
+            android:summary="@string/pref_summary_network_engine"
+            app:icon="@drawable/ic_network_node_outline"
+            app:singleLineTitle="false" />
+
+        <x.EditTextPreference
+            app:key="@string/pref_key_network_cache_size"
+            app:title="@string/pref_title_network_cache_size"
+            app:dialogMessage="@string/pref_message_network_cache_size"
+            app:dialogIcon="@drawable/ic_storage_outline"
+            app:defaultValue="50"
+            app:icon="@drawable/ic_storage_outline"
+            app:singleLineTitle="false"
+            android:inputType="number"
+            app:suffixText=" MB"
+            app:textGravity="right"
+            app:enabled="false" />
+
+        <Preference
+            android:key="@string/pref_key_clear_network_cache"
+            android:title="@string/pref_title_clear_cache"
+            app:icon="@drawable/ic_delete"
+            app:singleLineTitle="false"
+            app:enabled="false" />
+
+    </x.PreferenceCategory>
+
+    <x.PreferenceCategory
+        android:title="@string/settings_more"
+        app:singleLineTitle="false"
+        app:initialExpandedChildrenCount="1"
+        tools:initialExpandedChildrenCount="100">
+
+        <Preference
+            android:key="agent"
+            android:title="@string/agent"
+            app:icon="@drawable/ic_about"
+            app:iconSpaceReserved="false"
+            app:singleLineTitle="false" />
 
         <Preference
             android:key="download"
@@ -236,13 +245,6 @@
             android:key="@string/pref_key_request_save_data"
             android:title="@string/save_data"
             app:icon="@drawable/ic_data_save"
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false" />
-
-        <Preference
-            android:key="agent"
-            android:title="@string/agent"
-            app:icon="@drawable/ic_about"
             app:iconSpaceReserved="false"
             app:singleLineTitle="false" />
 

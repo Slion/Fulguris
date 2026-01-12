@@ -122,7 +122,7 @@ class LightningDialogBuilder @Inject constructor(
         entry: Bookmark.Entry
     ) =
         BrowserDialog.show(
-            activity, null, "", false, DialogTab(
+            activity, 0, "", false, DialogTab(
                 show = true, icon = R.drawable.ic_bookmark, title = R.string.dialog_title_bookmark, items = arrayOf(
                     DialogItem(title = R.string.dialog_open_new_tab) {
                         webBrowser.handleNewTab(NewTab.FOREGROUND, entry.url)
@@ -290,7 +290,7 @@ class LightningDialogBuilder @Inject constructor(
         folder: Bookmark.Folder
     ) =
         BrowserDialog.show(
-            activity, null, "", false, DialogTab(
+            activity, 0, "", false, DialogTab(
                 show = true, icon = R.drawable.ic_folder, title = R.string.action_folder, items = arrayOf(
                     DialogItem(title = R.string.dialog_rename_folder) {
                         showRenameFolderDialog(activity, webBrowser, folder)
@@ -336,7 +336,7 @@ class LightningDialogBuilder @Inject constructor(
         url: String
     ) =
         BrowserDialog.show(
-            activity, null, "", false, DialogTab(
+            activity, 0, "", false, DialogTab(
                 show = true, icon = R.drawable.ic_history, title = R.string.action_history, items = arrayOf(
                     DialogItem(title = R.string.dialog_open_new_tab) {
                         webBrowser.handleNewTab(NewTab.FOREGROUND, url)
@@ -379,7 +379,7 @@ class LightningDialogBuilder @Inject constructor(
         showImageTab: Boolean
     ) =
         BrowserDialog.show(
-            activity, null, "", false,
+            activity, 0, "", false,
             //Link tab
             DialogTab(show = showLinkTab, icon = R.drawable.ic_link, title = R.string.button_link, items = arrayOf(DialogItem(title = R.string.dialog_open_new_tab) {
                 webBrowser.handleNewTab(NewTab.FOREGROUND, linkUrl)

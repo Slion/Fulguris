@@ -308,7 +308,7 @@ public class DownloadHandler {
                         case SUCCESS:
                             iDownloadId = result.iDownloadId;
                             iFilename = result.iFilename;
-                            ba.showSnackbar( context.getString(R.string.download_pending)  + ' ' + iFilename);
+                            showDownloadPendingSnackbar(ba, context.getString(R.string.download_pending)  + ' ' + iFilename);
                             break;
                     }
                 });
@@ -325,7 +325,7 @@ public class DownloadHandler {
                 // because the system can only handle Environment.getExternal... as a path
                 ba.showSnackbar( R.string.problem_location_download);
             }
-            ba.showSnackbar( context.getString(R.string.download_pending) + ' ' + iFilename);
+            showDownloadPendingSnackbar(ba, context.getString(R.string.download_pending) + ' ' + iFilename);
         }
 
         // save download in database
@@ -435,7 +435,7 @@ public class DownloadHandler {
             Timber.e(e, "Download failed: cannot write to location");
             ba.showSnackbar( R.string.problem_location_download);
         }
-        ba.showSnackbar( context.getString(R.string.download_pending) + ' ' + iFilename);
+        showDownloadPendingSnackbar(ba, context.getString(R.string.download_pending) + ' ' + iFilename);
 
         // save download in database
         WebBrowser browserActivity = (WebBrowser) context;
@@ -471,5 +471,23 @@ public class DownloadHandler {
         } catch (IOException ignored) {
             return false;
         }
+    }
+
+    /**
+     * Show a download pending snackbar with a "Show" action that opens the downloads list.
+     *
+     * @param context The activity context
+     * @param message The message to display
+     */
+    private void showDownloadPendingSnackbar(@NonNull WebBrowserActivity context, @NonNull String message) {
+        fulguris.extensions.ActivityExtensions.makeSnackbar(
+                context,
+                message,
+                4000, // KDuration
+                fulguris.di.Injector.getConfigPrefs(context).getToolbarsBottom() ? android.view.Gravity.TOP : android.view.Gravity.BOTTOM
+        ).setAction(R.string.show, view -> {
+            // Open the downloads bottom sheet
+            context.executeAction(R.id.action_downloads);
+        }).show();
     }
 }

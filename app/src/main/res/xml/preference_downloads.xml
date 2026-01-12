@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:a="http://schemas.android.com/apk/res/android"
+    xmlns:x="http://schemas.android.com/apk/res-auto"
+    xmlns:t="http://schemas.android.com/tools">
+
+    <x.PreferenceCategory
+        a:title="@string/actions"
+        x:initialExpandedChildrenCount="1"
+        t:initialExpandedChildrenCount="100">
+
+        <Preference
+            a:key="pref_explore_downloads"
+            a:title="@string/pref_title_downloads_open_folder"
+            a:icon="@drawable/ic_folder_open_outline" />
+
+        <Preference
+            a:key="pref_clean_downloads"
+            a:title="@string/pref_title_downloads_clean"
+            a:summary="@string/pref_summary_downloads_clean"
+            a:icon="@drawable/ic_cleaning_services_outline" />
+
+        <Preference
+            a:key="pref_remove_all_downloads"
+            a:title="@string/pref_title_downloads_remove_all"
+            a:summary="@string/pref_summary_downloads_remove_all"
+            a:icon="@drawable/ic_delete_sweep_outline" />
+
+        <Preference
+            a:key="pref_delete_all_downloads"
+            a:title="@string/pref_title_downloads_delete_all"
+            a:summary="@string/pref_summary_downloads_delete_all"
+            a:icon="@drawable/ic_delete_forever_outline" />
+
+    </x.PreferenceCategory>
+
+    <x.PreferenceCategory
+        a:key="downloads_list_category"
+        a:title="@string/downloads_list">
+        <!-- Download items will be added dynamically here -->
+    </x.PreferenceCategory>
+
+</androidx.preference.PreferenceScreen>
+
