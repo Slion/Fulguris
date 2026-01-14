@@ -2,6 +2,7 @@ package fulguris.favicon
 
 import fulguris.R
 import fulguris.extensions.invert
+import fulguris.extensions.isInvalid
 import fulguris.extensions.pad
 import fulguris.extensions.safeUse
 import fulguris.utils.DrawableUtils
@@ -125,6 +126,14 @@ class FaviconModel @Inject constructor(
         val uri = url.toUri().toValidUri() ?: return@create emitter.onComplete()
 
         Timber.d("Caching icon for ${uri.host}")
+
+        // Validate bitmap before using it with Palette
+        // Bitmap must not be recycled and must have valid dimensions to avoid IllegalArgumentException
+        if (favicon.isInvalid()) {
+            Timber.w("cacheFaviconForUrl: Invalid bitmap (recycled=${favicon.isRecycled}, width=${favicon.width}, height=${favicon.height})")
+            // Skip caching for invalid bitmaps
+            return@create emitter.onComplete()
+        }
 
         /** TODO: This code was duplicated from [ImageView.setImageForTheme] fix it, somehow */
         // Check if that favicon is dark enough that it needs an inverted variant to be used on dark theme

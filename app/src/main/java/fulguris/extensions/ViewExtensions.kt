@@ -330,6 +330,13 @@ fun ImageView.setImageForTheme(bitmap: Bitmap, isDarkTheme: Boolean) {
     // Remove any existing filter
     clearColorFilter()
 
+    // Validate bitmap before using it with Palette
+    // Bitmap must not be recycled and must have valid dimensions to avoid IllegalArgumentException
+    if (bitmap.isInvalid()) {
+        Timber.w("setImageForTheme: Invalid bitmap (recycled=${bitmap.isRecycled}, width=${bitmap.width}, height=${bitmap.height})")
+        return
+    }
+
     if (isDarkTheme) {
         /**TODO: That code was duplicated in [FaviconModel.cacheFaviconForUrl] fix it, somehow */
         Palette.from(bitmap).generate { palette ->

@@ -69,3 +69,19 @@ fun Bitmap.invert(): Bitmap {
     return bitmap
 }
 
+/**
+ * Checks if a bitmap is invalid (recycled or has zero/negative dimensions).
+ * Invalid bitmaps cannot be used with operations like Palette.from().
+ *
+ * @return true if the bitmap is recycled or has invalid dimensions, false otherwise.
+ */
+fun Bitmap.isInvalid(): Boolean = isRecycled || width <= 0 || height <= 0
+
+/**
+ * Checks if a bitmap is valid (not recycled and has positive dimensions).
+ * Valid bitmaps can be safely used with operations like Palette.from().
+ *
+ * @return true if the bitmap is valid, false otherwise.
+ */
+fun Bitmap.isValid(): Boolean = !isInvalid()
+
