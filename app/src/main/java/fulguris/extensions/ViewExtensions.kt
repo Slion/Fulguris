@@ -332,7 +332,7 @@ fun ImageView.setImageForTheme(bitmap: Bitmap, isDarkTheme: Boolean) {
 
     // Validate bitmap before using it with Palette
     // Bitmap must not be recycled and must have valid dimensions to avoid IllegalArgumentException
-    if (bitmap.isRecycled || bitmap.width <= 0 || bitmap.height <= 0) {
+    if (bitmap.isInvalid()) {
         Timber.w("setImageForTheme: Invalid bitmap (recycled=${bitmap.isRecycled}, width=${bitmap.width}, height=${bitmap.height})")
         // Still set the bitmap even if invalid, as setImageBitmap handles it gracefully
         setImageBitmap(bitmap)
