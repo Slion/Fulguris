@@ -3815,9 +3815,11 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         }
         else if (favicon==null
                 // Use default color if forced dark mode
-                || tabsManager.currentTab?.darkMode == true)
+                || tabsManager.currentTab?.darkMode == true
+                // Validate bitmap before using it with Palette
+                || favicon.isRecycled || favicon.width <= 0 || favicon.height <= 0)
         {
-            // No HTML meta theme color and no favicon, use app theme color then
+            // No HTML meta theme color and no favicon (or invalid bitmap), use app theme color then
             applyToolbarColor(defaultColor);
         }
         else {

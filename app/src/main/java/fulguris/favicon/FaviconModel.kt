@@ -126,6 +126,14 @@ class FaviconModel @Inject constructor(
 
         Timber.d("Caching icon for ${uri.host}")
 
+        // Validate bitmap before using it with Palette
+        // Bitmap must not be recycled and must have valid dimensions to avoid IllegalArgumentException
+        if (favicon.isRecycled || favicon.width <= 0 || favicon.height <= 0) {
+            Timber.w("cacheFaviconForUrl: Invalid bitmap (recycled=${favicon.isRecycled}, width=${favicon.width}, height=${favicon.height})")
+            // Skip caching for invalid bitmaps
+            return@create emitter.onComplete()
+        }
+
         /** TODO: This code was duplicated from [ImageView.setImageForTheme] fix it, somehow */
         // Check if that favicon is dark enough that it needs an inverted variant to be used on dark theme
         val palette = Palette.from(favicon).generate()
