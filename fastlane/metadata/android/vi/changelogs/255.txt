@@ -1,0 +1,3 @@
+📥 Cải thiện hộp thoại tải xuống với phát hiện loại tệp
+🪲 Sửa lỗi crash khi khởi động với favicon không hợp lệ
+🚀 Ẩn mục menu khởi chạy cho dấu trang, tab lịch sử và các trang tích hợp khác

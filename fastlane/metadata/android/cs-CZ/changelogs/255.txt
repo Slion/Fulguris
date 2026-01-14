@@ -1,0 +1,3 @@
+📥 Vylepšení dialogu stahování s detekcí typu souboru
+🪲 Oprava pádu při spuštění s neplatnou favico
+🚀 Skrytí položky nabídky spuštění pro záložky, historii a další vestavěné stránky

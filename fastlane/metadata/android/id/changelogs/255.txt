@@ -1,0 +1,3 @@
+📥 Tingkatkan dialog unduhan dengan deteksi jenis file
+🪲 Perbaiki crash saat memulai dengan favicon yang tidak valid
+🚀 Sembunyikan item menu peluncuran untuk bookmark, tab riwayat, dan halaman bawaan lainnya

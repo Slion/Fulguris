@@ -1,0 +1,3 @@
+📥 Letöltési párbeszédablak javítása fájltípus-érzékeléssel
+🪲 Összeomlás javítása indításkor érvénytelen faviconnal
+🪲 Indítási menüelem elrejtése könyvjelzők, előzmények lap és más beépített oldalak esetén

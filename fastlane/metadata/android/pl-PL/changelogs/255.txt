@@ -1,0 +1,3 @@
+📥 Ulepszenie okna pobierania z wykrywaniem typu pliku
+🪲 Naprawa awarii podczas uruchamiania z nieprawidłową ikoną favicon
+🚀 Ukryj element menu uruchamiania dla zakładek, karty historii i innych wbudowanych stron

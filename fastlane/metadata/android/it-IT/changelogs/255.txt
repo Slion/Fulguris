@@ -1,0 +1,3 @@
+📥 Miglioramento della finestra di dialogo di download con rilevamento del tipo di file
+🪲 Correzione del crash all'avvio con favicon non valida
+🚀 Nascondi voce del menu di avvio per segnalibri, scheda cronologia e altre pagine integrate

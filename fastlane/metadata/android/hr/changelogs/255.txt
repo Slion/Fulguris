@@ -1,0 +1,3 @@
+📥 Poboljšanje dijaloga preuzimanja s detekcijom vrste datoteke
+🪲 Popravak rušenja pri pokretanju s neispravnom favikonom
+🚀 Sakrij stavku izbornika pokretanja za knjižne oznake, karticu povijesti i druge ugrađene stranice

@@ -1,0 +1,3 @@
+📥 Amélioration de la boîte de dialogue de téléchargement avec détection du type de fichier
+🪲 Correction du plantage au démarrage avec un favicon invalide
+🚀 Masquer l'élément de menu de lancement pour les favoris, l'onglet historique et autres pages intégrées

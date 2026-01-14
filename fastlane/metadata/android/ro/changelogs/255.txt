@@ -1,0 +1,3 @@
+📥 Îmbunătățire dialog descărcare cu detectare tip fișier
+🪲 Remediere cădere la pornire cu favicon invalid
+🚀 Ascunde elementul de meniu lansare pentru marcaje, filă istoric și alte pagini încorporate

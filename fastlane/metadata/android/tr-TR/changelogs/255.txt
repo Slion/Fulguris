@@ -1,0 +1,3 @@
+📥 Dosya türü algılama ile indirme iletişim kutusunu geliştir
+🪲 Geçersiz favicon ile başlangıçta çökmeyi düzelt
+🚀 Yer imleri, geçmiş sekmesi ve diğer yerleşik sayfalar için başlatma menüsü öğesini gizle

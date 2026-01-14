@@ -1,0 +1,3 @@
+📥 Patobulinkite atsisiuntimo dialogo langą su failo tipo aptikimu
+🪲 Ištaisykite gedimą paleidžiant su negaliojančia favicon
+🚀 Paslėpkite paleidimo meniu elementą žymėms, istorijos kortelei ir kitiems integruotiems puslapiams

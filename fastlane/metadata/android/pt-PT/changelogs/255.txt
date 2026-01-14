@@ -1,0 +1,3 @@
+📥 Melhorar caixa de diálogo de transferência com deteção de tipo de ficheiro
+🪲 Corrigir falha no arranque com favicon inválido
+🚀 Ocultar item de menu de inicialização para marcadores, separador de histórico e outras páginas integradas

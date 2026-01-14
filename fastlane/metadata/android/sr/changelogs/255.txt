@@ -1,0 +1,3 @@
+📥 Poboljšanje dijaloga preuzimanja sa detekcijom tipa datoteke
+🪲 Popravka pada pri pokretanju sa neispravnom ikonom
+🚀 Sakrij stavku menija pokretanja za obeleživače, karticu istorije i druge ugrađene stranice
