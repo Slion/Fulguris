@@ -572,7 +572,6 @@ class DownloadsFragment : PreferenceFragmentCompat() {
                     options.add(fulguris.dialog.DialogItem(title = R.string.copy_name) {
                         val clipboard = requireContext().getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
                         clipboard.copyToClipboard(fileName)
-                        activity?.snackbar(R.string.message_text_copied)
                     })
                 }
             }
@@ -583,7 +582,6 @@ class DownloadsFragment : PreferenceFragmentCompat() {
                     options.add(fulguris.dialog.DialogItem(title = R.string.copy_path) {
                         val clipboard = requireContext().getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
                         clipboard.copyToClipboard(filePath)
-                        activity?.snackbar(R.string.message_text_copied)
                     })
                 }
             }
@@ -602,7 +600,6 @@ class DownloadsFragment : PreferenceFragmentCompat() {
             // Remove from list
             options.add(fulguris.dialog.DialogItem(title = R.string.remove_from_list) {
                 removeDownload(downloadId)
-                activity?.snackbar(R.string.removed_from_list)
             })
             // Re-download (if has URL)
             if (hasUrl) {
@@ -622,7 +619,6 @@ class DownloadsFragment : PreferenceFragmentCompat() {
             options.add(fulguris.dialog.DialogItem(title = R.string.dialog_copy_link) {
                 val clipboard = requireContext().getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
                 clipboard.copyToClipboard(originalUri)
-                activity?.snackbar(R.string.message_text_copied)
             })
         }
 
@@ -647,7 +643,6 @@ class DownloadsFragment : PreferenceFragmentCompat() {
     private fun cancelDownload(downloadId: Long) {
         downloadManager.remove(downloadId)
         loadDownloads()
-        activity?.snackbar(R.string.download_cancelled)
     }
 
     /**
@@ -735,10 +730,7 @@ class DownloadsFragment : PreferenceFragmentCompat() {
             .setMessage(getString(R.string.dialog_message_remove_and_keep, title))
             .setPositiveButton(R.string.action_remove) { _, _ ->
                 if (removeFromListOnly(downloadId)) {
-                    activity?.snackbar(R.string.removed_from_list)
                     loadDownloads()
-                } else {
-                    activity?.snackbar("Failed to remove from list")
                 }
             }
             .setNegativeButton(android.R.string.cancel, null)
@@ -754,7 +746,6 @@ class DownloadsFragment : PreferenceFragmentCompat() {
             .setMessage(getString(R.string.dialog_message_remove_and_delete, title))
             .setPositiveButton(R.string.action_delete) { _, _ ->
                 removeDownload(downloadId)
-                activity?.snackbar(R.string.download_deleted)
             }
             .setNegativeButton(android.R.string.cancel, null)
             .show()
@@ -888,7 +879,7 @@ class DownloadsFragment : PreferenceFragmentCompat() {
                 startActivity(openIntent)
             } catch (e: Exception) {
                 Timber.e(e, "Failed to open download")
-                activity?.snackbar(R.string.no_app_to_open)
+                activity?.toast(R.string.no_app_to_open)
             }
         } else {
             Timber.e("URI is null for download ID: $downloadId")
@@ -947,7 +938,6 @@ class DownloadsFragment : PreferenceFragmentCompat() {
             try {
                 startActivity(android.content.Intent.createChooser(shareIntent, getString(R.string.action_share)))
             } catch (e: Exception) {
-                activity?.snackbar(R.string.error_sharing)
             }
         }
     }
@@ -963,7 +953,6 @@ class DownloadsFragment : PreferenceFragmentCompat() {
         try {
             startActivity(android.content.Intent.createChooser(shareIntent, getString(R.string.share_link)))
         } catch (e: Exception) {
-            activity?.snackbar(R.string.error_sharing)
         }
     }
 
@@ -974,7 +963,6 @@ class DownloadsFragment : PreferenceFragmentCompat() {
      */
     private fun redownloadFile(originalUri: String?, title: String) {
         if (originalUri.isNullOrBlank()) {
-            activity?.snackbar("Cannot re-download: original URL not available")
             return
         }
 
@@ -993,10 +981,8 @@ class DownloadsFragment : PreferenceFragmentCompat() {
 
             downloadManager.enqueue(request)
             loadDownloads()
-            activity?.snackbar("Download started")
         } catch (e: Exception) {
             Timber.e(e, "Failed to re-download file")
-            activity?.snackbar("Failed to start download")
         }
     }
 
@@ -1056,7 +1042,6 @@ class DownloadsFragment : PreferenceFragmentCompat() {
             startActivity(intent)
         } catch (e: Exception) {
             Timber.e(e, "Failed to open downloads folder")
-            activity?.snackbar(R.string.error_opening_folder)
         }
     }
 
@@ -1070,7 +1055,6 @@ class DownloadsFragment : PreferenceFragmentCompat() {
         cursor.close()
 
         if (count == 0) {
-            activity?.snackbar(R.string.no_downloads)
             return
         }
 
@@ -1094,7 +1078,6 @@ class DownloadsFragment : PreferenceFragmentCompat() {
         cursor.close()
 
         if (count == 0) {
-            activity?.snackbar(R.string.no_downloads)
             return
         }
 
@@ -1138,7 +1121,6 @@ class DownloadsFragment : PreferenceFragmentCompat() {
         cursor.close()
 
         if (cleanCount == 0) {
-            activity?.snackbar("No failed or orphaned downloads to clean")
             return
         }
 
@@ -1162,7 +1144,6 @@ class DownloadsFragment : PreferenceFragmentCompat() {
         cursor.close()
 
         if (count == 0) {
-            activity?.snackbar(R.string.no_downloads)
             return
         }
 
@@ -1201,7 +1182,6 @@ class DownloadsFragment : PreferenceFragmentCompat() {
         idsToRemove.forEach { downloadManager.remove(it) }
 
         loadDownloads()
-        activity?.snackbar(getString(R.string.downloads_cleared, idsToRemove.size))
     }
 
     /**
@@ -1230,7 +1210,6 @@ class DownloadsFragment : PreferenceFragmentCompat() {
         }
 
         loadDownloads()
-        activity?.snackbar(R.string.all_downloads_removed)
     }
 
     /**
@@ -1272,7 +1251,6 @@ class DownloadsFragment : PreferenceFragmentCompat() {
         }
 
         loadDownloads()
-        activity?.snackbar(R.string.downloads_cleaned)
     }
 
     /**
@@ -1303,7 +1281,6 @@ class DownloadsFragment : PreferenceFragmentCompat() {
         }
 
         loadDownloads()
-        activity?.snackbar(R.string.all_downloads_deleted)
     }
 
     /**

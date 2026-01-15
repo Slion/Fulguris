@@ -115,22 +115,15 @@
     <string name="dialog_message_clean_downloads">Failed and orphaned download entries will be removed from the list</string>
     <string name="dialog_title_delete_all_downloads">Delete all downloads?</string>
     <string name="dialog_message_delete_all_downloads">All download entries will be removed and files will be permanently deleted</string>
-    <string name="all_downloads_removed">All downloads removed</string>
-    <string name="downloads_cleaned">Downloads cleaned</string>
-    <string name="all_downloads_deleted">All downloads deleted</string>
-    <string name="clear_downloads_list_summary">Remove completed downloads from list</string>
     <string name="no_downloads">No downloads</string>
     <string name="no_downloads_summary">Your downloads will appear here</string>
     <string name="cancel_download">Cancel download</string>
     <string name="open_download">Open</string>
-    <string name="show_file">Show file</string>
-    <string name="share_download">Share</string>
     <string name="share_file">Share file</string>
     <string name="share_link">Share link</string>
     <string name="copy_name">Copy name</string>
     <string name="copy_path">Copy path</string>
     <string name="remove_from_list">Remove from list</string>
-    <string name="removed_from_list">Removed from list</string>
     <string name="remove_and_keep_file">Remove and keep</string>
     <string name="dialog_title_remove_and_keep">Remove and keep file?</string>
     <string name="dialog_message_remove_and_keep">The download entry will be removed from the list but the file will be kept:\n\n%s</string>
@@ -141,10 +134,6 @@
     <string name="dialog_title_delete_file">Delete file?</string>
     <string name="dialog_message_delete_file">File will be permanently deleted but download entry will remain in the list:\n\n%s</string>
     <string name="file_deleted">File deleted</string>
-    <string name="delete_download">Delete file</string>
-    <string name="delete_download_message">Delete "%s" and remove from downloads list?</string>
-    <string name="download_cancelled">Download cancelled</string>
-    <string name="download_deleted">Download deleted</string>
     <string name="download_not_found">Download not found</string>
     <string name="file_not_found">File not found</string>
     <string name="file_does_not_exist">File does not exist</string>
@@ -159,13 +148,9 @@
     <string name="download_status_pending">Pending…</string>
     <string name="download_status_unknown">Unknown status</string>
     <string name="no_app_to_open">No app found to open this file</string>
-    <string name="error_sharing">Failed to share file</string>
-    <string name="error_opening_folder">Failed to open downloads folder</string>
     <string name="dialog_title_install_apk">Open system settings?</string>
     <string name="dialog_message_install_apk">To install APK files, you need to enable \"Allow app installs\" in system settings</string>
     <string name="install_permission_denied">Cannot install APK without permission</string>
-    <string name="clear_downloads_confirmation">Clear %d downloads from list? Files will not be deleted.</string>
-    <string name="downloads_cleared">%d downloads cleared</string>
     <string name="action_clear">Clear</string>
     <string name="action_clean">Clean up</string>
 
