@@ -147,6 +147,7 @@
     <string name="download_status_paused">Paused</string>
     <string name="download_status_pending">Pending…</string>
     <string name="download_status_unknown">Unknown status</string>
+    <string name="downloads_could_not_remove">Some downloads could not be removed</string>
     <string name="no_app_to_open">No app found to open this file</string>
     <string name="dialog_title_install_apk">Open system settings?</string>
     <string name="dialog_message_install_apk">To install APK files, you need to enable \"Allow app installs\" in system settings</string>

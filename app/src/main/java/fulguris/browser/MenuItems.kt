@@ -98,7 +98,7 @@ object MenuItems {
         MenuItemId.Downloads to MenuItem(
             id = MenuItemId.Downloads,
             labelId = R.string.action_downloads,
-            iconId = R.drawable.ic_file_download,
+            iconId = R.drawable.ic_download_outline,
             viewId = R.id.menuItemDownloads,
             canBeInMainMenu = true,
             canBeInTabMenu = true,

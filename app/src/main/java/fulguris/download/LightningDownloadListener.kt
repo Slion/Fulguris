@@ -104,7 +104,7 @@ class LightningDownloadListener     //Injector.getInjector(context).inject(this)
                 }
                 val builder =
                     NotificationCompat.Builder(mActivity, (mActivity as WebBrowserActivity).CHANNEL_ID)
-                        .setSmallIcon(R.drawable.ic_file_download) // TODO: different icon for failure?
+                        .setSmallIcon(R.drawable.ic_download_outline) // TODO: different icon for failure?
                         .setContentTitle(contentTitle) //
                         .setContentText(contentText) //
                         .setPriority(NotificationCompat.PRIORITY_DEFAULT) // Set the intent that will fire when the user taps the notification
@@ -234,7 +234,8 @@ class LightningDownloadListener     //Injector.getInjector(context).inject(this)
         val message = mActivity.getString(R.string.dialog_download_message, originalFileName, fileType, downloadSize)
 
         // Use question as title per MD3 guidelines
-        val dialog: Dialog = builder.setTitle(R.string.dialog_download_title)
+        val dialog: Dialog = builder.setIcon(R.drawable.ic_download_outline)
+            .setTitle(R.string.dialog_download_title)
             .setMessage(message.parseAsHtml())
             .setPositiveButton(
                 mActivity.resources.getString(R.string.action_download)

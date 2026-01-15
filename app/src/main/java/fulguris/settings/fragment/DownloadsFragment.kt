@@ -180,12 +180,13 @@ class DownloadsFragment : PreferenceFragmentCompat() {
 
         if (cursor == null) {
             showEmptyState()
-            updateActionStates(0, 0)
+            updateActionStates(0, 0, 0)
             return
         }
 
         var hasDownloads = false
         var failedOrOrphanedCount = 0
+        var removableCount = 0
         var totalCount = 0
 
         if (cursor.moveToFirst()) {
@@ -199,12 +200,21 @@ class DownloadsFragment : PreferenceFragmentCompat() {
 
                 if (status == DownloadManager.STATUS_FAILED) {
                     failedOrOrphanedCount++
+                    removableCount++ // Failed downloads can be removed (no file to preserve)
                 } else if (status == DownloadManager.STATUS_SUCCESSFUL && localUri != null) {
                     val uri = android.net.Uri.parse(localUri)
                     val file = java.io.File(uri.path ?: "")
                     if (!file.exists()) {
                         failedOrOrphanedCount++
+                        removableCount++ // Orphaned downloads can be removed (no file to preserve)
+                    } else {
+                        // Check if we can preserve the file (need read or write permission)
+                        if (file.canRead() || file.canWrite()) {
+                            removableCount++
+                        }
                     }
+                } else if (status != DownloadManager.STATUS_SUCCESSFUL) {
+                    removableCount++ // Non-successful downloads can be removed (no file to preserve)
                 }
 
                 val downloadItem = createDownloadPreference(cursor)
@@ -217,7 +227,7 @@ class DownloadsFragment : PreferenceFragmentCompat() {
             showEmptyState()
         }
 
-        updateActionStates(totalCount, failedOrOrphanedCount)
+        updateActionStates(totalCount, failedOrOrphanedCount, removableCount)
     }
 
     /**
@@ -245,9 +255,11 @@ class DownloadsFragment : PreferenceFragmentCompat() {
     /**
      * Update the enabled state of action preferences based on download counts
      */
-    private fun updateActionStates(totalCount: Int, failedOrOrphanedCount: Int) {
-        // "Remove all" and "Delete all" are enabled only if there are any downloads
-        removeAllDownloadsPref?.isEnabled = totalCount > 0
+    private fun updateActionStates(totalCount: Int, failedOrOrphanedCount: Int, removableCount: Int) {
+        // "Remove all" is enabled only if there are downloads that can be removed without deleting files
+        removeAllDownloadsPref?.isEnabled = removableCount > 0
+
+        // "Delete all" is enabled if there are any downloads
         deleteAllDownloadsPref?.isEnabled = totalCount > 0
 
         // "Clean" is enabled only if there are failed or orphaned downloads
@@ -469,7 +481,7 @@ class DownloadsFragment : PreferenceFragmentCompat() {
 
         // Final fallback: use generic download icon (static resource ID)
         Timber.d("✗ Using fallback download icon")
-        pref.setIcon(R.drawable.ic_file_download)
+        pref.setIcon(R.drawable.ic_download_outline)
     }
 
     /**
@@ -522,7 +534,7 @@ class DownloadsFragment : PreferenceFragmentCompat() {
         val isFailed = status == DownloadManager.STATUS_FAILED
         val hasUrl = originalUri?.isNotEmpty() == true
 
-        // Check if we have write permission on the file
+        // Check if we have write/read permission on the file
         val canWriteFile = if (hasFile && localUri != null) {
             try {
                 val fileUri = android.net.Uri.parse(localUri)
@@ -534,6 +546,25 @@ class DownloadsFragment : PreferenceFragmentCompat() {
         } else {
             false
         }
+
+        val canReadFile = if (hasFile && localUri != null) {
+            try {
+                val fileUri = android.net.Uri.parse(localUri)
+                val file = java.io.File(fileUri.path ?: "")
+                file.canRead()
+            } catch (e: Exception) {
+                false
+            }
+        } else {
+            false
+        }
+
+        // Log visibility flags for debugging
+        Timber.d("Download options flags for ID $downloadId ($title):")
+        Timber.d("  Status: $status, isSuccessful=$isSuccessful, hasFile=$hasFile")
+        Timber.d("  isInProgress=$isInProgress, isPaused=$isPaused, isFailed=$isFailed, isOrphaned=$isOrphaned")
+        Timber.d("  hasUrl=$hasUrl, canReadFile=$canReadFile, canWriteFile=$canWriteFile")
+        Timber.d("  localUri=$localUri")
 
         val options = mutableListOf<fulguris.dialog.DialogItem>()
 
@@ -548,13 +579,15 @@ class DownloadsFragment : PreferenceFragmentCompat() {
                 confirmRemoveAndDeleteDownload(downloadId, title)
             })
 
-            if (canWriteFile) {
-                // 3. Remove and keep (only if we have write permission - uses file.renameTo() which requires write permission)
+            if (canReadFile) {
+                // 3. Remove and keep (requires read permission - uses rename or copy fallback)
                 options.add(fulguris.dialog.DialogItem(title = R.string.remove_and_keep_file) {
                     confirmRemoveAndKeepFile(downloadId, title)
                 })
+            }
 
-                // 4. Delete file only (only if we have write permission - uses file.delete())
+            if (canWriteFile) {
+                // 4. Delete file only (requires write permission - uses file.delete())
                 options.add(fulguris.dialog.DialogItem(title = R.string.delete_file) {
                     confirmDeleteFileOnly(downloadId, title)
                 })
@@ -625,7 +658,7 @@ class DownloadsFragment : PreferenceFragmentCompat() {
         // Show tabbed dialog with a single tab (hide tab, show icon in dialog)
         fulguris.dialog.BrowserDialog.show(
             requireContext(),
-            R.drawable.ic_file_download,
+            R.drawable.ic_download_outline,
             null,
             false, // Hide tab layout
             fulguris.dialog.DialogTab(
@@ -684,27 +717,59 @@ class DownloadsFragment : PreferenceFragmentCompat() {
                 return true
             }
 
-            // Create temporary file name
+            // Create temporary file with unique name
             val tempFile = java.io.File(originalFile.parentFile, "tmp_${System.currentTimeMillis()}_${originalFile.name}")
 
-            // Step 1: Rename to temporary name
-            if (!originalFile.renameTo(tempFile)) {
-                Timber.w("Failed to rename file to temporary name")
+            // Try to rename first (fast, works if we have write permission)
+            if (originalFile.renameTo(tempFile)) {
+                // Rename succeeded - remove from DownloadManager (won't find file to delete)
+                downloadManager.remove(downloadId)
+
+                // Rename back to original
+                if (tempFile.renameTo(originalFile)) {
+                    Timber.d("Successfully removed download via rename")
+                    return true
+                } else {
+                    Timber.e("Failed to rename back! File is now: ${tempFile.absolutePath}")
+                    return false
+                }
+            }
+
+            // Rename failed (probably no write permission) - try copy approach
+            Timber.d("Rename failed, trying copy approach")
+
+            // Check if we at least have read permission
+            if (!originalFile.canRead()) {
+                Timber.w("Cannot read file, cannot preserve it")
                 return false
             }
 
-            // Step 2: Remove from DownloadManager (won't find the file to delete)
+            // Copy the file to temp location
+            originalFile.inputStream().use { input ->
+                tempFile.outputStream().use { output ->
+                    input.copyTo(output)
+                }
+            }
+
+            // Remove from DownloadManager (will fail to delete the file but will remove entry)
             downloadManager.remove(downloadId)
 
-            // Step 3: Rename back to original name
-            if (!tempFile.renameTo(originalFile)) {
-                Timber.e("Failed to rename file back to original name! File is now: ${tempFile.absolutePath}")
-                // Try to recover by calling it the original name anyway
+            // Verify the copy was successful
+            if (tempFile.exists() && tempFile.length() == originalFile.length()) {
+                Timber.d("Successfully removed download via copy (original file preserved)")
+                // Note: tempFile remains as a backup copy - we can't delete the original due to permissions
+                // Clean up temp file if it exists
+                try {
+                    tempFile.delete()
+                } catch (e: Exception) {
+                    Timber.d("Could not delete temp file: ${e.message}")
+                }
+                return true
+            } else {
+                // Copy failed, clean up and return false
+                tempFile.delete()
                 return false
             }
-
-            Timber.d("Successfully removed download from list while preserving file")
-            return true
 
         } catch (e: Exception) {
             Timber.e(e, "Error removing download from list")
@@ -1082,6 +1147,7 @@ class DownloadsFragment : PreferenceFragmentCompat() {
         }
 
         MaterialAlertDialogBuilder(requireContext())
+            .setIcon(R.drawable.ic_delete_sweep_outline)
             .setTitle(R.string.dialog_title_remove_all_downloads)
             .setMessage(R.string.dialog_message_remove_all_downloads)
             .setPositiveButton(R.string.action_remove) { _, _ ->
@@ -1125,6 +1191,7 @@ class DownloadsFragment : PreferenceFragmentCompat() {
         }
 
         MaterialAlertDialogBuilder(requireContext())
+            .setIcon(R.drawable.ic_cleaning_services_outline)
             .setTitle(R.string.dialog_title_clean_downloads)
             .setMessage(R.string.dialog_message_clean_downloads)
             .setPositiveButton(R.string.action_clean) { _, _ ->
@@ -1148,6 +1215,7 @@ class DownloadsFragment : PreferenceFragmentCompat() {
         }
 
         MaterialAlertDialogBuilder(requireContext())
+            .setIcon(R.drawable.ic_delete_forever_outline)
             .setTitle(R.string.dialog_title_delete_all_downloads)
             .setMessage(R.string.dialog_message_delete_all_downloads)
             .setPositiveButton(R.string.action_delete) { _, _ ->
@@ -1200,16 +1268,79 @@ class DownloadsFragment : PreferenceFragmentCompat() {
         }
         cursor.close()
 
-        // Remove from DownloadManager without deleting files
-        idsToRemove.forEach {
+        // Remove from DownloadManager while preserving files
+        var successCount = 0
+        var failCount = 0
+        var skippedCount = 0
+
+        idsToRemove.forEach { downloadId ->
             try {
-                downloadManager.remove(it)
+                // Check if we can read the file before attempting removal
+                val canRemove = checkCanRemoveDownload(downloadId)
+                if (!canRemove) {
+                    Timber.w("Skipping download $downloadId - no read/write permission to preserve file")
+                    skippedCount++
+                    return@forEach
+                }
+
+                if (removeFromListOnly(downloadId)) {
+                    successCount++
+                } else {
+                    failCount++
+                }
             } catch (e: Exception) {
-                Timber.e(e, "Failed to remove download: $it")
+                Timber.e(e, "Failed to remove download: $downloadId")
+                failCount++
             }
         }
 
+        Timber.d("Remove all complete: $successCount succeeded, $failCount failed, $skippedCount skipped")
+
+        // Show toast if some downloads were skipped
+        if (skippedCount > 0) {
+            requireContext().toast(R.string.downloads_could_not_remove)
+        }
+
         loadDownloads()
+    }
+
+    /**
+     * Check if we can safely remove a download while preserving its file.
+     * Returns true if we have at least read permission (can copy) or write permission (can rename).
+     */
+    private fun checkCanRemoveDownload(downloadId: Long): Boolean {
+        val query = DownloadManager.Query().setFilterById(downloadId)
+        val cursor = downloadManager.query(query)
+
+        if (!cursor.moveToFirst()) {
+            cursor.close()
+            return false
+        }
+
+        val status = cursor.getInt(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_STATUS))
+        val localUriString = cursor.getString(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_LOCAL_URI))
+        cursor.close()
+
+        // Only check files that are successfully downloaded
+        if (status != DownloadManager.STATUS_SUCCESSFUL || localUriString.isNullOrEmpty()) {
+            return true // Can safely remove non-file entries (failed, orphaned, etc.)
+        }
+
+        // Check if we have read or write permission
+        try {
+            val fileUri = android.net.Uri.parse(localUriString)
+            val file = java.io.File(fileUri.path ?: return false)
+
+            if (!file.exists()) {
+                return true // File doesn't exist, safe to remove entry
+            }
+
+            // Need at least read permission to preserve file via copy
+            return file.canRead() || file.canWrite()
+        } catch (e: Exception) {
+            Timber.e(e, "Error checking permissions for download $downloadId")
+            return false // Don't remove if we can't check
+        }
     }
 
     /**

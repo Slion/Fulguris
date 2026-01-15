@@ -194,7 +194,7 @@
         <Preference
             android:key="download"
             android:title="@string/download"
-            app:icon="@drawable/ic_file_download"
+            app:icon="@drawable/ic_download_outline"
             app:iconSpaceReserved="false"
             app:singleLineTitle="false" />
 

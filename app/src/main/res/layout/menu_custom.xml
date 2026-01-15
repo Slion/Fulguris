@@ -177,7 +177,7 @@
                         style="@style/BrowserTextMenuItem"
                         android:visibility="gone"
                         tools:visibility="visible"
-                        app:drawableStartCompat="@drawable/ic_file_download"
+                        app:drawableStartCompat="@drawable/ic_download_outline"
                         android:text="@string/action_downloads" />
 
                     <TextView
