@@ -9,7 +9,7 @@
     <string name="action_share">Teilen</string>
     <string name="action_history">Verlauf</string>
     <string name="action_bookmarks">Lesezeichen</string>
-    <string name="action_downloads">Downloads</string>
+    <string name="action_downloads">Heruntergeladen</string>
     <string name="action_add_bookmark">Lesezeichen hinzufügen</string>
     <string name="action_forward">Weiter</string>
     <string name="action_sessions">Sitzungen</string>
@@ -97,7 +97,7 @@
     <string name="hint_url">URL</string>
     <string name="title_edit_bookmark">Lesezeichen bearbeiten</string>
     <string name="action_edit">Bearbeiten</string>
-    <string name="downloads_list">Downloads</string>
+    <string name="downloads_list">Heruntergeladen</string>
     <string name="pref_title_downloads_open_folder">Ordner öffnen</string>
     <string name="pref_title_downloads_remove_all">Alle entfernen</string>
     <string name="pref_summary_downloads_remove_all">Alle Downloads aus der Liste entfernen, aber Dateien behalten</string>
@@ -158,7 +158,7 @@
     <string name="action_find_selection">Auswahl finden</string>
     <string name="action_print">Drucken</string>
     <string name="action_translate">Übersetzen</string>
-    <string name="downloads">Downloads</string>
+    <string name="downloads">Heruntergeladen</string>
     <string name="downloads_notification_description">Nach Fertigstellung des Downloads auslösen</string>
     <string name="download_pending">Wird heruntergeladen:</string>
     <string name="cannot_download">Herunterladen nur bei \"http\" oder \"https\" URLs möglich!</string>
@@ -419,7 +419,7 @@
     <string name="reset_settings_confirmation">Vorsicht! Dies wird alle deine individuellen Einstellungen entfernen. Bist du sicher, dass du fortfahren willst?</string>
     <string name="invert_color">Farben invertieren</string>
     <string name="settings_black_status_bar">Schwarze Statusleiste</string>
-    <string name="tabs">Tabs</string>
+    <string name="tabs">Registerkarten</string>
     <string name="theme">App-Design</string>
     <string name="theme_default">Automatisch</string>
     <string name="theme_light">Helles Design</string>
@@ -507,13 +507,13 @@
     <string name="action_restore_all_tabs">Alle Tabs wiederherstellen</string>
     <string name="action_restore_tab">Tab wiederherstellen</string>
     <string name="settings_title_layer_type">Layertyp</string>
-    <string name="settings_title_domains">Domains</string>
+    <string name="settings_title_domains">Domänen</string>
     <string name="settings_summary_domains">Website-Einstellungen verwalten</string>
     <string name="settings_title_override">Überschreiben</string>
     <string name="settings_summary_on_override">Übergeordnete Einstellungen überschreiben</string>
     <string name="settings_summary_off_override">Übergeordnete Einstellungen verwenden</string>
     <string name="settings_title_launch_app">App starten</string>
-    <string name="action_domain_settings">Domain</string>
+    <string name="action_domain_settings">Domäne</string>
     <string name="settings_title_domains_delete_all">Alle löschen</string>
     <string name="settings_summary_domains_delete_all">Alle Domain-Einstellungen zurücksetzen</string>
     <string name="question_delete_all_domain_settings">Möchten sie alle Domains-Einstellungen löschen?</string>
@@ -582,7 +582,7 @@
     <string name="tts">Seite lesen</string>
     <string name="stop_tts">Lesen beenden</string>
     <string name="locale_app_name">Fulguris Webbrowser</string>
-    <string name="button_link">Link</string>
+    <string name="button_link">Verknüpfung</string>
     <string name="button_image">Bild</string>
     <string name="notify_tab_closed">Tab geschlossen</string>
     <string name="button_undo">Rückgängig machen</string>
@@ -635,7 +635,7 @@
     <string name="accent_light_green">Hellgrün</string>
     <string name="accent_lime">Limette</string>
     <string name="accent_orange">Orange</string>
-    <string name="accent_pink">Pink</string>
+    <string name="accent_pink">Rosa</string>
     <string name="accent_purple">Lila</string>
     <string name="accent_teal">Türkisblau</string>
     <string name="accent_yellow">Gelb</string>
@@ -673,7 +673,7 @@
     <string name="log_level_assert">Behaupten</string>
     <string name="label_url">URL</string>
     <string name="label_short_url">Kurz-URL</string>
-    <string name="label_domain">Domain</string>
+    <string name="label_domain">Domäne</string>
     <string name="label_title">Titel</string>
     <string name="label_session">Sitzung</string>
     <string name="label_app_name">App-Name</string>
@@ -693,7 +693,7 @@
     <string name="page_request_details_title">Anfragedetails</string>
     <string name="request_status">Status</string>
     <string name="request_url_length">%1$d Zeichen</string>
-    <string name="request_domain">Domain</string>
+    <string name="request_domain">Domäne</string>
     <string name="request_path">Pfad</string>
     <string name="request_parameters">Parameter</string>
     <string name="request_timestamp">Zeitstempel</string>
@@ -735,7 +735,7 @@
     <string name="settings_title_extension_description">Beschreibung</string>
     <string name="settings_title_extension_version">Version</string>
     <string name="settings_title_extension_author">Autor</string>
-    <string name="settings_title_extension_namespace">Namespace</string>
+    <string name="settings_title_extension_namespace">Namensraum</string>
     <string name="settings_title_extension_patterns">Muster</string>
     <string name="settings_title_extension_match_urls">URL-Übereinstimmungen</string>
     <string name="settings_title_extension_exclude_urls">Ausgeschlossene URLs</string>
