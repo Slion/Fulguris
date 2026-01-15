@@ -12,11 +12,11 @@ This is **Fulguris Web Browser**, an Android application with localization suppo
 # Check translation status
 python subs\l10n\android\strings.py --check th-rTH
 
-# Translate single language
-python subs\l10n\android\strings.py --set string_id th-rTH 'คำแปล'
-
-# Translate multiple languages (RECOMMENDED)
+# Translate ONE string across MULTIPLE languages (RECOMMENDED for same string)
 python subs\l10n\android\strings.py --set app_name de-rDE 'Fulguris' fr-rFR 'Fulguris' es-rES 'Fulguris'
+
+# Translate MULTIPLE strings in ONE language (RECOMMENDED for bulk translation)
+python subs\l10n\android\strings.py --set-batch th-rTH string1 'คำแปล1' string2 'คำแปล2' string3 'คำแปล3'
 
 # Compile changelogs
 python subs\l10n\android\changelogs.py 254
