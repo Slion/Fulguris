@@ -1,0 +1,3 @@
+📋 Add downloads list
+🌐 Translations updates
+🪲 Various improvements and bug fixes
