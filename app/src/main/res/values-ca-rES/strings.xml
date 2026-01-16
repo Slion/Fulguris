@@ -143,6 +143,7 @@
     <string name="download_status_paused">En pausa</string>
     <string name="download_status_pending">Pendent</string>
     <string name="download_status_unknown">Estat desconegut</string>
+    <string name="downloads_could_not_remove">No s\'han pogut eliminar algunes baixades</string>
     <string name="no_app_to_open">No hi ha cap aplicació per obrir aquest fitxer</string>
     <string name="dialog_title_install_apk">Obrir la configuració del sistema?</string>
     <string name="dialog_message_install_apk">Per instal·lar fitxers APK, heu d\'activar \"Permetre instal·lacions d\'aplicacions\" a la configuració del sistema</string>

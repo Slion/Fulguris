@@ -143,6 +143,7 @@
     <string name="download_status_paused">Pauzirano</string>
     <string name="download_status_pending">Na čekanju</string>
     <string name="download_status_unknown">Nepoznati status</string>
+    <string name="downloads_could_not_remove">Neka preuzimanja nije moguće ukloniti</string>
     <string name="no_app_to_open">Nema aplikacije za otvaranje ove datoteke</string>
     <string name="dialog_title_install_apk">Otvoriti postavke sustava?</string>
     <string name="dialog_message_install_apk">Za instalaciju APK datoteka, morate omogućiti \"Dozvoli instalaciju aplikacija\" u postavkama sustava</string>

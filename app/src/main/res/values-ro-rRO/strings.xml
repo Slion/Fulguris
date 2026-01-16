@@ -143,6 +143,7 @@
     <string name="download_status_paused">Întrerupt</string>
     <string name="download_status_pending">În așteptare</string>
     <string name="download_status_unknown">Stare necunoscută</string>
+    <string name="downloads_could_not_remove">Unele descărcări nu au putut fi eliminate</string>
     <string name="no_app_to_open">Nicio aplicație pentru a deschide acest fișier</string>
     <string name="dialog_title_install_apk">Deschideți setările sistemului?</string>
     <string name="dialog_message_install_apk">Pentru a instala fișiere APK, trebuie să activați \"Permiterea instalărilor de aplicații\" în setările sistemului</string>

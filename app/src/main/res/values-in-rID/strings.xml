@@ -143,6 +143,7 @@
     <string name="download_status_paused">Dijeda</string>
     <string name="download_status_pending">Tertunda</string>
     <string name="download_status_unknown">Status tidak diketahui</string>
+    <string name="downloads_could_not_remove">Beberapa unduhan tidak dapat dihapus</string>
     <string name="no_app_to_open">Tidak ada aplikasi untuk membuka file ini</string>
     <string name="dialog_title_install_apk">Buka pengaturan sistem?</string>
     <string name="dialog_message_install_apk">Untuk menginstal file APK, Anda perlu mengaktifkan \"Izinkan instalasi aplikasi\" di pengaturan sistem</string>

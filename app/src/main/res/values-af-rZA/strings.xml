@@ -143,6 +143,7 @@
     <string name="download_status_paused">Gepouseer</string>
     <string name="download_status_pending">Hangende</string>
     <string name="download_status_unknown">Onbekende status</string>
+    <string name="downloads_could_not_remove">Sommige aflaaie kon nie verwyder word nie</string>
     <string name="no_app_to_open">Geen toepassing om hierdie lêer oop te maak nie</string>
     <string name="dialog_title_install_apk">Maak stelseinstellings oop?</string>
     <string name="dialog_message_install_apk">Om APK-lêers te installeer, moet jy \"Laat toep-installasies toe\" in stelseinstellings aktiveer</string>

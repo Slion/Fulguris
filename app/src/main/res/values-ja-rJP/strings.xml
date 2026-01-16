@@ -143,6 +143,7 @@
     <string name="download_status_paused">一時停止中</string>
     <string name="download_status_pending">保留中</string>
     <string name="download_status_unknown">ステータス不明</string>
+    <string name="downloads_could_not_remove">いくつかのダウンロードを削除できませんでした</string>
     <string name="no_app_to_open">このファイルを開くアプリがありません</string>
     <string name="dialog_title_install_apk">システム設定を開きますか？</string>
     <string name="dialog_message_install_apk">APKファイルをインストールするには、システム設定で「アプリのインストールを許可」を有効にする必要があります</string>

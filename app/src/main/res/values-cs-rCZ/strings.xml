@@ -143,6 +143,7 @@
     <string name="download_status_paused">Pozastaveno</string>
     <string name="download_status_pending">Čeká</string>
     <string name="download_status_unknown">Neznámý stav</string>
+    <string name="downloads_could_not_remove">Některá stažení nelze odstranit</string>
     <string name="no_app_to_open">Žádná aplikace pro otevření tohoto souboru</string>
     <string name="dialog_title_install_apk">Otevřít nastavení systému?</string>
     <string name="dialog_message_install_apk">Pro instalaci APK souborů je třeba povolit \"Povolit instalaci aplikací\" v nastavení systému</string>

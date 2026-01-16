@@ -143,6 +143,7 @@
     <string name="download_status_paused">已暫停</string>
     <string name="download_status_pending">等待中</string>
     <string name="download_status_unknown">未知狀態</string>
+    <string name="downloads_could_not_remove">無法移除部分下載</string>
     <string name="no_app_to_open">沒有應用程式可以開啟此檔案</string>
     <string name="dialog_title_install_apk">開啟系統設定?</string>
     <string name="dialog_message_install_apk">要安裝 APK 檔案，您需要在系統設定中啟用「允許安裝應用程式」</string>

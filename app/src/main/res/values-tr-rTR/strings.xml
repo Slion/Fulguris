@@ -143,6 +143,7 @@
     <string name="download_status_paused">Duraklatıldı</string>
     <string name="download_status_pending">Beklemede</string>
     <string name="download_status_unknown">Bilinmeyen durum</string>
+    <string name="downloads_could_not_remove">Bazı indirmeler kaldırılamadı</string>
     <string name="no_app_to_open">Bu dosyayı açacak uygulama yok</string>
     <string name="dialog_title_install_apk">Sistem ayarlarını aç?</string>
     <string name="dialog_message_install_apk">APK dosyalarını yüklemek için sistem ayarlarında \"Uygulama yüklemelerine izin ver\" seçeneğini etkinleştirmeniz gerekir</string>

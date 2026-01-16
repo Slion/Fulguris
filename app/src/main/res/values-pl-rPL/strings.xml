@@ -143,6 +143,7 @@
     <string name="download_status_paused">Wstrzymane</string>
     <string name="download_status_pending">Oczekuje</string>
     <string name="download_status_unknown">Nieznany status</string>
+    <string name="downloads_could_not_remove">Nie można usunąć niektórych pobranych plików</string>
     <string name="no_app_to_open">Brak aplikacji do otwarcia tego pliku</string>
     <string name="dialog_title_install_apk">Otworzyć ustawienia systemowe?</string>
     <string name="dialog_message_install_apk">Aby zainstalować pliki APK, musisz włączyć \"Zezwalaj na instalację aplikacji\" w ustawieniach systemowych</string>

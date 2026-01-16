@@ -143,6 +143,7 @@
     <string name="download_status_paused">מושהה</string>
     <string name="download_status_pending">ממתין</string>
     <string name="download_status_unknown">מצב לא ידוע</string>
+    <string name="downloads_could_not_remove">לא ניתן להסיר כמה הורדות</string>
     <string name="no_app_to_open">אין אפליקציה לפתיחת קובץ זה</string>
     <string name="dialog_title_install_apk">לפתוח הגדרות מערכת?</string>
     <string name="dialog_message_install_apk">כדי להתקין קבצי APK, עליך להפעיל \"אפשר התקנות אפליקציות\" בהגדרות המערכת</string>

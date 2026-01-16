@@ -143,6 +143,7 @@
     <string name="download_status_paused">Đã tạm dừng</string>
     <string name="download_status_pending">Đang chờ</string>
     <string name="download_status_unknown">Trạng thái không xác định</string>
+    <string name="downloads_could_not_remove">Không thể xóa một số tải xuống</string>
     <string name="no_app_to_open">Không có ứng dụng để mở tệp này</string>
     <string name="dialog_title_install_apk">Mở cài đặt hệ thống?</string>
     <string name="dialog_message_install_apk">Để cài đặt tệp APK, bạn cần bật \"Cho phép cài đặt ứng dụng\" trong cài đặt hệ thống</string>

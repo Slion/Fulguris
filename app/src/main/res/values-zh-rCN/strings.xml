@@ -143,6 +143,7 @@
     <string name="download_status_paused">已暂停</string>
     <string name="download_status_pending">等待中</string>
     <string name="download_status_unknown">未知状态</string>
+    <string name="downloads_could_not_remove">无法删除某些下载</string>
     <string name="no_app_to_open">没有应用程序可以打开此文件</string>
     <string name="dialog_title_install_apk">打开系统设置?</string>
     <string name="dialog_message_install_apk">要安装 APK 文件，您需要在系统设置中启用\"允许安装应用\"</string>

@@ -143,6 +143,7 @@
     <string name="download_status_paused">Gepauzeerd</string>
     <string name="download_status_pending">In behandeling</string>
     <string name="download_status_unknown">Onbekende status</string>
+    <string name="downloads_could_not_remove">Sommige downloads konden niet worden verwijderd</string>
     <string name="no_app_to_open">Geen app om dit bestand te openen</string>
     <string name="dialog_title_install_apk">Systeeminstellingen openen?</string>
     <string name="dialog_message_install_apk">Om APK-bestanden te installeren, moet je \"App-installaties toestaan\" inschakelen in de systeeminstellingen</string>

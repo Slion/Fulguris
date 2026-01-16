@@ -143,6 +143,7 @@
     <string name="download_status_paused">หยุดชั่วคราว</string>
     <string name="download_status_pending">รอดำเนินการ</string>
     <string name="download_status_unknown">สถานะไม่ทราบ</string>
+    <string name="downloads_could_not_remove">ไม่สามารถลบการดาวน์โหลดบางรายการได้</string>
     <string name="no_app_to_open">ไม่มีแอปเพื่อเปิดไฟล์นี้</string>
     <string name="dialog_title_install_apk">เปิดการตั้งค่าระบบ?</string>
     <string name="dialog_message_install_apk">ในการติดตั้งไฟล์ APK คุณต้องเปิดใช้งาน \"อนุญาตการติดตั้งแอป\" ในการตั้งค่าระบบ</string>

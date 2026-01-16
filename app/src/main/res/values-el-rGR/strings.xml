@@ -143,6 +143,7 @@
     <string name="download_status_paused">Σε παύση</string>
     <string name="download_status_pending">Σε αναμονή</string>
     <string name="download_status_unknown">Άγνωστη κατάσταση</string>
+    <string name="downloads_could_not_remove">Δεν ήταν δυνατή η κατάργηση ορισμένων λήψεων</string>
     <string name="no_app_to_open">Δεν υπάρχει εφαρμογή για άνοιγμα αυτού του αρχείου</string>
     <string name="dialog_title_install_apk">Άνοιγμα ρυθμίσεων συστήματος;</string>
     <string name="dialog_message_install_apk">Για να εγκαταστήσετε αρχεία APK, πρέπει να ενεργοποιήσετε \"Επιτρέπεται η εγκατάσταση εφαρμογών\" στις ρυθμίσεις συστήματος</string>

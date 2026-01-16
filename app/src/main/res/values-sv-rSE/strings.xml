@@ -143,6 +143,7 @@
     <string name="download_status_paused">Pausad</string>
     <string name="download_status_pending">Väntar</string>
     <string name="download_status_unknown">Okänd status</string>
+    <string name="downloads_could_not_remove">Vissa nedladdningar kunde inte tas bort</string>
     <string name="no_app_to_open">Ingen app för att öppna denna fil</string>
     <string name="dialog_title_install_apk">Öppna systeminställningar?</string>
     <string name="dialog_message_install_apk">För att installera APK-filer måste du aktivera \"Tillåt appinstallationer\" i systeminställningarna</string>

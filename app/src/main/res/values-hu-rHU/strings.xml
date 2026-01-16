@@ -143,6 +143,7 @@
     <string name="download_status_paused">Szüneteltetve</string>
     <string name="download_status_pending">Függőben</string>
     <string name="download_status_unknown">Ismeretlen állapot</string>
+    <string name="downloads_could_not_remove">Néhány letöltést nem sikerült eltávolítani</string>
     <string name="no_app_to_open">Nincs alkalmazás a fájl megnyitásához</string>
     <string name="dialog_title_install_apk">Rendszerbeállítások megnyitása?</string>
     <string name="dialog_message_install_apk">Az APK fájlok telepítéséhez engedélyeznie kell az \"Alkalmazástelepítések engedélyezése\" lehetőséget a rendszerbeállításokban</string>

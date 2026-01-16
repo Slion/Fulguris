@@ -143,6 +143,7 @@
     <string name="download_status_paused">En pause</string>
     <string name="download_status_pending">En attente</string>
     <string name="download_status_unknown">État inconnu</string>
+    <string name="downloads_could_not_remove">Certains téléchargements n\'ont pas pu être supprimés</string>
     <string name="no_app_to_open">Aucune application pour ouvrir ce fichier</string>
     <string name="dialog_title_install_apk">Ouvrir les paramètres système?</string>
     <string name="dialog_message_install_apk">Pour installer des fichiers APK, vous devez activer \"Autoriser les installations d\'applications\" dans les paramètres système</string>

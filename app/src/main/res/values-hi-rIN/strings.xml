@@ -126,6 +126,7 @@
     <string name="download_status_paused">रोका गया</string>
     <string name="download_status_pending">लंबित</string>
     <string name="download_status_unknown">अज्ञात स्थिति</string>
+    <string name="downloads_could_not_remove">कुछ डाउनलोड नहीं हटाए जा सके</string>
     <string name="no_app_to_open">इस फ़ाइल को खोलने के लिए कोई ऐप नहीं</string>
     <string name="dialog_title_install_apk">सिस्टम सेटिंग खोलें?</string>
     <string name="dialog_message_install_apk">APK फ़ाइलें इंस्टॉल करने के लिए, आपको सिस्टम सेटिंग में \"ऐप इंस्टॉल की अनुमति दें\" सक्षम करना होगा</string>

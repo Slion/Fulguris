@@ -143,6 +143,7 @@
     <string name="download_status_paused">Pauset</string>
     <string name="download_status_pending">Venter</string>
     <string name="download_status_unknown">Ukjent status</string>
+    <string name="downloads_could_not_remove">Noen nedlastinger kunne ikke fjernes</string>
     <string name="no_app_to_open">Ingen app for å åpne denne filen</string>
     <string name="dialog_title_install_apk">Åpne systeminnstillinger?</string>
     <string name="dialog_message_install_apk">For å installere APK-filer må du aktivere \"Tillat appinstallasjoner\" i systeminnstillingene</string>
