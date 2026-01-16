@@ -48,6 +48,18 @@ class DownloadsFragment : PreferenceFragmentCompat() {
     private var removeAllDownloadsPref: Preference? = null
     private var deleteAllDownloadsPref: Preference? = null
 
+    // Track counts during async population
+    private var totalCount = 0
+    private var failedOrOrphanedCount = 0
+    private var removableCount = 0
+
+    companion object {
+        // Delay increment for staggered download preference creation (in milliseconds)
+        private const val DELAY_INCREMENT = 1L
+        // Initial delay before starting download creation
+        private const val INITIAL_DELAY = 100L
+    }
+
     // BroadcastReceiver to listen for download completion/failure
     private val downloadCompleteReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
@@ -103,7 +115,7 @@ class DownloadsFragment : PreferenceFragmentCompat() {
     override fun onResume() {
         super.onResume()
         loadDownloads()
-        startPeriodicUpdates()
+        // Note: startPeriodicUpdates() is called by populateDownloadsAsync() after preferences are loaded
 
         // Register receiver for download completion events
         val filter = IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE)
@@ -157,7 +169,7 @@ class DownloadsFragment : PreferenceFragmentCompat() {
                     handler.postDelayed(this, updateInterval)
                 } else {
                     // No active downloads, stop updating
-                    Timber.d("No active downloads, stopping periodic updates")
+                    Timber.i("No active downloads, stopping periodic updates")
                     isUpdating = false
                 }
             }
@@ -165,10 +177,18 @@ class DownloadsFragment : PreferenceFragmentCompat() {
     }
 
     /**
-     * Load all downloads from DownloadManager
+     * Load all downloads from DownloadManager asynchronously.
+     * Updates existing preferences and adds/removes as needed.
+     * Counting happens during population, action states update when done.
      */
     private fun loadDownloads() {
-        downloadsListCategory.removeAll()
+        // Reset counts
+        totalCount = 0
+        failedOrOrphanedCount = 0
+        removableCount = 0
+
+        // Start with actions disabled, will enable appropriately after population
+        updateActionStates(0, 0, 0)
 
         val query = DownloadManager.Query()
         val cursor: Cursor? = try {
@@ -179,55 +199,160 @@ class DownloadsFragment : PreferenceFragmentCompat() {
         }
 
         if (cursor == null) {
+            downloadsListCategory.removeAll()
             showEmptyState()
-            updateActionStates(0, 0, 0)
             return
         }
 
-        var hasDownloads = false
-        var failedOrOrphanedCount = 0
-        var removableCount = 0
-        var totalCount = 0
-
-        if (cursor.moveToFirst()) {
-            hasDownloads = true
-            do {
-                totalCount++
-
-                // Count failed and orphaned downloads for "Clean" action
-                val status = cursor.getInt(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_STATUS))
-                val localUri = cursor.getString(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_LOCAL_URI))
-
-                if (status == DownloadManager.STATUS_FAILED) {
-                    failedOrOrphanedCount++
-                    removableCount++ // Failed downloads can be removed (no file to preserve)
-                } else if (status == DownloadManager.STATUS_SUCCESSFUL && localUri != null) {
-                    val uri = android.net.Uri.parse(localUri)
-                    val file = java.io.File(uri.path ?: "")
-                    if (!file.exists()) {
-                        failedOrOrphanedCount++
-                        removableCount++ // Orphaned downloads can be removed (no file to preserve)
-                    } else {
-                        // Check if we can preserve the file (need read or write permission)
-                        if (file.canRead() || file.canWrite()) {
-                            removableCount++
-                        }
-                    }
-                } else if (status != DownloadManager.STATUS_SUCCESSFUL) {
-                    removableCount++ // Non-successful downloads can be removed (no file to preserve)
-                }
-
-                val downloadItem = createDownloadPreference(cursor)
-                downloadsListCategory.addPreference(downloadItem)
-            } while (cursor.moveToNext())
-        }
-        cursor.close()
-
-        if (!hasDownloads) {
+        if (!cursor.moveToFirst()) {
+            cursor.close()
+            downloadsListCategory.removeAll()
             showEmptyState()
+            return
         }
 
-        updateActionStates(totalCount, failedOrOrphanedCount, removableCount)
+        // Move cursor back to beginning and start async population
+        cursor.moveToPosition(-1) // Move before first
+        populateDownloadsAsync(cursor)
+    }
+
+    /**
+     * Populate downloads list UI asynchronously by processing cursor items one at a time.
+     * Updates existing preferences, adds new ones, and removes stale ones.
+     * Fetches, counts, and displays each download with a staggered delay.
+     * Updates action states when all downloads are processed.
+     */
+    private fun populateDownloadsAsync(cursor: Cursor) {
+        var delay = INITIAL_DELAY
+
+        // Track which download IDs we've seen (to remove stale preferences later)
+        val seenDownloadIds = mutableSetOf<Long>()
+
+        // Process cursor items asynchronously
+        fun processNextDownload() {
+            if (cursor.moveToNext()) {
+                view?.postDelayed({
+                    try {
+                        // Count this download
+                        totalCount++
+
+                        val id = cursor.getLong(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_ID))
+                        seenDownloadIds.add(id)
+
+                        val status = cursor.getInt(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_STATUS))
+                        val localUri = cursor.getString(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_LOCAL_URI))
+
+                        // Count for action states
+                        if (status == DownloadManager.STATUS_FAILED) {
+                            failedOrOrphanedCount++
+                            removableCount++ // Failed downloads can be removed (no file to preserve)
+                        } else if (status == DownloadManager.STATUS_SUCCESSFUL && localUri != null) {
+                            val uri = android.net.Uri.parse(localUri)
+                            val file = java.io.File(uri.path ?: "")
+                            if (!file.exists()) {
+                                failedOrOrphanedCount++
+                                removableCount++ // Orphaned downloads can be removed (no file to preserve)
+                            } else {
+                                // Check if we can preserve the file (need read or write permission)
+                                if (file.canRead() || file.canWrite()) {
+                                    removableCount++
+                                }
+                            }
+                        } else if (status != DownloadManager.STATUS_SUCCESSFUL) {
+                            removableCount++ // Non-successful downloads can be removed (no file to preserve)
+                        }
+
+                        // Check if preference already exists
+                        val prefKey = "download_$id"
+                        var downloadPref = downloadsListCategory.findPreference<DownloadPreference>(prefKey)
+
+                        if (downloadPref != null) {
+                            // Update existing preference
+                            val downloadData = createDownloadData(cursor)
+                            downloadPref.updateFromDownloadData(downloadData)
+                        } else {
+                            // Create new preference
+                            val downloadData = createDownloadData(cursor)
+                            downloadPref = createDownloadPreference(downloadData)
+                            downloadsListCategory.addPreference(downloadPref)
+                        }
+
+                        // Schedule next download
+                        processNextDownload()
+                    } catch (e: Exception) {
+                        Timber.e(e, "Failed to process download preference")
+                        // Continue with next download even if this one failed
+                        processNextDownload()
+                    }
+                }, delay)
+                delay += DELAY_INCREMENT
+            } else {
+                // All downloads processed, clean up stale preferences
+                view?.postDelayed({
+                    removeStalePreferences(seenDownloadIds)
+                    cursor.close()
+                    updateActionStates(totalCount, failedOrOrphanedCount, removableCount)
+
+                    // Start periodic updates now that all preferences are loaded
+                    startPeriodicUpdates()
+                }, delay)
+            }
+        }
+
+        // Start processing
+        processNextDownload()
+    }
+
+    /**
+     * Remove preferences for downloads that no longer exist in the DownloadManager.
+     */
+    private fun removeStalePreferences(validDownloadIds: Set<Long>) {
+        val prefsToRemove = mutableListOf<Preference>()
+
+        for (i in 0 until downloadsListCategory.preferenceCount) {
+            val pref = downloadsListCategory.getPreference(i)
+            if (pref is DownloadPreference) {
+                if (pref.downloadId !in validDownloadIds) {
+                    prefsToRemove.add(pref)
+                }
+            }
+        }
+
+        prefsToRemove.forEach { pref ->
+            downloadsListCategory.removePreference(pref)
+        }
+    }
+
+    /**
+     * Data class to hold download information extracted from cursor
+     */
+    private data class DownloadData(
+        val id: Long,
+        val title: String?,
+        val status: Int,
+        val localUri: String?,
+        val uri: String?,
+        val bytesDownloaded: Long,
+        val totalSize: Long,
+        val lastModified: Long,
+        val mimeType: String?
+    )
+
+    /**
+     * Create DownloadData from cursor position
+     */
+    private fun createDownloadData(cursor: Cursor): DownloadData {
+        return DownloadData(
+            id = cursor.getLong(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_ID)),
+            title = cursor.getString(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_TITLE)),
+            status = cursor.getInt(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_STATUS)),
+            localUri = cursor.getString(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_LOCAL_URI)),
+            uri = cursor.getString(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_URI)),
+            bytesDownloaded = cursor.getLong(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR)),
+            totalSize = cursor.getLong(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_TOTAL_SIZE_BYTES)),
+            lastModified = cursor.getLong(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_LAST_MODIFIED_TIMESTAMP)),
+            mimeType = cursor.getString(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_MEDIA_TYPE))
+        )
     }
 
     /**
@@ -243,7 +368,8 @@ class DownloadsFragment : PreferenceFragmentCompat() {
             val pref = downloadsListCategory.getPreference(i) as? DownloadPreference
             if (pref != null) {
                 // updateProgress() returns true if download is still active (running/pending/paused)
-                if (pref.updateProgress()) {
+                val isActive = pref.updateProgress()
+                if (isActive) {
                     hasActiveDownloads = true
                 }
             }
@@ -269,16 +395,14 @@ class DownloadsFragment : PreferenceFragmentCompat() {
     /**
      * Create a preference for a download item
      */
-    private fun createDownloadPreference(cursor: Cursor): Preference {
-        val id = cursor.getLong(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_ID))
+    private fun createDownloadPreference(downloadData: DownloadData): DownloadPreference {
+        val id = downloadData.id
 
         // Try to get actual filename from local URI first, then fall back to title
-        var displayTitle = cursor.getString(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_TITLE))
-            ?: cursor.getString(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_DESCRIPTION))
-            ?: "Unknown"
+        var displayTitle = downloadData.title ?: "Unknown"
 
         // Extract filename from local URI if available
-        val localUri = cursor.getString(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_LOCAL_URI))
+        val localUri = downloadData.localUri
         if (localUri != null) {
             try {
                 val fileUri = android.net.Uri.parse(localUri)
@@ -292,7 +416,7 @@ class DownloadsFragment : PreferenceFragmentCompat() {
             }
         } else {
             // For failed/pending downloads, try to extract filename from original URI
-            val originalUri = cursor.getString(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_URI))
+            val originalUri = downloadData.uri
             if (originalUri != null) {
                 try {
                     val uri = android.net.Uri.parse(originalUri)
@@ -328,8 +452,8 @@ class DownloadsFragment : PreferenceFragmentCompat() {
         downloadPref.isIconSpaceReserved = true
 
         // Get status and set appropriate icon
-        val status = cursor.getInt(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_STATUS))
-        val mimeType = cursor.getString(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_MEDIA_TYPE))
+        val status = downloadData.status
+        val mimeType = downloadData.mimeType
 
         // Set icon based on status and file type
         setDownloadIcon(downloadPref, status, mimeType, localUri)
@@ -339,7 +463,8 @@ class DownloadsFragment : PreferenceFragmentCompat() {
             true
         }
 
-        downloadPref.updateFromCursor(cursor)
+        // Initialize summary from downloadData
+        downloadPref.initializeFromDownloadData(downloadData)
 
         return downloadPref
     }
@@ -373,7 +498,6 @@ class DownloadsFragment : PreferenceFragmentCompat() {
 
         // Use error icon for failed downloads (static resource ID)
         if (status == DownloadManager.STATUS_FAILED) {
-            Timber.d("Using error icon for failed download")
             pref.setIcon(R.drawable.ic_error_outline)
             return
         }
@@ -384,7 +508,6 @@ class DownloadsFragment : PreferenceFragmentCompat() {
                 val fileUri = android.net.Uri.parse(localUri)
                 val file = java.io.File(fileUri.path ?: "")
                 if (!file.exists()) {
-                    Timber.d("Using warning icon for orphaned download (file missing)")
                     pref.setIcon(R.drawable.ic_unknown_document_outline)
                     return
                 }
@@ -395,13 +518,8 @@ class DownloadsFragment : PreferenceFragmentCompat() {
 
         val packageManager = context.packageManager
 
-        Timber.d("=== Icon Resolution ===")
-        Timber.d("MIME type: $mimeType")
-        Timber.d("Local URI: $localUri")
-
         // Use static icon for APK files
         if (mimeType == "application/vnd.android.package-archive") {
-            Timber.d("Using APK document icon for APK file")
             pref.setIcon(R.drawable.ic_apk_document_outline)
             return
         }
@@ -418,12 +536,7 @@ class DownloadsFragment : PreferenceFragmentCompat() {
                 val resolveInfo = packageManager.resolveActivity(intent, 0)
 
                 if (resolveInfo != null) {
-                    val appName = resolveInfo.loadLabel(packageManager)
-                    val packageName = resolveInfo.activityInfo.packageName
-                    Timber.d("Default app for URI + MIME: $appName ($packageName)")
-
                     resolveInfo.activityInfo.loadIcon(packageManager)?.let { icon ->
-                        Timber.d("✓ Using icon from default app: $appName ($packageName)")
                         pref.icon = resizeDrawableToIconSize(icon)
                         return
                     }
@@ -442,33 +555,17 @@ class DownloadsFragment : PreferenceFragmentCompat() {
                 val resolveInfo = packageManager.resolveActivity(intent, 0)
 
                 if (resolveInfo != null) {
-                    val appName = resolveInfo.loadLabel(packageManager)
-                    val packageName = resolveInfo.activityInfo.packageName
-                    Timber.d("Default app for MIME type $mime: $appName ($packageName)")
-
                     resolveInfo.activityInfo.loadIcon(packageManager)?.let { icon ->
-                        Timber.d("✓ Using icon from default app: $appName ($packageName)")
                         pref.icon = resizeDrawableToIconSize(icon)
                         return
                     }
                 } else {
-                    Timber.d("✗ No default app found for MIME type: $mime")
-
                     // Last resort: try querying all apps if no default is set
                     val resolveInfos = packageManager.queryIntentActivities(intent, 0)
-                    Timber.d("Found ${resolveInfos.size} apps that can handle MIME type: $mime")
 
                     if (resolveInfos.isNotEmpty()) {
-                        resolveInfos.forEachIndexed { index, info ->
-                            val name = info.loadLabel(packageManager)
-                            val pkg = info.activityInfo.packageName
-                            Timber.d("  [$index] $name ($pkg)")
-                        }
-
                         val selectedApp = resolveInfos[0]
-                        val appName = selectedApp.loadLabel(packageManager)
                         selectedApp.activityInfo.loadIcon(packageManager)?.let { icon ->
-                            Timber.d("✓ Using icon from first available app: $appName (${selectedApp.activityInfo.packageName})")
                             pref.icon = resizeDrawableToIconSize(icon)
                             return
                         }
@@ -480,7 +577,6 @@ class DownloadsFragment : PreferenceFragmentCompat() {
         }
 
         // Final fallback: use generic download icon (static resource ID)
-        Timber.d("✗ Using fallback download icon")
         pref.setIcon(R.drawable.ic_download_outline)
     }
 
@@ -1420,7 +1516,7 @@ class DownloadsFragment : PreferenceFragmentCompat() {
      */
     private class DownloadPreference(
         context: Context,
-        private val downloadId: Long,
+        val downloadId: Long,
         private val downloadManager: DownloadManager
     ) : x.Preference(context) {
 
@@ -1480,14 +1576,18 @@ class DownloadsFragment : PreferenceFragmentCompat() {
             var isActive = false
             if (cursor.moveToFirst()) {
                 val status = cursor.getInt(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_STATUS))
+
                 isActive = status == DownloadManager.STATUS_RUNNING ||
                           status == DownloadManager.STATUS_PENDING ||
                           status == DownloadManager.STATUS_PAUSED
+
 
                 // Only update if this download is active or needs a summary refresh
                 if (isActive || summary == null) {
                     updateFromCursor(cursor)
                 }
+            } else {
+                Timber.w("updateProgress($downloadId): No cursor data found")
             }
             cursor.close()
 
@@ -1505,6 +1605,41 @@ class DownloadsFragment : PreferenceFragmentCompat() {
             val lastModified = cursor.getLong(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_LAST_MODIFIED_TIMESTAMP))
             val localUri = cursor.getString(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_LOCAL_URI))
 
+            summary = formatSummary(status, bytesDownloaded, bytesTotal, lastModified, localUri)
+        }
+
+        /**
+         * Initialize the preference summary from DownloadData.
+         * Called once during preference creation.
+         */
+        fun initializeFromDownloadData(data: DownloadData) {
+            summary = formatSummary(data.status, data.bytesDownloaded, data.totalSize, data.lastModified, data.localUri)
+        }
+
+        /**
+         * Update existing preference from DownloadData.
+         * Called when refreshing the download list.
+         */
+        fun updateFromDownloadData(data: DownloadData) {
+            // Update title if it has changed
+            if (data.title != null && title != data.title) {
+                title = data.title
+            }
+
+            // Update summary
+            summary = formatSummary(data.status, data.bytesDownloaded, data.totalSize, data.lastModified, data.localUri)
+        }
+
+        /**
+         * Format summary text from download status and data.
+         */
+        private fun formatSummary(
+            status: Int,
+            bytesDownloaded: Long,
+            bytesTotal: Long,
+            lastModified: Long,
+            localUri: String?
+        ): String {
             // Format date and time using system default format
             val dateTime = android.text.format.DateUtils.formatDateTime(
                 context,
@@ -1528,7 +1663,7 @@ class DownloadsFragment : PreferenceFragmentCompat() {
                 false
             }
 
-            val statusText = when {
+            return when {
                 isOrphaned -> "${context.getString(R.string.download_status_orphaned)}\n$dateTime"
                 status == DownloadManager.STATUS_RUNNING -> {
                     if (bytesTotal > 0) {
@@ -1546,15 +1681,13 @@ class DownloadsFragment : PreferenceFragmentCompat() {
                 status == DownloadManager.STATUS_SUCCESSFUL ->
                     "${Formatter.formatFileSize(context, bytesTotal)}\n$dateTime"
                 status == DownloadManager.STATUS_FAILED -> {
-                    val reason = cursor.getInt(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_REASON))
-                    "${context.getString(R.string.download_status_failed, reason)}\n$dateTime"
+                    // Note: reason is not available in DownloadData, would need cursor for full error details
+                    "${context.getString(R.string.download_status_failed, 0)}\n$dateTime"
                 }
                 status == DownloadManager.STATUS_PAUSED -> "${context.getString(R.string.download_status_paused)}\n$dateTime"
                 status == DownloadManager.STATUS_PENDING -> "${context.getString(R.string.download_status_pending)}\n$dateTime"
                 else -> "${context.getString(R.string.download_status_unknown)}\n$dateTime"
             }
-
-            summary = statusText
         }
     }
 }
