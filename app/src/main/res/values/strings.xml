@@ -835,7 +835,7 @@
     <string name="pref_category_title_installed_extensions">Installed extensions</string>
     <string name="pref_category_summary_no_extensions">No extensions installed</string>
     <string name="pref_title_extension_show_popup">Show popup notification</string>
-    <string name="pref_summary_extension_show_popup">Display a notification when this extension runs</string>
+    <string name="pref_summary_extension_show_popup">Show a notification when this extension runs</string>
     <string name="pref_title_extension_name">Name</string>
     <string name="pref_title_extension_description">Description</string>
     <string name="pref_title_extension_version">Version</string>

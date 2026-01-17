@@ -731,7 +731,7 @@
     <string name="pref_category_title_installed_extensions">Telepített bővítmények</string>
     <string name="pref_category_summary_no_extensions">Nincsenek telepített bővítmények</string>
     <string name="pref_title_extension_show_popup">Felugró értesítés megjelenítése</string>
-    <string name="pref_summary_extension_show_popup">Értesítés megjelenítése amikor ez a bővítmény fut</string>
+    <string name="pref_summary_extension_show_popup">Értesítés megjelenítése, amikor ez a bővítmény fut</string>
     <string name="pref_title_extension_name">Név</string>
     <string name="pref_title_extension_description">Leírás</string>
     <string name="pref_title_extension_version">Verzió</string>

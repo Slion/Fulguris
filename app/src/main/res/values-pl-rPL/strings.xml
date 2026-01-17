@@ -737,7 +737,7 @@
     <string name="pref_category_title_installed_extensions">Zainstalowane rozszerzenia</string>
     <string name="pref_category_summary_no_extensions">Brak zainstalowanych rozszerzeń</string>
     <string name="pref_title_extension_show_popup">Pokaż powiadomienie wyskakujące</string>
-    <string name="pref_summary_extension_show_popup">Wyświetlaj powiadomienie gdy to rozszerzenie działa</string>
+    <string name="pref_summary_extension_show_popup">Wyświetl powiadomienie, gdy to rozszerzenie działa</string>
     <string name="pref_title_extension_name">Nazwa</string>
     <string name="pref_title_extension_description">Opis</string>
     <string name="pref_title_extension_version">Wersja</string>

@@ -731,7 +731,7 @@
     <string name="pref_category_title_installed_extensions">Geïnstalleerde uitbreidings</string>
     <string name="pref_category_summary_no_extensions">Geen uitbreidings geïnstalleer nie</string>
     <string name="pref_title_extension_show_popup">Wys opspringkennisgewing</string>
-    <string name="pref_summary_extension_show_popup">Vertoon \'n kennisgewing wanneer hierdie uitbreiding loop</string>
+    <string name="pref_summary_extension_show_popup">Wys \'n kennisgewing wanneer hierdie uitbreiding loop</string>
     <string name="pref_title_extension_name">Naam</string>
     <string name="pref_title_extension_description">Beskrywing</string>
     <string name="pref_title_extension_version">Weergawe</string>

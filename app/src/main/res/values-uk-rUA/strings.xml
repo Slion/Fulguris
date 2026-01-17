@@ -737,7 +737,7 @@
     <string name="pref_category_title_installed_extensions">Встановлені розширення</string>
     <string name="pref_category_summary_no_extensions">Розширення не встановлено</string>
     <string name="pref_title_extension_show_popup">Показувати спливаюче сповіщення</string>
-    <string name="pref_summary_extension_show_popup">Показувати сповіщення коли це розширення запускається</string>
+    <string name="pref_summary_extension_show_popup">Показувати сповіщення, коли це розширення запускається</string>
     <string name="pref_title_extension_name">Ім\'я</string>
     <string name="pref_title_extension_description">Опис</string>
     <string name="pref_title_extension_version">Версія</string>
