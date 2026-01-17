@@ -734,7 +734,7 @@
     <string name="pref_summary_extension_show_popup">ᱡᱟᱦᱟᱸ ᱱᱚᱶᱟ ᱮᱠᱥᱴᱮᱱᱥᱚᱱ ᱪᱟᱹᱞᱩᱜ-ᱟ ᱩᱱᱤᱭᱟᱹᱠ ᱩᱫᱩᱜ ᱫᱮᱠᱷᱟᱣ ᱢᱮ</string>
     <string name="pref_title_extension_name">ᱧᱩᱛᱩᱢ</string>
     <string name="pref_title_extension_description">ᱵᱤᱵᱚᱨᱚᱬ</string>
-    <string name="pref_title_extension_version">ᱵᱷᱟᱨᱥᱚᱱ</string>
+    <string name="pref_title_extension_version">ᱵᱷᱟᱹᱨᱥᱚᱱ</string>
     <string name="pref_title_extension_author">ᱚᱱᱚᱞᱤᱭᱟᱹ</string>
     <string name="pref_title_extension_namespace">ᱧᱩᱛᱩᱢ ᱡᱟᱜᱟ</string>
     <string name="pref_title_extension_patterns">ᱯᱟᱹᱨᱥᱤ</string>

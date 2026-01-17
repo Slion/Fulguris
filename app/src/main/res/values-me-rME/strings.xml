@@ -737,7 +737,7 @@
     <string name="pref_summary_extension_show_popup">Прикажи обавјештење када се ово проширење покреће</string>
     <string name="pref_title_extension_name">Ime</string>
     <string name="pref_title_extension_description">Опис</string>
-    <string name="pref_title_extension_version">Верзија</string>
+    <string name="pref_title_extension_version">Verzija</string>
     <string name="pref_title_extension_author">Аутор</string>
     <string name="pref_title_extension_namespace">Простор имена</string>
     <string name="pref_title_extension_patterns">Обрасци</string>
