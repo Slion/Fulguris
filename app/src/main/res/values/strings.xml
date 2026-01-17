@@ -853,7 +853,7 @@
     <string name="dialog_title_delete_extension">Delete extension?</string>
     <string name="userscripts_name_hint">Script name</string>
     <string name="userscripts_content_hint">JavaScript code</string>
-    <string name="error_parsing_userscript">Failed to parse userscript</string>
+    <string name="error_parsing_userscript">Error parsing userscript</string>
     <string name="error_installing_userscript">Failed to install userscript</string>
     <string name="error_downloading_userscript">Failed to download userscript</string>
     <string name="extension_installed_successfully">Extension \"%1$s\" installed successfully</string>
