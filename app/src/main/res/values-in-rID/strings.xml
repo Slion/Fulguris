@@ -137,7 +137,7 @@
     <string name="error_no_permission">Tidak ada izin untuk menghapus file</string>
     <string name="dialog_title_clear_downloads">Hapus unduhan?</string>
     <string name="dialog_message_clear_downloads">%d unduhan akan dihapus dari daftar. File tidak akan dihapus.</string>
-    <string name="download_status_orphaned">File dibersihkan</string>
+    <string name="download_status_orphaned">File tidak ditemukan</string>
     <string name="download_status_downloading">Mengunduh…</string>
     <string name="download_status_failed">Kesalahan: %d</string>
     <string name="download_status_paused">Dijeda</string>

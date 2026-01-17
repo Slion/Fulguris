@@ -137,7 +137,7 @@
     <string name="error_no_permission">Sin permiso para borrar el archivo</string>
     <string name="dialog_title_clear_downloads">¿Limpiar descargas?</string>
     <string name="dialog_message_clear_downloads">%d descarga(s) se eliminarán de la lista. Los archivos no se borrarán.</string>
-    <string name="download_status_orphaned">Archivo limpiado</string>
+    <string name="download_status_orphaned">Archivo no encontrado</string>
     <string name="download_status_downloading">Descargando…</string>
     <string name="download_status_failed">Error: %d</string>
     <string name="download_status_paused">En pausa</string>

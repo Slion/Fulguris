@@ -137,7 +137,7 @@
     <string name="error_no_permission">Nincs jogosultság a fájl törléséhez</string>
     <string name="dialog_title_clear_downloads">Letöltések törlése?</string>
     <string name="dialog_message_clear_downloads">%d letöltés el lesz távolítva a listából. A fájlok nem lesznek törölve.</string>
-    <string name="download_status_orphaned">Fájl megtisztítva</string>
+    <string name="download_status_orphaned">A fájl nem található</string>
     <string name="download_status_downloading">Letöltés…</string>
     <string name="download_status_failed">Hiba: %d</string>
     <string name="download_status_paused">Szüneteltetve</string>

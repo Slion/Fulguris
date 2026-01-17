@@ -137,7 +137,7 @@
     <string name="error_no_permission">파일을 삭제할 권한이 없습니다</string>
     <string name="dialog_title_clear_downloads">다운로드를 지우시겠습니까?</string>
     <string name="dialog_message_clear_downloads">%d개의 다운로드가 목록에서 제거됩니다. 파일은 삭제되지 않습니다.</string>
-    <string name="download_status_orphaned">파일 정리됨</string>
+    <string name="download_status_orphaned">파일을 찾을 수 없습니다</string>
     <string name="download_status_downloading">다운로드 중…</string>
     <string name="download_status_failed">오류: %d</string>
     <string name="download_status_paused">일시중지됨</string>

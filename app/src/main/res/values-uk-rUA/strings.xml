@@ -137,7 +137,7 @@
     <string name="error_no_permission">Немає дозволу на видалення файлу</string>
     <string name="dialog_title_clear_downloads">Очистити завантаження?</string>
     <string name="dialog_message_clear_downloads">%d завантажень буде видалено зі списку. Файли не буде видалено.</string>
-    <string name="download_status_orphaned">Файл очищено</string>
+    <string name="download_status_orphaned">Файл не знайдено</string>
     <string name="download_status_downloading">Завантаження…</string>
     <string name="download_status_failed">Помилка: %d</string>
     <string name="download_status_paused">Призупинено</string>

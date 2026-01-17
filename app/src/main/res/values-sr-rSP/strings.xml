@@ -137,7 +137,7 @@
     <string name="error_no_permission">Nema dozvole za brisanje datoteke</string>
     <string name="dialog_title_clear_downloads">Obrisati preuzimanja?</string>
     <string name="dialog_message_clear_downloads">%d preuzimanje/a će biti uklonjeno sa liste. Datoteke neće biti izbrisane.</string>
-    <string name="download_status_orphaned">Datoteka očišćena</string>
+    <string name="download_status_orphaned">Datoteka nije pronađena</string>
     <string name="download_status_downloading">Preuzimanje…</string>
     <string name="download_status_failed">Greška: %d</string>
     <string name="download_status_paused">Pauzirano</string>

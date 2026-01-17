@@ -137,7 +137,7 @@
     <string name="error_no_permission">Fără permisiune de a șterge fișierul</string>
     <string name="dialog_title_clear_downloads">Ștergi descărcările?</string>
     <string name="dialog_message_clear_downloads">%d descărcare/i vor fi șterse din listă. Fișierele nu vor fi șterse.</string>
-    <string name="download_status_orphaned">Fișier curățat</string>
+    <string name="download_status_orphaned">Fișier negăsit</string>
     <string name="download_status_downloading">Se descarcă…</string>
     <string name="download_status_failed">Eroare: %d</string>
     <string name="download_status_paused">Întrerupt</string>

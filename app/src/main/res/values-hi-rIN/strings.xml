@@ -120,7 +120,7 @@
     <string name="error_no_permission">फ़ाइल मिटाने की अनुमति नहीं</string>
     <string name="dialog_title_clear_downloads">डाउनलोड साफ़ करें?</string>
     <string name="dialog_message_clear_downloads">%d डाउनलोड सूची से हटाए जाएंगे। फ़ाइलें मिटाई नहीं जाएंगी।</string>
-    <string name="download_status_orphaned">फ़ाइल साफ़ की गई</string>
+    <string name="download_status_orphaned">फ़ाइल नहीं मिली</string>
     <string name="download_status_downloading">डाउनलोड हो रहा है…</string>
     <string name="download_status_failed">त्रुटि: %d</string>
     <string name="download_status_paused">रोका गया</string>

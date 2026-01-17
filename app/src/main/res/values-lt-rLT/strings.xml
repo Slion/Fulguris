@@ -137,7 +137,7 @@
     <string name="error_no_permission">Nėra leidimo trinti failą</string>
     <string name="dialog_title_clear_downloads">Išvalyti atsisiuntimus?</string>
     <string name="dialog_message_clear_downloads">%d atsisiuntimas(-ai) bus pašalintas(-i) iš sąrašo. Failai nebus ištrinti.</string>
-    <string name="download_status_orphaned">Failas išvalytas</string>
+    <string name="download_status_orphaned">Failas nerastas</string>
     <string name="download_status_downloading">Atsisiunčiama…</string>
     <string name="download_status_failed">Klaida: %d</string>
     <string name="download_status_paused">Pristabdyta</string>

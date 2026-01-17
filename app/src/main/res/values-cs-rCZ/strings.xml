@@ -137,7 +137,7 @@
     <string name="error_no_permission">Žádné oprávnění ke smazání souboru</string>
     <string name="dialog_title_clear_downloads">Vymazat stahování?</string>
     <string name="dialog_message_clear_downloads">%d stažení bude odstraněno ze seznamu. Soubory nebudou smazány.</string>
-    <string name="download_status_orphaned">Soubor vyčištěn</string>
+    <string name="download_status_orphaned">Soubor nenalezen</string>
     <string name="download_status_downloading">Stahování…</string>
     <string name="download_status_failed">Chyba: %d</string>
     <string name="download_status_paused">Pozastaveno</string>

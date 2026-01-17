@@ -137,7 +137,7 @@
     <string name="error_no_permission">Brak uprawnień do usunięcia pliku</string>
     <string name="dialog_title_clear_downloads">Wyczyścić pobrane?</string>
     <string name="dialog_message_clear_downloads">%d pobrań zostanie usuniętych z listy. Pliki nie zostaną usunięte.</string>
-    <string name="download_status_orphaned">Plik wyczyszczony</string>
+    <string name="download_status_orphaned">Nie znaleziono pliku</string>
     <string name="download_status_downloading">Pobieranie…</string>
     <string name="download_status_failed">Błąd: %d</string>
     <string name="download_status_paused">Wstrzymane</string>

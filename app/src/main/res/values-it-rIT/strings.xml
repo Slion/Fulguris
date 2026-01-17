@@ -137,7 +137,7 @@
     <string name="error_no_permission">Nessun permesso per eliminare il file</string>
     <string name="dialog_title_clear_downloads">Cancellare i download?</string>
     <string name="dialog_message_clear_downloads">%d download saranno rimossi dall\'elenco. I file non saranno eliminati.</string>
-    <string name="download_status_orphaned">File pulito</string>
+    <string name="download_status_orphaned">File non trovato</string>
     <string name="download_status_downloading">Scaricamento…</string>
     <string name="download_status_failed">Errore: %d</string>
     <string name="download_status_paused">In pausa</string>

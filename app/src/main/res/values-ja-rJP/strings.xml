@@ -137,7 +137,7 @@
     <string name="error_no_permission">ファイルを削除する権限がありません</string>
     <string name="dialog_title_clear_downloads">ダウンロードをクリアしますか？</string>
     <string name="dialog_message_clear_downloads">%d 件のダウンロードがリストから削除されます。ファイルは削除されません。</string>
-    <string name="download_status_orphaned">ファイルがクリーンアップされました</string>
+    <string name="download_status_orphaned">ファイルが見つかりません</string>
     <string name="download_status_downloading">ダウンロード中…</string>
     <string name="download_status_failed">エラー: %d</string>
     <string name="download_status_paused">一時停止中</string>

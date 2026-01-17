@@ -137,7 +137,7 @@
     <string name="error_no_permission">ไม่มีสิทธิ์ในการลบไฟล์</string>
     <string name="dialog_title_clear_downloads">ล้างการดาวน์โหลด?</string>
     <string name="dialog_message_clear_downloads">%d การดาวน์โหลดจะถูกลบออกจากรายการ ไฟล์จะไม่ถูกลบ</string>
-    <string name="download_status_orphaned">ไฟล์ถูกล้างแล้ว</string>
+    <string name="download_status_orphaned">ไม่พบไฟล์</string>
     <string name="download_status_downloading">กำลังดาวน์โหลด…</string>
     <string name="download_status_failed">ข้อผิดพลาด: %d</string>
     <string name="download_status_paused">หยุดชั่วคราว</string>

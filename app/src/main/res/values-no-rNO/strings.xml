@@ -137,7 +137,7 @@
     <string name="error_no_permission">Ingen tillatelse til å slette filen</string>
     <string name="dialog_title_clear_downloads">Tøm nedlastinger?</string>
     <string name="dialog_message_clear_downloads">%d nedlasting(er) vil bli fjernet fra listen. Filer vil ikke slettes.</string>
-    <string name="download_status_orphaned">Fil ryddet</string>
+    <string name="download_status_orphaned">Filen ble ikke funnet</string>
     <string name="download_status_downloading">Laster ned…</string>
     <string name="download_status_failed">Feil: %d</string>
     <string name="download_status_paused">Pauset</string>

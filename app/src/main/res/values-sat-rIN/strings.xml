@@ -137,7 +137,7 @@
     <string name="error_no_permission">ᱨᱮᱫ ᱢᱮᱴᱟᱣ ᱞᱟᱹᱜᱤᱫ ᱪᱷᱟᱰᱟ ᱵᱟᱹᱱᱩᱜᱼᱟ</string>
     <string name="dialog_title_clear_downloads">ᱰᱟᱣᱩᱱᱞᱚᱰ ᱯᱷᱟᱨᱪᱟ ᱢᱮ?</string>
     <string name="dialog_message_clear_downloads">%d ᱰᱟᱣᱩᱱᱞᱚᱰ ᱛᱟᱹᱞᱠᱟᱹ ᱠᱷᱚᱱ ᱚᱪᱚᱜᱚᱜᱼᱟ᱾ ᱨᱮᱫᱠᱚ ᱵᱟᱝ ᱢᱮᱴᱟᱣᱟ᱾</string>
-    <string name="download_status_orphaned">ᱨᱮᱫᱽ ᱥᱟᱯᱷᱟ ᱮᱱᱟ</string>
+    <string name="download_status_orphaned">ᱨᱮᱫ ᱵᱟᱝ ᱧᱟᱢ ᱞᱮᱱᱟ</string>
     <string name="download_status_downloading">ᱰᱟᱣᱩᱱᱞᱳᱰ ᱦᱩᱭᱩᱜ ᱠᱟᱱᱟ…</string>
     <string name="download_status_failed">ᱵᱷᱩᱞ: %d</string>
     <string name="download_status_paused">ᱛᱷᱤᱨ ᱠᱮᱫᱟ</string>

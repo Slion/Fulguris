@@ -137,7 +137,7 @@
     <string name="error_no_permission">没有删除文件的权限</string>
     <string name="dialog_title_clear_downloads">清除下载？</string>
     <string name="dialog_message_clear_downloads">%d 个下载将从列表中删除。文件不会被删除。</string>
-    <string name="download_status_orphaned">文件已清理</string>
+    <string name="download_status_orphaned">找不到文件</string>
     <string name="download_status_downloading">正在下载…</string>
     <string name="download_status_failed">错误：%d</string>
     <string name="download_status_paused">已暂停</string>

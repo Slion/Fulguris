@@ -137,7 +137,7 @@
     <string name="error_no_permission">אין הרשאה למחוק את הקובץ</string>
     <string name="dialog_title_clear_downloads">לנקות הורדות?</string>
     <string name="dialog_message_clear_downloads">%d הורדה/ות יוסרו מהרשימה. הקבצים לא יימחקו.</string>
-    <string name="download_status_orphaned">הקובץ נוקה</string>
+    <string name="download_status_orphaned">הקובץ לא נמצא</string>
     <string name="download_status_downloading">מוריד…</string>
     <string name="download_status_failed">שגיאה: %d</string>
     <string name="download_status_paused">מושהה</string>

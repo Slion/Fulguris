@@ -137,7 +137,7 @@
     <string name="error_no_permission">No hi ha permís per esborrar el fitxer</string>
     <string name="dialog_title_clear_downloads">Netejar descàrregues?</string>
     <string name="dialog_message_clear_downloads">S\'eliminaran %d descàrrega/es de la llista. Els fitxers no s\'esborraran.</string>
-    <string name="download_status_orphaned">Fitxer netejat</string>
+    <string name="download_status_orphaned">Fitxer no trobat</string>
     <string name="download_status_downloading">Descarregant…</string>
     <string name="download_status_failed">Error: %d</string>
     <string name="download_status_paused">En pausa</string>

@@ -137,7 +137,7 @@
     <string name="error_no_permission">Ingen behörighet att radera fil</string>
     <string name="dialog_title_clear_downloads">Rensa nedladdningar?</string>
     <string name="dialog_message_clear_downloads">%d nedladdning(ar) tas bort från listan. Filer raderas inte.</string>
-    <string name="download_status_orphaned">Fil rensad</string>
+    <string name="download_status_orphaned">Filen hittades inte</string>
     <string name="download_status_downloading">Hämtar…</string>
     <string name="download_status_failed">Fel: %d</string>
     <string name="download_status_paused">Pausad</string>

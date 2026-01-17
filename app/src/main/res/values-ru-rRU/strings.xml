@@ -137,7 +137,7 @@
     <string name="error_no_permission">Нет разрешения на удаление файла</string>
     <string name="dialog_title_clear_downloads">Очистить загрузки?</string>
     <string name="dialog_message_clear_downloads">%d загрузок будут удалены из списка. Файлы не будут удалены.</string>
-    <string name="download_status_orphaned">Файл очищен</string>
+    <string name="download_status_orphaned">Файл не найден</string>
     <string name="download_status_downloading">Загрузка…</string>
     <string name="download_status_failed">Ошибка: %d</string>
     <string name="download_status_paused">Приостановлено</string>

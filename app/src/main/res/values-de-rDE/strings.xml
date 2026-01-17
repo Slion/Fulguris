@@ -137,7 +137,7 @@
     <string name="error_no_permission">Keine Berechtigung zum Löschen der Datei</string>
     <string name="dialog_title_clear_downloads">Downloads löschen?</string>
     <string name="dialog_message_clear_downloads">%d Download(s) werden aus der Liste entfernt. Dateien werden nicht gelöscht.</string>
-    <string name="download_status_orphaned">Datei bereinigt</string>
+    <string name="download_status_orphaned">Datei nicht gefunden</string>
     <string name="download_status_downloading">Herunterladen…</string>
     <string name="download_status_failed">Fehler: %d</string>
     <string name="download_status_paused">Pausiert</string>

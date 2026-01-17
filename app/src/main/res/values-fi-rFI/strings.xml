@@ -137,7 +137,7 @@
     <string name="error_no_permission">Ei oikeutta poistaa tiedostoa</string>
     <string name="dialog_title_clear_downloads">Tyhjennä lataukset?</string>
     <string name="dialog_message_clear_downloads">%d lataus/ta poistetaan listasta. Tiedostoja ei poisteta.</string>
-    <string name="download_status_orphaned">Tiedosto puhdistettu</string>
+    <string name="download_status_orphaned">Tiedostoa ei löydy</string>
     <string name="download_status_downloading">Ladataan…</string>
     <string name="download_status_failed">Virhe: %d</string>
     <string name="download_status_paused">Keskeytetty</string>
