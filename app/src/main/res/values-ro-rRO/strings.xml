@@ -576,7 +576,8 @@
     <string name="session_cant_delete_current">Nu se poate șterge sesiunea curentă!</string>
     <string name="dialog_title_session_deletion">Șterge sesiunea?</string>
     <string name="dialog_message_session_deletion">Sesiunea \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\" va fi ștearsă permanent. Această acțiune nu poate fi anulată.</string>
-    <string name="configuration_prompt_confirm_deletion_message">Sigur doriti sa stergeti configuratia \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\"?</string>
+    <string name="dialog_title_configuration_deletion">Ștergeți configurația?</string>
+    <string name="dialog_message_configuration_deletion">Configurația \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\" va fi ștearsă permanent. Această acțiune nu poate fi anulată.</string>
     <string name="session_switched">Comutat la \"%s\"</string>
     <string name="busy">Ocupat, încearcă din nou în scurt timp.</string>
     <string name="invalid_character_removed">Caracter invalid eliminat!</string>

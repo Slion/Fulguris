@@ -571,7 +571,8 @@
     <string name="session_cant_delete_current">現在のセッションは削除できません!</string>
     <string name="dialog_title_session_deletion">セッションを削除しますか？</string>
     <string name="dialog_message_session_deletion">セッション「<xliff:g id="session_name" example="Shopping">%s</xliff:g>」は完全に削除されます。この操作は元に戻せません。</string>
-    <string name="configuration_prompt_confirm_deletion_message">本当に \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\" の設定を削除してよいですか？</string>
+    <string name="dialog_title_configuration_deletion">設定を削除しますか?</string>
+    <string name="dialog_message_configuration_deletion">設定「<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>」は完全に削除されます。この操作は元に戻せません。</string>
     <string name="session_switched">「%s」に切り替えました</string>
     <string name="busy">ビジーです。少し間を開けて再試行してください。</string>
     <string name="invalid_character_removed">無効な文字が削除されました!</string>

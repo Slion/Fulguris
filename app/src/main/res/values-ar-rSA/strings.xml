@@ -585,7 +585,8 @@
     <string name="session_cant_delete_current">لا يمكن حذف الجلسة الحالية!</string>
     <string name="dialog_title_session_deletion">حذف الجلسة؟</string>
     <string name="dialog_message_session_deletion">سيتم حذف الجلسة \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\" نهائيًا. لا يمكن التراجع عن هذا الإجراء.</string>
-    <string name="configuration_prompt_confirm_deletion_message">هل أنت متأكد أنك تريد حذف تكوين \"<xliff:g id="config_name" example="Landscape - 270 - sw718dp">%s</xliff:g>\"؟</string>
+    <string name="dialog_title_configuration_deletion">حذف التكوين؟</string>
+    <string name="dialog_message_configuration_deletion">سيتم حذف التكوين \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\" نهائيًا. لا يمكن التراجع عن هذا الإجراء.</string>
     <string name="session_switched">تم التبديل إلى \"%s\"</string>
     <string name="busy">مشغول، حاول مرة أخرى قريباً.</string>
     <string name="invalid_character_removed">تمت إزالة الحرف غير الصالح!</string>

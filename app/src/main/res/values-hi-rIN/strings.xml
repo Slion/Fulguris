@@ -535,7 +535,8 @@
     <string name="session_cant_delete_current">वर्तमान सत्र हटा नहीं सकते!</string>
     <string name="dialog_title_session_deletion">सत्र हटाएं?</string>
     <string name="dialog_message_session_deletion">सत्र \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\" को स्थायी रूप से हटा दिया जाएगा। यह कार्रवाई पूर्ववत नहीं की जा सकती।</string>
-    <string name="configuration_prompt_confirm_deletion_message">क्या आप वाकई \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\" कॉन्फ़िगरेशन हटाना चाहते हैं?</string>
+    <string name="dialog_title_configuration_deletion">कॉन्फ़िगरेशन हटाएं?</string>
+    <string name="dialog_message_configuration_deletion">कॉन्फ़िगरेशन \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\" को स्थायी रूप से हटा दिया जाएगा। यह कार्रवाई पूर्ववत नहीं की जा सकती।</string>
     <string name="session_switched">\"%s\" पर स्विच किया गया</string>
     <string name="busy">व्यस्त है, कृपया थोड़ी देर में पुनः प्रयास करें।</string>
     <string name="invalid_character_removed">अमान्य वर्ण हटाया गया!</string>

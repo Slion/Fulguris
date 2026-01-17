@@ -576,7 +576,8 @@
     <string name="session_cant_delete_current">Nije moguće izbrisati trenutačnu sesiju!</string>
     <string name="dialog_title_session_deletion">Izbrisati sesiju?</string>
     <string name="dialog_message_session_deletion">Jeste li sigurni da želite trajno izbrisati sesiju "<xliff:g id="session_name" example="Shopping">%s</xliff:g>"? Ova radnja se ne može poništiti.</string>
-    <string name="configuration_prompt_confirm_deletion_message">Jeste li sigurni da želite izbrisati \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp"> %s</xliff:g> \"konfiguracija?\"</string>
+    <string name="dialog_title_configuration_deletion">Izbrisati konfiguraciju?</string>
+    <string name="dialog_message_configuration_deletion">Jeste li sigurni da želite izbrisati \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp"> %s</xliff:g> \"konfiguracija?\"</string>
     <string name="session_switched">Prebačeno na \"%s\"</string>
     <string name="busy">Zauzeto, pokušajte ponovo uskoro.</string>
     <string name="invalid_character_removed">Nevažeći znak je uklonjen!</string>

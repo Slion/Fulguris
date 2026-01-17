@@ -573,7 +573,8 @@
     <string name="session_cant_delete_current">No es pot eliminar la sessió actual!</string>
     <string name="dialog_title_session_deletion">Voleu suprimir la sessió?</string>
     <string name="dialog_message_session_deletion">Esteu segur que voleu suprimir permanentment la sessió "<xliff:g id="session_name" example="Shopping">%s</xliff:g>"? Aquesta acció no es pot desfer.</string>
-    <string name="configuration_prompt_confirm_deletion_message">Segur que vols suprimir la configuració "<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>"?</string>
+    <string name="dialog_title_configuration_deletion">Suprimir la configuració?</string>
+    <string name="dialog_message_configuration_deletion">Segur que vols suprimir la configuració "<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>"?</string>
     <string name="session_switched">S\'ha canviat a \"%s\"</string>
     <string name="busy">Ocupat, torneu a provar-ho aviat.</string>
     <string name="invalid_character_removed">S\'ha eliminat el caràcter no vàlid!</string>

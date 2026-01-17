@@ -573,7 +573,8 @@
     <string name="session_cant_delete_current">Can\'t delete current session!</string>
     <string name="dialog_title_session_deletion">Skrap sessie?</string>
     <string name="dialog_message_session_deletion">Sessie \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\" sal permanent uitgevee word. Hierdie aksie kan nie ongedaan gemaak word nie.</string>
-    <string name="configuration_prompt_confirm_deletion_message">Are you sure you want to delete \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\" configuration?</string>
+    <string name="dialog_title_configuration_deletion">Skrap konfigurasie?</string>
+    <string name="dialog_message_configuration_deletion">Konfigurasie \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\" sal permanent uitgevee word. Hierdie aksie kan nie ongedaan gemaak word nie.</string>
     <string name="session_switched">Switched to \"%s\"</string>
     <string name="busy">Busy, try again shortly.</string>
     <string name="invalid_character_removed">Invalid character removed!</string>

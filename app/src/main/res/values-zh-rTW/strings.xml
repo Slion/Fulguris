@@ -571,7 +571,8 @@
     <string name="session_cant_delete_current">無法刪除目前的工作階段！</string>
     <string name="dialog_title_session_deletion">刪除工作階段？</string>
     <string name="dialog_message_session_deletion">工作階段「<xliff:g id="session_name" example="Shopping">%s</xliff:g>」將被永久刪除。此動作無法復原。</string>
-    <string name="configuration_prompt_confirm_deletion_message">Are you sure you want to delete \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\" configuration?</string>
+    <string name="dialog_title_configuration_deletion">刪除配置？</string>
+    <string name="dialog_message_configuration_deletion">配置「<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>」將被永久刪除。此動作無法復原。</string>
     <string name="session_switched">已切換到「%s」</string>
     <string name="busy">忙碌中，請稍後再試。</string>
     <string name="invalid_character_removed">已移除無效字元！</string>

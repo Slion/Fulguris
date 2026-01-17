@@ -573,7 +573,8 @@
     <string name="session_cant_delete_current">ᱱᱤᱛᱚᱜᱟᱜ ᱥᱮᱥᱚᱱ ᱢᱮᱴᱟᱣ ᱵᱟᱝ ᱫᱟᱲᱮᱭᱟᱜᱼᱟ!</string>
     <string name="dialog_title_session_deletion">ᱥᱮᱥᱚᱱ ᱢᱮᱴᱟᱣ ᱪᱷᱚ?</string>
     <string name="dialog_message_session_deletion">ᱥᱮᱥᱚᱱ \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\" ᱫᱚ ᱯᱟᱨᱢᱟᱱᱮᱸᱴ ᱛᱮ ᱠᱚᱜᱼᱟ ᱾ ᱱᱚᱶᱟ ᱠᱟᱹᱢᱤ ᱫᱚ ᱵᱟᱹᱛᱤᱞ ᱵᱟᱝ ᱦᱩᱭᱩᱜᱼᱟ ᱾</string>
-    <string name="configuration_prompt_confirm_deletion_message">Are you sure you want to delete \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\" configuration?</string>
+    <string name="dialog_title_configuration_deletion">ᱠᱚᱱᱯᱷᱤᱜᱽᱣᱨᱮᱥᱚᱱ ᱠᱩᱜ ᱥᱮ?</string>
+    <string name="dialog_message_configuration_deletion">ᱠᱚᱱᱯᱷᱤᱜᱽᱣᱨᱮᱥᱚᱱ \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\" ᱫᱚ ᱯᱟᱨᱢᱟᱱᱮᱸᱴ ᱛᱮ ᱠᱩᱜᱼᱟ ᱾ ᱱᱚᱶᱟ ᱠᱟᱹᱢᱤ ᱫᱚ ᱵᱟᱹᱛᱤᱞ ᱵᱟᱝ ᱦᱩᱭᱩᱜᱼᱟ ᱾</string>
     <string name="session_switched">\"%s\" ᱛᱮ ᱵᱚᱫᱚᱞ ᱮᱱᱟ</string>
     <string name="busy">ᱠᱟᱹᱢᱤ ᱨᱮ ᱢᱮᱱᱟᱜᱼᱟ, ᱦᱩᱰᱤᱧ ᱛᱟᱭᱚᱢ ᱫᱚᱦᱲᱟ ᱠᱩᱨᱩᱢᱩᱴᱩ ᱢᱮ ᱾</string>
     <string name="invalid_character_removed">ᱵᱷᱩᱞ ᱪᱤᱱᱦᱟᱹᱯ ᱚᱪᱚᱜ ᱮᱱᱟ!</string>

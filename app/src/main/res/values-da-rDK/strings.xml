@@ -573,7 +573,8 @@
     <string name="session_cant_delete_current">Kan ikke slette nuværende session!</string>
     <string name="dialog_title_session_deletion">Slet session?</string>
     <string name="dialog_message_session_deletion">Er du sikker på, at du vil slette sessionen "<xliff:g id="session_name" example="Shopping">%s</xliff:g>" permanent? Denne handling kan ikke fortrydes.</string>
-    <string name="configuration_prompt_confirm_deletion_message">Er du sikker på at du vil slette \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\" konfiguration?</string>
+    <string name="dialog_title_configuration_deletion">Slet konfiguration?</string>
+    <string name="dialog_message_configuration_deletion">Er du sikker på at du vil slette \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\" konfiguration?</string>
     <string name="session_switched">Skiftet til \"%s\"</string>
     <string name="busy">Optaget, prøv igen om lidt.</string>
     <string name="invalid_character_removed">Ugyldigt tegn fjernet!</string>

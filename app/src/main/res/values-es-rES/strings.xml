@@ -573,7 +573,8 @@
     <string name="session_cant_delete_current">¡La sesión actual no se puede eliminar!</string>
     <string name="dialog_title_session_deletion">¿Eliminar sesión?</string>
     <string name="dialog_message_session_deletion">La sesión \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\" se eliminará de forma permanente. Esta acción no se puede deshacer.</string>
-    <string name="configuration_prompt_confirm_deletion_message">¿Está seguro de que desea eliminar la configuración\"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\"?</string>
+    <string name="dialog_title_configuration_deletion">¿Eliminar configuración?</string>
+    <string name="dialog_message_configuration_deletion">La configuración \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\" se eliminará de forma permanente. Esta acción no se puede deshacer.</string>
     <string name="session_switched">Cambiada a \"%s\"</string>
     <string name="busy">Ocupado, inténtelo de nuevo en breve.</string>
     <string name="invalid_character_removed">¡Carácter inválido eliminado!</string>

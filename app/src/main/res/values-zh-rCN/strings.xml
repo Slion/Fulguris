@@ -571,7 +571,8 @@
     <string name="session_cant_delete_current">无法删除当前会话！</string>
     <string name="dialog_title_session_deletion">删除会话？</string>
     <string name="dialog_message_session_deletion">会话"<xliff:g id="session_name" example="Shopping">%s</xliff:g>"将被永久删除。此操作无法撤消。</string>
-    <string name="configuration_prompt_confirm_deletion_message">您确定要删除\"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\"配置吗？</string>
+    <string name="dialog_title_configuration_deletion">删除配置？</string>
+    <string name="dialog_message_configuration_deletion">配置"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>"将被永久删除。此操作无法撤消。</string>
     <string name="session_switched">已切换到\"%s\"</string>
     <string name="busy">忙，请稍后再试。</string>
     <string name="invalid_character_removed">无效字符已删除！</string>

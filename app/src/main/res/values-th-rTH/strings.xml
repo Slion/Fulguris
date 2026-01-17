@@ -571,7 +571,8 @@
     <string name="session_cant_delete_current">ไม่สามารถลบเซสชันปัจจุบันได้!</string>
     <string name="dialog_title_session_deletion">ลบเซสชัน?</string>
     <string name="dialog_message_session_deletion">เซสชัน \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\" จะถูกลบอย่างถาวร การดำเนินการนี้ไม่สามารถยกเลิกได้</string>
-    <string name="configuration_prompt_confirm_deletion_message">คุณแน่ใจหรือไม่ว่าต้องการลบการกำหนดค่า \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\"?</string>
+    <string name="dialog_title_configuration_deletion">ลบการกำหนดค่าหรือไม่</string>
+    <string name="dialog_message_configuration_deletion">การกำหนดค่า \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\" จะถูกลบอย่างถาวร การดำเนินการนี้ไม่สามารถยกเลิกได้</string>
     <string name="session_switched">สลับไปที่ \"%s\"</string>
     <string name="busy">ไม่ว่าง</string>
     <string name="invalid_character_removed">ลบอักขระที่ไม่ถูกต้องแล้ว</string>

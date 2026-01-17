@@ -573,7 +573,8 @@
     <string name="session_cant_delete_current">Nykyistä istuntoa ei voi poistaa!</string>
     <string name="dialog_title_session_deletion">Poista istunto?</string>
     <string name="dialog_message_session_deletion">Istunto \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\" poistetaan pysyvästi. Tätä toimintoa ei voi kumota.</string>
-    <string name="configuration_prompt_confirm_deletion_message">Haluatko varmasti poistaa määrityksen \"%s\"?</string>
+    <string name="dialog_title_configuration_deletion">Poista kokoonpano?</string>
+    <string name="dialog_message_configuration_deletion">Kokoonpano \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\" poistetaan pysyvästi. Tätä toimintoa ei voi kumota.</string>
     <string name="session_switched">Vaihdettu istuntoon \"%s\"</string>
     <string name="busy">Varattu</string>
     <string name="invalid_character_removed">Virheellinen merkki poistettu</string>

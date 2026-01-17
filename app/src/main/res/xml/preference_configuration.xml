@@ -151,7 +151,7 @@
     <Preference
         a:key="@string/pref_key_delete"
         a:title="@string/settings_title_delete_configuration"
-        a:icon="@drawable/ic_delete"
+        a:icon="@drawable/ic_delete_forever_outline"
         a:fragment="back"
         a:isPreferenceVisible="false"
         tools:isPreferenceVisible="true"

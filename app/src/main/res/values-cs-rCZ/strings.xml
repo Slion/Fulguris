@@ -579,7 +579,8 @@
     <string name="session_cant_delete_current">Nelze smazat aktuální relaci!</string>
     <string name="dialog_title_session_deletion">Odstranit relaci?</string>
     <string name="dialog_message_session_deletion">Opravdu chcete trvale odstranit relaci „<xliff:g id="session_name" example="Shopping">%s</xliff:g>"? Tuto akci nelze vrátit zpět.</string>
-    <string name="configuration_prompt_confirm_deletion_message">Opravdu chcete smazat konfiguraci \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\"?</string>
+    <string name="dialog_title_configuration_deletion">Smazat konfiguraci?</string>
+    <string name="dialog_message_configuration_deletion">Opravdu chcete smazat konfiguraci \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\"?</string>
     <string name="session_switched">Přepnuto na \"%s\"</string>
     <string name="busy">Zaneprázdněn, zkuste to brzy znovu.</string>
     <string name="invalid_character_removed">Neplatný znak odstraněn!</string>

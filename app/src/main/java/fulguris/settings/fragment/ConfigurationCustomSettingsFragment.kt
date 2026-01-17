@@ -78,9 +78,10 @@ class ConfigurationCustomSettingsFragment : ConfigurationSettingsFragment() {
 
             MaterialAlertDialogBuilder(requireContext())
                 .setCancelable(true)
-                .setTitle(R.string.dialog_title_session_deletion)
-                .setMessage(getString(R.string.configuration_prompt_confirm_deletion_message, app.config.name(requireContext())))
-                .setNegativeButton(android.R.string.cancel) { _, _ ->
+                .setIcon(R.drawable.ic_delete_forever_outline)
+                .setTitle(R.string.dialog_title_configuration_deletion)
+                .setMessage(getString(R.string.dialog_message_configuration_deletion, app.config.name(requireContext())))
+                .setNegativeButton(R.string.action_cancel) { _, _ ->
                     cancel = true
                     // Exit our nested event loop
                     handler.sendMessage(handler.obtainMessage())
@@ -88,7 +89,7 @@ class ConfigurationCustomSettingsFragment : ConfigurationSettingsFragment() {
                     cancel = true
                     // Exit our nested event loop
                     handler.sendMessage(handler.obtainMessage())
-                }.setPositiveButton(android.R.string.ok) { _, _ ->
+                }.setPositiveButton(R.string.action_delete) { _, _ ->
                     // Delete our config
                     app.config.delete()
                     // Exit our nested event loop

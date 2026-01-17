@@ -579,7 +579,8 @@
     <string name="session_cant_delete_current">Невозможно удалить текущую сессию!</string>
     <string name="dialog_title_session_deletion">Удалить сеанс?</string>
     <string name="dialog_message_session_deletion">Сеанс \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\" будет удален навсегда. Это действие нельзя отменить.</string>
-    <string name="configuration_prompt_confirm_deletion_message">Вы уверены, что хотите удалить конфигурацию \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\"?</string>
+    <string name="dialog_title_configuration_deletion">Удалить конфигурацию?</string>
+    <string name="dialog_message_configuration_deletion">Конфигурация \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\" будет удалена навсегда. Это действие нельзя отменить.</string>
     <string name="session_switched">Переключено на \"%s\"</string>
     <string name="busy">Занято, попробуйте еще раз в ближайшее время.</string>
     <string name="invalid_character_removed">Недействительный символ удалён!</string>
