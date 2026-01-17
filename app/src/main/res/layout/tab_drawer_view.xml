@@ -85,7 +85,7 @@
             android:contentDescription="@string/action_sessions"
             app:tooltipText="@{@string/action_sessions}"
             android:scaleType="center"
-            app:srcCompat="@drawable/ic_sessions"
+            app:srcCompat="@drawable/ic_tab_group_outline"
             android:onClick="@{(view) -> uiController.executeAction(view.id)}"
             />
 

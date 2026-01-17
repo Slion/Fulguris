@@ -71,7 +71,7 @@ object MenuItems {
         MenuItemId.Sessions to MenuItem(
             id = MenuItemId.Sessions,
             labelId = R.string.action_sessions,
-            iconId = R.drawable.ic_sessions,
+            iconId = R.drawable.ic_tab_group_outline,
             viewId = R.id.menuItemSessions,
             canBeInMainMenu = true,
             canBeInTabMenu = true,

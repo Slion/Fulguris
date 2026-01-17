@@ -73,7 +73,7 @@
                         android:contentDescription="@string/action_new_session"
                         app:tooltipText="@{@string/action_edit_sessions}"
                         android:scaleType="center"
-                        app:srcCompat="@drawable/ic_edit"
+                        app:srcCompat="@drawable/ic_edit_outline"
                         />
 
                     <!-- Save as button -->
@@ -86,7 +86,7 @@
                         android:contentDescription="@string/action_save_session"
                         app:tooltipText="@{@string/action_save_session}"
                         android:scaleType="center"
-                        app:srcCompat="@drawable/ic_save"
+                        app:srcCompat="@drawable/ic_save_as_outline"
                         />
 
 
@@ -99,7 +99,7 @@
                         android:contentDescription="@string/action_new_session"
                         app:tooltipText="@{@string/action_new_session}"
                         android:scaleType="center"
-                        app:srcCompat="@drawable/ic_action_plus"
+                        app:srcCompat="@drawable/ic_add_box_outline"
                         />
 
                 </LinearLayout>

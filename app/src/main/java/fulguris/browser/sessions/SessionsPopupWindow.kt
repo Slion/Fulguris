@@ -188,9 +188,9 @@ class SessionsPopupWindow : PopupWindow {
                 // Change button icon
                 // TODO: change the text too?
                 if (!editModeEnabled) {
-                    aBinding.buttonEditSessions.setImageResource(R.drawable.ic_secured);
+                    aBinding.buttonEditSessions.setImageResource(R.drawable.ic_edit_off_outline);
                 } else {
-                    aBinding.buttonEditSessions.setImageResource(R.drawable.ic_edit);
+                    aBinding.buttonEditSessions.setImageResource(R.drawable.ic_edit_outline);
                 }
                 // Notify our observers of edit mode change
                 iAdapter.iEditModeEnabledObservable.onNext(!editModeEnabled)
@@ -244,9 +244,9 @@ class SessionsPopupWindow : PopupWindow {
         // Disable edit mode when showing our menu
         iAdapter.iEditModeEnabledObservable.onNext(aEdit)
         if (aEdit) {
-            iBinding.buttonEditSessions.setImageResource(R.drawable.ic_secured);
+            iBinding.buttonEditSessions.setImageResource(R.drawable.ic_edit_off_outline);
         } else {
-            iBinding.buttonEditSessions.setImageResource(R.drawable.ic_edit);
+            iBinding.buttonEditSessions.setImageResource(R.drawable.ic_edit_outline);
         }
 
         iAnchor = aAnchor
