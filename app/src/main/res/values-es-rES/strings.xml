@@ -724,7 +724,7 @@
     <string name="error_cache_too_large">Caché demasiado grande</string>
     <string name="hint_available_space">Disponible: %s</string>
     <string name="settings_title_extensions">Extensiones</string>
-    <string name="settings_summary_extensions">Gestionar scripts de extensión</string>
+    <string name="settings_summary_extensions">Administrar scripts de extensión</string>
     <string name="settings_title_enable_extensions">Activar extensiones</string>
     <string name="settings_summary_on_enable_extensions">Las extensiones pueden inyectar código JavaScript en páginas web</string>
     <string name="settings_summary_off_enable_extensions">Las páginas web se cargan sin modificaciones</string>

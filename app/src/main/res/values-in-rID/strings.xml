@@ -722,7 +722,7 @@
     <string name="error_cache_too_large">Cache terlalu besar</string>
     <string name="hint_available_space">Tersedia: %s</string>
     <string name="settings_title_extensions">Ekstensi</string>
-    <string name="settings_summary_extensions">Kelola skrip pengguna dan ekstensi</string>
+    <string name="settings_summary_extensions">Kelola skrip ekstensi</string>
     <string name="settings_title_enable_extensions">Aktifkan ekstensi</string>
     <string name="settings_summary_on_enable_extensions">Ekstensi dapat menyuntikkan kode JavaScript ke halaman web</string>
     <string name="settings_summary_off_enable_extensions">Halaman web dimuat tanpa modifikasi</string>

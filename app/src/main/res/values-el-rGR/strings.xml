@@ -724,7 +724,7 @@
     <string name="error_cache_too_large">Προσωρινή μνήμη πολύ μεγάλη</string>
     <string name="hint_available_space">Διαθέσιμο: %s</string>
     <string name="settings_title_extensions">Επεκτάσεις</string>
-    <string name="settings_summary_extensions">Διαχείριση σεναρίων επεκτάσεων</string>
+    <string name="settings_summary_extensions">Διαχείριση σεναρίων επέκτασης</string>
     <string name="settings_title_enable_extensions">Ενεργοποίηση επεκτάσεων</string>
     <string name="settings_summary_on_enable_extensions">Οι επεκτάσεις μπορούν να εισαγάγουν κώδικα JavaScript σε ιστοσελίδες</string>
     <string name="settings_summary_off_enable_extensions">Οι ιστοσελίδες φορτώνονται χωρίς τροποποιήσεις</string>

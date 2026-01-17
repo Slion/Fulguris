@@ -727,7 +727,7 @@
     <string name="error_cache_too_large">Cache prea mare</string>
     <string name="hint_available_space">Disponibil: %s</string>
     <string name="settings_title_extensions">Extensii</string>
-    <string name="settings_summary_extensions">Gestionează scripturi de extensii</string>
+    <string name="settings_summary_extensions">Gestionează scripturile de extensii</string>
     <string name="settings_title_enable_extensions">Activează extensii</string>
     <string name="settings_summary_on_enable_extensions">Extensiile pot injecta cod JavaScript în paginile web</string>
     <string name="settings_summary_off_enable_extensions">Paginile web se încarcă fără modificări</string>

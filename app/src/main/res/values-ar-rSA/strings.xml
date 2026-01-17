@@ -736,7 +736,7 @@
     <string name="error_cache_too_large">ذاكرة التخزين المؤقت كبيرة جدًا</string>
     <string name="hint_available_space">متاح: %s</string>
     <string name="settings_title_extensions">الامتدادات</string>
-    <string name="settings_summary_extensions">إدارة نصوص الامتدادات</string>
+    <string name="settings_summary_extensions">إدارة سكريبتات الملحقات</string>
     <string name="settings_title_enable_extensions">تفعيل الامتدادات</string>
     <string name="settings_summary_on_enable_extensions">يمكن للامتدادات حقن كود JavaScript في صفحات الويب</string>
     <string name="settings_summary_off_enable_extensions">تحميل صفحات الويب بدون تعديلات</string>

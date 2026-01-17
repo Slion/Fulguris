@@ -722,7 +722,7 @@
     <string name="error_cache_too_large">快取過大</string>
     <string name="hint_available_space">可用: %s</string>
     <string name="settings_title_extensions">擴充功能</string>
-    <string name="settings_summary_extensions">管理擴充功能腳本</string>
+    <string name="settings_summary_extensions">管理擴充腳本</string>
     <string name="settings_title_enable_extensions">啟用擴充功能</string>
     <string name="settings_summary_on_enable_extensions">擴充功能可以在網頁中注入JavaScript程式碼</string>
     <string name="settings_summary_off_enable_extensions">網頁載入時不修改</string>

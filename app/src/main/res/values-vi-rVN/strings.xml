@@ -722,7 +722,7 @@
     <string name="error_cache_too_large">Bộ nhớ đệm quá lớn</string>
     <string name="hint_available_space">Có sẵn: %s</string>
     <string name="settings_title_extensions">Tiện ích mở rộng</string>
-    <string name="settings_summary_extensions">Quản lý script tiện ích</string>
+    <string name="settings_summary_extensions">Quản lý các script mở rộng</string>
     <string name="settings_title_enable_extensions">Bật tiện ích mở rộng</string>
     <string name="settings_summary_on_enable_extensions">Tiện ích có thể chèn mã JavaScript vào trang web</string>
     <string name="settings_summary_off_enable_extensions">Trang web tải mà không thay đổi</string>

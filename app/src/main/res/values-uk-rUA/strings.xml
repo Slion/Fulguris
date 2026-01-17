@@ -730,7 +730,7 @@
     <string name="error_cache_too_large">Кеш занадто великий</string>
     <string name="hint_available_space">Доступно: %s</string>
     <string name="settings_title_extensions">Розширення</string>
-    <string name="settings_summary_extensions">Керування скриптами розширень</string>
+    <string name="settings_summary_extensions">Керувати скриптами розширень</string>
     <string name="settings_title_enable_extensions">Увімкнути розширення</string>
     <string name="settings_summary_on_enable_extensions">Розширення можуть впроваджувати JavaScript-код у веб-сторінки</string>
     <string name="settings_summary_off_enable_extensions">Веб-сторінки завантажуються без змін</string>

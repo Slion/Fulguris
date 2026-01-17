@@ -730,7 +730,7 @@
     <string name="error_cache_too_large">Talpykla per didelė</string>
     <string name="hint_available_space">Prieinama: %s</string>
     <string name="settings_title_extensions">Plėtiniai</string>
-    <string name="settings_summary_extensions">Valdyti plėtinių scenarijus</string>
+    <string name="settings_summary_extensions">Tvarkyti plėtinių scenarijus</string>
     <string name="settings_title_enable_extensions">Įjungti plėtinius</string>
     <string name="settings_summary_on_enable_extensions">Plėtiniai gali įterpti JavaScript kodą į tinklalapius</string>
     <string name="settings_summary_off_enable_extensions">Tinklalapiai įkeliami be pakeitimų</string>
