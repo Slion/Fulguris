@@ -228,7 +228,7 @@
                         android:visibility="gone"
                         tools:visibility="visible"
                         app:drawableStartCompat="@drawable/ic_history"
-                        android:text="@string/settings_title_page_history" />
+                        android:text="@string/pref_title_page_history" />
 
                     <TextView
                         android:id="@+id/menuItemDomainSettings"

@@ -116,7 +116,7 @@ class ConfigurationCustomSettingsFragment : ConfigurationSettingsFragment() {
      * See [AbstractSettingsFragment.titleResourceId]
      */
     override fun titleResourceId(): Int {
-        return R.string.settings_title_landscape
+        return R.string.pref_title_landscape
     }
 
     /**

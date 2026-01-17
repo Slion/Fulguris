@@ -52,13 +52,13 @@ class PortraitSettingsFragment : ConfigurationSettingsFragment() {
         super.onCreatePreferences(savedInstanceState,rootKey)
 
         // For access through options we show which configuration is currently loaded
-        findPreference<Preference>(getString(R.string.pref_key_back))?.summary = getString(R.string.settings_title_portrait)
+        findPreference<Preference>(getString(R.string.pref_key_back))?.summary = getString(R.string.pref_title_portrait)
     }
 
     /**
      * See [AbstractSettingsFragment.titleResourceId]
      */
     override fun titleResourceId(): Int {
-        return R.string.settings_title_portrait
+        return R.string.pref_title_portrait
     }
 }

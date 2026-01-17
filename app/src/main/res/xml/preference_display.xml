@@ -37,28 +37,28 @@
 
     <x.PreferenceCategory
         x:key="@string/pref_key_configurations"
-        a:title="@string/settings_title_configuration"
-        a:summary="@string/settings_summary_configuration"
+        a:title="@string/pref_title_configuration"
+        a:summary="@string/pref_summary_configuration"
         x:singleLineTitle="false"
         >
 
         <Preference
             x:fragment="fulguris.settings.fragment.PortraitSettingsFragment"
-            x:title="@string/settings_title_portrait"
+            x:title="@string/pref_title_portrait"
             x:icon="@drawable/ic_phone"
             x:singleLineTitle="false"
             />
 
         <Preference
             x:fragment="fulguris.settings.fragment.LandscapeSettingsFragment"
-            x:title="@string/settings_title_landscape"
+            x:title="@string/pref_title_landscape"
             x:icon="@drawable/ic_landscape"
             x:singleLineTitle="false"
             />
 
         <Preference
             x:key="@string/pref_key_add_configuration"
-            x:title="@string/settings_title_add_configuration"
+            x:title="@string/pref_title_add_configuration"
             x:icon="@drawable/ic_add"
             x:singleLineTitle="false"
             x:isPreferenceVisible="false"
@@ -73,23 +73,23 @@
 
         <Preference
             x:fragment="fulguris.settings.fragment.MenusSettingsFragment"
-            x:title="@string/settings_title_menus"
-            x:summary="@string/settings_summary_menus"
+            x:title="@string/pref_title_menus"
+            x:summary="@string/pref_summary_menus"
             x:icon="@drawable/ic_menu"
             x:singleLineTitle="false"
             />
 
         <Preference
             x:fragment="fulguris.settings.fragment.TabSettingsFragment"
-            x:title="@string/settings_title_tab"
-            x:summary="@string/settings_summary_tab"
+            x:title="@string/pref_title_tab"
+            x:summary="@string/pref_summary_tab"
             x:icon="@drawable/ic_tab"
             x:singleLineTitle="false"
             />
 
         <x.EnumListPreference
             x:key="@string/pref_key_toolbar_label"
-            x:title="@string/settings_title_toolbar_label"
+            x:title="@string/pref_title_toolbar_label"
             x:useSimpleSummaryProvider="true"
             x:defaultValue="Title"
             x:entries="@array/HeaderInfo"
@@ -100,7 +100,7 @@
 
         <x.EnumListPreference
             x:key="@string/pref_key_task_label"
-            x:title="@string/settings_title_task_label"
+            x:title="@string/pref_title_task_label"
             x:useSimpleSummaryProvider="true"
             x:defaultValue="AppName"
             x:entries="@array/HeaderInfo"
@@ -112,9 +112,9 @@
         <x.SwitchPreference
             a:defaultValue="false"
             a:key="@string/pref_key_task_icon"
-            a:title="@string/settings_title_task_icon"
-            a:summaryOn="@string/settings_summary_on_task_icon"
-            a:summaryOff="@string/settings_summary_off_task_icon"
+            a:title="@string/pref_title_task_icon"
+            a:summaryOn="@string/pref_summary_on_task_icon"
+            a:summaryOff="@string/pref_summary_off_task_icon"
             x:icon="@drawable/ic_image"
             x:singleLineTitle="false"
             />
@@ -167,8 +167,8 @@
         <x.SwitchPreference
             a:defaultValue="@bool/pref_default_swap_drawer"
             a:key="@string/pref_key_swap_tabs_and_bookmarks"
-            a:title="@string/settings_title_swap_bookmarks_and_tabs"
-            a:summary="@string/settings_summary_swap_bookmarks_and_tabs"
+            a:title="@string/pref_title_swap_bookmarks_and_tabs"
+            a:summary="@string/pref_summary_swap_bookmarks_and_tabs"
             a:dependency="@string/pref_key_use_bottom_sheets"
             x:icon="@drawable/ic_cache"
             x:iconSpaceReserved="true"
@@ -182,7 +182,7 @@
 
         <x.EnumListPreference
             x:key="@string/pref_key_layer_type"
-            x:title="@string/settings_title_layer_type"
+            x:title="@string/pref_title_layer_type"
             x:useSimpleSummaryProvider="true"
             x:defaultValue="Hardware"
             x:entries="@array/LayerTypes"

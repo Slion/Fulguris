@@ -61,7 +61,7 @@ class CookiesSettingsFragment : AbstractSettingsFragment() {
      * See [AbstractSettingsFragment.titleResourceId]
      */
     override fun titleResourceId(): Int {
-        return R.string.settings_title_cookies
+        return R.string.pref_title_cookies
     }
 
     // Set to the domain settings the user last opened
@@ -252,10 +252,10 @@ class CookiesSettingsFragment : AbstractSettingsFragment() {
         }
 
         if (cookiesCount!=0) {
-            catCookies?.summary = resources.getQuantityString(R.plurals.settings_summary_cookies, cookiesCount, cookiesCount)
+            catCookies?.summary = resources.getQuantityString(R.plurals.pref_summary_cookies, cookiesCount, cookiesCount)
             deleteAll?.isEnabled = true
         } else {
-            catCookies?.summary = resources.getString(R.string.settings_summary_cookies)
+            catCookies?.summary = resources.getString(R.string.pref_summary_cookies)
             deleteAll?.isEnabled = false
         }
 

@@ -4,7 +4,7 @@
 
     <x.PreferenceCategory
         a:key="@string/pref_key_page_history"
-        a:title="@string/settings_title_page_history">
+        a:title="@string/pref_title_page_history">
 
 
     </x.PreferenceCategory>

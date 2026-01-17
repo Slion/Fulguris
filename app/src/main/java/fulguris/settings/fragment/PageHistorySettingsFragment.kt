@@ -145,6 +145,6 @@ class PageHistorySettingsFragment : AbstractSettingsFragment() {
      * See [AbstractSettingsFragment.titleResourceId]
      */
     override fun titleResourceId(): Int {
-        return R.string.settings_title_page_history
+        return R.string.pref_title_page_history
     }
 }

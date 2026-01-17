@@ -260,25 +260,25 @@ class DomainPreferences constructor(
         if (!isDefault && exists(domain)) {
             // Order matches preference_domain_default.xml
             if (darkModeOverride) {
-                overrides.add(context.getString(R.string.settings_title_dark_mode_default))
+                overrides.add(context.getString(R.string.pref_title_dark_mode_default))
             }
             if (desktopModeOverride) {
-                overrides.add(context.getString(R.string.settings_title_desktop_mode_default))
+                overrides.add(context.getString(R.string.pref_title_desktop_mode_default))
             }
             if (javaScriptEnabledOverride) {
-                overrides.add(context.getString(R.string.settings_title_javascript))
+                overrides.add(context.getString(R.string.pref_title_javascript))
             }
             if (thirdPartyCookiesOverride) {
-                overrides.add(context.getString(R.string.settings_title_third_party_cookies))
+                overrides.add(context.getString(R.string.pref_title_third_party_cookies))
             }
             if (launchAppOverride) {
-                overrides.add(context.getString(R.string.settings_title_launch_app))
+                overrides.add(context.getString(R.string.pref_title_launch_app))
             }
             if (sslErrorOverride) {
-                overrides.add(context.getString(R.string.settings_title_ssl_error))
+                overrides.add(context.getString(R.string.pref_title_ssl_error))
             }
             if (incomingUrlActionOverride) {
-                overrides.add(context.getString(R.string.settings_title_incoming_url_action))
+                overrides.add(context.getString(R.string.pref_title_incoming_url_action))
             }
         }
 
@@ -294,7 +294,7 @@ class DomainPreferences constructor(
                 // Return domain name if no overrides exist
                 domain.ifEmpty {
                     Timber.w("getOverridesSummary does not make sense for default domain settings")
-                    context.getString(R.string.settings_summary_no_overrides)
+                    context.getString(R.string.pref_summary_no_overrides)
                 }
             } else {
                 overrides.joinToString(", ")

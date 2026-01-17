@@ -27,7 +27,7 @@
     <x.Preference
         a:key="@string/pref_key_back"
         a:title="@string/action_domain_settings"
-        a:summary="@string/settings_title_default_domain_settings"
+        a:summary="@string/pref_title_default_domain_settings"
         a:icon="@drawable/ic_arrow_back_ios"
         a:fragment="back"
         a:layout="@layout/preference_category_material"
@@ -47,8 +47,8 @@
     <x.SwitchPreference
         a:defaultValue="false"
         a:key="@string/pref_key_dark_mode"
-        a:title="@string/settings_title_dark_mode_default"
-        a:summary="@string/settings_summary_dark_mode_default"
+        a:title="@string/pref_title_dark_mode_default"
+        a:summary="@string/pref_summary_dark_mode_default"
         a:iconSpaceReserved="false"
         a:icon="@drawable/ic_dark_mode"
         a:singleLineTitle="false" />
@@ -56,8 +56,8 @@
     <x.SwitchPreference
         a:defaultValue="false"
         a:key="@string/pref_key_desktop_mode"
-        a:title="@string/settings_title_desktop_mode_default"
-        a:summary="@string/settings_summary_desktop_mode_default"
+        a:title="@string/pref_title_desktop_mode_default"
+        a:summary="@string/pref_summary_desktop_mode_default"
         a:iconSpaceReserved="false"
         a:icon="@drawable/ic_desktop"
         a:singleLineTitle="false" />
@@ -65,9 +65,9 @@
     <x.SwitchPreference
         a:defaultValue="true"
         a:key="@string/pref_key_javascript"
-        a:title="@string/settings_title_javascript"
-        a:summaryOn="@string/settings_summary_on_javascript"
-        a:summaryOff="@string/settings_summary_off_javascript"
+        a:title="@string/pref_title_javascript"
+        a:summaryOn="@string/pref_summary_on_javascript"
+        a:summaryOff="@string/pref_summary_off_javascript"
         a:icon="@drawable/ic_script"
         a:iconSpaceReserved="false"
         a:singleLineTitle="false" />
@@ -75,16 +75,16 @@
     <x.SwitchPreference
         a:defaultValue="true"
         a:key="@string/pref_key_third_party_cookies"
-        a:title="@string/settings_title_third_party_cookies"
-        a:summaryOn="@string/settings_summary_on_third_party_cookies"
-        a:summaryOff="@string/settings_summary_off_third_party_cookies"
+        a:title="@string/pref_title_third_party_cookies"
+        a:summaryOn="@string/pref_summary_on_third_party_cookies"
+        a:summaryOff="@string/pref_summary_off_third_party_cookies"
         a:icon="@drawable/ic_cookie_outline"
         a:iconSpaceReserved="false"
         a:singleLineTitle="false" />
 
     <x.EnumListPreference
         a:key="@string/pref_key_launch_app"
-        a:title="@string/settings_title_launch_app"
+        a:title="@string/pref_title_launch_app"
         a:useSimpleSummaryProvider="true"
         a:defaultValue="ASK"
         a:entries="@array/NoYesAsk"
@@ -95,7 +95,7 @@
 
     <x.EnumListPreference
         a:key="@string/pref_key_ssl_error"
-        a:title="@string/settings_title_ssl_error"
+        a:title="@string/pref_title_ssl_error"
         a:useSimpleSummaryProvider="true"
         a:defaultValue="ASK"
         a:entries="@array/AbortProceedAsk"
@@ -106,7 +106,7 @@
 
     <x.EnumListPreference
         a:key="@string/pref_key_incoming_url_action"
-        a:title="@string/settings_title_incoming_url_action"
+        a:title="@string/pref_title_incoming_url_action"
         a:useSimpleSummaryProvider="true"
         a:defaultValue="NEW_TAB"
         a:entries="@array/incoming_url_actions"
@@ -117,7 +117,7 @@
 
     <x.Preference
         a:key="@string/pref_key_reset_default_domain"
-        a:title="@string/settings_title_reset_default_domain"
+        a:title="@string/pref_title_reset_default_domain"
         a:icon="@drawable/ic_delete_forever_outline"
         a:fragment="back"
         a:allowDividerAbove="true"

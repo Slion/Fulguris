@@ -52,7 +52,7 @@ class MenusSettingsFragment : AbstractSettingsFragment() {
 
     override fun providePreferencesXmlResource() = R.xml.preference_menus
 
-    override fun titleResourceId(): Int = R.string.settings_title_menus
+    override fun titleResourceId(): Int = R.string.pref_title_menus
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         super.onCreatePreferences(savedInstanceState, rootKey)
@@ -109,7 +109,7 @@ class MenusSettingsFragment : AbstractSettingsFragment() {
         // Add reset preference
         val resetPref = x.Preference(requireContext()).apply {
             key = "reset_menus"
-            title = getString(R.string.settings_title_reset_menus)
+            title = getString(R.string.pref_title_reset_menus)
             icon = AppCompatResources.getDrawable(requireContext(), R.drawable.ic_reset_menu)
             isIconSpaceReserved = true
             isSingleLineTitle = false
@@ -137,7 +137,7 @@ class MenusSettingsFragment : AbstractSettingsFragment() {
         // Create fixed header preferences with sequential order
         val headerMain = x.Preference(requireContext()).apply {
             key = KEY_HEADER_MAIN
-            title = getString(R.string.settings_title_main_menu)
+            title = getString(R.string.pref_title_main_menu)
             isIconSpaceReserved = false
             isSingleLineTitle = false
             isSelectable = false // Make it non-clickable without graying it out
@@ -214,7 +214,7 @@ class MenusSettingsFragment : AbstractSettingsFragment() {
         // Create hidden menu header item
         val headerHidden = x.Preference(requireContext()).apply {
             key = KEY_HEADER_HIDDEN
-            title = getString(R.string.settings_title_hidden)
+            title = getString(R.string.pref_title_hidden)
             isIconSpaceReserved = false
             isSingleLineTitle = false
             isSelectable = false // Make it non-clickable without graying it out

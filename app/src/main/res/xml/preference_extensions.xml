@@ -13,9 +13,9 @@
     <!-- Global enable/disable switch -->
     <x.SwitchPreference
         x:key="@string/pref_key_extensions_enabled"
-        x:title="@string/settings_title_enable_extensions"
-        x:summaryOn="@string/settings_summary_on_enable_extensions"
-        x:summaryOff="@string/settings_summary_off_enable_extensions"
+        x:title="@string/pref_title_enable_extensions"
+        x:summaryOn="@string/pref_summary_on_enable_extensions"
+        x:summaryOff="@string/pref_summary_off_enable_extensions"
         x:defaultValue="false"
         x:singleLineTitle="false"
         x:iconSpaceReserved="false"/>
@@ -23,7 +23,7 @@
     <!-- Link to Greasy Fork -->
     <Preference
         x:title="@string/name_greasy_fork"
-        x:summary="@string/settings_summary_greasy_fork"
+        x:summary="@string/pref_summary_greasy_fork"
         x:icon="@drawable/ic_fork_outline"
         a:dependency="@string/pref_key_extensions_enabled"
         x:iconSpaceReserved="false"

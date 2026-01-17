@@ -46,8 +46,8 @@
     </x.Preference>
 
     <Preference
-        a:title="@string/settings_title_introduction"
-        a:summary="@string/settings_summary_introduction"
+        a:title="@string/pref_title_introduction"
+        a:summary="@string/pref_summary_introduction"
         x:iconSpaceReserved="false"
         x:icon="@drawable/ic_slideshow_outline"
         x:singleLineTitle="false">
@@ -72,8 +72,8 @@
     <x.PreferenceCategory a:title="@string/pref_category_title_contact_us">
 
         <Preference
-            a:title="@string/settings_title_discord"
-            a:summary="@string/settings_summary_discord"
+            a:title="@string/pref_title_discord"
+            a:summary="@string/pref_summary_discord"
             x:icon="@drawable/ic_discord"
             x:iconSpaceReserved="false"
             x:singleLineTitle="false" >
@@ -129,8 +129,8 @@
     <x.PreferenceCategory a:title="@string/pref_category_title_legal">
 
         <Preference
-            a:title="@string/settings_title_terms_and_conditions"
-            a:summary="@string/settings_summary_terms_and_conditions"
+            a:title="@string/pref_title_terms_and_conditions"
+            a:summary="@string/pref_summary_terms_and_conditions"
             x:iconSpaceReserved="false"
             x:icon="@drawable/ic_assignment_outline"
             x:singleLineTitle="false">
@@ -154,8 +154,8 @@
         </Preference>
 
         <Preference
-            a:title="@string/settings_title_privacy_policy"
-            a:summary="@string/settings_summary_privacy_policy"
+            a:title="@string/pref_title_privacy_policy"
+            a:summary="@string/pref_summary_privacy_policy"
             x:iconSpaceReserved="false"
             x:icon="@drawable/ic_privacy_tip_outline"
             x:singleLineTitle="false">

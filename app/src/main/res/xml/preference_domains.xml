@@ -32,8 +32,8 @@ To limit the number of items initial shown you can use: a:initialExpandedChildre
     <x.Preference
         a:defaultValue="false"
         a:key="@string/pref_key_delete_all_domains_settings"
-        a:title="@string/settings_title_domains_delete_all"
-        a:summary="@string/settings_summary_domains_delete_all"
+        a:title="@string/pref_title_domains_delete_all"
+        a:summary="@string/pref_summary_domains_delete_all"
         a:iconSpaceReserved="false"
         a:icon="@drawable/ic_delete_forever_outline"
         a:singleLineTitle="false"
@@ -43,8 +43,8 @@ To limit the number of items initial shown you can use: a:initialExpandedChildre
 
     <x.Preference
         a:key="@string/pref_key_clear_location_permissions"
-        a:title="@string/settings_title_clear_location_permissions"
-        a:summary="@string/settings_summary_clear_location_permissions"
+        a:title="@string/pref_title_clear_location_permissions"
+        a:summary="@string/pref_summary_clear_location_permissions"
         a:icon="@drawable/ic_wrong_location_outline"
         a:iconSpaceReserved="false"
         a:singleLineTitle="false"
@@ -55,7 +55,7 @@ To limit the number of items initial shown you can use: a:initialExpandedChildre
     <x.PreferenceCategory
         a:key="@string/pref_key_domains"
         a:icon="@drawable/ic_domain"
-        a:title="@string/settings_title_domains"
+        a:title="@string/pref_title_domains"
         a:singleLineTitle="false"
         a:order="100"/>
 

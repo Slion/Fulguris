@@ -50,6 +50,6 @@ class TabSettingsFragment : AbstractSettingsFragment() {
      * See [AbstractSettingsFragment.titleResourceId]
      */
     override fun titleResourceId(): Int {
-        return R.string.settings_title_tab
+        return R.string.pref_title_tab
     }
 }

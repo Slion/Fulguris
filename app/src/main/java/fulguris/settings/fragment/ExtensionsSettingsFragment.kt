@@ -44,7 +44,7 @@ class ExtensionsSettingsFragment : AbstractSettingsFragment() {
 
     private lateinit var scriptsCategory: PreferenceGroup
 
-    override fun titleResourceId(): Int = R.string.settings_title_extensions
+    override fun titleResourceId(): Int = R.string.pref_title_extensions
 
     override fun providePreferencesXmlResource(): Int = R.xml.preference_extensions
 

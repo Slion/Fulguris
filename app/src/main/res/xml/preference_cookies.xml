@@ -30,8 +30,8 @@
 
     <x.Preference
         a:key="@string/pref_key_back"
-        a:title="@string/settings_title_cookies"
-        a:summary="@string/settings_summary_manage_cookies"
+        a:title="@string/pref_title_cookies"
+        a:summary="@string/pref_summary_manage_cookies"
         a:icon="@drawable/ic_arrow_back_ios"
         a:fragment="back"
         a:layout="@layout/preference_category_material"
@@ -40,8 +40,8 @@
 
     <Preference
         a:key="@string/pref_key_delete_page_cookies"
-        a:title="@string/settings_title_cookies_delete_all"
-        a:summary="@string/settings_summary_cookies_delete_all"
+        a:title="@string/pref_title_cookies_delete_all"
+        a:summary="@string/pref_summary_cookies_delete_all"
         a:iconSpaceReserved="false"
         a:icon="@drawable/ic_delete_forever"
         a:singleLineTitle="false"
@@ -51,8 +51,8 @@
     <x.PreferenceCategory
         a:key="@string/pref_key_cat_cookies"
         a:icon="@drawable/ic_cookie_outline"
-        a:title="@string/settings_title_cookies"
-        a:summary="@string/settings_summary_cookies"
+        a:title="@string/pref_title_cookies"
+        a:summary="@string/pref_summary_cookies"
         a:singleLineTitle="false"
         />
 

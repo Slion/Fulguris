@@ -25,7 +25,7 @@
         <x.SliderPreference
             a:key="@string/pref_key_on_tab_change_animation_duration"
             a:dependency="@string/pref_key_on_tab_change_show_animation"
-            a:title="@string/settings_title_animation_duration"
+            a:title="@string/pref_title_animation_duration"
             a:icon="@drawable/ic_timer"
             a:seekBarIncrement="25"
             a:showSeekBarValue="true"
@@ -73,7 +73,7 @@
         <x.SliderPreference
             a:key="@string/pref_key_on_tab_flip_animation_duration"
             a:dependency="@string/pref_key_on_tab_back_show_animation"
-            a:title="@string/settings_title_animation_duration"
+            a:title="@string/pref_title_animation_duration"
             a:icon="@drawable/ic_timer"
             a:seekBarIncrement="25"
             a:showSeekBarValue="true"

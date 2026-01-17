@@ -29,8 +29,8 @@
 
     <Preference
         x:fragment="fulguris.settings.fragment.DomainsSettingsFragment"
-        x:summary="@string/settings_summary_domains"
-        x:title="@string/settings_title_domains"
+        x:summary="@string/pref_summary_domains"
+        x:title="@string/pref_title_domains"
         x:icon="@drawable/ic_domain"
         x:singleLineTitle="false"
         />
@@ -45,8 +45,8 @@
 
     <Preference
         x:fragment="fulguris.settings.fragment.ExtensionsSettingsFragment"
-        x:title="@string/settings_title_extensions"
-        x:summary="@string/settings_summary_extensions"
+        x:title="@string/pref_title_extensions"
+        x:summary="@string/pref_summary_extensions"
         x:icon="@drawable/ic_extension_outline"
         x:singleLineTitle="false"
         />
@@ -70,7 +70,7 @@
     <Preference
         x:fragment="fulguris.settings.fragment.SponsorshipSettingsFragment"
         x:title="@string/settings_contribute"
-        x:summary="@string/settings_summary_contribute"
+        x:summary="@string/pref_summary_contribute"
         x:icon="@drawable/ic_giftcard"
         x:singleLineTitle="false"
         />
@@ -79,7 +79,7 @@
     <Preference
         x:fragment="fulguris.settings.fragment.AboutSettingsFragment"
         x:title="@string/settings_about"
-        x:summary="@string/settings_summary_about"
+        x:summary="@string/pref_summary_about"
         x:icon="@drawable/ic_info"
         x:singleLineTitle="false"
         />

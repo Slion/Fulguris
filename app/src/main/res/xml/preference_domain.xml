@@ -27,7 +27,7 @@
     <x.Preference
         x:key="@string/pref_key_back"
         x:title="@string/action_domain_settings"
-        x:summary="@string/settings_summary_domains"
+        x:summary="@string/pref_summary_domains"
         x:icon="@drawable/ic_arrow_back_ios"
         x:fragment="back"
         x:layout="@layout/preference_category_material"
@@ -73,7 +73,7 @@
     <x.Preference
         x:fragment="fulguris.settings.fragment.DomainSettingsFragment"
         x:key="@string/pref_key_parent"
-        x:title="@string/settings_title_parent"
+        x:title="@string/pref_title_parent"
         x:icon="@drawable/ic_domain"
         x:singleLineTitle="false"
         />
@@ -101,22 +101,22 @@
     </x.PreferenceCategory>
 
     <x.PreferenceCategory
-        x:title="@string/settings_title_dark_mode_default">
+        x:title="@string/pref_title_dark_mode_default">
 
     <x.SwitchPreference
         x:defaultValue="false"
         x:key="@string/pref_key_dark_mode_override"
-        x:title="@string/settings_title_override"
-        x:summaryOn="@string/settings_summary_on_override"
-        x:summaryOff="@string/settings_summary_off_override"
+        x:title="@string/pref_title_override"
+        x:summaryOn="@string/pref_summary_on_override"
+        x:summaryOff="@string/pref_summary_off_override"
         x:iconSpaceReserved="true"
         x:singleLineTitle="false" />
 
     <x.SwitchPreference
         x:defaultValue="false"
         x:key="@string/pref_key_dark_mode"
-        x:title="@string/settings_title_dark_mode_default"
-        x:summary="@string/settings_summary_dark_mode_default"
+        x:title="@string/pref_title_dark_mode_default"
+        x:summary="@string/pref_summary_dark_mode_default"
         x:dependency="@string/pref_key_dark_mode_override"
         x:iconSpaceReserved="false"
         x:icon="@drawable/ic_dark_mode"
@@ -125,22 +125,22 @@
     </x.PreferenceCategory>
 
     <x.PreferenceCategory
-        x:title="@string/settings_title_desktop_mode_default">
+        x:title="@string/pref_title_desktop_mode_default">
 
         <x.SwitchPreference
             x:defaultValue="false"
             x:key="@string/pref_key_desktop_mode_override"
-            x:title="@string/settings_title_override"
-            x:summaryOn="@string/settings_summary_on_override"
-            x:summaryOff="@string/settings_summary_off_override"
+            x:title="@string/pref_title_override"
+            x:summaryOn="@string/pref_summary_on_override"
+            x:summaryOff="@string/pref_summary_off_override"
             x:iconSpaceReserved="true"
             x:singleLineTitle="false" />
 
         <x.SwitchPreference
             x:defaultValue="false"
             x:key="@string/pref_key_desktop_mode"
-            x:title="@string/settings_title_desktop_mode_default"
-            x:summary="@string/settings_summary_desktop_mode_default"
+            x:title="@string/pref_title_desktop_mode_default"
+            x:summary="@string/pref_summary_desktop_mode_default"
             x:dependency="@string/pref_key_desktop_mode_override"
             x:iconSpaceReserved="false"
             x:icon="@drawable/ic_desktop"
@@ -149,23 +149,23 @@
     </x.PreferenceCategory>
 
     <x.PreferenceCategory
-        x:title="@string/settings_title_javascript">
+        x:title="@string/pref_title_javascript">
 
         <x.SwitchPreference
             x:defaultValue="false"
             x:key="@string/pref_key_javascript_override"
-            x:title="@string/settings_title_override"
-            x:summaryOn="@string/settings_summary_on_override"
-            x:summaryOff="@string/settings_summary_off_override"
+            x:title="@string/pref_title_override"
+            x:summaryOn="@string/pref_summary_on_override"
+            x:summaryOff="@string/pref_summary_off_override"
             x:iconSpaceReserved="true"
             x:singleLineTitle="false" />
 
         <x.SwitchPreference
             x:defaultValue="true"
             x:key="@string/pref_key_javascript"
-            x:title="@string/settings_title_javascript"
-            x:summaryOn="@string/settings_summary_on_javascript"
-            x:summaryOff="@string/settings_summary_off_javascript"
+            x:title="@string/pref_title_javascript"
+            x:summaryOn="@string/pref_summary_on_javascript"
+            x:summaryOff="@string/pref_summary_off_javascript"
             x:dependency="@string/pref_key_javascript_override"
             x:icon="@drawable/ic_script"
             x:iconSpaceReserved="false"
@@ -174,23 +174,23 @@
     </x.PreferenceCategory>
 
     <x.PreferenceCategory
-        x:title="@string/settings_title_third_party_cookies">
+        x:title="@string/pref_title_third_party_cookies">
 
         <x.SwitchPreference
             x:defaultValue="false"
             x:key="@string/pref_key_third_party_cookies_override"
-            x:title="@string/settings_title_override"
-            x:summaryOn="@string/settings_summary_on_override"
-            x:summaryOff="@string/settings_summary_off_override"
+            x:title="@string/pref_title_override"
+            x:summaryOn="@string/pref_summary_on_override"
+            x:summaryOff="@string/pref_summary_off_override"
             x:iconSpaceReserved="true"
             x:singleLineTitle="false" />
 
         <x.SwitchPreference
             x:defaultValue="true"
             x:key="@string/pref_key_third_party_cookies"
-            x:title="@string/settings_title_third_party_cookies"
-            x:summaryOn="@string/settings_summary_on_third_party_cookies"
-            x:summaryOff="@string/settings_summary_off_third_party_cookies"
+            x:title="@string/pref_title_third_party_cookies"
+            x:summaryOn="@string/pref_summary_on_third_party_cookies"
+            x:summaryOff="@string/pref_summary_off_third_party_cookies"
             x:dependency="@string/pref_key_third_party_cookies_override"
             x:icon="@drawable/ic_cookie_outline"
             x:iconSpaceReserved="false"
@@ -199,20 +199,20 @@
     </x.PreferenceCategory>
 
     <x.PreferenceCategory
-        x:title="@string/settings_title_launch_app">
+        x:title="@string/pref_title_launch_app">
 
         <x.SwitchPreference
             x:defaultValue="false"
             x:key="@string/pref_key_launch_app_override"
-            x:title="@string/settings_title_override"
-            x:summaryOn="@string/settings_summary_on_override"
-            x:summaryOff="@string/settings_summary_off_override"
+            x:title="@string/pref_title_override"
+            x:summaryOn="@string/pref_summary_on_override"
+            x:summaryOff="@string/pref_summary_off_override"
             x:iconSpaceReserved="true"
             x:singleLineTitle="false" />
 
         <x.EnumListPreference
             x:key="@string/pref_key_launch_app"
-            x:title="@string/settings_title_launch_app"
+            x:title="@string/pref_title_launch_app"
             x:useSimpleSummaryProvider="true"
             x:defaultValue="YES"
             x:entries="@array/NoYesAsk"
@@ -225,21 +225,21 @@
     </x.PreferenceCategory>
 
     <x.PreferenceCategory
-        x:title="@string/settings_title_ssl_error"
-        x:summary="@string/settings_summary_ssl_error">
+        x:title="@string/pref_title_ssl_error"
+        x:summary="@string/pref_summary_ssl_error">
 
         <x.SwitchPreference
             x:defaultValue="false"
             x:key="@string/pref_key_ssl_error_override"
-            x:title="@string/settings_title_override"
-            x:summaryOn="@string/settings_summary_on_override"
-            x:summaryOff="@string/settings_summary_off_override"
+            x:title="@string/pref_title_override"
+            x:summaryOn="@string/pref_summary_on_override"
+            x:summaryOff="@string/pref_summary_off_override"
             x:iconSpaceReserved="true"
             x:singleLineTitle="false" />
 
         <x.EnumListPreference
             x:key="@string/pref_key_ssl_error"
-            x:title="@string/settings_title_ssl_error"
+            x:title="@string/pref_title_ssl_error"
             x:useSimpleSummaryProvider="true"
             x:defaultValue="ASK"
             x:entries="@array/AbortProceedAsk"
@@ -252,21 +252,21 @@
     </x.PreferenceCategory>
 
     <x.PreferenceCategory
-        x:title="@string/settings_title_incoming_url_action"
-        x:summary="@string/settings_summary_incoming_url_action">
+        x:title="@string/pref_title_incoming_url_action"
+        x:summary="@string/pref_summary_incoming_url_action">
 
         <x.SwitchPreference
             x:defaultValue="false"
             x:key="@string/pref_key_incoming_url_action_override"
-            x:title="@string/settings_title_override"
-            x:summaryOn="@string/settings_summary_on_override"
-            x:summaryOff="@string/settings_summary_off_override"
+            x:title="@string/pref_title_override"
+            x:summaryOn="@string/pref_summary_on_override"
+            x:summaryOff="@string/pref_summary_off_override"
             x:iconSpaceReserved="true"
             x:singleLineTitle="false" />
 
         <x.EnumListPreference
             x:key="@string/pref_key_incoming_url_action"
-            x:title="@string/settings_title_incoming_url_action"
+            x:title="@string/pref_title_incoming_url_action"
             x:useSimpleSummaryProvider="true"
             x:defaultValue="NEW_TAB"
             x:entries="@array/incoming_url_actions"
@@ -280,7 +280,7 @@
 
     <x.Preference
         x:key="@string/pref_key_delete"
-        x:title="@string/settings_title_delete_domain_settings"
+        x:title="@string/pref_title_delete_domain_settings"
         x:icon="@drawable/ic_delete_forever_outline"
         x:allowDividerAbove="true"
         x:fragment="back"

@@ -97,7 +97,7 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
      * See [AbstractSettingsFragment.titleResourceId]
      */
     override fun titleResourceId(): Int {
-        return R.string.settings_title_domains
+        return R.string.pref_title_domains
     }
 
     override fun providePreferencesXmlResource() = R.xml.preference_domains
@@ -111,7 +111,7 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
         catDomains = findPreference<x.PreferenceCategory>(resources.getString(R.string.pref_key_domains))?.apply {
             isOrderingAsAdded = false
             // Initial summary will be updated after scanning
-            summary = getString(R.string.settings_summary_loading)
+            summary = getString(R.string.pref_summary_loading)
         }
 
         deleteAll = clickablePreference(
@@ -167,10 +167,10 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
      */
     private fun updateDomainCountSummary() {
         catDomains?.summary = if (domainCount == 0) {
-            getString(R.string.settings_summary_no_overrides)
+            getString(R.string.pref_summary_no_overrides)
         } else {
             resources.getQuantityString(
-                R.plurals.settings_summary_overrides,
+                R.plurals.pref_summary_overrides,
                 domainCount,
                 domainCount
             )
@@ -380,8 +380,8 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
         // Add default domain settings entry
         x.Preference(requireContext()).apply {
             isSingleLineTitle = false
-            title = getString(R.string.settings_title_default_domain_settings)
-            summary = getString(R.string.settings_summary_default_domain_settings)
+            title = getString(R.string.pref_title_default_domain_settings)
+            summary = getString(R.string.pref_summary_default_domain_settings)
             order = 5
             fragment = "fulguris.settings.fragment.DomainSettingsFragment"
             onPreferenceClickListener = Preference.OnPreferenceClickListener {

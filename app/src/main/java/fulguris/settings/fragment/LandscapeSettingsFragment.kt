@@ -52,13 +52,13 @@ class LandscapeSettingsFragment : ConfigurationSettingsFragment() {
         super.onCreatePreferences(savedInstanceState,rootKey)
 
         // For access through options we show which configuration is currently loaded
-        findPreference<Preference>(getString(R.string.pref_key_back))?.summary = getString(R.string.settings_title_landscape)
+        findPreference<Preference>(getString(R.string.pref_key_back))?.summary = getString(R.string.pref_title_landscape)
     }
 
     /**
      * See [AbstractSettingsFragment.titleResourceId]
      */
     override fun titleResourceId(): Int {
-        return R.string.settings_title_landscape
+        return R.string.pref_title_landscape
     }
 }

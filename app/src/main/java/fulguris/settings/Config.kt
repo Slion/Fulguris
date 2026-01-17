@@ -35,8 +35,8 @@ class Config(idOrFile: String) {
         var name = id.replace(filePrefix,  "")
         name = name.replace("-",  " - ")
         name = name.replace(" - sw",  "° - sw")
-        name = name.replace("landscape", aContext.getString(R.string.settings_title_landscape))
-        name = name.replace("portrait", aContext.getString(R.string.settings_title_portrait))
+        name = name.replace("landscape", aContext.getString(R.string.pref_title_landscape))
+        name = name.replace("portrait", aContext.getString(R.string.pref_title_portrait))
         return "${name}dp"
     }
 

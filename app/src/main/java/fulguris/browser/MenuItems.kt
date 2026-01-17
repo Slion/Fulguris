@@ -156,7 +156,7 @@ object MenuItems {
         // Tab menu items (can also appear in both menus)
         MenuItemId.TabHistory to MenuItem(
             id = MenuItemId.TabHistory,
-            labelId = R.string.settings_title_page_history,
+            labelId = R.string.pref_title_page_history,
             iconId = R.drawable.ic_history,
             viewId = R.id.menuItemPageHistory,
             canBeInMainMenu = true,
@@ -228,7 +228,7 @@ object MenuItems {
         ),
         MenuItemId.DomainSettings to MenuItem(
             id = MenuItemId.DomainSettings,
-            labelId = R.string.settings_title_domains,
+            labelId = R.string.pref_title_domains,
             iconId = R.drawable.ic_domain,
             viewId = R.id.menuItemDomainSettings,
             canBeInMainMenu = true,
