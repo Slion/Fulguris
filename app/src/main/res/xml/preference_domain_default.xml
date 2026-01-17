@@ -78,7 +78,7 @@
         a:title="@string/settings_title_third_party_cookies"
         a:summaryOn="@string/settings_summary_on_third_party_cookies"
         a:summaryOff="@string/settings_summary_off_third_party_cookies"
-        a:icon="@drawable/ic_cookie"
+        a:icon="@drawable/ic_cookie_outline"
         a:iconSpaceReserved="false"
         a:singleLineTitle="false" />
 

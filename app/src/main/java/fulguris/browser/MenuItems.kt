@@ -276,7 +276,7 @@ object MenuItems {
         MenuItemId.Cookies to MenuItem(
             id = MenuItemId.Cookies,
             labelId = R.string.action_cookies,
-            iconId = R.drawable.ic_cookie,
+            iconId = R.drawable.ic_cookie_outline,
             viewId = R.id.menuItemCookies,
             canBeInMainMenu = true,
             canBeInTabMenu = true,

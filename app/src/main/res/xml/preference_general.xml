@@ -220,7 +220,7 @@
             android:key="@string/pref_key_cookies"
             android:summary="@string/recommended"
             android:title="@string/cookies"
-            app:icon="@drawable/ic_cookie"
+            app:icon="@drawable/ic_cookie_outline"
             app:iconSpaceReserved="false"
             app:singleLineTitle="false" />
 
@@ -228,7 +228,7 @@
             android:defaultValue="false"
             android:key="@string/pref_key_cookies_incognito"
             android:title="@string/incognito_cookies"
-            app:icon="@drawable/ic_cookie"
+            app:icon="@drawable/ic_cookie_outline"
             app:iconSpaceReserved="false"
             app:singleLineTitle="false" />
 

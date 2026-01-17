@@ -192,7 +192,7 @@
             x:summaryOn="@string/settings_summary_on_third_party_cookies"
             x:summaryOff="@string/settings_summary_off_third_party_cookies"
             x:dependency="@string/pref_key_third_party_cookies_override"
-            x:icon="@drawable/ic_cookie"
+            x:icon="@drawable/ic_cookie_outline"
             x:iconSpaceReserved="false"
             x:singleLineTitle="false" />
 

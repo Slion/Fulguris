@@ -349,7 +349,7 @@
                         style="@style/BrowserTextMenuItem"
                         android:visibility="gone"
                         tools:visibility="visible"
-                        app:drawableStartCompat="@drawable/ic_cookie"
+                        app:drawableStartCompat="@drawable/ic_cookie_outline"
                         android:text="@string/action_cookies" />
 
                     <TextView

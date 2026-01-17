@@ -17,7 +17,7 @@
             a:fragment="fulguris.settings.fragment.CookiesSettingsFragment"
             a:title="@string/settings_title_cookies"
             a:summary="@string/settings_summary_manage_cookies"
-            a:icon="@drawable/ic_cookie"
+            a:icon="@drawable/ic_cookie_outline"
             a:singleLineTitle="false"
             />
 

@@ -4926,7 +4926,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
                 builder.show()
             },
             DialogItem(
-                icon = this.drawable(R.drawable.cookie_outline),
+                icon = this.drawable(R.drawable.ic_cookie_outline),
                 title = R.string.edit_cookies) {
                 val cookieManager = CookieManager.getInstance()
                 if (cookieManager.getCookie(currentTab.url) != null) {
