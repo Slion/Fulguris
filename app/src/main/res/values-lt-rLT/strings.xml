@@ -731,8 +731,8 @@
     <string name="pref_title_extensions">Plėtiniai</string>
     <string name="pref_summary_extensions">Tvarkyti plėtinių scenarijus</string>
     <string name="pref_title_enable_extensions">Įjungti plėtinius</string>
-    <string name="pref_summary_on_enable_extensions">Plėtiniai gali įterpti JavaScript kodą į tinklalapius</string>
-    <string name="pref_summary_off_enable_extensions">Tinklalapiai įkeliami be pakeitimų</string>
+    <string name="pref_summary_on_enable_extensions">Tinklalapiai gali būti keičiami</string>
+    <string name="pref_summary_off_enable_extensions">Tinklalapiai nėra keičiami</string>
     <string name="pref_summary_greasy_fork">Naršyti ir įdiegti plėtinius iš Greasy Fork</string>
     <string name="pref_category_title_installed_extensions">Įdiegti plėtiniai</string>
     <string name="pref_category_summary_no_extensions">Dar neįdiegta jokių naudotojo scenarijų</string>

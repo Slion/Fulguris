@@ -728,8 +728,8 @@
     <string name="pref_title_extensions">Проширења</string>
     <string name="pref_summary_extensions">Upravljaj skriptama proširenja</string>
     <string name="pref_title_enable_extensions">Омогући проширења</string>
-    <string name="pref_summary_on_enable_extensions">Проширења могу убацивати JavaScript код у веб странице</string>
-    <string name="pref_summary_off_enable_extensions">Веб странице се учитавају без измена</string>
+    <string name="pref_summary_on_enable_extensions">Веб странице могу бити измењене</string>
+    <string name="pref_summary_off_enable_extensions">Веб странице се не мењају</string>
     <string name="pref_summary_greasy_fork">Прегледај и инсталирај проширења са Greasy Fork</string>
     <string name="pref_category_title_installed_extensions">Инсталирана проширења</string>
     <string name="pref_category_summary_no_extensions">Још није инсталирана ниједна корисничка скрипта</string>

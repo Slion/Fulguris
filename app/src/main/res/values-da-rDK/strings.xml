@@ -725,8 +725,8 @@
     <string name="pref_title_extensions">Udvidelser</string>
     <string name="pref_summary_extensions">Administrer udvidelsesscripts</string>
     <string name="pref_title_enable_extensions">Aktiver udvidelser</string>
-    <string name="pref_summary_on_enable_extensions">Udvidelser kan indsætte JavaScript-kode i websider</string>
-    <string name="pref_summary_off_enable_extensions">Websider indlæses uden ændringer</string>
+    <string name="pref_summary_on_enable_extensions">Websider kan modificeres</string>
+    <string name="pref_summary_off_enable_extensions">Websider modificeres ikke</string>
     <string name="pref_summary_greasy_fork">Gennemse og installer udvidelser fra Greasy Fork</string>
     <string name="pref_category_title_installed_extensions">Installerede udvidelser</string>
     <string name="pref_category_summary_no_extensions">Ingen brugerscripts installeret endnu</string>

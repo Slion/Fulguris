@@ -731,8 +731,8 @@
     <string name="pref_title_extensions">Rozszerzenia</string>
     <string name="pref_summary_extensions">Zarządzaj skryptami rozszerzeń</string>
     <string name="pref_title_enable_extensions">Włącz rozszerzenia</string>
-    <string name="pref_summary_on_enable_extensions">Rozszerzenia mogą wstrzykiwać kod JavaScript do stron internetowych</string>
-    <string name="pref_summary_off_enable_extensions">Strony internetowe ładują się bez modyfikacji</string>
+    <string name="pref_summary_on_enable_extensions">Strony internetowe mogą być modyfikowane</string>
+    <string name="pref_summary_off_enable_extensions">Strony internetowe nie są modyfikowane</string>
     <string name="pref_summary_greasy_fork">Przeglądaj i instaluj rozszerzenia z Greasy Fork</string>
     <string name="pref_category_title_installed_extensions">Zainstalowane rozszerzenia</string>
     <string name="pref_category_summary_no_extensions">Nie zainstalowano jeszcze żadnych skryptów użytkownika</string>

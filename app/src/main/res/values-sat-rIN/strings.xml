@@ -725,8 +725,8 @@
     <string name="pref_title_extensions">ᱮᱠᱥᱴᱮᱱᱥᱚᱱ</string>
     <string name="pref_summary_extensions">ᱮᱠᱥᱴᱮᱱᱥᱚᱱ ᱥᱠᱨᱤᱯᱴ ᱢᱮᱱᱮᱡᱽ ᱢᱮ</string>
     <string name="pref_title_enable_extensions">ᱮᱠᱥᱴᱮᱱᱥᱚᱱ ᱮᱢ ᱪᱷᱚ</string>
-    <string name="pref_summary_on_enable_extensions">ᱮᱠᱥᱴᱮᱱᱥᱚᱱ ᱣᱮᱵᱽ ᱥᱟᱦᱴᱟ ᱨᱮ JavaScript ᱠᱳᱰ ᱫᱚᱦᱚ ᱫᱟᱲᱮᱭᱟᱜ-ᱟ</string>
-    <string name="pref_summary_off_enable_extensions">ᱣᱮᱵᱽ ᱥᱟᱦᱴᱟ ᱵᱟᱝ ᱵᱚᱫᱚᱞ ᱛᱮ ᱞᱳᱰ ᱦᱩᱭᱩᱜ-ᱟ</string>
+    <string name="pref_summary_on_enable_extensions">ᱣᱮᱵᱽ ᱥᱟᱦᱴᱟ ᱵᱚᱫᱚᱞ ᱫᱟᱲᱮᱭᱟᱜ-ᱟ</string>
+    <string name="pref_summary_off_enable_extensions">ᱣᱮᱵᱽ ᱥᱟᱦᱴᱟ ᱵᱟᱝ ᱵᱚᱫᱚᱞᱚᱜ-ᱟ</string>
     <string name="pref_summary_greasy_fork">Greasy Fork ᱠᱷᱚᱱ ᱮᱠᱥᱴᱮᱱᱥᱚᱱ ᱧᱮᱞ ᱟᱨ ᱵᱚᱦᱟᱞ ᱢᱮ</string>
     <string name="pref_category_title_installed_extensions">ᱵᱚᱦᱟᱞ ᱠᱟᱱ ᱮᱠᱥᱴᱮᱱᱥᱚᱱ</string>
     <string name="pref_category_summary_no_extensions">ᱱᱤᱛᱚᱜ ᱦᱟᱹᱵᱤᱡ ᱪᱮᱫ ᱵᱮᱵᱷᱟᱨᱤᱭᱟᱹ ᱥᱠᱨᱤᱯᱴ ᱵᱟᱭ ᱵᱚᱦᱟᱞ ᱟᱠᱟᱱᱟ</string>

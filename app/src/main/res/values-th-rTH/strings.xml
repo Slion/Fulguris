@@ -723,8 +723,8 @@
     <string name="pref_title_extensions">ส่วนขยาย</string>
     <string name="pref_summary_extensions">จัดการสคริปต์ส่วนขยาย</string>
     <string name="pref_title_enable_extensions">เปิดใช้งานส่วนขยาย</string>
-    <string name="pref_summary_on_enable_extensions">ส่วนขยายสามารถแทรกโค้ด JavaScript ลงในหน้าเว็บ</string>
-    <string name="pref_summary_off_enable_extensions">หน้าเว็บโหลดโดยไม่มีการแก้ไข</string>
+    <string name="pref_summary_on_enable_extensions">หน้าเว็บสามารถถูกแก้ไขได้</string>
+    <string name="pref_summary_off_enable_extensions">หน้าเว็บไม่ถูกแก้ไข</string>
     <string name="pref_summary_greasy_fork">เรียกดูและติดตั้งส่วนขยายจาก Greasy Fork</string>
     <string name="pref_category_title_installed_extensions">ส่วนขยายที่ติดตั้ง</string>
     <string name="pref_category_summary_no_extensions">ยังไม่ได้ติดตั้งสคริปต์ผู้ใช้</string>

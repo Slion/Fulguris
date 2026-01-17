@@ -725,8 +725,8 @@
     <string name="pref_title_extensions">Utvidelser</string>
     <string name="pref_summary_extensions">Administrer utvidelsesscripter</string>
     <string name="pref_title_enable_extensions">Aktiver utvidelser</string>
-    <string name="pref_summary_on_enable_extensions">Utvidelser kan injisere JavaScript-kode i nettsider</string>
-    <string name="pref_summary_off_enable_extensions">Nettsider lastes inn uten endringer</string>
+    <string name="pref_summary_on_enable_extensions">Nettsider kan endres</string>
+    <string name="pref_summary_off_enable_extensions">Nettsider endres ikke</string>
     <string name="pref_summary_greasy_fork">Bla gjennom og installer utvidelser fra Greasy Fork</string>
     <string name="pref_category_title_installed_extensions">Installerte utvidelser</string>
     <string name="pref_category_summary_no_extensions">Ingen brukerscript installert ennå</string>

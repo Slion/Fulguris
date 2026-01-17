@@ -829,8 +829,8 @@
     <string name="pref_title_extensions">Extensions</string>
     <string name="pref_summary_extensions">Manage extension scripts</string>
     <string name="pref_title_enable_extensions">Enable extensions</string>
-    <string name="pref_summary_on_enable_extensions">Extensions can inject JavaScript code into web pages</string>
-    <string name="pref_summary_off_enable_extensions">Web pages load without modifications</string>
+    <string name="pref_summary_on_enable_extensions">Web pages can be modified</string>
+    <string name="pref_summary_off_enable_extensions">Web pages are not modified</string>
     <string name="pref_summary_greasy_fork">Browse and install extensions from Greasy Fork</string>
     <string name="pref_category_title_installed_extensions">Installed extensions</string>
     <string name="pref_category_summary_no_extensions">No user scripts installed yet</string>

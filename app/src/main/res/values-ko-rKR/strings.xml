@@ -723,8 +723,8 @@
     <string name="pref_title_extensions">확장 프로그램</string>
     <string name="pref_summary_extensions">확장 스크립트 관리</string>
     <string name="pref_title_enable_extensions">확장 프로그램 활성화</string>
-    <string name="pref_summary_on_enable_extensions">확장 프로그램이 웹 페이지에 JavaScript 코드를 삽입할 수 있습니다</string>
-    <string name="pref_summary_off_enable_extensions">웹 페이지가 수정 없이 로드됩니다</string>
+    <string name="pref_summary_on_enable_extensions">웹 페이지를 수정할 수 있습니다</string>
+    <string name="pref_summary_off_enable_extensions">웹 페이지는 수정되지 않습니다</string>
     <string name="pref_summary_greasy_fork">Greasy Fork에서 확장 프로그램 탐색 및 설치</string>
     <string name="pref_category_title_installed_extensions">설치된 확장 프로그램</string>
     <string name="pref_category_summary_no_extensions">아직 사용자 스크립트가 설치되지 않았습니다</string>

@@ -725,8 +725,8 @@
     <string name="pref_title_extensions">Uitbreidings</string>
     <string name="pref_summary_extensions">Bestuur uitbreidingskrifte</string>
     <string name="pref_title_enable_extensions">Aktiveer uitbreidings</string>
-    <string name="pref_summary_on_enable_extensions">Uitbreidings kan JavaScript-kode in webbladsye inspuit</string>
-    <string name="pref_summary_off_enable_extensions">Webbladsye laai sonder wysigings</string>
+    <string name="pref_summary_on_enable_extensions">Webbladsye kan gewysig word</string>
+    <string name="pref_summary_off_enable_extensions">Webbladsye word nie gewysig nie</string>
     <string name="pref_summary_greasy_fork">Blaai deur en installeer uitbreidings vanaf Greasy Fork</string>
     <string name="pref_category_title_installed_extensions">Geïnstalleerde uitbreidings</string>
     <string name="pref_category_summary_no_extensions">Nog geen gebruikerskripte geïnstalleer nie</string>

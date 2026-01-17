@@ -731,8 +731,8 @@
     <string name="pref_title_extensions">Розширення</string>
     <string name="pref_summary_extensions">Керувати скриптами розширень</string>
     <string name="pref_title_enable_extensions">Увімкнути розширення</string>
-    <string name="pref_summary_on_enable_extensions">Розширення можуть впроваджувати JavaScript-код у веб-сторінки</string>
-    <string name="pref_summary_off_enable_extensions">Веб-сторінки завантажуються без змін</string>
+    <string name="pref_summary_on_enable_extensions">Веб-сторінки можуть бути змінені</string>
+    <string name="pref_summary_off_enable_extensions">Веб-сторінки не змінюються</string>
     <string name="pref_summary_greasy_fork">Перегляд та встановлення розширень з Greasy Fork</string>
     <string name="pref_category_title_installed_extensions">Встановлені розширення</string>
     <string name="pref_category_summary_no_extensions">Ще не встановлено жодного користувацького скрипта</string>

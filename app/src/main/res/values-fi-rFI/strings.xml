@@ -725,8 +725,8 @@
     <string name="pref_title_extensions">Laajennukset</string>
     <string name="pref_summary_extensions">Hallitse laajennusskriptejä</string>
     <string name="pref_title_enable_extensions">Ota laajennukset käyttöön</string>
-    <string name="pref_summary_on_enable_extensions">Laajennukset voivat lisätä JavaScript-koodia verkkosivuille</string>
-    <string name="pref_summary_off_enable_extensions">Verkkosivut latautuvat ilman muutoksia</string>
+    <string name="pref_summary_on_enable_extensions">Verkkosivuja voidaan muokata</string>
+    <string name="pref_summary_off_enable_extensions">Verkkosivuja ei muokata</string>
     <string name="pref_summary_greasy_fork">Selaa ja asenna laajennuksia Greasy Forkista</string>
     <string name="pref_category_title_installed_extensions">Asennetut laajennukset</string>
     <string name="pref_category_summary_no_extensions">Ei käyttäjäskriptejä asennettu vielä</string>

@@ -725,8 +725,8 @@
     <string name="pref_title_extensions">Uzantılar</string>
     <string name="pref_summary_extensions">Uzantı betiklerini yönet</string>
     <string name="pref_title_enable_extensions">Uzantıları etkinleştir</string>
-    <string name="pref_summary_on_enable_extensions">Uzantılar web sayfalarına JavaScript kodu ekleyebilir</string>
-    <string name="pref_summary_off_enable_extensions">Web sayfaları değişiklik yapılmadan yüklenir</string>
+    <string name="pref_summary_on_enable_extensions">Web sayfaları değiştirilebilir</string>
+    <string name="pref_summary_off_enable_extensions">Web sayfaları değiştirilmez</string>
     <string name="pref_summary_greasy_fork">Greasy Fork\'tan uzantıları göz atın ve yükleyin</string>
     <string name="pref_category_title_installed_extensions">Yüklü uzantılar</string>
     <string name="pref_category_summary_no_extensions">Henüz kullanıcı betiği yüklenmedi</string>

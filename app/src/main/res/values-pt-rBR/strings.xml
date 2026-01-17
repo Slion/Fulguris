@@ -725,8 +725,8 @@
     <string name="pref_title_extensions">Extensões</string>
     <string name="pref_summary_extensions">Gerenciar scripts de extensão</string>
     <string name="pref_title_enable_extensions">Ativar extensões</string>
-    <string name="pref_summary_on_enable_extensions">Extensões podem injetar código JavaScript em páginas web</string>
-    <string name="pref_summary_off_enable_extensions">Páginas web carregam sem modificações</string>
+    <string name="pref_summary_on_enable_extensions">As páginas web podem ser modificadas</string>
+    <string name="pref_summary_off_enable_extensions">As páginas web não são modificadas</string>
     <string name="pref_summary_greasy_fork">Navegar e instalar extensões do Greasy Fork</string>
     <string name="pref_category_title_installed_extensions">Extensões instaladas</string>
     <string name="pref_category_summary_no_extensions">Nenhum script de usuário instalado ainda</string>

@@ -725,8 +725,8 @@
     <string name="pref_title_extensions">Extensies</string>
     <string name="pref_summary_extensions">Beheer extensiescripts</string>
     <string name="pref_title_enable_extensions">Extensies inschakelen</string>
-    <string name="pref_summary_on_enable_extensions">Extensies kunnen JavaScript-code in webpagina\'s injecteren</string>
-    <string name="pref_summary_off_enable_extensions">Webpagina\'s laden zonder aanpassingen</string>
+    <string name="pref_summary_on_enable_extensions">Webpagina\'s kunnen worden gewijzigd</string>
+    <string name="pref_summary_off_enable_extensions">Webpagina\'s worden niet gewijzigd</string>
     <string name="pref_summary_greasy_fork">Bladeren en installeren van extensies van Greasy Fork</string>
     <string name="pref_category_title_installed_extensions">Geïnstalleerde extensies</string>
     <string name="pref_category_summary_no_extensions">Nog geen gebruikersscripts geïnstalleerd</string>

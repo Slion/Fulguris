@@ -728,8 +728,8 @@
     <string name="pref_title_extensions">Extensii</string>
     <string name="pref_summary_extensions">Gestionează scripturile de extensii</string>
     <string name="pref_title_enable_extensions">Activează extensii</string>
-    <string name="pref_summary_on_enable_extensions">Extensiile pot injecta cod JavaScript în paginile web</string>
-    <string name="pref_summary_off_enable_extensions">Paginile web se încarcă fără modificări</string>
+    <string name="pref_summary_on_enable_extensions">Paginile web pot fi modificate</string>
+    <string name="pref_summary_off_enable_extensions">Paginile web nu sunt modificate</string>
     <string name="pref_summary_greasy_fork">Răsfoiește și instalează extensii din Greasy Fork</string>
     <string name="pref_category_title_installed_extensions">Extensii instalate</string>
     <string name="pref_category_summary_no_extensions">Niciun script de utilizator instalat încă</string>
