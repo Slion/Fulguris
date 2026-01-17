@@ -725,7 +725,7 @@
     <string name="pref_title_enable_extensions">拡張機能を有効化</string>
     <string name="pref_summary_on_enable_extensions">Webページは変更される可能性があります</string>
     <string name="pref_summary_off_enable_extensions">Webページは変更されません</string>
-    <string name="pref_summary_greasy_fork">Greasy Forkから拡張機能を閲覧してインストール</string>
+    <string name="pref_summary_greasy_fork">拡張機能を検索してインストール</string>
     <string name="pref_category_title_installed_extensions">インストール済み拡張機能</string>
     <string name="pref_category_summary_no_extensions">まだユーザースクリプトはインストールされていません</string>
     <string name="pref_title_extension_show_popup">ポップアップ通知を表示</string>

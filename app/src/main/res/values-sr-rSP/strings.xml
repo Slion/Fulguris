@@ -730,7 +730,7 @@
     <string name="pref_title_enable_extensions">Omogući proširenja</string>
     <string name="pref_summary_on_enable_extensions">Veb stranice mogu biti izmenjene</string>
     <string name="pref_summary_off_enable_extensions">Veb stranice se ne menjaju</string>
-    <string name="pref_summary_greasy_fork">Pregledaj i instaliraj proširenja sa Greasy Fork</string>
+    <string name="pref_summary_greasy_fork">Pronađi i instaliraj proširenja</string>
     <string name="pref_category_title_installed_extensions">Instalirana proširenja</string>
     <string name="pref_category_summary_no_extensions">Još nije instalirana nijedna korisnička skripta</string>
     <string name="pref_title_extension_show_popup">Prikaži iskačuću obaveštenje</string>

@@ -727,7 +727,7 @@
     <string name="pref_title_enable_extensions">Aktivera tillägg</string>
     <string name="pref_summary_on_enable_extensions">Webbsidor kan modifieras</string>
     <string name="pref_summary_off_enable_extensions">Webbsidor modifieras inte</string>
-    <string name="pref_summary_greasy_fork">Bläddra och installera tillägg från Greasy Fork</string>
+    <string name="pref_summary_greasy_fork">Hitta och installera tillägg</string>
     <string name="pref_category_title_installed_extensions">Installerade tillägg</string>
     <string name="pref_category_summary_no_extensions">Inga användarskript installerade ännu</string>
     <string name="pref_title_extension_show_popup">Visa popup-avisering</string>

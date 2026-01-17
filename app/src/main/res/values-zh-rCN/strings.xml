@@ -725,7 +725,7 @@
     <string name="pref_title_enable_extensions">启用扩展</string>
     <string name="pref_summary_on_enable_extensions">网页可以被修改</string>
     <string name="pref_summary_off_enable_extensions">网页不会被修改</string>
-    <string name="pref_summary_greasy_fork">从Greasy Fork浏览和安装扩展</string>
+    <string name="pref_summary_greasy_fork">查找并安装扩展</string>
     <string name="pref_category_title_installed_extensions">已安装的扩展</string>
     <string name="pref_category_summary_no_extensions">尚未安装用户脚本</string>
     <string name="pref_title_extension_show_popup">显示弹出通知</string>

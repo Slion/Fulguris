@@ -725,7 +725,7 @@
     <string name="pref_title_enable_extensions">확장 프로그램 활성화</string>
     <string name="pref_summary_on_enable_extensions">웹 페이지를 수정할 수 있습니다</string>
     <string name="pref_summary_off_enable_extensions">웹 페이지는 수정되지 않습니다</string>
-    <string name="pref_summary_greasy_fork">Greasy Fork에서 확장 프로그램 탐색 및 설치</string>
+    <string name="pref_summary_greasy_fork">확장 프로그램 찾기 및 설치</string>
     <string name="pref_category_title_installed_extensions">설치된 확장 프로그램</string>
     <string name="pref_category_summary_no_extensions">아직 사용자 스크립트가 설치되지 않았습니다</string>
     <string name="pref_title_extension_show_popup">팝업 알림 표시</string>

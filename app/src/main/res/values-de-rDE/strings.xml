@@ -727,7 +727,7 @@
     <string name="pref_title_enable_extensions">Erweiterungen aktivieren</string>
     <string name="pref_summary_on_enable_extensions">Webseiten können verändert werden</string>
     <string name="pref_summary_off_enable_extensions">Webseiten werden nicht verändert</string>
-    <string name="pref_summary_greasy_fork">Erweiterungen von Greasy Fork durchsuchen und installieren</string>
+    <string name="pref_summary_greasy_fork">Erweiterungen finden und installieren</string>
     <string name="pref_category_title_installed_extensions">Installierte Erweiterungen</string>
     <string name="pref_category_summary_no_extensions">Noch keine Benutzerskripte installiert</string>
     <string name="pref_title_extension_show_popup">Popup-Benachrichtigung anzeigen</string>

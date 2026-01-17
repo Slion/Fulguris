@@ -733,7 +733,7 @@
     <string name="pref_title_enable_extensions">Włącz rozszerzenia</string>
     <string name="pref_summary_on_enable_extensions">Strony internetowe mogą być modyfikowane</string>
     <string name="pref_summary_off_enable_extensions">Strony internetowe nie są modyfikowane</string>
-    <string name="pref_summary_greasy_fork">Przeglądaj i instaluj rozszerzenia z Greasy Fork</string>
+    <string name="pref_summary_greasy_fork">Znajdź i zainstaluj rozszerzenia</string>
     <string name="pref_category_title_installed_extensions">Zainstalowane rozszerzenia</string>
     <string name="pref_category_summary_no_extensions">Nie zainstalowano jeszcze żadnych skryptów użytkownika</string>
     <string name="pref_title_extension_show_popup">Pokaż powiadomienie wyskakujące</string>

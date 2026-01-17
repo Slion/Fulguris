@@ -727,7 +727,7 @@
     <string name="pref_title_enable_extensions">Bővítmények engedélyezése</string>
     <string name="pref_summary_on_enable_extensions">A weboldalak módosíthatók</string>
     <string name="pref_summary_off_enable_extensions">A weboldalak nem módosulnak</string>
-    <string name="pref_summary_greasy_fork">Bővítmények böngészése és telepítése a Greasy Forkról</string>
+    <string name="pref_summary_greasy_fork">Bővítmények keresése és telepítése</string>
     <string name="pref_category_title_installed_extensions">Telepített bővítmények</string>
     <string name="pref_category_summary_no_extensions">Még nincs felhasználói szkript telepítve</string>
     <string name="pref_title_extension_show_popup">Felugró értesítés megjelenítése</string>

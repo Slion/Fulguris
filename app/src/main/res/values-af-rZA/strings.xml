@@ -727,7 +727,7 @@
     <string name="pref_title_enable_extensions">Aktiveer uitbreidings</string>
     <string name="pref_summary_on_enable_extensions">Webbladsye kan gewysig word</string>
     <string name="pref_summary_off_enable_extensions">Webbladsye word nie gewysig nie</string>
-    <string name="pref_summary_greasy_fork">Blaai deur en installeer uitbreidings vanaf Greasy Fork</string>
+    <string name="pref_summary_greasy_fork">Vind en installeer uitbreidings</string>
     <string name="pref_category_title_installed_extensions">Geïnstalleerde uitbreidings</string>
     <string name="pref_category_summary_no_extensions">Nog geen gebruikerskripte geïnstalleer nie</string>
     <string name="pref_title_extension_show_popup">Wys opspringkennisgewing</string>

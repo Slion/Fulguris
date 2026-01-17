@@ -733,7 +733,7 @@
     <string name="pref_title_enable_extensions">Povolit rozšíření</string>
     <string name="pref_summary_on_enable_extensions">Webové stránky mohou být upraveny</string>
     <string name="pref_summary_off_enable_extensions">Webové stránky nejsou upravovány</string>
-    <string name="pref_summary_greasy_fork">Procházet a instalovat rozšíření z Greasy Fork</string>
+    <string name="pref_summary_greasy_fork">Najít a nainstalovat rozšíření</string>
     <string name="pref_category_title_installed_extensions">Nainstalovaná rozšíření</string>
     <string name="pref_category_summary_no_extensions">Zatím nejsou nainstalovány žádné uživatelské skripty</string>
     <string name="pref_title_extension_show_popup">Zobrazit vyskakovací oznámení</string>

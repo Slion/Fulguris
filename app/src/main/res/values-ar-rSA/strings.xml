@@ -739,7 +739,7 @@
     <string name="pref_title_enable_extensions">تفعيل الامتدادات</string>
     <string name="pref_summary_on_enable_extensions">يمكن تعديل صفحات الويب</string>
     <string name="pref_summary_off_enable_extensions">لا يتم تعديل صفحات الويب</string>
-    <string name="pref_summary_greasy_fork">تصفح وتثبيت الامتدادات من Greasy Fork</string>
+    <string name="pref_summary_greasy_fork">البحث عن الامتدادات وتثبيتها</string>
     <string name="pref_category_title_installed_extensions">الامتدادات المثبتة</string>
     <string name="pref_category_summary_no_extensions">لم يتم تثبيت أي نصوص مستخدم بعد</string>
     <string name="pref_title_extension_show_popup">إظهار إشعار منبثق</string>
