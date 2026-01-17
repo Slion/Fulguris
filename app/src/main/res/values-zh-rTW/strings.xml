@@ -727,7 +727,7 @@
     <string name="pref_summary_off_enable_extensions">網頁不會被修改</string>
     <string name="pref_summary_greasy_fork">尋找並安裝擴充功能</string>
     <string name="pref_category_title_installed_extensions">已安裝的擴充功能</string>
-    <string name="pref_category_summary_no_extensions">尚未安裝使用者腳本</string>
+    <string name="pref_category_summary_no_extensions">未安裝擴充功能</string>
     <string name="pref_title_extension_show_popup">顯示彈出通知</string>
     <string name="pref_summary_extension_show_popup">當此擴充功能執行時顯示通知</string>
     <string name="pref_title_extension_name">名稱</string>

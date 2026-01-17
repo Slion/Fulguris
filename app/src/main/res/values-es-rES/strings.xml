@@ -729,7 +729,7 @@
     <string name="pref_summary_off_enable_extensions">Las páginas web no se modifican</string>
     <string name="pref_summary_greasy_fork">Buscar e instalar extensiones</string>
     <string name="pref_category_title_installed_extensions">Extensiones instaladas</string>
-    <string name="pref_category_summary_no_extensions">Aún no hay scripts de usuario instalados</string>
+    <string name="pref_category_summary_no_extensions">No hay extensiones instaladas</string>
     <string name="pref_title_extension_show_popup">Mostrar notificación emergente</string>
     <string name="pref_summary_extension_show_popup">Mostrar una notificación cuando se ejecuta esta extensión</string>
     <string name="pref_title_extension_name">Nombre</string>

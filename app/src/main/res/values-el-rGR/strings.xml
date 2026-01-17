@@ -729,7 +729,7 @@
     <string name="pref_summary_off_enable_extensions">Οι ιστοσελίδες δεν τροποποιούνται</string>
     <string name="pref_summary_greasy_fork">Βρείτε και εγκαταστήστε επεκτάσεις</string>
     <string name="pref_category_title_installed_extensions">Εγκατεστημένες επεκτάσεις</string>
-    <string name="pref_category_summary_no_extensions">Δεν έχουν εγκατασταθεί ακόμα σενάρια χρήστη</string>
+    <string name="pref_category_summary_no_extensions">Δεν υπάρχουν εγκατεστημένες επεκτάσεις</string>
     <string name="pref_title_extension_show_popup">Εμφάνιση αναδυόμενης ειδοποίησης</string>
     <string name="pref_summary_extension_show_popup">Εμφάνιση ειδοποίησης όταν εκτελείται αυτή η επέκταση</string>
     <string name="pref_title_extension_name">Όνομα</string>

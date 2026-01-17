@@ -729,7 +729,7 @@
     <string name="pref_summary_off_enable_extensions">Nettsider endres ikke</string>
     <string name="pref_summary_greasy_fork">Finn og installer utvidelser</string>
     <string name="pref_category_title_installed_extensions">Installerte utvidelser</string>
-    <string name="pref_category_summary_no_extensions">Ingen brukerscript installert ennå</string>
+    <string name="pref_category_summary_no_extensions">Ingen utvidelser installert</string>
     <string name="pref_title_extension_show_popup">Vis popup-varsling</string>
     <string name="pref_summary_extension_show_popup">Vis et varsel når denne utvidelsen kjører</string>
     <string name="pref_title_extension_name">Navn</string>

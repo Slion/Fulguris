@@ -735,7 +735,7 @@
     <string name="pref_summary_off_enable_extensions">Tinklalapiai nėra keičiami</string>
     <string name="pref_summary_greasy_fork">Rasti ir įdiegti plėtinius</string>
     <string name="pref_category_title_installed_extensions">Įdiegti plėtiniai</string>
-    <string name="pref_category_summary_no_extensions">Dar neįdiegta jokių naudotojo scenarijų</string>
+    <string name="pref_category_summary_no_extensions">Nėra įdiegtų plėtinių</string>
     <string name="pref_title_extension_show_popup">Rodyti iškylantį pranešimą</string>
     <string name="pref_summary_extension_show_popup">Rodyti pranešimą kai šis plėtinys veikia</string>
     <string name="pref_title_extension_name">Pavadinimas</string>

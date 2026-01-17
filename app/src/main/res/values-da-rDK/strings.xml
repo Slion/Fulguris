@@ -729,7 +729,7 @@
     <string name="pref_summary_off_enable_extensions">Websider modificeres ikke</string>
     <string name="pref_summary_greasy_fork">Find og installer udvidelser</string>
     <string name="pref_category_title_installed_extensions">Installerede udvidelser</string>
-    <string name="pref_category_summary_no_extensions">Ingen brugerscripts installeret endnu</string>
+    <string name="pref_category_summary_no_extensions">Ingen udvidelser installeret</string>
     <string name="pref_title_extension_show_popup">Vis popup-meddelelse</string>
     <string name="pref_summary_extension_show_popup">Vis en meddelelse når denne udvidelse kører</string>
     <string name="pref_title_extension_name">Navn</string>

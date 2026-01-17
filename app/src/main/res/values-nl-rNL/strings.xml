@@ -729,7 +729,7 @@
     <string name="pref_summary_off_enable_extensions">Webpagina\'s worden niet gewijzigd</string>
     <string name="pref_summary_greasy_fork">Extensies zoeken en installeren</string>
     <string name="pref_category_title_installed_extensions">Geïnstalleerde extensies</string>
-    <string name="pref_category_summary_no_extensions">Nog geen gebruikersscripts geïnstalleerd</string>
+    <string name="pref_category_summary_no_extensions">Geen extensies geïnstalleerd</string>
     <string name="pref_title_extension_show_popup">Toon pop-upmelding</string>
     <string name="pref_summary_extension_show_popup">Toon een melding wanneer deze extensie wordt uitgevoerd</string>
     <string name="pref_title_extension_name">Naam</string>

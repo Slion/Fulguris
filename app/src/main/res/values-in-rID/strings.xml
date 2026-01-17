@@ -727,7 +727,7 @@
     <string name="pref_summary_off_enable_extensions">Halaman web tidak dimodifikasi</string>
     <string name="pref_summary_greasy_fork">Temukan dan instal ekstensi</string>
     <string name="pref_category_title_installed_extensions">Ekstensi terpasang</string>
-    <string name="pref_category_summary_no_extensions">Belum ada ekstensi terpasang</string>
+    <string name="pref_category_summary_no_extensions">Tidak ada ekstensi terpasang</string>
     <string name="pref_title_extension_show_popup">Tampilkan notifikasi</string>
     <string name="pref_summary_extension_show_popup">Tampilkan notifikasi saat ekstensi ini berjalan</string>
     <string name="pref_title_extension_name">Nama</string>

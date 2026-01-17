@@ -729,7 +729,7 @@
     <string name="pref_summary_off_enable_extensions">A weboldalak nem módosulnak</string>
     <string name="pref_summary_greasy_fork">Bővítmények keresése és telepítése</string>
     <string name="pref_category_title_installed_extensions">Telepített bővítmények</string>
-    <string name="pref_category_summary_no_extensions">Még nincs felhasználói szkript telepítve</string>
+    <string name="pref_category_summary_no_extensions">Nincsenek telepített bővítmények</string>
     <string name="pref_title_extension_show_popup">Felugró értesítés megjelenítése</string>
     <string name="pref_summary_extension_show_popup">Értesítés megjelenítése amikor ez a bővítmény fut</string>
     <string name="pref_title_extension_name">Név</string>

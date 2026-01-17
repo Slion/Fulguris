@@ -729,7 +729,7 @@
     <string name="pref_summary_off_enable_extensions">Web sayfaları değiştirilmez</string>
     <string name="pref_summary_greasy_fork">Uzantıları bulun ve yükleyin</string>
     <string name="pref_category_title_installed_extensions">Yüklü uzantılar</string>
-    <string name="pref_category_summary_no_extensions">Henüz kullanıcı betiği yüklenmedi</string>
+    <string name="pref_category_summary_no_extensions">Yüklü uzantı yok</string>
     <string name="pref_title_extension_show_popup">Açılır bildirim göster</string>
     <string name="pref_summary_extension_show_popup">Bu uzantı çalıştığında bir bildirim göster</string>
     <string name="pref_title_extension_name">Ad</string>

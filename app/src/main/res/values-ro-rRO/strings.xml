@@ -732,7 +732,7 @@
     <string name="pref_summary_off_enable_extensions">Paginile web nu sunt modificate</string>
     <string name="pref_summary_greasy_fork">Găsește și instalează extensii</string>
     <string name="pref_category_title_installed_extensions">Extensii instalate</string>
-    <string name="pref_category_summary_no_extensions">Niciun script de utilizator instalat încă</string>
+    <string name="pref_category_summary_no_extensions">Nicio extensie instalată</string>
     <string name="pref_title_extension_show_popup">Afișează notificare popup</string>
     <string name="pref_summary_extension_show_popup">Afișează o notificare când această extensie rulează</string>
     <string name="pref_title_extension_name">Nume</string>

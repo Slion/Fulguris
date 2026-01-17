@@ -741,7 +741,7 @@
     <string name="pref_summary_off_enable_extensions">لا يتم تعديل صفحات الويب</string>
     <string name="pref_summary_greasy_fork">البحث عن الامتدادات وتثبيتها</string>
     <string name="pref_category_title_installed_extensions">الامتدادات المثبتة</string>
-    <string name="pref_category_summary_no_extensions">لم يتم تثبيت أي نصوص مستخدم بعد</string>
+    <string name="pref_category_summary_no_extensions">لا توجد امتدادات مثبتة</string>
     <string name="pref_title_extension_show_popup">إظهار إشعار منبثق</string>
     <string name="pref_summary_extension_show_popup">عرض إشعار عند تشغيل هذا الامتداد</string>
     <string name="pref_title_extension_name">الاسم</string>

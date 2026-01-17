@@ -729,7 +729,7 @@
     <string name="pref_summary_off_enable_extensions">ᱣᱮᱵᱽ ᱥᱟᱦᱴᱟ ᱵᱟᱝ ᱵᱚᱫᱚᱞᱚᱜ-ᱟ</string>
     <string name="pref_summary_greasy_fork">ᱮᱠᱥᱴᱮᱱᱥᱚᱱ ᱯᱟᱱᱛᱮ ᱟᱨ ᱵᱚᱦᱟᱞ ᱢᱮ</string>
     <string name="pref_category_title_installed_extensions">ᱵᱚᱦᱟᱞ ᱠᱟᱱ ᱮᱠᱥᱴᱮᱱᱥᱚᱱ</string>
-    <string name="pref_category_summary_no_extensions">ᱱᱤᱛᱚᱜ ᱦᱟᱹᱵᱤᱡ ᱪᱮᱫ ᱵᱮᱵᱷᱟᱨᱤᱭᱟᱹ ᱥᱠᱨᱤᱯᱴ ᱵᱟᱭ ᱵᱚᱦᱟᱞ ᱟᱠᱟᱱᱟ</string>
+    <string name="pref_category_summary_no_extensions">ᱪᱮᱫ ᱮᱠᱥᱴᱮᱱᱥᱚᱱ ᱵᱟᱭ ᱵᱚᱦᱟᱞ ᱟᱠᱟᱱᱟ</string>
     <string name="pref_title_extension_show_popup">ᱯᱚᱯᱚᱯ ᱦᱚᱠᱚᱱ ᱩᱫᱩᱜ ᱫᱮᱠᱷᱟᱣ ᱢᱮ</string>
     <string name="pref_summary_extension_show_popup">ᱡᱟᱦᱟᱸ ᱱᱚᱶᱟ ᱮᱠᱥᱴᱮᱱᱥᱚᱱ ᱪᱟᱹᱞᱩᱜ-ᱟ ᱩᱱᱤᱭᱟᱹᱠ ᱩᱫᱩᱜ ᱫᱮᱠᱷᱟᱣ ᱢᱮ</string>
     <string name="pref_title_extension_name">ᱧᱩᱛᱩᱢ</string>

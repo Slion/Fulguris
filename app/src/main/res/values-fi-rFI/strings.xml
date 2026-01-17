@@ -729,7 +729,7 @@
     <string name="pref_summary_off_enable_extensions">Verkkosivuja ei muokata</string>
     <string name="pref_summary_greasy_fork">Etsi ja asenna laajennuksia</string>
     <string name="pref_category_title_installed_extensions">Asennetut laajennukset</string>
-    <string name="pref_category_summary_no_extensions">Ei käyttäjäskriptejä asennettu vielä</string>
+    <string name="pref_category_summary_no_extensions">Ei asennettuja laajennuksia</string>
     <string name="pref_title_extension_show_popup">Näytä ponnahdusikkunailmoitus</string>
     <string name="pref_summary_extension_show_popup">Näytä ilmoitus kun tämä laajennus suoritetaan</string>
     <string name="pref_title_extension_name">Nimi</string>

@@ -727,7 +727,7 @@
     <string name="pref_summary_off_enable_extensions">Webページは変更されません</string>
     <string name="pref_summary_greasy_fork">拡張機能を検索してインストール</string>
     <string name="pref_category_title_installed_extensions">インストール済み拡張機能</string>
-    <string name="pref_category_summary_no_extensions">まだユーザースクリプトはインストールされていません</string>
+    <string name="pref_category_summary_no_extensions">拡張機能がインストールされていません</string>
     <string name="pref_title_extension_show_popup">ポップアップ通知を表示</string>
     <string name="pref_summary_extension_show_popup">この拡張機能が実行されたときに通知を表示</string>
     <string name="pref_title_extension_name">名前</string>

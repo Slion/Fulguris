@@ -684,7 +684,7 @@
     <string name="pref_summary_off_enable_extensions">वेब पेज संशोधित नहीं किए जाते</string>
     <string name="pref_summary_greasy_fork">एक्सटेंशन खोजें और इंस्टॉल करें</string>
     <string name="pref_category_title_installed_extensions">इंस्टॉल किए गए एक्सटेंशन</string>
-    <string name="pref_category_summary_no_extensions">अभी तक कोई उपयोगकर्ता स्क्रिप्ट इंस्टॉल नहीं की गई</string>
+    <string name="pref_category_summary_no_extensions">कोई एक्सटेंशन इंस्टॉल नहीं है</string>
     <string name="pref_title_extension_show_popup">पॉपअप सूचना दिखाएं</string>
     <string name="pref_summary_extension_show_popup">जब यह एक्सटेंशन चलता है तो सूचना प्रदर्शित करें</string>
     <string name="pref_title_extension_name">नाम</string>

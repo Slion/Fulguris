@@ -727,7 +727,7 @@
     <string name="pref_summary_off_enable_extensions">หน้าเว็บไม่ถูกแก้ไข</string>
     <string name="pref_summary_greasy_fork">ค้นหาและติดตั้งส่วนขยาย</string>
     <string name="pref_category_title_installed_extensions">ส่วนขยายที่ติดตั้ง</string>
-    <string name="pref_category_summary_no_extensions">ยังไม่ได้ติดตั้งสคริปต์ผู้ใช้</string>
+    <string name="pref_category_summary_no_extensions">ไม่มีส่วนขยายที่ติดตั้ง</string>
     <string name="pref_title_extension_show_popup">แสดงการแจ้งเตือนแบบป๊อปอัพ</string>
     <string name="pref_summary_extension_show_popup">แสดงการแจ้งเตือนเมื่อส่วนขยายนี้ทำงาน</string>
     <string name="pref_title_extension_name">ชื่อ</string>

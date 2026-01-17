@@ -735,7 +735,7 @@
     <string name="pref_summary_off_enable_extensions">דפי אינטרנט אינם משתנים</string>
     <string name="pref_summary_greasy_fork">מצא והתקן הרחבות</string>
     <string name="pref_category_title_installed_extensions">הרחבות מותקנות</string>
-    <string name="pref_category_summary_no_extensions">טרם הותקנו סקריפטים של משתמש</string>
+    <string name="pref_category_summary_no_extensions">אין הרחבות מותקנות</string>
     <string name="pref_title_extension_show_popup">הצג הודעה קופצת</string>
     <string name="pref_summary_extension_show_popup">הצג הודעה כאשר הרחבה זו רצה</string>
     <string name="pref_title_extension_name">שם</string>

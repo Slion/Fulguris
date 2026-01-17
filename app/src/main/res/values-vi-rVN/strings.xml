@@ -727,7 +727,7 @@
     <string name="pref_summary_off_enable_extensions">Trang web không được sửa đổi</string>
     <string name="pref_summary_greasy_fork">Tìm và cài đặt tiện ích</string>
     <string name="pref_category_title_installed_extensions">Tiện ích đã cài đặt</string>
-    <string name="pref_category_summary_no_extensions">Chưa cài đặt script người dùng nào</string>
+    <string name="pref_category_summary_no_extensions">Không có tiện ích nào được cài đặt</string>
     <string name="pref_title_extension_show_popup">Hiển thị thông báo popup</string>
     <string name="pref_summary_extension_show_popup">Hiển thị thông báo khi tiện ích này chạy</string>
     <string name="pref_title_extension_name">Tên</string>

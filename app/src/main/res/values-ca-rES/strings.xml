@@ -729,7 +729,7 @@
     <string name="pref_summary_off_enable_extensions">Les pàgines web no es modifiquen</string>
     <string name="pref_summary_greasy_fork">Troba i instal·la extensions</string>
     <string name="pref_category_title_installed_extensions">Extensions instal·lades</string>
-    <string name="pref_category_summary_no_extensions">Encara no s\'han instal·lat scripts d\'usuari</string>
+    <string name="pref_category_summary_no_extensions">No hi ha extensions instal·lades</string>
     <string name="pref_title_extension_show_popup">Mostra notificació emergent</string>
     <string name="pref_summary_extension_show_popup">Mostra una notificació quan s\'executa aquesta extensió</string>
     <string name="pref_title_extension_name">Nom</string>
