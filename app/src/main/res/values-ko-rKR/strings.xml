@@ -569,8 +569,8 @@
     <string name="session_name_prompt">세션 이름 입력:</string>
     <string name="session_already_exists">해당 이름의 세션이 이미 존재합니다!</string>
     <string name="session_cant_delete_current">현재 세션을 삭제할 수 없습니다!</string>
-    <string name="session_prompt_confirm_deletion_title">삭제 확인</string>
-    <string name="session_prompt_confirm_deletion_message">세션 \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\"을(를) 정말로 삭제하시겠습니까?</string>
+    <string name="dialog_title_session_deletion">세션을 삭제하시겠습니까?</string>
+    <string name="dialog_message_session_deletion">세션 \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\"이(가) 영구적으로 삭제됩니다. 이 작업은 취소할 수 없습니다.</string>
     <string name="configuration_prompt_confirm_deletion_message">\"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\" 구성을 정말로 삭제하시겠습니까?</string>
     <string name="session_switched">\"%s\"(으)로 전환됨</string>
     <string name="busy">사용 중, 잠시 후 다시 시도하세요.</string>

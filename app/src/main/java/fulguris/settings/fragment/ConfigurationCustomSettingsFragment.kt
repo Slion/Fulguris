@@ -78,7 +78,7 @@ class ConfigurationCustomSettingsFragment : ConfigurationSettingsFragment() {
 
             MaterialAlertDialogBuilder(requireContext())
                 .setCancelable(true)
-                .setTitle(R.string.session_prompt_confirm_deletion_title)
+                .setTitle(R.string.dialog_title_session_deletion)
                 .setMessage(getString(R.string.configuration_prompt_confirm_deletion_message, app.config.name(requireContext())))
                 .setNegativeButton(android.R.string.cancel) { _, _ ->
                     cancel = true

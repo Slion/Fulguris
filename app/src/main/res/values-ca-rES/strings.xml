@@ -571,8 +571,8 @@
     <string name="session_name_prompt">Introdueix el nom de la sessió:</string>
     <string name="session_already_exists">Ja existeix una sessió amb aquest nom!</string>
     <string name="session_cant_delete_current">No es pot eliminar la sessió actual!</string>
-    <string name="session_prompt_confirm_deletion_title">Confirmar l\'eliminació</string>
-    <string name="session_prompt_confirm_deletion_message">Segur que vols suprimir la sessió "<xliff:g id="session_name" example="Shopping">%s</xliff:g>"?</string>
+    <string name="dialog_title_session_deletion">Voleu suprimir la sessió?</string>
+    <string name="dialog_message_session_deletion">Esteu segur que voleu suprimir permanentment la sessió "<xliff:g id="session_name" example="Shopping">%s</xliff:g>"? Aquesta acció no es pot desfer.</string>
     <string name="configuration_prompt_confirm_deletion_message">Segur que vols suprimir la configuració "<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>"?</string>
     <string name="session_switched">S\'ha canviat a \"%s\"</string>
     <string name="busy">Ocupat, torneu a provar-ho aviat.</string>

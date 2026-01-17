@@ -569,8 +569,8 @@
     <string name="session_name_prompt">セッション名を入力:</string>
     <string name="session_already_exists">その名前のセッションは既に存在します!</string>
     <string name="session_cant_delete_current">現在のセッションは削除できません!</string>
-    <string name="session_prompt_confirm_deletion_title">削除の確認</string>
-    <string name="session_prompt_confirm_deletion_message">セッション \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\" を削除してもよろしいですか？</string>
+    <string name="dialog_title_session_deletion">セッションを削除しますか？</string>
+    <string name="dialog_message_session_deletion">セッション「<xliff:g id="session_name" example="Shopping">%s</xliff:g>」は完全に削除されます。この操作は元に戻せません。</string>
     <string name="configuration_prompt_confirm_deletion_message">本当に \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\" の設定を削除してよいですか？</string>
     <string name="session_switched">「%s」に切り替えました</string>
     <string name="busy">ビジーです。少し間を開けて再試行してください。</string>

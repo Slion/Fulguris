@@ -571,8 +571,8 @@
     <string name="session_name_prompt">Ange sessionens namn:</string>
     <string name="session_already_exists">En session med detta namn finns redan!</string>
     <string name="session_cant_delete_current">Kan inte ta bort nuvarande session!</string>
-    <string name="session_prompt_confirm_deletion_title">Bekräfta radering</string>
-    <string name="session_prompt_confirm_deletion_message">Är du säker på att du vill ta bort sessionen \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\"?</string>
+    <string name="dialog_title_session_deletion">Ta bort session?</string>
+    <string name="dialog_message_session_deletion">Sessionen \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\" kommer att raderas permanent. Denna åtgärd kan inte ångras.</string>
     <string name="configuration_prompt_confirm_deletion_message">Är du säker på att du vill ta bort konfigurationen \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\"?</string>
     <string name="session_switched">Byt till %s</string>
     <string name="busy">Upptagen, försök igen inom kort.</string>

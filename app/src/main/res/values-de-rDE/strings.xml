@@ -571,8 +571,8 @@
     <string name="session_name_prompt">Name der Sitzung:</string>
     <string name="session_already_exists">Es existiert bereits eine Sitzung mit diesem Namen!</string>
     <string name="session_cant_delete_current">Die aktuelle Sitzung kann nicht gelöscht werden!</string>
-    <string name="session_prompt_confirm_deletion_title">Löschen bestätigen</string>
-    <string name="session_prompt_confirm_deletion_message">Sind Sie sicher, dass Sie die Sitzung \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\" löschen möchten?</string>
+    <string name="dialog_title_session_deletion">Sitzung löschen?</string>
+    <string name="dialog_message_session_deletion">Die Sitzung \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\" wird dauerhaft gelöscht. Diese Aktion kann nicht rückgängig gemacht werden.</string>
     <string name="configuration_prompt_confirm_deletion_message">Möchtest du die \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\" Konfiguration wirklich löschen?</string>
     <string name="session_switched">Zu \"%s\" gewechselt</string>
     <string name="busy">Beschäftigt, versuche es in Kürze wieder</string>

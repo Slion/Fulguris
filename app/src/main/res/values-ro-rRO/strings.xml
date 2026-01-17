@@ -574,8 +574,8 @@
     <string name="session_name_prompt">Introdu nume sesiune:</string>
     <string name="session_already_exists">O sesiune cu acel nume există deja!</string>
     <string name="session_cant_delete_current">Nu se poate șterge sesiunea curentă!</string>
-    <string name="session_prompt_confirm_deletion_title">Confirmă ștergerea</string>
-    <string name="session_prompt_confirm_deletion_message">Sigur doriti sa stergeti sesiunea \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\"?</string>
+    <string name="dialog_title_session_deletion">Șterge sesiunea?</string>
+    <string name="dialog_message_session_deletion">Sesiunea \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\" va fi ștearsă permanent. Această acțiune nu poate fi anulată.</string>
     <string name="configuration_prompt_confirm_deletion_message">Sigur doriti sa stergeti configuratia \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\"?</string>
     <string name="session_switched">Comutat la \"%s\"</string>
     <string name="busy">Ocupat, încearcă din nou în scurt timp.</string>

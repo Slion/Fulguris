@@ -571,8 +571,8 @@
     <string name="session_name_prompt">Oturum adı girin:</string>
     <string name="session_already_exists">Bu adda bir oturum zaten var!</string>
     <string name="session_cant_delete_current">Mevcut oturum silinemez!</string>
-    <string name="session_prompt_confirm_deletion_title">Silmeyi onayla</string>
-    <string name="session_prompt_confirm_deletion_message">\"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\" oturumunu silmek istediğinizden emin misiniz?</string>
+    <string name="dialog_title_session_deletion">Oturum silinsin mi?</string>
+    <string name="dialog_message_session_deletion">\"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\" oturumu kalıcı olarak silinecek. Bu eylem geri alınamaz.</string>
     <string name="configuration_prompt_confirm_deletion_message">\"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\" yapılandırmasını silmek istediğinizden emin misiniz?</string>
     <string name="session_switched">\"%s\" oturumuna geçildi</string>
     <string name="busy">Meşgul, birazdan tekrar deneyin.</string>

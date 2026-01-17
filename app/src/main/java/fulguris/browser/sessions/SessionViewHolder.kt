@@ -76,10 +76,11 @@ class SessionViewHolder(
             } else {
                 MaterialAlertDialogBuilder(it.context)
                         .setCancelable(true)
-                        .setTitle(R.string.session_prompt_confirm_deletion_title)
-                        .setMessage(it.context.getString(R.string.session_prompt_confirm_deletion_message,session().name))
-                        .setNegativeButton(android.R.string.cancel, null)
-                        .setPositiveButton(android.R.string.ok) { _, _ ->
+                        .setIcon(R.drawable.ic_delete_forever_outline)
+                        .setTitle(R.string.dialog_title_session_deletion)
+                        .setMessage(it.context.getString(R.string.dialog_message_session_deletion,session().name))
+                        .setNegativeButton(R.string.action_cancel, null)
+                        .setPositiveButton(R.string.action_delete) { _, _ ->
                             // User confirmed deletion, go ahead then
                             sessionsManager.deleteSession(textName.tag as String)
                             // Refresh our list

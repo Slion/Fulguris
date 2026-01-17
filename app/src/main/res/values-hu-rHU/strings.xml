@@ -571,8 +571,8 @@
     <string name="session_name_prompt">Munkamenet neve:</string>
     <string name="session_already_exists">Egy munkamenet ezzel a névvel már létezik!</string>
     <string name="session_cant_delete_current">Nem törölhető a jelenlegi munkamenet!</string>
-    <string name="session_prompt_confirm_deletion_title">Beleegyezés a törlésbe</string>
-    <string name="session_prompt_confirm_deletion_message">Biztos törölni akarod a \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\" munkamenetet?</string>
+    <string name="dialog_title_session_deletion">Munkamenet törlése?</string>
+    <string name="dialog_message_session_deletion">A(z) \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\" munkamenet véglegesen törlésre kerül. Ez a művelet nem vonható vissza.</string>
     <string name="configuration_prompt_confirm_deletion_message">Biztos törölni akarod \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\" beállítását?</string>
     <string name="session_switched">Átváltva \"%s\"-re</string>
     <string name="busy">Foglalt, hamarosan próbálja újra.</string>

@@ -571,8 +571,8 @@
     <string name="session_name_prompt">Voer de naam van de sessie in:</string>
     <string name="session_already_exists">Er bestaat al een sessie met die naam!</string>
     <string name="session_cant_delete_current">Kan huidige sessie niet verwijderen!</string>
-    <string name="session_prompt_confirm_deletion_title">Verwijdering bevestigen</string>
-    <string name="session_prompt_confirm_deletion_message">Weet je zeker dat je sessie \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\"?</string>
+    <string name="dialog_title_session_deletion">Sessie verwijderen?</string>
+    <string name="dialog_message_session_deletion">Sessie \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\" wordt permanent verwijderd. Deze actie kan niet ongedaan worden gemaakt.</string>
     <string name="configuration_prompt_confirm_deletion_message">Weet je zeker dat je \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\" configuratie wilt verwijderen?</string>
     <string name="session_switched">Overgeschakeld naar \"%s\"</string>
     <string name="busy">Bezig, probeer het binnenkort nog eens.</string>

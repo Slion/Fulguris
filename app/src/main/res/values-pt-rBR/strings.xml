@@ -571,8 +571,8 @@
     <string name="session_name_prompt">Digite o nome da sessão:</string>
     <string name="session_already_exists">Já existe uma sessão com este nome!</string>
     <string name="session_cant_delete_current">Não foi possível excluir a sessão atual!</string>
-    <string name="session_prompt_confirm_deletion_title">Confirmar exclusão</string>
-    <string name="session_prompt_confirm_deletion_message">Tem certeza de que deseja excluir a sessão \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\"?</string>
+    <string name="dialog_title_session_deletion">Excluir sessão?</string>
+    <string name="dialog_message_session_deletion">A sessão \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\" será excluída permanentemente. Esta ação não pode ser desfeita.</string>
     <string name="configuration_prompt_confirm_deletion_message">Tem certeza de que deseja excluir a configuração \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\"?</string>
     <string name="session_switched">Alternado para \"%s\"</string>
     <string name="busy">Ocupado, tente novamente mais tarde.</string>

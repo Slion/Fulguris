@@ -574,8 +574,8 @@
     <string name="session_name_prompt">Unesite naziv sesije:</string>
     <string name="session_already_exists">Sesija s tim imenom već postoji!</string>
     <string name="session_cant_delete_current">Nije moguće izbrisati trenutačnu sesiju!</string>
-    <string name="session_prompt_confirm_deletion_title">Potvrdite brisanje</string>
-    <string name="session_prompt_confirm_deletion_message">Jeste li sigurni da želite izbrisati sesiju<xliff:g id="session_name" example="Shopping"> %s</xliff:g> \"?</string>
+    <string name="dialog_title_session_deletion">Izbrisati sesiju?</string>
+    <string name="dialog_message_session_deletion">Jeste li sigurni da želite trajno izbrisati sesiju "<xliff:g id="session_name" example="Shopping">%s</xliff:g>"? Ova radnja se ne može poništiti.</string>
     <string name="configuration_prompt_confirm_deletion_message">Jeste li sigurni da želite izbrisati \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp"> %s</xliff:g> \"konfiguracija?\"</string>
     <string name="session_switched">Prebačeno na \"%s\"</string>
     <string name="busy">Zauzeto, pokušajte ponovo uskoro.</string>

@@ -571,8 +571,8 @@
     <string name="session_name_prompt">Anna istunnon nimi:</string>
     <string name="session_already_exists">Istunto tällä nimellä on jo olemassa!</string>
     <string name="session_cant_delete_current">Nykyistä istuntoa ei voi poistaa!</string>
-    <string name="session_prompt_confirm_deletion_title">Vahvista poisto</string>
-    <string name="session_prompt_confirm_deletion_message">Haluatko varmasti poistaa istunnon \"%s\"?</string>
+    <string name="dialog_title_session_deletion">Poista istunto?</string>
+    <string name="dialog_message_session_deletion">Istunto \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\" poistetaan pysyvästi. Tätä toimintoa ei voi kumota.</string>
     <string name="configuration_prompt_confirm_deletion_message">Haluatko varmasti poistaa määrityksen \"%s\"?</string>
     <string name="session_switched">Vaihdettu istuntoon \"%s\"</string>
     <string name="busy">Varattu</string>

@@ -577,8 +577,8 @@
     <string name="session_name_prompt">Wprowadź nazwę sesji:</string>
     <string name="session_already_exists">Sesja o tej nazwie już istnieje!</string>
     <string name="session_cant_delete_current">Nie można usunąć bieżącej sesji!</string>
-    <string name="session_prompt_confirm_deletion_title">Potwierdź usunięcie</string>
-    <string name="session_prompt_confirm_deletion_message">Czy na pewno chcesz usunąć sesję \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\"?</string>
+    <string name="dialog_title_session_deletion">Usunąć sesję?</string>
+    <string name="dialog_message_session_deletion">Sesja \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\" zostanie trwale usunięta. Tej operacji nie można cofnąć.</string>
     <string name="configuration_prompt_confirm_deletion_message">Czy na pewno chcesz usunąć konfigurację \"<xliff:g id="config_name" example="Landscape - 270 - sw718dp">%s</xliff:g>\"?</string>
     <string name="session_switched">Przełączono na \"%s\"</string>
     <string name="busy">Zajęte, spróbuj ponownie wkrótce.</string>

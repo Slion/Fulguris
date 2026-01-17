@@ -571,8 +571,8 @@
     <string name="session_name_prompt">Angi øktnavn:</string>
     <string name="session_already_exists">En økt med det navnet finnes allerede!</string>
     <string name="session_cant_delete_current">Kan ikke slette gjeldende økt!</string>
-    <string name="session_prompt_confirm_deletion_title">Bekreft sletting</string>
-    <string name="session_prompt_confirm_deletion_message">Er du sikker på at du vil slette økten \"%s\"?</string>
+    <string name="dialog_title_session_deletion">Slette økt?</string>
+    <string name="dialog_message_session_deletion">Økten \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\" vil bli permanent slettet. Denne handlingen kan ikke angres.</string>
     <string name="configuration_prompt_confirm_deletion_message">Er du sikker på at du vil slette konfigurasjonen \"%s\"?</string>
     <string name="session_switched">Byttet til \"%s\"</string>
     <string name="busy">Opptatt, prøv igjen om litt.</string>

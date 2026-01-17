@@ -571,8 +571,8 @@
     <string name="session_name_prompt">Εισαγάγετε όνομα συνεδρίας:</string>
     <string name="session_already_exists">Υπάρχει ήδη συνεδρία με αυτό το όνομα!</string>
     <string name="session_cant_delete_current">Δεν είναι δυνατή η διαγραφή της τρέχουσας συνεδρίας!</string>
-    <string name="session_prompt_confirm_deletion_title">Επιβεβαίωση διαγραφής</string>
-    <string name="session_prompt_confirm_deletion_message">Είστε βέβαιοι ότι θέλετε να διαγράψετε τη συνεδρία \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\";</string>
+    <string name="dialog_title_session_deletion">Διαγραφή συνεδρίας;</string>
+    <string name="dialog_message_session_deletion">Η περίοδος λειτουργίας \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\" θα διαγραφεί οριστικά. Αυτή η ενέργεια δεν μπορεί να αναιρεθεί.</string>
     <string name="configuration_prompt_confirm_deletion_message">Είστε βέβαιοι ότι θέλετε να διαγράψετε τη διαμόρφωση \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\";</string>
     <string name="session_switched">Μεταβήκατε στο \"%s\"</string>
     <string name="busy">Απασχολημένο, δοκιμάστε ξανά σύντομα.</string>

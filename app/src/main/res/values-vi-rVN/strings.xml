@@ -569,8 +569,8 @@
     <string name="session_name_prompt">Nhập tên phiên:</string>
     <string name="session_already_exists">Phiên có tên đó đã tồn tại!</string>
     <string name="session_cant_delete_current">Không thể xóa phiên hiện tại!</string>
-    <string name="session_prompt_confirm_deletion_title">Xác nhận xóa</string>
-    <string name="session_prompt_confirm_deletion_message">Bạn có chắc chắn muốn xóa phiên \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\"?</string>
+    <string name="dialog_title_session_deletion">Xóa phiên?</string>
+    <string name="dialog_message_session_deletion">Phiên "<xliff:g id="session_name" example="Shopping">%s</xliff:g>" sẽ bị xóa vĩnh viễn. Hành động này không thể hoàn tác.</string>
     <string name="configuration_prompt_confirm_deletion_message">Bạn có chắc chắn muốn xóa cấu hình \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\" không?</string>
     <string name="session_switched">Đã chuyển sang \"%s\"</string>
     <string name="busy">Bận, vui lòng thử lại sau.</string>

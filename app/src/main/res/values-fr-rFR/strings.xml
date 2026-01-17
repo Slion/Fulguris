@@ -571,8 +571,8 @@
     <string name="session_name_prompt">Entrez le nom de la session :</string>
     <string name="session_already_exists">Une session portant ce nom existe déjà !</string>
     <string name="session_cant_delete_current">Impossible de supprimer la session en cours !</string>
-    <string name="session_prompt_confirm_deletion_title">Confirmez la suppression</string>
-    <string name="session_prompt_confirm_deletion_message">Êtes-vous sûr de vouloir supprimer la session \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\" ?</string>
+    <string name="dialog_title_session_deletion">Supprimer la session ?</string>
+    <string name="dialog_message_session_deletion">La session \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\" sera définitivement supprimée. Cette action ne peut pas être annulée.</string>
     <string name="configuration_prompt_confirm_deletion_message">Êtes-vous sûr de vouloir supprimer la configuration \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\" ?</string>
     <string name="session_switched">Basculé vers \"%s\"</string>
     <string name="busy">Occupé, réessayez ultérieurement.</string>

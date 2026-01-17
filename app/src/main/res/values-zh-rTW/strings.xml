@@ -569,8 +569,8 @@
     <string name="session_name_prompt">輸入工作階段名稱：</string>
     <string name="session_already_exists">已存在同名的工作階段！</string>
     <string name="session_cant_delete_current">無法刪除目前的工作階段！</string>
-    <string name="session_prompt_confirm_deletion_title">確認刪除</string>
-    <string name="session_prompt_confirm_deletion_message">Are you sure you want to delete session \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\"?</string>
+    <string name="dialog_title_session_deletion">刪除工作階段？</string>
+    <string name="dialog_message_session_deletion">工作階段「<xliff:g id="session_name" example="Shopping">%s</xliff:g>」將被永久刪除。此動作無法復原。</string>
     <string name="configuration_prompt_confirm_deletion_message">Are you sure you want to delete \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\" configuration?</string>
     <string name="session_switched">已切換到「%s」</string>
     <string name="busy">忙碌中，請稍後再試。</string>

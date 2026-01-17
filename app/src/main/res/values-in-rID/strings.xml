@@ -569,8 +569,8 @@
     <string name="session_name_prompt">Sebutkan nama sesi:</string>
     <string name="session_already_exists">Sudah ada sesi yang bernama ini!</string>
     <string name="session_cant_delete_current">Tidak dapat menghapus sesi ini!</string>
-    <string name="session_prompt_confirm_deletion_title">Konfirmasi penghapusan</string>
-    <string name="session_prompt_confirm_deletion_message">Apakah Anda yakin ingin menghapus sesi \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\"?</string>
+    <string name="dialog_title_session_deletion">Hapus sesi?</string>
+    <string name="dialog_message_session_deletion">Sesi \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\" akan dihapus secara permanen. Tindakan ini tidak dapat dibatalkan.</string>
     <string name="configuration_prompt_confirm_deletion_message">Apakah Anda yakin ingin menghapus konfigurasi \"<xliff:g id="config_name" example="Landscape - 270 - sw718dp">%s</xliff:g>\"?</string>
     <string name="session_switched">Beralih ke \"%s\"</string>
     <string name="busy">Sedang sibuk, coba sebentar lagi.</string>

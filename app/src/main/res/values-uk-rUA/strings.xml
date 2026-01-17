@@ -577,8 +577,8 @@
     <string name="session_name_prompt">Уведіть назву сеансу:</string>
     <string name="session_already_exists">Сеанс із такою назвою вже існує!</string>
     <string name="session_cant_delete_current">Неможливо видалити поточний сеанс!</string>
-    <string name="session_prompt_confirm_deletion_title">Підтвердити видалення</string>
-    <string name="session_prompt_confirm_deletion_message">Ви впевнені, що хочете видалити сеанс \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\"?</string>
+    <string name="dialog_title_session_deletion">Видалити сеанс?</string>
+    <string name="dialog_message_session_deletion">Сеанс «<xliff:g id="session_name" example="Shopping">%s</xliff:g>» буде назавжди видалено. Цю дію неможливо скасувати.</string>
     <string name="configuration_prompt_confirm_deletion_message">Ви впевнені, що хочете видалити конфігурацію \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\"?</string>
     <string name="session_switched">Перемкнуто на \"%s\"</string>
     <string name="busy">Зайнято, спробуйте ще раз пізніше.</string>
