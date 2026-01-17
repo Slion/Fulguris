@@ -25,7 +25,7 @@ package fulguris.settings.fragment
 import fulguris.R
 import fulguris.bookmark.LegacyBookmarkImporter
 import fulguris.bookmark.NetscapeBookmarkFormatImporter
-import fulguris.browser.TabsManager
+import fulguris.browser.SessionsManager
 import acr.browser.lightning.browser.sessions.Session
 import fulguris.database.bookmark.BookmarkExporter
 import fulguris.database.bookmark.BookmarkRepository
@@ -106,7 +106,7 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
 
 
     //
-    @Inject lateinit var tabsManager: TabsManager
+    @Inject lateinit var sessionsManager: SessionsManager
 
     private var importSubscription: Disposable? = null
     private var exportSubscription: Disposable? = null
@@ -143,8 +143,8 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
         //clickablePreference(preference = getString(R.string.pref_key_sessions_reset), onClick = this::deleteAllBookmarks)
 
 
-        // Populate our sessions
-        tabsManager.iSessions.forEach { s -> addPreferenceSessionExport(s) }
+        // Populate our sessions - use SessionsManager to load them independently of TabsManager
+        sessionsManager.sessions().forEach { s -> addPreferenceSessionExport(s) }
 
         // Handle reset settings option
         clickableDynamicPreference(
@@ -174,7 +174,7 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
         pref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
             // Open up Fulguris Crowdin project page
             //startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://crowdin.com/project/fulguris-web-browser")))
-            showSessionExportDialog(aSession.name, aSession.tabCount, tabsManager.fileFromSessionName(aSession.name))
+            showSessionExportDialog(aSession.name, aSession.tabCount, sessionsManager.fileFromSessionName(aSession.name))
             true
         }
         sessionsCategory.addPreference(pref)
@@ -554,8 +554,8 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
                 context?.contentResolver?.openInputStream(uri).let { input ->
 
                     // Build up our session name
-                    val fileName = application.filesDir?.path + '/' + TabsManager.FILENAME_SESSION_PREFIX + uri.fileName
-                    //val file = File.createTempFile(TabsManager.FILENAME_SESSION_PREFIX + uri.fileName,"",application.filesDir)
+                    val fileName = application.filesDir?.path + '/' + SessionsManager.FILENAME_SESSION_PREFIX + uri.fileName
+                    //val file = File.createTempFile(SessionsManager.FILENAME_SESSION_PREFIX + uri.fileName,"",application.filesDir)
 
                     // Make sure our file name is unique and short
                     // TODO: move this into an utility function somewhere
@@ -573,12 +573,16 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
                     output.flush()
                     output.close()
                     // Workout session name
-                    val sessionName = file.name.substring(TabsManager.FILENAME_SESSION_PREFIX.length);
-                    // Add imported session to our session collection in our tab manager
+                    val sessionName = file.name.substring(SessionsManager.FILENAME_SESSION_PREFIX.length);
+
+                    // Get current sessions, add the new one, and save
+                    val sessions = sessionsManager.sessions()
                     val session = Session(sessionName)
-                    tabsManager.iSessions.add(session)
+                    sessions.add(session)
+
                     // Make sure we persist our imported session
-                    tabsManager.saveSessions()
+                    sessionsManager.saveSessions()
+
                     // Add imported session to our preferences list
                     addPreferenceSessionExport(session)
 

@@ -214,6 +214,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     @Inject lateinit var abpUserRules: AbpUserRules
     //
     @Inject lateinit var tabsManager: TabsManager
+    @Inject lateinit var sessionsManager: SessionsManager
 
     // To be notified when preference are changed
     @Inject @PrefsPortrait
@@ -440,7 +441,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
                 if (userPreferences.versionCode==0
                         // Added this check to avoid show welcome message to existing installation
                         // TODO: Remove that a few versions down the road
-                        && tabsManager.iSessions.count()==1 && tabsManager.allTabs.count()==1) {
+                        && sessionsManager.sessions().count()==1 && tabsManager.allTabs.count()==1) {
                     // First run
                     welcomeToFulguris()
                 } else {
@@ -510,7 +511,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
      *
      */
     private fun createMenuSessions() {
-        iMenuSessions = SessionsPopupWindow(layoutInflater)
+        iMenuSessions = SessionsPopupWindow(layoutInflater, sessionsManager)
         // Make it full screen gesture friendly
         iMenuSessions.setOnDismissListener { justClosedMenuCountdown() }
     }
@@ -1424,7 +1425,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         Timber.d("Closing browser")
         tabsManager.newTab(this, NoOpInitializer(), NewTabPosition.END_OF_TAB_LIST)
         tabsManager.switchToTab(0)
-        tabsManager.clearSavedState()
+        sessionsManager.clearAllSavedState()
 
         historyPageFactory.deleteHistoryPage().subscribe()
         closeBrowser()
@@ -2091,14 +2092,14 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
                 // Ctrl + Shift + session number for direct session access
                 tabsManager.let {
                     if (KeyEvent.KEYCODE_0 <= event.keyCode && event.keyCode <= KeyEvent.KEYCODE_9) {
-                        val nextIndex = if (event.keyCode > it.iSessions.count() + KeyEvent.KEYCODE_1 || event.keyCode == KeyEvent.KEYCODE_0) {
+                        val nextIndex = if (event.keyCode > sessionsManager.sessions().count() + KeyEvent.KEYCODE_1 || event.keyCode == KeyEvent.KEYCODE_0) {
                             // Go to the last session if not enough sessions or KEYCODE_0
-                            it.iSessions.count()-1
+                            sessionsManager.sessions().count()-1
                         } else {
                             // Otherwise access any of the first nine sessions
                             event.keyCode - KeyEvent.KEYCODE_1
                         }
-                        tabsManager.switchToSession(it.iSessions[nextIndex].name)
+                        tabsManager.switchToSession(sessionsManager.sessions()[nextIndex].name)
                         return true
                     }
                 }
@@ -3913,7 +3914,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
                 HeaderInfo.ShortUrl -> Utils.trimmedProtocolFromURL(tab.url)
                 HeaderInfo.Domain -> Utils.getDisplayDomainName(tab.url)
                 HeaderInfo.Title -> tab.title.ifBlank { getString(R.string.untitled) }
-                HeaderInfo.Session -> tabsManager.iCurrentSessionName
+                HeaderInfo.Session -> sessionsManager.currentSessionName()
                 HeaderInfo.AppName -> getString(R.string.app_name)
             }
         }

@@ -523,7 +523,7 @@ class MenuPopupWindow : PopupWindow {
             } ?: false
 
             // Update Sessions menu item with current session name
-            val sessionName = (contentView.context as? WebBrowserActivity)?.tabsManager?.iCurrentSessionName ?: ""
+            val sessionName = (contentView.context as? WebBrowserActivity)?.sessionsManager?.currentSessionName() ?: ""
             if (sessionName.isNotEmpty()) {
                 val sessionsMenuItem = MenuItems.getItem(MenuItemId.Sessions)
                 val sessionsLabel = sessionsMenuItem?.labelId?.let { labelId ->

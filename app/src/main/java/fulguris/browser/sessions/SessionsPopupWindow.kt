@@ -25,6 +25,7 @@ package fulguris.browser.sessions
 import acr.browser.lightning.browser.sessions.Session
 import fulguris.R
 import fulguris.activity.WebBrowserActivity
+import fulguris.browser.SessionsManager
 import fulguris.browser.WebBrowser
 import fulguris.databinding.SessionListBinding
 import fulguris.dialog.BrowserDialog
@@ -32,7 +33,6 @@ import fulguris.extensions.toast
 import fulguris.settings.preferences.UserPreferences
 import fulguris.utils.FileNameInputFilter
 import fulguris.utils.ItemDragDropSwipeHelper
-import fulguris.utils.Utils
 import fulguris.di.configPrefs
 import android.app.Activity
 import android.graphics.drawable.ColorDrawable
@@ -64,8 +64,11 @@ class SessionsPopupWindow : PopupWindow {
     @Inject
     lateinit var iUserPreferences: UserPreferences
 
+    private val sessionsManager: SessionsManager
+
 
     constructor(layoutInflater: LayoutInflater,
+                sessionsManager: SessionsManager,
                 aBinding: SessionListBinding = SessionListBinding.inflate(layoutInflater))
             : super(aBinding.root, WRAP_CONTENT, WRAP_CONTENT, true) {
 
@@ -76,9 +79,10 @@ class SessionsPopupWindow : PopupWindow {
         // Elevation just need to be high enough not to cut the effect defined in our layout
         elevation = 100F
 
+        this.sessionsManager = sessionsManager
         iBinding = aBinding
         iWebBrowser = aBinding.root.context as WebBrowser
-        iAdapter = SessionsAdapter(iWebBrowser)
+        iAdapter = SessionsAdapter(iWebBrowser, sessionsManager)
 
         animationStyle = R.style.AnimationMenu
         //animationStyle = android.R.style.Animation_Dialog
@@ -100,9 +104,9 @@ class SessionsPopupWindow : PopupWindow {
                     setPositiveButton(R.string.action_ok) { _, _ ->
                         val name = textView.text.toString()
                         // Check if session exists already
-                        if (iWebBrowser.getTabModel().isValidSessionName(name)) {
+                        if (sessionsManager.isValidSessionName(name)) {
                             // That session does not exist yet, add it then
-                            iWebBrowser.getTabModel().iSessions.let {
+                            sessionsManager.sessions().let {
                                 it.add(Session(name, 1))
                                 // Switch to our newly added session
                                 (view.context as WebBrowserActivity).apply {
@@ -113,7 +117,7 @@ class SessionsPopupWindow : PopupWindow {
                                     }
                                 }
                                 // Update our session list
-                                //iAdapter.showSessions(it)
+                                updateSessions()
                             }
                         } else {
                             // We already have a session with that name, display an error message
@@ -138,15 +142,17 @@ class SessionsPopupWindow : PopupWindow {
                     setPositiveButton(R.string.action_ok) { _, _ ->
                         val name = textView.text.toString()
                         // Check if session exists already
-                        if (tabs.isValidSessionName(name)) {
+                        if (sessionsManager.isValidSessionName(name)) {
                             // That session does not exist yet, add it then
-                            tabs.iSessions.let {
+                            sessionsManager.sessions().let {
                                 // Save current session session first
                                 tabs.saveState()
                                 // Add new session
-                                it.add(Session(name, tabs.currentSession().tabCount))
+                                it.add(Session(name, sessionsManager.currentSession().tabCount))
                                 // Set it as current session
-                                tabs.iCurrentSessionName = name
+                                sessionsManager.setCurrentSession(name)
+                                // Save sessions
+                                sessionsManager.saveSessions()
                                 // Save current tabs that our newly added session
                                 tabs.saveState()
                                 // Switch to our newly added session
@@ -163,7 +169,7 @@ class SessionsPopupWindow : PopupWindow {
                                 }
 
                                 // Update our session list
-                                //iAdapter.showSessions(it)
+                                updateSessions()
                             }
                         } else {
                             // We already have a session with that name, display an error message
@@ -294,7 +300,7 @@ class SessionsPopupWindow : PopupWindow {
      *
      */
     fun scrollToCurrentSession() {
-        iBinding.recyclerViewSessions.smoothScrollToPosition(iWebBrowser.getTabModel().currentSessionIndex())
+        iBinding.recyclerViewSessions.smoothScrollToPosition(sessionsManager.currentSessionIndex())
     }
 
     /**
@@ -305,7 +311,7 @@ class SessionsPopupWindow : PopupWindow {
         // I'm guessing isComputingLayout is not needed anymore since we moved our update after tab manager initialization
         // TODO: remove it and switch quickly between sessions to see if that still works
         if (!iBinding.recyclerViewSessions.isComputingLayout) {
-            iAdapter.showSessions(iWebBrowser.getTabModel().iSessions)
+            iAdapter.showSessions(sessionsManager.sessions())
         }
     }
 

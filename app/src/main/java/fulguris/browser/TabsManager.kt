@@ -3,33 +3,22 @@ package fulguris.browser
 import fulguris.Entitlement
 import fulguris.R
 import acr.browser.lightning.browser.sessions.Session
-import fulguris.constant.INTENT_ORIGIN
 import fulguris.extensions.snackbar
-import fulguris.extensions.topPrivateDomain
-import fulguris.extensions.log
 import fulguris.search.SearchEngineProvider
 import fulguris.settings.NewTabPosition
 import fulguris.settings.preferences.UserPreferences
 import fulguris.ssl.SslState
-import fulguris.utils.*
 import android.app.Activity
 import android.app.Application
-import android.app.SearchManager
-import android.content.Intent
 import android.os.Bundle
-import android.webkit.URLUtil
 import androidx.lifecycle.LifecycleOwner
 import fulguris.Component
-import fulguris.app
-import fulguris.settings.preferences.DomainPreferences
-import fulguris.utils.QUERY_PLACE_HOLDER
 import fulguris.utils.isBookmarkUrl
 import fulguris.utils.isDownloadsUrl
 import fulguris.utils.isHistoryUrl
 import fulguris.utils.isIncognitoPageUrl
 import fulguris.utils.isSpecialUrl
 import fulguris.utils.isStartPageUrl
-import fulguris.utils.smartUrlFilter
 import fulguris.view.BookmarkPageInitializer
 import fulguris.view.DownloadPageInitializer
 import fulguris.view.FreezableBundleInitializer
@@ -38,21 +27,14 @@ import fulguris.view.HomePageInitializer
 import fulguris.view.IncognitoPageInitializer
 import fulguris.view.NoOpInitializer
 import fulguris.view.TabInitializer
-import fulguris.view.UrlInitializer
 import fulguris.view.WebPageTab
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-import java.io.File
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
-import kotlin.collections.ArrayList
-import androidx.core.net.toUri
-import fulguris.enums.IncomingUrlAction
-import fulguris.activity.IncognitoActivity
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 /**
  * A manager singleton that holds all the [WebPageTab] and tracks the current tab. It handles
@@ -69,7 +51,8 @@ class TabsManager @Inject constructor(
     private val historyPageInitializer: HistoryPageInitializer,
     private val downloadPageInitializer: DownloadPageInitializer,
     private val noOpPageInitializer: NoOpInitializer,
-    private val userPreferences: UserPreferences
+    private val userPreferences: UserPreferences,
+    private val sessionsManager: SessionsManager
 ): Component() {
 
     private val tabList = arrayListOf<WebPageTab>()
@@ -78,21 +61,6 @@ class TabsManager @Inject constructor(
     // TODO: Ideally it should not be a data member.
     val savedRecentTabsIndices = mutableSetOf<Int>()
 
-
-
-
-
-
-    // Our persisted list of sessions
-    // TODO: Consider using a map instead of an array
-    var iSessions: ArrayList<Session> = arrayListOf<Session>()
-    var iCurrentSessionName: String = ""
-        set(value) {
-            // Most unoptimized way to maintain our current item but that should do for now
-            iSessions.forEach { s -> s.isCurrent = false }
-            iSessions.filter { s -> s.name == value}.apply {if (isNotEmpty()) get(0).isCurrent = true }
-            field = value
-        }
 
     /**
      * Return the current [WebPageTab] or null if no current tab has been set.
@@ -115,7 +83,7 @@ class TabsManager @Inject constructor(
             //TODO: during shutdown initiated by session switch we get stray events here not matching the proper session since it current session name was changed
             //TODO: it's no big deal and does no harm at all but still not consistent, we may want to fix it at some point
             //TODO: after shutdown our tab counts are fixed by [loadSessions]
-            val session=iSessions.filter { s -> s.name == iCurrentSessionName }
+            val session = sessionsManager.sessions().filter { s -> s.name == sessionsManager.currentSessionName() }
             if (session.isNotEmpty()) {
                 session[0].tabCount = it
             }
@@ -149,38 +117,6 @@ class TabsManager @Inject constructor(
         //shutdown()
     }
 
-
-    /**
-     */
-    fun currentSessionIndex() : Int {
-        return iSessions.indexOfFirst { s -> s.name == iCurrentSessionName }
-    }
-
-    /**
-     */
-    fun currentSession() : Session {
-        return session(iCurrentSessionName)
-    }
-
-    /**
-     * Provide the session matching the given name
-     * TODO: have a better implementation
-     */
-    fun session(aName: String) : Session {
-        if (iSessions.isNullOrEmpty()) {
-            // TODO: Return session with Default name
-            return Session()
-        }
-
-        val list = iSessions.filter { s -> s.name == aName }
-        if (list.isNullOrEmpty()) {
-            // TODO: Return session with Default name
-            return Session()
-        }
-
-        // Should only be one session item in that list
-        return list[0]
-    }
 
 
     /**
@@ -367,66 +303,6 @@ class TabsManager @Inject constructor(
     }
 
 
-    /**
-     * Rename the session [aOldName] to [aNewName].
-     * Takes care of checking parameters validity before proceeding.
-     * Changes current session name if needed.
-     * Rename matching session data file too.
-     * Commit session list changes to persistent storage.
-     *
-     * @param [aOldName] Name of the session to rename in our session list.
-     * @param [aNewName] New name to be assumed by specified session.
-     */
-    fun renameSession(aOldName: String, aNewName: String) {
-
-        Timber.d("Try rename session $aOldName to $aNewName")
-
-        val index = iSessions.indexOf(session(aOldName))
-        Timber.d("Session index $index")
-
-        // Check if we can indeed rename that session
-        if (iSessions.isEmpty() // Check if we have sessions at all
-                or !isValidSessionName(aNewName) // Check if new session name is valid
-                or !(index>=0 && index<iSessions.count())) { // Check if index is in range
-            Timber.d("Session rename aborted")
-            return
-        }
-
-        // Proceed with rename then
-        val oldName = iSessions[index].name
-        // Change session name
-        iSessions[index].name = aNewName
-        // Renamed session is the current session
-        if (iCurrentSessionName == oldName) {
-            iCurrentSessionName = aNewName
-        }
-
-        Timber.d("Rename session files $oldName to $aNewName")
-        // Rename our session file
-        fulguris.utils.FileUtils.renameBundleInStorage(application, fileNameFromSessionName(oldName), fileNameFromSessionName(aNewName))
-
-        // I guess it makes sense to persist our changes
-        saveSessions()
-    }
-
-    /**
-     * Check if the given string is a valid session name
-     */
-    fun isValidSessionName(aName: String): Boolean {
-        // Empty strings are not valid names
-        if (aName.isNullOrBlank()) {
-            return false
-        }
-
-        if (iSessions.isNullOrEmpty()) {
-            // Null or empty session list so that name is valid
-            return true
-        } else {
-            // That name is valid if not already in use
-            return iSessions.filter { s -> s.name == aName }.isNullOrEmpty()
-        }
-    }
-
 
     /**
      * Returns an observable that emits the [TabInitializer] for each previously opened tab as
@@ -435,21 +311,21 @@ class TabsManager @Inject constructor(
     private fun restorePreviousTabs(): MutableList<TabInitializer>
     {
         //throw Exception("Hi There!")
-        // First load our sessions
-        loadSessions()
         // Check if we have a current session
-        if (iCurrentSessionName.isBlank()) {
+        val currentSessionName = sessionsManager.currentSessionName()
+        if (currentSessionName.isBlank()) {
             // No current session name meaning first load with version support
             // Add our default session
-            iCurrentSessionName = application.getString(R.string.session_default)
-            // At this stage we must have at least an empty list
-            iSessions.add(Session(iCurrentSessionName))
+            val newSessionName = application.getString(R.string.session_default)
+            val sessions = sessionsManager.sessions()
+            sessions.add(Session(newSessionName))
+            sessionsManager.setCurrentSession(newSessionName)
             // Than load legacy session file to make sure tabs from earlier version are preserved
             return loadSession(FILENAME_SESSION_DEFAULT)
             // TODO: delete legacy session file at some point
         } else {
             // Load current session then
-            return loadSession(fileNameFromSessionName(iCurrentSessionName))
+            return loadSession(sessionsManager.fileNameFromSessionName(currentSessionName))
         }
     }
 
@@ -475,10 +351,14 @@ class TabsManager @Inject constructor(
      */
     private fun createRecoverySession(): MutableList<TabInitializer>
     {
-        recoverSessions()
+        // Force reload of sessions from disk to recover any orphaned session files
+        sessionsManager.reloadSessions()
+
         // Add our recovery session using timestamp
-        iCurrentSessionName = application.getString(R.string.session_recovery) + "-" + Date().time
-        iSessions.add(Session(iCurrentSessionName,1, true))
+        val recoverySessionName = application.getString(R.string.session_recovery) + "-" + Date().time
+        val sessions = sessionsManager.sessions()
+        sessions.add(Session(recoverySessionName,1, true))
+        sessionsManager.setCurrentSession(recoverySessionName)
 
         return loadRecoverySession()
     }
@@ -681,7 +561,7 @@ class TabsManager @Inject constructor(
             saveState()
         }
         else {
-            clearSavedState()
+            fulguris.utils.FileUtils.deleteBundleInStorage(application, FILENAME_SESSION_DEFAULT)
         }
     }
 
@@ -700,9 +580,9 @@ class TabsManager @Inject constructor(
         }
 
         // Save sessions info
-        saveSessions()
-        // Save our session        
-        saveCurrentSession(iCurrentSessionName)
+        sessionsManager.saveSessions()
+        // Save our session
+        saveCurrentSession(sessionsManager.currentSessionName())
     }
 
     /**
@@ -731,7 +611,7 @@ class TabsManager @Inject constructor(
             //delay(1L)
             val temp = FILENAME_TEMP_PREFIX + aName
             val backup = FILENAME_BACKUP_PREFIX + aName
-            val session = FILENAME_SESSION_PREFIX + aName
+            val session = sessionsManager.fileNameFromSessionName(aName)
 
             // Save to temporary session file
             fulguris.utils.FileUtils.writeBundleToStorage(application, outState, temp)
@@ -760,105 +640,7 @@ class TabsManager @Inject constructor(
         }
     }
 
-    /**
-     * Provide session file name from session name
-     */
-    private fun fileNameFromSessionName(aSessionName: String) : String {
-        return FILENAME_SESSION_PREFIX + aSessionName
-    }
 
-    /**
-     * Provide session file from session name
-     */
-    fun fileFromSessionName(aName: String) : File {
-        return  File(application.filesDir, fileNameFromSessionName(aName))
-    }
-
-    /**
-     * Use this method to clear the saved state if you do not wish it to be restored when the
-     * browser next starts.
-     */
-    fun clearSavedState() = fulguris.utils.FileUtils.deleteBundleInStorage(application, FILENAME_SESSION_DEFAULT)
-
-    /**
-     *
-     */
-    fun deleteSession(aSessionName: String) {
-
-        // TODO: handle case where we delete current session
-        if (aSessionName == iCurrentSessionName) {
-            // Can't do that for now
-            return
-        }
-
-        val index = iSessions.indexOf(session(aSessionName))
-        // Delete session file
-        fulguris.utils.FileUtils.deleteBundleInStorage(application, fileNameFromSessionName(iSessions[index].name))
-        // Remove session from our list
-        iSessions.removeAt(index)
-    }
-
-
-    /**
-     * Save our session list and current session name to disk.
-     */
-    fun saveSessions() {
-        Timber.d("saveState")
-        val bundle = Bundle(javaClass.classLoader)
-        bundle.putString(KEY_CURRENT_SESSION, iCurrentSessionName)
-        bundle.putParcelableArrayList(KEY_SESSIONS, iSessions)
-        // Write our bundle to disk
-        iScopeThreadPool.launch {
-            // Guessing delay is not needed since we do not use the main thread scope anymore
-            //delay(1L)
-            FileUtils.writeBundleToStorage(application, bundle, FILENAME_SESSIONS)
-        }
-    }
-
-    /**
-     * Just the sessions list really
-     */
-    fun deleteSessions() {
-        FileUtils.deleteBundleInStorage(application, FILENAME_SESSIONS)
-    }
-
-    /**
-     * Load our session list and current session name from disk.
-     */
-    private fun loadSessions() {
-        val bundle = FileUtils.readBundleFromStorage(application, FILENAME_SESSIONS)
-
-        bundle?.apply{
-            getParcelableArrayList<Session>(KEY_SESSIONS)?.let { iSessions = it}
-            // Sessions must have been loaded when we load that guys
-            getString(KEY_CURRENT_SESSION)?.let {iCurrentSessionName = it}
-        }
-
-        // Somehow we lost that file again :)
-        // That crazy bug we keep chasing after
-        // TODO: consider running recovery even when our session list was loaded
-        if (iSessions.isEmpty()) {
-            recoverSessions()
-            // Set the first one as current one
-            if (iSessions.isNotEmpty()) {
-                iCurrentSessionName = iSessions[0].name
-            }
-        }
-    }
-
-    /**
-     * Reset our session collection and repopulate by searching the file system for session files.
-     */
-    private fun recoverSessions() {
-        // TODO: report this in firebase or local logs
-        Timber.i("recoverSessions")
-        //
-        iSessions.clear() // Defensive, should already be empty if we get there
-        // Search for session files
-        val files = application.filesDir?.let{it.listFiles { d, name -> name.startsWith(FILENAME_SESSION_PREFIX) }}
-        // Add recovered sessions to our collection
-        files?.forEach { f -> iSessions.add(Session(f.name.substring(FILENAME_SESSION_PREFIX.length), -1)) }
-    }
 
     /**
      *
@@ -946,8 +728,8 @@ class TabsManager @Inject constructor(
     fun switchToSession(aSessionName: String) {
         // Don't do anything if given session name is already the current one or if such session does not exists
         if (!isInitialized
-            || iCurrentSessionName==aSessionName
-            || iSessions.none { s -> s.name == aSessionName }
+            || sessionsManager.currentSessionName() == aSessionName
+            || sessionsManager.sessions().none { s -> s.name == aSessionName }
         ) {
             return
         }
@@ -957,9 +739,9 @@ class TabsManager @Inject constructor(
         //
         isInitialized = false
         // Change current session
-        iCurrentSessionName = aSessionName
+        sessionsManager.setCurrentSession(aSessionName)
         // Save it again to preserve new current session name
-        saveSessions()
+        sessionsManager.saveSessions()
         // Then reload our tabs
         setupTabs()
 
@@ -1212,10 +994,7 @@ class TabsManager @Inject constructor(
         private const val TAB_KEY_PREFIX = "TAB_"
         // Preserve this file name for compatibility
         private const val FILENAME_SESSION_DEFAULT = "SAVED_TABS.parcel"
-        private const val KEY_CURRENT_SESSION = "KEY_CURRENT_SESSION"
-        private const val KEY_SESSIONS = "KEY_SESSIONS"
-        private const val FILENAME_SESSIONS = "SESSIONS"
-        const val FILENAME_SESSION_PREFIX = "SESSION_"
+        // Temp and backup prefixes for session saving
         const val FILENAME_TEMP_PREFIX = "TEMP_SESSION_"
         const val FILENAME_BACKUP_PREFIX = "BACKUP_SESSION_"
 

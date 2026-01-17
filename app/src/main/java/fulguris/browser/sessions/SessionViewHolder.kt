@@ -24,6 +24,7 @@ package fulguris.browser.sessions
 
 import fulguris.R
 import fulguris.activity.WebBrowserActivity
+import fulguris.browser.SessionsManager
 import fulguris.browser.WebBrowser
 import fulguris.dialog.BrowserDialog
 import fulguris.extensions.launch
@@ -52,7 +53,8 @@ import io.reactivex.disposables.Disposable
  */
 class SessionViewHolder(
         view: View,
-        private val iWebBrowser: WebBrowser
+        private val iWebBrowser: WebBrowser,
+        private val sessionsManager: SessionsManager
 ) : RecyclerView.ViewHolder(view), View.OnClickListener, View.OnLongClickListener,
     ItemDragDropSwipeViewHolder {
 
@@ -69,7 +71,7 @@ class SessionViewHolder(
         buttonDelete.setOnClickListener {
             // Just don't delete current session for now
             // TODO: implement a solution to indeed delete current session
-            if (iWebBrowser.getTabModel().iCurrentSessionName == session().name) {
+            if (sessionsManager.currentSessionName() == session().name) {
                 it.context.toast(R.string.session_cant_delete_current)
             } else {
                 MaterialAlertDialogBuilder(it.context)
@@ -79,9 +81,7 @@ class SessionViewHolder(
                         .setNegativeButton(android.R.string.cancel, null)
                         .setPositiveButton(android.R.string.ok) { _, _ ->
                             // User confirmed deletion, go ahead then
-                            iWebBrowser.getTabModel().deleteSession(textName.tag as String)
-                            // Persist our session list after removing one
-                            iWebBrowser.getTabModel().saveSessions()
+                            sessionsManager.deleteSession(textName.tag as String)
                             // Refresh our list
                             (it.context as WebBrowserActivity).apply {
                                 iMenuSessions.updateSessions()
@@ -120,9 +120,9 @@ class SessionViewHolder(
                 setPositiveButton(R.string.action_ok) { _, _ ->
                     val newName = textView.text.toString()
                     // Check if session exists already to display proper error message
-                    if (iWebBrowser.getTabModel().isValidSessionName(newName)) {
+                    if (sessionsManager.isValidSessionName(newName)) {
                         // Proceed with session rename
-                        iWebBrowser.getTabModel().renameSession(textName.tag as String,newName)
+                        sessionsManager.renameSession(textName.tag as String,newName)
                         // Make sure we update adapter list and thus edited item too
                         (iWebBrowser as WebBrowserActivity).iMenuSessions.updateSessions()
                     } else {
@@ -180,7 +180,7 @@ class SessionViewHolder(
     }
 
 
-    private fun session() = iWebBrowser.getTabModel().session(textName.tag as String)
+    private fun session() = sessionsManager.session(textName.tag as String)
 
 
     //TODO: should we have dedicated click handlers instead of a switch?

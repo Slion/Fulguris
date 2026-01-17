@@ -24,6 +24,7 @@ package fulguris.browser.sessions
 
 import acr.browser.lightning.browser.sessions.Session
 import fulguris.R
+import fulguris.browser.SessionsManager
 import fulguris.browser.WebBrowser
 import fulguris.extensions.inflater
 import fulguris.utils.ItemDragDropSwipeAdapter
@@ -43,7 +44,8 @@ import java.util.*
  * TODO: consider using [ListAdapter] instead of [RecyclerView.Adapter]
  */
 class SessionsAdapter(
-        private val webBrowser: WebBrowser
+        private val webBrowser: WebBrowser,
+        private val sessionsManager: SessionsManager
 ) : RecyclerView.Adapter<SessionViewHolder>(),
     ItemDragDropSwipeAdapter {
 
@@ -79,7 +81,7 @@ class SessionsAdapter(
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): SessionViewHolder {
         val view = viewGroup.context.inflater.inflate(R.layout.session_list_item, viewGroup, false)
-        return SessionViewHolder(view, webBrowser).apply {
+        return SessionViewHolder(view, webBrowser, sessionsManager).apply {
             // Ask our newly created view holder to observe our edit mode status
             // Thus buttons on our items will be shown or hidden
             iEditModeSubscriptions.add(observeEditMode(iEditModeEnabledObservable))
@@ -119,12 +121,12 @@ class SessionsAdapter(
         // Note: recent tab list is not affected
         // Swap local list position
         Collections.swap(iSessions, fromPosition, toPosition)
-        // Swap model list position
-        Collections.swap(webBrowser.getTabModel().iSessions, fromPosition, toPosition)
+        // Swap sessions manager list position
+        Collections.swap(sessionsManager.sessions(), fromPosition, toPosition)
         // Tell base class an item was moved
         notifyItemMoved(fromPosition, toPosition)
         // Persist our changes
-        webBrowser.getTabModel().saveSessions()
+        sessionsManager.saveSessions()
         return true
     }
 
