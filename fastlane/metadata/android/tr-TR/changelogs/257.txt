@@ -1,0 +1,5 @@
+📥 Aşamalı indirme listesi
+📑 Oturum yöneticisi geliştirmeleri
+⚙️ Uygulamayı başlatmadan sistem ayarları üzerinden oturumları dışa aktarın
+🕒 Sayfa geçmişini görüntülemek için geri/ileri düğmelerine uzun basın
+🪲 Çeşitli iyileştirmeler ve hata düzeltmeleri

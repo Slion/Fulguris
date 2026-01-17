@@ -1,0 +1,5 @@
+📥 Daftar unduhan progresif
+📑 Peningkatan pengelola sesi
+⚙️ Ekspor sesi melalui pengaturan sistem tanpa memulai aplikasi
+🕒 Tekan lama tombol kembali/maju untuk melihat riwayat halaman
+🪲 Berbagai perbaikan dan perbaikan bug

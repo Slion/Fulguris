@@ -1,0 +1,5 @@
+📥 Lista de transferências progressiva
+📑 Melhorias no gestor de sessões
+⚙️ Exportar sessões através das definições do sistema sem iniciar a aplicação
+🕒 Pressione longamente os botões voltar/avançar para ver o histórico da página
+🪲 Várias melhorias e correções de erros

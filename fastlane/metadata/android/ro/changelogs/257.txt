@@ -1,0 +1,5 @@
+📥 Listă de descărcări progresivă
+📑 Îmbunătățiri ale gestionarului de sesiuni
+⚙️ Exportă sesiunile prin setările sistemului fără a porni aplicația
+🕒 Apăsare lungă pe butoanele înapoi/înainte pentru a vizualiza istoricul paginii
+🪲 Diverse îmbunătățiri și remedieri de erori

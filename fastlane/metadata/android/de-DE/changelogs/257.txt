@@ -1,0 +1,5 @@
+📥 Progressive Download-Liste
+📑 Verbesserungen des Sitzungsmanagers
+⚙️ Sitzungen über Systemeinstellungen exportieren, ohne die App zu starten
+🕒 Langer Druck auf Zurück/Vorwärts-Tasten zeigt Seitenverlauf
+🪲 Verschiedene Verbesserungen und Fehlerbehebungen

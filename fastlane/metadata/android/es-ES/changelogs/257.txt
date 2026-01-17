@@ -1,0 +1,5 @@
+📥 Lista de descargas progresiva
+📑 Mejoras del gestor de sesiones
+⚙️ Exportar sesiones a través de la configuración del sistema sin iniciar la aplicación
+🕒 Pulsación larga en botones atrás/adelante para ver el historial de la página
+🪲 Varias mejoras y correcciones de errores

@@ -1,0 +1,5 @@
+📥 Progresyvus atsiuntimų sąrašas
+📑 Seansų tvarkyklės patobulinimai
+⚙️ Eksportuoti seansus per sistemos nustatymus nepaleisdami programos
+🕒 Ilgai paspauskite atgal/pirmyn mygtukus, kad pamatytumėte puslapio istoriją
+🪲 Įvairūs patobulinimai ir klaidų taisymai

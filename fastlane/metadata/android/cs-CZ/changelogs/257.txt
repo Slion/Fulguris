@@ -1,0 +1,5 @@
+📥 Seznam progresivního stahování
+📑 Vylepšení správce relací
+⚙️ Export relací přes systémová nastavení bez spuštění aplikace
+🕒 Dlouhé stisknutí tlačítek zpět/vpřed pro zobrazení historie stránky
+🪲 Různá vylepšení a opravy chyb

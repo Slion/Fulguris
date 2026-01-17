@@ -1,0 +1,5 @@
+📥 Progressieve downloadlijst
+📑 Verbeteringen sessiebeheer
+⚙️ Exporteer sessies via systeeminstellingen zonder de app te starten
+🕒 Lang indrukken op terug/vooruit-knoppen om paginageschiedenis te bekijken
+🪲 Diverse verbeteringen en bugfixes

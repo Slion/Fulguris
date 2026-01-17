@@ -1,0 +1,5 @@
+📥 Elenco download progressivo
+📑 Miglioramenti del gestore sessioni
+⚙️ Esporta le sessioni tramite le impostazioni di sistema senza avviare l'app
+🕒 Pressione prolungata sui pulsanti indietro/avanti per visualizzare la cronologia della pagina
+🪲 Vari miglioramenti e correzioni di bug
