@@ -12,6 +12,14 @@ This is **Fulguris Web Browser**, an Android application with localization suppo
 # Check translation status
 python subs\l10n\android\strings.py --check th-rTH
 
+# Get a string in one language
+python subs\l10n\android\strings.py --get th-rTH app_name
+
+# Get a string across ALL languages (with language names)
+python subs\l10n\android\strings.py --get all app_name
+# or
+python subs\l10n\android\strings.py --get-all app_name
+
 # Translate ONE string across MULTIPLE languages (RECOMMENDED for same string)
 python subs\l10n\android\strings.py --set app_name de-rDE 'Fulguris' fr-rFR 'Fulguris' es-rES 'Fulguris'
 
