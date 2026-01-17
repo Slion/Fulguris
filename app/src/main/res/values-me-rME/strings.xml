@@ -143,7 +143,7 @@
     <string name="download_status_pending">Na čekanju</string>
     <string name="download_status_unknown">Nepoznati status</string>
     <string name="downloads_could_not_remove">Neka preuzimanja nisu mogla biti uklonjena</string>
-    <string name="no_app_to_open">Nema aplikacije za otvaranje ove datoteke</string>
+    <string name="error_cant_open_file">Greška: Ne mogu otvoriti datoteku</string>
     <string name="dialog_title_install_apk">Otvoriti sistemske postavke?</string>
     <string name="dialog_message_install_apk">Za instalaciju APK datoteka, potrebno je omogućiti \"Dozvoli instalaciju aplikacija\" u sistemskim postavkama</string>
     <string name="install_permission_denied">Nije moguće instalirati APK bez dozvole</string>

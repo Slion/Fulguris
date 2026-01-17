@@ -143,7 +143,7 @@
     <string name="download_status_pending">保留中</string>
     <string name="download_status_unknown">ステータス不明</string>
     <string name="downloads_could_not_remove">いくつかのダウンロードを削除できませんでした</string>
-    <string name="no_app_to_open">このファイルを開くアプリがありません</string>
+    <string name="error_cant_open_file">エラー: ファイルを開けません</string>
     <string name="dialog_title_install_apk">システム設定を開きますか？</string>
     <string name="dialog_message_install_apk">APKファイルをインストールするには、システム設定で「アプリのインストールを許可」を有効にする必要があります</string>
     <string name="install_permission_denied">権限なしでAPKをインストールできません</string>

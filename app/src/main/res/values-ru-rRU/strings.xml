@@ -143,7 +143,7 @@
     <string name="download_status_pending">Ожидает</string>
     <string name="download_status_unknown">Неизвестный статус</string>
     <string name="downloads_could_not_remove">Не удалось удалить некоторые загрузки</string>
-    <string name="no_app_to_open">Нет приложения для открытия этого файла</string>
+    <string name="error_cant_open_file">Ошибка: Невозможно открыть файл</string>
     <string name="dialog_title_install_apk">Открыть системные настройки?</string>
     <string name="dialog_message_install_apk">Для установки APK-файлов необходимо включить \"Разрешить установку приложений\" в системных настройках</string>
     <string name="install_permission_denied">Невозможно установить APK без разрешения</string>

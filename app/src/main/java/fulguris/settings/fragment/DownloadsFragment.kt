@@ -22,7 +22,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import fulguris.R
 import fulguris.extensions.copyToClipboard
-import fulguris.extensions.snackbar
 import fulguris.extensions.toast
 import fulguris.utils.Utils
 import timber.log.Timber
@@ -1033,7 +1032,7 @@ class DownloadsFragment : PreferenceFragmentCompat() {
                 startActivity(openIntent)
             } catch (e: Exception) {
                 Timber.e(e, "Failed to open download")
-                activity?.toast(R.string.no_app_to_open)
+                activity?.toast(R.string.error_cant_open_file)
             }
         } else {
             Timber.e("URI is null for download ID: $downloadId")

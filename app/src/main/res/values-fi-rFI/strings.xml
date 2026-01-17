@@ -143,7 +143,7 @@
     <string name="download_status_pending">Odottaa</string>
     <string name="download_status_unknown">Tuntematon tila</string>
     <string name="downloads_could_not_remove">Joitakin latauksia ei voitu poistaa</string>
-    <string name="no_app_to_open">Ei sovellusta tämän tiedoston avaamiseen</string>
+    <string name="error_cant_open_file">Virhe: Tiedostoa ei voi avata</string>
     <string name="dialog_title_install_apk">Avaa järjestelmäasetukset?</string>
     <string name="dialog_message_install_apk">APK-tiedostojen asentamiseksi sinun on otettava käyttöön \"Salli sovellusten asennus\" järjestelmäasetuksissa</string>
     <string name="install_permission_denied">APK:ta ei voi asentaa ilman lupaa</string>

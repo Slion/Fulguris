@@ -143,7 +143,7 @@
     <string name="download_status_pending">Pendente</string>
     <string name="download_status_unknown">Estado desconhecido</string>
     <string name="downloads_could_not_remove">Não foi possível remover alguns downloads</string>
-    <string name="no_app_to_open">Nenhuma aplicação para abrir este ficheiro</string>
+    <string name="error_cant_open_file">Erro: Não é possível abrir o ficheiro</string>
     <string name="dialog_title_install_apk">Abrir definições do sistema?</string>
     <string name="dialog_message_install_apk">Para instalar ficheiros APK, precisa de ativar \"Permitir instalações de aplicações\" nas definições do sistema</string>
     <string name="install_permission_denied">Não é possível instalar APK sem permissão</string>

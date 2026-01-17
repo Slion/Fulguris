@@ -143,7 +143,7 @@
     <string name="download_status_pending">In sospeso</string>
     <string name="download_status_unknown">Stato sconosciuto</string>
     <string name="downloads_could_not_remove">Impossibile rimuovere alcuni download</string>
-    <string name="no_app_to_open">Nessuna app per aprire questo file</string>
+    <string name="error_cant_open_file">Errore: Impossibile aprire il file</string>
     <string name="dialog_title_install_apk">Aprire le impostazioni di sistema?</string>
     <string name="dialog_message_install_apk">Per installare file APK, devi abilitare \"Consenti installazione app\" nelle impostazioni di sistema</string>
     <string name="install_permission_denied">Impossibile installare APK senza autorizzazione</string>

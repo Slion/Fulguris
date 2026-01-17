@@ -143,7 +143,7 @@
     <string name="download_status_pending">Laukiama</string>
     <string name="download_status_unknown">Nežinoma būsena</string>
     <string name="downloads_could_not_remove">Kai kurių atsisiuntimų nepavyko pašalinti</string>
-    <string name="no_app_to_open">Nėra programos šiam failui atidaryti</string>
+    <string name="error_cant_open_file">Klaida: Nepavyko atidaryti failo</string>
     <string name="dialog_title_install_apk">Atidaryti sistemos nustatymus?</string>
     <string name="dialog_message_install_apk">Norėdami įdiegti APK failus, turite įjungti \"Leisti programų diegimą\" sistemos nustatymuose</string>
     <string name="install_permission_denied">Negalima įdiegti APK be leidimo</string>
