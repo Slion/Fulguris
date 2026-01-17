@@ -743,7 +743,7 @@
     <string name="message_code_copied">コードをクリップボードにコピーしました</string>
     <string name="settings_userscript_no_info">追加情報なし</string>
     <string name="dialog_message_delete_extension">拡張機能「%1$s」は完全に削除されます</string>
-    <string name="dialog_title_delete_extension">拡張機能を削除</string>
+    <string name="dialog_title_delete_extension">拡張機能を削除？</string>
     <string name="userscripts_name_hint">スクリプト名</string>
     <string name="userscripts_content_hint">スクリプトの内容</string>
     <string name="error_parsing_userscript">ユーザースクリプトの解析エラー</string>

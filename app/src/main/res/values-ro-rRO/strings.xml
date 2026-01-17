@@ -748,7 +748,7 @@
     <string name="message_code_copied">Cod copiat în clipboard</string>
     <string name="settings_userscript_no_info">Fără informații suplimentare</string>
     <string name="dialog_message_delete_extension">Extensia \"%1$s\" va fi eliminată definitiv</string>
-    <string name="dialog_title_delete_extension">Șterge extensia</string>
+    <string name="dialog_title_delete_extension">Șterge extensia?</string>
     <string name="userscripts_name_hint">Nume script</string>
     <string name="userscripts_content_hint">Conținut script</string>
     <string name="error_parsing_userscript">Eroare la parsarea script-ului utilizatorului</string>

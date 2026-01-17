@@ -751,7 +751,7 @@
     <string name="message_code_copied">Kod skopiowano do schowka</string>
     <string name="settings_userscript_no_info">Brak dodatkowych informacji</string>
     <string name="dialog_message_delete_extension">Rozszerzenie \"%1$s\" zostanie trwale usunięte</string>
-    <string name="dialog_title_delete_extension">Usuń rozszerzenie</string>
+    <string name="dialog_title_delete_extension">Usunąć rozszerzenie?</string>
     <string name="userscripts_name_hint">Nazwa skryptu</string>
     <string name="userscripts_content_hint">Zawartość skryptu</string>
     <string name="error_parsing_userscript">Błąd parsowania skryptu użytkownika</string>

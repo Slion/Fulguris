@@ -748,7 +748,7 @@
     <string name="message_code_copied">Код копиран у clipboard</string>
     <string name="settings_userscript_no_info">Нема додатних информација</string>
     <string name="dialog_message_delete_extension">Екстензија \"%1$s\" ће бити трајно уклоњена</string>
-    <string name="dialog_title_delete_extension">Обриши екстензију</string>
+    <string name="dialog_title_delete_extension">Обрисати проширење?</string>
     <string name="userscripts_name_hint">Име скрипте</string>
     <string name="userscripts_content_hint">Садржај скрипте</string>
     <string name="error_parsing_userscript">Грешка при парсирању корисничке скрипте</string>

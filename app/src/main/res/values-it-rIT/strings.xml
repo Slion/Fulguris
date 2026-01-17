@@ -745,7 +745,7 @@
     <string name="message_code_copied">Codice copiato negli appunti</string>
     <string name="settings_userscript_no_info">Nessuna informazione aggiuntiva</string>
     <string name="dialog_message_delete_extension">L\'estensione \"%1$s\" sarà rimossa definitivamente</string>
-    <string name="dialog_title_delete_extension">Elimina estensione</string>
+    <string name="dialog_title_delete_extension">Eliminare estensione?</string>
     <string name="userscripts_name_hint">Nome dello script</string>
     <string name="userscripts_content_hint">Contenuto dello script</string>
     <string name="error_parsing_userscript">Errore durante l\'analisi dello script utente</string>

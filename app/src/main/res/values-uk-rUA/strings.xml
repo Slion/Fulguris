@@ -751,7 +751,7 @@
     <string name="message_code_copied">Код скопійовано в буфер обміну</string>
     <string name="settings_userscript_no_info">Немає додаткової інформації</string>
     <string name="dialog_message_delete_extension">Розширення \"%1$s\" буде видалено назавжди</string>
-    <string name="dialog_title_delete_extension">Видалити розширення</string>
+    <string name="dialog_title_delete_extension">Видалити розширення?</string>
     <string name="userscripts_name_hint">Ім\'я скрипта</string>
     <string name="userscripts_content_hint">Вміст скрипта</string>
     <string name="error_parsing_userscript">Помилка розбору користувацького скрипта</string>

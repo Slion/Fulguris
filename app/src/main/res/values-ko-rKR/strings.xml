@@ -743,7 +743,7 @@
     <string name="message_code_copied">코드를 클립보드에 복사했습니다</string>
     <string name="settings_userscript_no_info">추가 정보 없음</string>
     <string name="dialog_message_delete_extension">확장 프로그램 \"%1$s\"이(가) 영구적으로 제거됩니다</string>
-    <string name="dialog_title_delete_extension">확장 프로그램 삭제</string>
+    <string name="dialog_title_delete_extension">확장 기능 삭제?</string>
     <string name="userscripts_name_hint">스크립트 이름</string>
     <string name="userscripts_content_hint">스크립트 내용</string>
     <string name="error_parsing_userscript">사용자 스크립트 구문 분석 오류</string>

@@ -745,7 +745,7 @@
     <string name="message_code_copied">Code copié dans le presse-papiers</string>
     <string name="settings_userscript_no_info">Aucune information supplémentaire</string>
     <string name="dialog_message_delete_extension">L\'extension \"%1$s\" sera définitivement supprimée</string>
-    <string name="dialog_title_delete_extension">Supprimer l\'extension</string>
+    <string name="dialog_title_delete_extension">Supprimer l\'extension ?</string>
     <string name="userscripts_name_hint">Nom du script</string>
     <string name="userscripts_content_hint">Contenu du script</string>
     <string name="error_parsing_userscript">Erreur lors de l\'analyse du script utilisateur</string>

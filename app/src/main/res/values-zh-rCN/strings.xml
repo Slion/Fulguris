@@ -743,7 +743,7 @@
     <string name="message_code_copied">代码已复制到剪贴板</string>
     <string name="settings_userscript_no_info">无其他信息</string>
     <string name="dialog_message_delete_extension">扩展\"%1$s\"将被永久删除</string>
-    <string name="dialog_title_delete_extension">删除扩展</string>
+    <string name="dialog_title_delete_extension">删除扩展？</string>
     <string name="userscripts_name_hint">脚本名称</string>
     <string name="userscripts_content_hint">脚本内容</string>
     <string name="error_parsing_userscript">解析用户脚本时出错</string>

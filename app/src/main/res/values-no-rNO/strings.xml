@@ -745,7 +745,7 @@
     <string name="message_code_copied">Kode kopiert til utklippstavlen</string>
     <string name="settings_userscript_no_info">Ingen tilleggsinformasjon</string>
     <string name="dialog_message_delete_extension">Utvidelsen \"%1$s\" vil bli permanent fjernet</string>
-    <string name="dialog_title_delete_extension">Slett utvidelse</string>
+    <string name="dialog_title_delete_extension">Slett utvidelse?</string>
     <string name="userscripts_name_hint">Skriptnavn</string>
     <string name="userscripts_content_hint">Skriptinnhold</string>
     <string name="error_parsing_userscript">Feil ved tolkning av brukerskript</string>

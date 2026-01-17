@@ -745,7 +745,7 @@
     <string name="message_code_copied">Code in die Zwischenablage kopiert</string>
     <string name="settings_userscript_no_info">Keine zusätzlichen Informationen</string>
     <string name="dialog_message_delete_extension">Die Erweiterung \"%1$s\" wird dauerhaft entfernt</string>
-    <string name="dialog_title_delete_extension">Erweiterung löschen</string>
+    <string name="dialog_title_delete_extension">Erweiterung löschen?</string>
     <string name="userscripts_name_hint">Skriptname</string>
     <string name="userscripts_content_hint">Skriptinhalt</string>
     <string name="error_parsing_userscript">Fehler beim Parsen des Benutzerskripts</string>

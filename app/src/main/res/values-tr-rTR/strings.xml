@@ -745,7 +745,7 @@
     <string name="message_code_copied">Kod panoya kopyalandı</string>
     <string name="settings_userscript_no_info">Ek bilgi yok</string>
     <string name="dialog_message_delete_extension">\"%1$s\" uzantısı kalıcı olarak kaldırılacak</string>
-    <string name="dialog_title_delete_extension">Uzantıyı sil</string>
+    <string name="dialog_title_delete_extension">Uzantı silinsin mi?</string>
     <string name="userscripts_name_hint">Betik adı</string>
     <string name="userscripts_content_hint">Betik içeriği</string>
     <string name="error_parsing_userscript">Kullanıcı betiği ayrıştırma hatası</string>

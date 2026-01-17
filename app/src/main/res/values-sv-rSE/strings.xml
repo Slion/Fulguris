@@ -745,7 +745,7 @@
     <string name="message_code_copied">Kod kopierad till urklipp</string>
     <string name="settings_userscript_no_info">Ingen ytterligare information</string>
     <string name="dialog_message_delete_extension">Tillägget \"%1$s\" kommer att tas bort permanent</string>
-    <string name="dialog_title_delete_extension">Ta bort tillägg</string>
+    <string name="dialog_title_delete_extension">Ta bort tillägg?</string>
     <string name="userscripts_name_hint">Skriptnamn</string>
     <string name="userscripts_content_hint">Skriptinnehåll</string>
     <string name="error_parsing_userscript">Fel vid tolkning av användarskript</string>

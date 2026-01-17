@@ -745,7 +745,7 @@
     <string name="message_code_copied">Kode na knipbord gekopieer</string>
     <string name="settings_userscript_no_info">Geen addisionele inligting</string>
     <string name="dialog_message_delete_extension">Uitbreiding \"%1$s\" sal permanent verwyder word</string>
-    <string name="dialog_title_delete_extension">Skrap uitbreiding</string>
+    <string name="dialog_title_delete_extension">Uitbreiding verwyder?</string>
     <string name="userscripts_name_hint">Skripnaam</string>
     <string name="userscripts_content_hint">Skripinhoud</string>
     <string name="error_parsing_userscript">Fout met ontleding van gebruikerskrip</string>

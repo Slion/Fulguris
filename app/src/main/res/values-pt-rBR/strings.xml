@@ -745,7 +745,7 @@
     <string name="message_code_copied">Código copiado para a área de transferência</string>
     <string name="settings_userscript_no_info">Sem informações adicionais</string>
     <string name="dialog_message_delete_extension">A extensão \"%1$s\" será removida permanentemente</string>
-    <string name="dialog_title_delete_extension">Excluir extensão</string>
+    <string name="dialog_title_delete_extension">Excluir extensão?</string>
     <string name="userscripts_name_hint">Nome do script</string>
     <string name="userscripts_content_hint">Conteúdo do script</string>
     <string name="error_parsing_userscript">Erro ao analisar o script do usuário</string>

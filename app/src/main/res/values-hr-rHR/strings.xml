@@ -748,7 +748,7 @@
     <string name="message_code_copied">Kôd kopiran u međuspremnik</string>
     <string name="settings_userscript_no_info">Nema dodatnih informacija</string>
     <string name="dialog_message_delete_extension">Ekstenzija \"%1$s\" bit će trajno uklonjena</string>
-    <string name="dialog_title_delete_extension">Obriši ekstenziju</string>
+    <string name="dialog_title_delete_extension">Obrisati proširenje?</string>
     <string name="userscripts_name_hint">Naziv skripte</string>
     <string name="userscripts_content_hint">Sadržaj skripte</string>
     <string name="error_parsing_userscript">Greška pri raščlanjivanju korisničke skripte</string>

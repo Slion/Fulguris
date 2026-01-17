@@ -757,7 +757,7 @@
     <string name="message_code_copied">تم نسخ الكود إلى الحافظة</string>
     <string name="settings_userscript_no_info">لا توجد معلومات إضافية</string>
     <string name="dialog_message_delete_extension">سيتم حذف الامتداد \"%1$s\" نهائيًا</string>
-    <string name="dialog_title_delete_extension">حذف الامتداد</string>
+    <string name="dialog_title_delete_extension">حذف الملحق؟</string>
     <string name="userscripts_name_hint">اسم السكريبت</string>
     <string name="userscripts_content_hint">محتوى السكريبت</string>
     <string name="error_parsing_userscript">خطأ في تحليل سكريبت المستخدم</string>

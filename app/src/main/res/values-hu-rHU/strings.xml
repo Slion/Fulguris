@@ -745,7 +745,7 @@
     <string name="message_code_copied">Kód a vágólapra másolva</string>
     <string name="settings_userscript_no_info">Nincs további információ</string>
     <string name="dialog_message_delete_extension">A(z) \"%1$s\" bővítmény véglegesen törlődik</string>
-    <string name="dialog_title_delete_extension">Bővítmény törlése</string>
+    <string name="dialog_title_delete_extension">Bővítmény törlése?</string>
     <string name="userscripts_name_hint">Szkript neve</string>
     <string name="userscripts_content_hint">Szkript tartalma</string>
     <string name="error_parsing_userscript">Hiba a felhasználói szkript elemzése során</string>

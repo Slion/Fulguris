@@ -745,7 +745,7 @@
     <string name="message_code_copied">Κώδικας αντιγράφηκε στο πρόχειρο</string>
     <string name="settings_userscript_no_info">Δεν υπάρχουν επιπλέον πληροφορίες</string>
     <string name="dialog_message_delete_extension">Η επέκταση \"%1$s\" θα αφαιρεθεί οριστικά</string>
-    <string name="dialog_title_delete_extension">Διαγραφή επέκτασης</string>
+    <string name="dialog_title_delete_extension">Διαγραφή επέκτασης;</string>
     <string name="userscripts_name_hint">Όνομα σεναρίου</string>
     <string name="userscripts_content_hint">Περιεχόμενο σεναρίου</string>
     <string name="error_parsing_userscript">Σφάλμα κατά την ανάλυση του σεναρίου χρήστη</string>

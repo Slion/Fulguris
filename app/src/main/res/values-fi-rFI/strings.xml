@@ -745,7 +745,7 @@
     <string name="message_code_copied">Koodi kopioitu leikepöydälle</string>
     <string name="settings_userscript_no_info">Ei lisätietoja</string>
     <string name="dialog_message_delete_extension">Laajennus \"%1$s\" poistetaan pysyvästi</string>
-    <string name="dialog_title_delete_extension">Poista laajennus</string>
+    <string name="dialog_title_delete_extension">Poista laajennus?</string>
     <string name="userscripts_name_hint">Skriptin nimi</string>
     <string name="userscripts_content_hint">Skriptin sisältö</string>
     <string name="error_parsing_userscript">Virhe käyttäjäskriptin jäsentämisessä</string>

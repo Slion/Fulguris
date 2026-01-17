@@ -751,7 +751,7 @@
     <string name="message_code_copied">Kód zkopírován do schránky</string>
     <string name="settings_userscript_no_info">Žádné další informace</string>
     <string name="dialog_message_delete_extension">Rozšíření \"%1$s\" bude trvale odstraněno</string>
-    <string name="dialog_title_delete_extension">Odstranit rozšíření</string>
+    <string name="dialog_title_delete_extension">Smazat rozšíření?</string>
     <string name="userscripts_name_hint">Název skriptu</string>
     <string name="userscripts_content_hint">Obsah skriptu</string>
     <string name="error_parsing_userscript">Chyba při analýze uživatelského skriptu</string>

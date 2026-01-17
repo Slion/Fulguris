@@ -751,7 +751,7 @@
     <string name="message_code_copied">קוד הועתק ללוח</string>
     <string name="settings_userscript_no_info">אין מידע נוסף</string>
     <string name="dialog_message_delete_extension">התוסף \"%1$s\" יוסר לצמיתות</string>
-    <string name="dialog_title_delete_extension">מחק תוסף</string>
+    <string name="dialog_title_delete_extension">למחוק הרחבה?</string>
     <string name="userscripts_name_hint">שם הסקריפט</string>
     <string name="userscripts_content_hint">תוכן הסקריפט</string>
     <string name="error_parsing_userscript">שגיאה בניתוח סקריפט משתמש</string>

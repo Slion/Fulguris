@@ -751,7 +751,7 @@
     <string name="message_code_copied">Kodas nukopijuotas į iškarpinę</string>
     <string name="settings_userscript_no_info">Nėra papildomos informacijos</string>
     <string name="dialog_message_delete_extension">Plėtinys \"%1$s\" bus visam laikui pašalintas</string>
-    <string name="dialog_title_delete_extension">Ištrinti plėtinį</string>
+    <string name="dialog_title_delete_extension">Ištrinti plėtinį?</string>
     <string name="userscripts_name_hint">Scenarijaus pavadinimas</string>
     <string name="userscripts_content_hint">Scenarijaus turinys</string>
     <string name="error_parsing_userscript">Klaida analizuojant naudotojo scenarijų</string>

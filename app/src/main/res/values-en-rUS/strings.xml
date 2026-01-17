@@ -745,7 +745,7 @@
     <string name="message_code_copied">Code copied to clipboard</string>
     <string name="settings_userscript_no_info">No additional information</string>
     <string name="dialog_message_delete_extension">Extension \"%1$s\" will be permanently removed</string>
-    <string name="dialog_title_delete_extension">Delete extension</string>
+    <string name="dialog_title_delete_extension">Delete extension?</string>
     <string name="userscripts_name_hint">Script name</string>
     <string name="userscripts_content_hint">Script content</string>
     <string name="error_parsing_userscript">Error parsing userscript</string>

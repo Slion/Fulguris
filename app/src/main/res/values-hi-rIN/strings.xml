@@ -700,7 +700,7 @@
     <string name="message_code_copied">कोड क्लिपबोर्ड पर कॉपी किया गया</string>
     <string name="settings_userscript_no_info">कोई अतिरिक्त जानकारी नहीं</string>
     <string name="dialog_message_delete_extension">एक्सटेंशन \"%1$s\" स्थायी रूप से हटा दिया जाएगा</string>
-    <string name="dialog_title_delete_extension">एक्सटेंशन हटाएं</string>
+    <string name="dialog_title_delete_extension">एक्सटेंशन हटाएं?</string>
     <string name="userscripts_name_hint">स्क्रिप्ट का नाम</string>
     <string name="userscripts_content_hint">स्क्रिप्ट की सामग्री</string>
     <string name="error_parsing_userscript">यूज़र स्क्रिप्ट को पार्स करने में त्रुटि</string>

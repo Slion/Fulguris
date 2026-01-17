@@ -743,7 +743,7 @@
     <string name="message_code_copied">คัดลอกโค้ดไปยังคลิปบอร์ดแล้ว</string>
     <string name="settings_userscript_no_info">ไม่มีข้อมูลเพิ่มเติม</string>
     <string name="dialog_message_delete_extension">ส่วนขยาย \"%1$s\" จะถูกลบอย่างถาวร</string>
-    <string name="dialog_title_delete_extension">ลบส่วนขยาย</string>
+    <string name="dialog_title_delete_extension">ลบส่วนขยาย?</string>
     <string name="userscripts_name_hint">ชื่อสคริปต์</string>
     <string name="userscripts_content_hint">เนื้อหาสคริปต์</string>
     <string name="error_parsing_userscript">เกิดข้อผิดพลาดในการแยกวิเคราะห์สคริปต์ผู้ใช้</string>
