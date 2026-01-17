@@ -30,7 +30,7 @@ import fulguris.di.NetworkScheduler
 import fulguris.extensions.isDarkTheme
 import fulguris.favicon.FaviconModel
 import fulguris.settings.preferences.UserPreferences
-import fulguris.utils.Utils
+import android.text.TextUtils
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.webkit.WebBackForwardList
@@ -89,14 +89,18 @@ class PageHistorySettingsFragment : AbstractSettingsFragment() {
             history.getItemAtIndex(i).let {item ->
                 // Create history item preference
                 val pref = x.Preference(requireContext())
-                //pref.swapTitleSummary = true
-                pref.isSingleLineTitle = false
+                pref.isCopyingEnabled = true
+                pref.isSingleLineTitle = true
+                pref.titleEllipsize = TextUtils.TruncateAt.MIDDLE
                 pref.key = "item$i"
                 pref.title = item.title
                 if (history.currentIndex==i) {
-                    pref.title = "✔ " + pref.title
+                    pref.title = "🔵 " + pref.title
                 }
                 pref.summary = item.url
+                pref.summaryMaxLines = 1
+                pref.isSingleLineSummary = true
+                pref.summaryEllipsize = TextUtils.TruncateAt.MIDDLE
                 pref.icon = item.favicon?.scale(fulguris.utils.Utils.dpToPx(24f), fulguris.utils.Utils.dpToPx(24f))?.toDrawable(resources)
                 // As favicon is usually null for restored tab we still need to fetch it from our cache
                 if (pref.icon==null) {
@@ -129,7 +133,7 @@ class PageHistorySettingsFragment : AbstractSettingsFragment() {
                     // Update current item
                     currentIndex = i
                     // Add tick to new current item
-                    pref.title = "✔ " + pref.title
+                    pref.title = "🔵 " + pref.title
                     // TODO: Optionally exit our bottom sheet?
                     true
                 }

@@ -686,7 +686,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
             // Tab/Web page menu items
             onMenuItemClicked(iBinding.menuItemPageHistory) {
                 dismiss()
-                iBottomSheet.setLayout(R.layout.fragment_settings_page_history).show()
+                showPageHistory()
             }
             onMenuItemClicked(iBinding.menuItemDomainSettings) {
                 dismiss()
@@ -747,6 +747,13 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
      */
     private fun showPageRequests() {
         iBottomSheet.setLayout(R.layout.fragment_page_requests).show()
+    }
+
+    /**
+     * Show page history in a bottom sheet
+     */
+    private fun showPageHistory() {
+        iBottomSheet.setLayout(R.layout.fragment_settings_page_history).show()
     }
 
     /**
@@ -1104,6 +1111,18 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         iBindingToolbarContent.homeButton.setOnClickListener(this)
         iBindingToolbarContent.buttonActionBack.setOnClickListener{executeAction(R.id.action_back)}
         iBindingToolbarContent.buttonActionForward.setOnClickListener{executeAction(R.id.action_forward)}
+
+        // Long press on back button to show page history
+        iBindingToolbarContent.buttonActionBack.setOnLongClickListener {
+            showPageHistory()
+            true
+        }
+
+        // Long press on forward button to show page history
+        iBindingToolbarContent.buttonActionForward.setOnLongClickListener {
+            showPageHistory()
+            true
+        }
 
         //setFullscreenIfNeeded(resources.configuration) // As that's needed before bottom sheets creation
         createTabsView()
