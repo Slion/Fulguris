@@ -129,7 +129,6 @@
     <string name="delete_file">ファイルを削除</string>
     <string name="dialog_title_delete_file">ファイルを削除しますか？</string>
     <string name="dialog_message_delete_file">ファイルは完全に削除されますが、ダウンロードエントリーはリストに残ります:\n\n%s</string>
-    <string name="file_deleted">ファイルが削除されました</string>
     <string name="download_not_found">ダウンロードが見つかりません</string>
     <string name="file_not_found">ファイルが見つかりません</string>
     <string name="file_does_not_exist">ファイルが存在しません</string>

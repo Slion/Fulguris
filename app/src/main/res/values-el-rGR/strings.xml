@@ -129,7 +129,6 @@
     <string name="delete_file">Διαγραφή αρχείου</string>
     <string name="dialog_title_delete_file">Διαγραφή αρχείου;</string>
     <string name="dialog_message_delete_file">Το αρχείο θα διαγραφεί οριστικά αλλά η εγγραφή λήψης θα παραμείνει στη λίστα:\n\n%s</string>
-    <string name="file_deleted">Αρχείο διαγράφηκε</string>
     <string name="download_not_found">Η λήψη δεν βρέθηκε</string>
     <string name="file_not_found">Το αρχείο δεν βρέθηκε</string>
     <string name="file_does_not_exist">Το αρχείο δεν υπάρχει</string>

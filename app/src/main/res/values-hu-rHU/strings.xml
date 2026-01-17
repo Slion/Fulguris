@@ -129,7 +129,6 @@
     <string name="delete_file">Fájl törlése</string>
     <string name="dialog_title_delete_file">Fájl törlése?</string>
     <string name="dialog_message_delete_file">A fájl véglegesen törölve lesz, de a letöltési bejegyzés megmarad a listában:\n\n%s</string>
-    <string name="file_deleted">Fájl törölve</string>
     <string name="download_not_found">Letöltés nem található</string>
     <string name="file_not_found">Fájl nem található</string>
     <string name="file_does_not_exist">A fájl nem létezik</string>

@@ -129,7 +129,6 @@
     <string name="delete_file">Избриши датотеку</string>
     <string name="dialog_title_delete_file">Избрисати датотеку?</string>
     <string name="dialog_message_delete_file">Датотека ће бити трајно избрисана, али ће унос преузимања остати на листи:\n\n%s</string>
-    <string name="file_deleted">Датотека избрисана</string>
     <string name="download_not_found">Преузимање није пронађено</string>
     <string name="file_not_found">Датотека није пронађена</string>
     <string name="file_does_not_exist">Датотека не постоји</string>

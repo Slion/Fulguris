@@ -112,7 +112,6 @@
     <string name="delete_file">फ़ाइल मिटाएं</string>
     <string name="dialog_title_delete_file">फ़ाइल मिटाएं?</string>
     <string name="dialog_message_delete_file">फ़ाइल स्थायी रूप से मिटा दी जाएगी लेकिन डाउनलोड प्रविष्टि सूची में रहेगी:\n\n%s</string>
-    <string name="file_deleted">फ़ाइल मिटाई गई</string>
     <string name="download_not_found">डाउनलोड नहीं मिला</string>
     <string name="file_not_found">फ़ाइल नहीं मिली</string>
     <string name="file_does_not_exist">फ़ाइल मौजूद नहीं है</string>

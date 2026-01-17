@@ -129,7 +129,6 @@
     <string name="delete_file">Удалить файл</string>
     <string name="dialog_title_delete_file">Удалить файл?</string>
     <string name="dialog_message_delete_file">Файл будет безвозвратно удалён, но запись о загрузке останется в списке:\n\n%s</string>
-    <string name="file_deleted">Файл удалён</string>
     <string name="download_not_found">Загрузка не найдена</string>
     <string name="file_not_found">Файл не найден</string>
     <string name="file_does_not_exist">Файл не существует</string>

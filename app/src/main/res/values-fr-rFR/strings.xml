@@ -129,7 +129,6 @@
     <string name="delete_file">Supprimer le fichier</string>
     <string name="dialog_title_delete_file">Supprimer le fichier ?</string>
     <string name="dialog_message_delete_file">Le fichier sera définitivement supprimé mais l\'entrée de téléchargement restera dans la liste :\n\n%s</string>
-    <string name="file_deleted">Fichier supprimé</string>
     <string name="download_not_found">Téléchargement introuvable</string>
     <string name="file_not_found">Fichier introuvable</string>
     <string name="file_does_not_exist">Le fichier n\'existe pas</string>

@@ -129,7 +129,6 @@
     <string name="delete_file">Borrar archivo</string>
     <string name="dialog_title_delete_file">¿Borrar archivo?</string>
     <string name="dialog_message_delete_file">El archivo se borrará permanentemente pero la entrada de descarga permanecerá en la lista:\n\n%s</string>
-    <string name="file_deleted">Archivo borrado</string>
     <string name="download_not_found">Descarga no encontrada</string>
     <string name="file_not_found">Archivo no encontrado</string>
     <string name="file_does_not_exist">El archivo no existe</string>

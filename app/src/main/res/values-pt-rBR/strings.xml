@@ -129,7 +129,6 @@
     <string name="delete_file">Excluir arquivo</string>
     <string name="dialog_title_delete_file">Excluir arquivo?</string>
     <string name="dialog_message_delete_file">O arquivo será excluído permanentemente, mas a entrada de download permanecerá na lista:\n\n%s</string>
-    <string name="file_deleted">Arquivo excluído</string>
     <string name="download_not_found">Download não encontrado</string>
     <string name="file_not_found">Arquivo não encontrado</string>
     <string name="file_does_not_exist">O arquivo não existe</string>

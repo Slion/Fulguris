@@ -129,7 +129,6 @@
     <string name="delete_file">ลบไฟล์</string>
     <string name="dialog_title_delete_file">ลบไฟล์?</string>
     <string name="dialog_message_delete_file">ไฟล์จะถูกลบอย่างถาวร แต่รายการดาวน์โหลดจะยังคงอยู่ในรายการ:\n\n%s</string>
-    <string name="file_deleted">ลบไฟล์แล้ว</string>
     <string name="download_not_found">ไม่พบการดาวน์โหลด</string>
     <string name="file_not_found">ไม่พบไฟล์</string>
     <string name="file_does_not_exist">ไม่มีไฟล์อยู่</string>

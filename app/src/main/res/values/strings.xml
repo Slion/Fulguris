@@ -133,7 +133,6 @@
     <string name="delete_file">Delete file</string>
     <string name="dialog_title_delete_file">Delete file?</string>
     <string name="dialog_message_delete_file">File will be permanently deleted but download entry will remain in the list:\n\n%s</string>
-    <string name="file_deleted">File deleted</string>
     <string name="download_not_found">Download not found</string>
     <string name="file_not_found">File not found</string>
     <string name="file_does_not_exist">File does not exist</string>

@@ -129,7 +129,6 @@
     <string name="delete_file">Skasuj plik</string>
     <string name="dialog_title_delete_file">Skasować plik?</string>
     <string name="dialog_message_delete_file">Plik zostanie trwale skasowany, ale wpis pobierania pozostanie na liście:\n\n%s</string>
-    <string name="file_deleted">Plik skasowany</string>
     <string name="download_not_found">Pobieranie nie znalezione</string>
     <string name="file_not_found">Plik nie znaleziony</string>
     <string name="file_does_not_exist">Plik nie istnieje</string>

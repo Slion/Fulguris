@@ -129,7 +129,6 @@
     <string name="delete_file">Ștergeți fișierul</string>
     <string name="dialog_title_delete_file">Ștergeți fișierul?</string>
     <string name="dialog_message_delete_file">Fișierul va fi șters definitiv, dar intrarea de descărcare va rămâne în listă:\n\n%s</string>
-    <string name="file_deleted">Fișier șters</string>
     <string name="download_not_found">Descărcare negăsită</string>
     <string name="file_not_found">Fișier negăsit</string>
     <string name="file_does_not_exist">Fișierul nu există</string>

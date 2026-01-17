@@ -129,7 +129,6 @@
     <string name="delete_file">刪除檔案</string>
     <string name="dialog_title_delete_file">刪除檔案？</string>
     <string name="dialog_message_delete_file">檔案將被永久刪除，但下載項目將保留在清單中:\n\n%s</string>
-    <string name="file_deleted">檔案已刪除</string>
     <string name="download_not_found">未找到下載</string>
     <string name="file_not_found">未找到檔案</string>
     <string name="file_does_not_exist">檔案不存在</string>

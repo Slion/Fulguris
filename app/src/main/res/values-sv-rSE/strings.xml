@@ -129,7 +129,6 @@
     <string name="delete_file">Radera fil</string>
     <string name="dialog_title_delete_file">Radera filen?</string>
     <string name="dialog_message_delete_file">Filen kommer att raderas permanent men nedladdningsposten kommer att finnas kvar i listan:\n\n%s</string>
-    <string name="file_deleted">Fil raderad</string>
     <string name="download_not_found">Nedladdning hittades inte</string>
     <string name="file_not_found">Fil hittades inte</string>
     <string name="file_does_not_exist">Filen existerar inte</string>

@@ -129,7 +129,6 @@
     <string name="delete_file">Xóa tệp</string>
     <string name="dialog_title_delete_file">Xóa tệp?</string>
     <string name="dialog_message_delete_file">Tệp sẽ bị xóa vĩnh viễn nhưng mục tải xuống sẽ vẫn còn trong danh sách:\n\n%s</string>
-    <string name="file_deleted">Đã xóa tệp</string>
     <string name="download_not_found">Không tìm thấy bản tải xuống</string>
     <string name="file_not_found">Không tìm thấy tệp</string>
     <string name="file_does_not_exist">Tệp không tồn tại</string>

@@ -129,7 +129,6 @@
     <string name="delete_file">Smazat soubor</string>
     <string name="dialog_title_delete_file">Smazat soubor?</string>
     <string name="dialog_message_delete_file">Soubor bude trvale smazán, ale záznam stahování zůstane v seznamu:\n\n%s</string>
-    <string name="file_deleted">Soubor smazán</string>
     <string name="download_not_found">Stažení nenalezeno</string>
     <string name="file_not_found">Soubor nenalezen</string>
     <string name="file_does_not_exist">Soubor neexistuje</string>

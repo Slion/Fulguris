@@ -129,7 +129,6 @@
     <string name="delete_file">Bestand wissen</string>
     <string name="dialog_title_delete_file">Bestand wissen?</string>
     <string name="dialog_message_delete_file">Het bestand wordt permanent gewist, maar het downloaditem blijft in de lijst:\n\n%s</string>
-    <string name="file_deleted">Bestand gewist</string>
     <string name="download_not_found">Download niet gevonden</string>
     <string name="file_not_found">Bestand niet gevonden</string>
     <string name="file_does_not_exist">Bestand bestaat niet</string>

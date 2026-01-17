@@ -129,7 +129,6 @@
     <string name="delete_file">Vee lêer uit</string>
     <string name="dialog_title_delete_file">Vee lêer uit?</string>
     <string name="dialog_message_delete_file">Die lêer sal permanent uitgevee word, maar aflaairekord sal in die lys bly:\n\n%s</string>
-    <string name="file_deleted">Lêer uitgevee</string>
     <string name="download_not_found">Aflaai nie gevind nie</string>
     <string name="file_not_found">Lêer nie gevind nie</string>
     <string name="file_does_not_exist">Lêer bestaan nie</string>

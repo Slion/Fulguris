@@ -129,7 +129,6 @@
     <string name="delete_file">파일 삭제</string>
     <string name="dialog_title_delete_file">파일을 삭제하시겠습니까?</string>
     <string name="dialog_message_delete_file">파일은 영구적으로 삭제되지만 다운로드 항목은 목록에 남습니다:\n\n%s</string>
-    <string name="file_deleted">파일이 삭제되었습니다</string>
     <string name="download_not_found">다운로드를 찾을 수 없습니다</string>
     <string name="file_not_found">파일을 찾을 수 없습니다</string>
     <string name="file_does_not_exist">파일이 존재하지 않습니다</string>

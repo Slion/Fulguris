@@ -129,7 +129,6 @@
     <string name="delete_file">Ištrinti failą</string>
     <string name="dialog_title_delete_file">Ištrinti failą?</string>
     <string name="dialog_message_delete_file">Failas bus visam laikui ištrintas, bet atsisiuntimo įrašas liks sąraše:\n\n%s</string>
-    <string name="file_deleted">Failas ištrintas</string>
     <string name="download_not_found">Atsisiuntimas nerastas</string>
     <string name="file_not_found">Failas nerastas</string>
     <string name="file_does_not_exist">Failas neegzistuoja</string>

@@ -129,7 +129,6 @@
     <string name="delete_file">Видалити файл</string>
     <string name="dialog_title_delete_file">Видалити файл?</string>
     <string name="dialog_message_delete_file">Файл буде безповоротно видалено, але запис про завантаження залишиться у списку:\n\n%s</string>
-    <string name="file_deleted">Файл видалено</string>
     <string name="download_not_found">Завантаження не знайдено</string>
     <string name="file_not_found">Файл не знайдено</string>
     <string name="file_does_not_exist">Файл не існує</string>

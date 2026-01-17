@@ -129,7 +129,6 @@
     <string name="delete_file">Izbriši datoteku</string>
     <string name="dialog_title_delete_file">Izbrisati datoteku?</string>
     <string name="dialog_message_delete_file">Datoteka će biti trajno izbrisana, ali će unos preuzimanja ostati na listi:\n\n%s</string>
-    <string name="file_deleted">Datoteka izbrisana</string>
     <string name="download_not_found">Preuzimanje nije pronađeno</string>
     <string name="file_not_found">Datoteka nije pronađena</string>
     <string name="file_does_not_exist">Datoteka ne postoji</string>

@@ -129,7 +129,6 @@
     <string name="delete_file">Eliminar ficheiro</string>
     <string name="dialog_title_delete_file">Eliminar ficheiro?</string>
     <string name="dialog_message_delete_file">O ficheiro será eliminado permanentemente, mas a entrada de transferência permanecerá na lista:\n\n%s</string>
-    <string name="file_deleted">Ficheiro eliminado</string>
     <string name="download_not_found">Transferência não encontrada</string>
     <string name="file_not_found">Ficheiro não encontrado</string>
     <string name="file_does_not_exist">O ficheiro não existe</string>

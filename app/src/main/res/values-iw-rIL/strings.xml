@@ -129,7 +129,6 @@
     <string name="delete_file">מחק קובץ</string>
     <string name="dialog_title_delete_file">למחוק את הקובץ?</string>
     <string name="dialog_message_delete_file">הקובץ יימחק לצמיתות אך רשומת ההורדה תישאר ברשימה:\n\n%s</string>
-    <string name="file_deleted">הקובץ נמחק</string>
     <string name="download_not_found">ההורדה לא נמצאה</string>
     <string name="file_not_found">הקובץ לא נמצא</string>
     <string name="file_does_not_exist">הקובץ אינו קיים</string>

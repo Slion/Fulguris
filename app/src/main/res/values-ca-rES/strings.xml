@@ -129,7 +129,6 @@
     <string name="delete_file">Esborra fitxer</string>
     <string name="dialog_title_delete_file">Esborrar fitxer?</string>
     <string name="dialog_message_delete_file">El fitxer s\'esborrarà definitivament però l\'entrada de descàrrega romandrà a la llista:\n\n%s</string>
-    <string name="file_deleted">Fitxer esborrat</string>
     <string name="download_not_found">Descàrrega no trobada</string>
     <string name="file_not_found">Fitxer no trobat</string>
     <string name="file_does_not_exist">El fitxer no existeix</string>

@@ -129,7 +129,6 @@
     <string name="delete_file">Dosyayı sil</string>
     <string name="dialog_title_delete_file">Dosyayı sil?</string>
     <string name="dialog_message_delete_file">Dosya kalıcı olarak silinecek ancak indirme girişi listede kalacak:\n\n%s</string>
-    <string name="file_deleted">Dosya silindi</string>
     <string name="download_not_found">İndirme bulunamadı</string>
     <string name="file_not_found">Dosya bulunamadı</string>
     <string name="file_does_not_exist">Dosya mevcut değil</string>

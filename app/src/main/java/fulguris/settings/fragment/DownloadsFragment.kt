@@ -27,6 +27,7 @@ import fulguris.extensions.toast
 import fulguris.utils.Utils
 import timber.log.Timber
 import javax.inject.Inject
+import androidx.core.net.toUri
 
 /**
  * Fragment to display and manage downloads from DownloadManager.
@@ -949,7 +950,7 @@ class DownloadsFragment : PreferenceFragmentCompat() {
         }
 
         try {
-            val fileUri = android.net.Uri.parse(localUriString)
+            val fileUri = localUriString.toUri()
             val file = java.io.File(fileUri.path ?: "")
 
             Timber.d("Attempting to delete file: ${file.absolutePath}")
@@ -970,16 +971,8 @@ class DownloadsFragment : PreferenceFragmentCompat() {
             Timber.d("Parent exists: ${file.parentFile?.exists()}")
             Timber.d("Parent can write: ${file.parentFile?.canWrite()}")
 
-            // Check if we have write permission
-            if (!file.canWrite()) {
-                Timber.w("No write permission for file: ${file.absolutePath}")
-                requireContext().toast(R.string.error_no_permission)
-                return
-            }
-
             if (file.delete()) {
-                Timber.d("Successfully deleted file: ${file.absolutePath}")
-                requireContext().toast(R.string.file_deleted)
+                Timber.i("File deleted: ${file.absolutePath}")
                 loadDownloads()  // Refresh to show orphaned status
             } else {
                 // Delete failed - log detailed information

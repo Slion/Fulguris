@@ -129,7 +129,6 @@
     <string name="delete_file">Slet fil</string>
     <string name="dialog_title_delete_file">Slet fil?</string>
     <string name="dialog_message_delete_file">Filen vil blive permanent slettet, men downloadposten vil forblive i listen:\n\n%s</string>
-    <string name="file_deleted">Fil slettet</string>
     <string name="download_not_found">Download ikke fundet</string>
     <string name="file_not_found">Fil ikke fundet</string>
     <string name="file_does_not_exist">Filen findes ikke</string>

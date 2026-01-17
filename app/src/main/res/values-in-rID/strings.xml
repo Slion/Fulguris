@@ -129,7 +129,6 @@
     <string name="delete_file">Hapus file</string>
     <string name="dialog_title_delete_file">Hapus file?</string>
     <string name="dialog_message_delete_file">File akan dihapus secara permanen tetapi entri unduhan akan tetap ada dalam daftar:\n\n%s</string>
-    <string name="file_deleted">File dihapus</string>
     <string name="download_not_found">Unduhan tidak ditemukan</string>
     <string name="file_not_found">File tidak ditemukan</string>
     <string name="file_does_not_exist">File tidak ada</string>
