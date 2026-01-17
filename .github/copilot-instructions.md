@@ -24,6 +24,8 @@ python subs\l10n\android\changelogs.py 254
 
 ### Important Reminders
 
+- **⚠️ ALWAYS check English source text FIRST** - Use `python strings.py --get source <string_id>` to see actual content
+- **NEVER translate string ID names** - IDs are technical identifiers (e.g., `download_status_orphaned` ≠ "Orphaned", it's "File not found")
 - **Always use PowerShell syntax** on Windows
 - **Work in batches** - 10-20 strings at a time for efficiency
 - **Check command output** for `[ERROR]` vs `[OK]` messages
