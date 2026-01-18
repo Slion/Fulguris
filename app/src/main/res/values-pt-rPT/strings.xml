@@ -111,8 +111,7 @@
     <string name="dialog_message_clean_downloads">As entradas de transferência falhadas e órfãs serão removidas da lista</string>
     <string name="dialog_title_delete_all_downloads">Eliminar todas as transferências?</string>
     <string name="dialog_message_delete_all_downloads">Todas as entradas de transferência serão removidas e os ficheiros serão eliminados permanentemente</string>
-    <string name="no_downloads">Sem transferências</string>
-    <string name="no_downloads_summary">As suas transferências aparecerão aqui</string>
+    <string name="pref_summary_no_downloads">A sua lista de transferências está vazia</string>
     <string name="cancel_download">Cancelar transferência</string>
     <string name="open_download">Abrir</string>
     <string name="share_file">Partilhar ficheiro</string>

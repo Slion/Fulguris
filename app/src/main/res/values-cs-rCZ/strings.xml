@@ -111,8 +111,7 @@
     <string name="dialog_message_clean_downloads">Neúspěšné a osiřelé záznamy stahování budou odebrány ze seznamu</string>
     <string name="dialog_title_delete_all_downloads">Smazat všechna stahování?</string>
     <string name="dialog_message_delete_all_downloads">Všechny záznamy stahování budou odebrány a soubory budou trvale smazány</string>
-    <string name="no_downloads">Žádná stahování</string>
-    <string name="no_downloads_summary">Zde se zobrazí vaše stahování</string>
+    <string name="pref_summary_no_downloads">Váš seznam stahování je prázdný</string>
     <string name="cancel_download">Zrušit stahování</string>
     <string name="open_download">Otevřít</string>
     <string name="share_file">Sdílet soubor</string>

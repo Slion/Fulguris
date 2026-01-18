@@ -111,8 +111,7 @@
     <string name="dialog_message_clean_downloads">Entradas de download com falha e órfãs serão removidas da lista</string>
     <string name="dialog_title_delete_all_downloads">Excluir todos os downloads?</string>
     <string name="dialog_message_delete_all_downloads">Todas as entradas de download serão removidas e os arquivos serão excluídos permanentemente</string>
-    <string name="no_downloads">Nenhum download</string>
-    <string name="no_downloads_summary">Seus downloads aparecerão aqui</string>
+    <string name="pref_summary_no_downloads">Sua lista de downloads está vazia</string>
     <string name="cancel_download">Cancelar download</string>
     <string name="open_download">Abrir</string>
     <string name="share_file">Compartilhar arquivo</string>

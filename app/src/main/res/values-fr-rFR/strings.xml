@@ -111,8 +111,7 @@
     <string name="dialog_message_clean_downloads">Les entrées de téléchargement échouées et orphelines seront supprimées de la liste</string>
     <string name="dialog_title_delete_all_downloads">Supprimer tous les téléchargements ?</string>
     <string name="dialog_message_delete_all_downloads">Toutes les entrées de téléchargement seront supprimées et les fichiers seront définitivement effacés</string>
-    <string name="no_downloads">Aucun téléchargement</string>
-    <string name="no_downloads_summary">Vos téléchargements apparaîtront ici</string>
+    <string name="pref_summary_no_downloads">Votre liste de téléchargements est vide</string>
     <string name="cancel_download">Annuler le téléchargement</string>
     <string name="open_download">Ouvrir</string>
     <string name="share_file">Partager le fichier</string>

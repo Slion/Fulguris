@@ -111,8 +111,7 @@
     <string name="dialog_message_clean_downloads">A sikertelen és árva letöltési bejegyzések el lesznek távolítva a listából</string>
     <string name="dialog_title_delete_all_downloads">Összes letöltés törlése?</string>
     <string name="dialog_message_delete_all_downloads">Minden letöltési bejegyzés el lesz távolítva és a fájlok véglegesen törölve lesznek</string>
-    <string name="no_downloads">Nincs letöltés</string>
-    <string name="no_downloads_summary">A letöltéseid itt jelennek meg</string>
+    <string name="pref_summary_no_downloads">A letöltési listád üres</string>
     <string name="cancel_download">Letöltés megszakítása</string>
     <string name="open_download">Megnyitás</string>
     <string name="share_file">Fájl megosztása</string>

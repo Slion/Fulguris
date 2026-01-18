@@ -111,8 +111,7 @@
     <string name="dialog_message_clean_downloads">失敗したダウンロードと孤立したダウンロードエントリーがリストから削除されます</string>
     <string name="dialog_title_delete_all_downloads">すべてのダウンロードを削除しますか？</string>
     <string name="dialog_message_delete_all_downloads">すべてのダウンロードエントリーが削除され、ファイルは完全に消去されます</string>
-    <string name="no_downloads">ダウンロードなし</string>
-    <string name="no_downloads_summary">ダウンロードがここに表示されます</string>
+    <string name="pref_summary_no_downloads">ダウンロードリストは空です</string>
     <string name="cancel_download">ダウンロードをキャンセル</string>
     <string name="open_download">開く</string>
     <string name="share_file">ファイルを共有</string>

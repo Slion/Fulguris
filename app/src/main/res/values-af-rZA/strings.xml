@@ -111,8 +111,7 @@
     <string name="dialog_message_clean_downloads">Mislukte en verweesde aflaairekords sal van die lys verwyder word</string>
     <string name="dialog_title_delete_all_downloads">Vee alle aflaaie uit?</string>
     <string name="dialog_message_delete_all_downloads">Alle aflaairekords sal verwyder word en lêers sal permanent uitgevee word</string>
-    <string name="no_downloads">Geen aflaaie</string>
-    <string name="no_downloads_summary">Jou aflaaie sal hier verskyn</string>
+    <string name="pref_summary_no_downloads">Jou aflaaie-lys is leeg</string>
     <string name="cancel_download">Kanselleer aflaai</string>
     <string name="open_download">Maak oop</string>
     <string name="share_file">Deel lêer</string>

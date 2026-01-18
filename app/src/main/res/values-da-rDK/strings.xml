@@ -111,8 +111,7 @@
     <string name="dialog_message_clean_downloads">Mislykkede og forældreløse downloadposter vil blive fjernet fra listen</string>
     <string name="dialog_title_delete_all_downloads">Slet alle downloads?</string>
     <string name="dialog_message_delete_all_downloads">Alle downloadposter vil blive fjernet og filer vil blive permanent slettet</string>
-    <string name="no_downloads">Ingen downloads</string>
-    <string name="no_downloads_summary">Dine downloads vises her</string>
+    <string name="pref_summary_no_downloads">Din downloadliste er tom</string>
     <string name="cancel_download">Annuller download</string>
     <string name="open_download">Åbn</string>
     <string name="share_file">Del fil</string>

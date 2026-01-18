@@ -111,8 +111,7 @@
     <string name="dialog_message_clean_downloads">Mislykkede og foreldreløse nedlastingsoppføringer vil bli fjernet fra listen</string>
     <string name="dialog_title_delete_all_downloads">Slett alle nedlastinger?</string>
     <string name="dialog_message_delete_all_downloads">Alle nedlastingsoppføringer vil bli fjernet og filer vil bli permanent slettet</string>
-    <string name="no_downloads">Ingen nedlastinger</string>
-    <string name="no_downloads_summary">Nedlastingene dine vil vises her</string>
+    <string name="pref_summary_no_downloads">Nedlastingslisten din er tom</string>
     <string name="cancel_download">Avbryt nedlasting</string>
     <string name="open_download">Åpne</string>
     <string name="share_file">Del fil</string>

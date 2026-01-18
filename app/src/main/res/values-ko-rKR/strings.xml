@@ -111,8 +111,7 @@
     <string name="dialog_message_clean_downloads">실패한 다운로드 및 고아 다운로드 항목이 목록에서 제거됩니다</string>
     <string name="dialog_title_delete_all_downloads">모든 다운로드를 삭제하시겠습니까?</string>
     <string name="dialog_message_delete_all_downloads">모든 다운로드 항목이 제거되고 파일이 영구적으로 삭제됩니다</string>
-    <string name="no_downloads">다운로드 없음</string>
-    <string name="no_downloads_summary">다운로드가 여기에 표시됩니다</string>
+    <string name="pref_summary_no_downloads">다운로드 목록이 비어 있습니다</string>
     <string name="cancel_download">다운로드 취소</string>
     <string name="open_download">열기</string>
     <string name="share_file">파일 공유</string>

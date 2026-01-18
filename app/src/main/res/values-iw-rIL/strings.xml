@@ -111,8 +111,7 @@
     <string name="dialog_message_clean_downloads">רשומות הורדה שנכשלו ויתומות יוסרו מהרשימה</string>
     <string name="dialog_title_delete_all_downloads">למחוק את כל ההורדות?</string>
     <string name="dialog_message_delete_all_downloads">כל רשומות ההורדה יוסרו והקבצים יימחקו לצמיתות</string>
-    <string name="no_downloads">אין הורדות</string>
-    <string name="no_downloads_summary">ההורדות שלך יופיעו כאן</string>
+    <string name="pref_summary_no_downloads">רשימת ההורדות שלך ריקה</string>
     <string name="cancel_download">בטל הורדה</string>
     <string name="open_download">פתח</string>
     <string name="share_file">שתף קובץ</string>

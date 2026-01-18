@@ -111,8 +111,7 @@
     <string name="dialog_message_clean_downloads">Epäonnistuneet ja orpoutuneet latauskohteet poistetaan luettelosta</string>
     <string name="dialog_title_delete_all_downloads">Tyhjennä kaikki lataukset?</string>
     <string name="dialog_message_delete_all_downloads">Kaikki latauskohteet poistetaan ja tiedostot tyhjennetään pysyvästi</string>
-    <string name="no_downloads">Ei latauksia</string>
-    <string name="no_downloads_summary">Latauksesi näkyvät täällä</string>
+    <string name="pref_summary_no_downloads">Latausluettelosi on tyhjä</string>
     <string name="cancel_download">Peruuta lataus</string>
     <string name="open_download">Avaa</string>
     <string name="share_file">Jaa tiedosto</string>

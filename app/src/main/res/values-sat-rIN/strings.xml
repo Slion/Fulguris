@@ -111,8 +111,7 @@
     <string name="dialog_message_clean_downloads">ᱵᱟᱝ ᱥᱟᱹᱨᱤ ᱟᱨ ᱵᱟᱹᱜᱤ ᱰᱟᱣᱩᱱᱞᱳᱰ ᱛᱷᱤᱱᱚᱠ ᱞᱤᱥᱴᱤ ᱠᱷᱚᱱ ᱚᱪᱚᱜᱽ-ᱟ</string>
     <string name="dialog_title_delete_all_downloads">ᱡᱷᱚᱛᱚ ᱰᱟᱣᱩᱱᱞᱳᱰ ᱢᱮᱴᱟᱣ?</string>
     <string name="dialog_message_delete_all_downloads">ᱡᱷᱚᱛᱚ ᱰᱟᱣᱩᱱᱞᱳᱰ ᱛᱷᱤᱱᱚᱠ ᱚᱪᱚᱜᱽ-ᱟ ᱟᱨ ᱨᱮᱫ ᱡᱤᱭᱚᱱ ᱞᱮᱠᱟᱛᱮ ᱢᱮᱴᱟᱣᱜ-ᱟ</string>
-    <string name="no_downloads">ᱰᱟᱣᱩᱱᱞᱳᱰ ᱵᱟᱹᱱᱩᱜ-ᱟ</string>
-    <string name="no_downloads_summary">ᱟᱢᱟᱜ ᱰᱟᱣᱩᱱᱞᱳᱰ ᱱᱚᱰᱮ ᱧᱮᱞᱚᱜ-ᱟ</string>
+    <string name="pref_summary_no_downloads">ᱟᱢᱟᱜ ᱰᱟᱣᱩᱱᱞᱳᱰ ᱛᱟᱹᱞᱠᱟᱹ ᱠᱷᱟᱹᱞᱤ ᱢᱮᱱᱟᱜ-ᱟ</string>
     <string name="cancel_download">ᱰᱟᱣᱩᱱᱞᱳᱰ ᱵᱟᱹᱰᱨᱟᱹ</string>
     <string name="open_download">ᱡᱷᱤᱡᱽ</string>
     <string name="share_file">ᱨᱮᱫ ᱦᱟᱹᱴᱤᱧ</string>

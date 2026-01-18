@@ -111,8 +111,7 @@
     <string name="dialog_message_clean_downloads">Entri unduhan yang gagal dan yatim piatu akan dihapus dari daftar</string>
     <string name="dialog_title_delete_all_downloads">Hapus semua unduhan?</string>
     <string name="dialog_message_delete_all_downloads">Semua entri unduhan akan dihapus dan file akan dihapus secara permanen</string>
-    <string name="no_downloads">Tidak ada unduhan</string>
-    <string name="no_downloads_summary">Unduhan Anda akan muncul di sini</string>
+    <string name="pref_summary_no_downloads">Daftar unduhan Anda kosong</string>
     <string name="cancel_download">Batalkan unduhan</string>
     <string name="open_download">Buka</string>
     <string name="share_file">Bagikan file</string>

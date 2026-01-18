@@ -111,8 +111,7 @@
     <string name="dialog_message_clean_downloads">سيتم إزالة سجلات التنزيل الفاشلة واليتيمة من القائمة</string>
     <string name="dialog_title_delete_all_downloads">حذف جميع التنزيلات؟</string>
     <string name="dialog_message_delete_all_downloads">سيتم إزالة جميع سجلات التنزيل وحذف الملفات نهائيًا</string>
-    <string name="no_downloads">لا توجد تنزيلات</string>
-    <string name="no_downloads_summary">ستظهر تنزيلاتك هنا</string>
+    <string name="pref_summary_no_downloads">قائمة التنزيلات فارغة</string>
     <string name="cancel_download">إلغاء التنزيل</string>
     <string name="open_download">فتح</string>
     <string name="share_file">مشاركة الملف</string>

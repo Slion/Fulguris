@@ -111,8 +111,7 @@
     <string name="dialog_message_clean_downloads">Nieudane i osierocone wpisy pobierania zostaną usunięte z listy</string>
     <string name="dialog_title_delete_all_downloads">Skasować wszystkie pobierania?</string>
     <string name="dialog_message_delete_all_downloads">Wszystkie wpisy pobierania zostaną usunięte, a pliki zostaną trwale skasowane</string>
-    <string name="no_downloads">Brak pobierań</string>
-    <string name="no_downloads_summary">Twoje pobierania pojawią się tutaj</string>
+    <string name="pref_summary_no_downloads">Twoja lista pobierania jest pusta</string>
     <string name="cancel_download">Anuluj pobieranie</string>
     <string name="open_download">Otwórz</string>
     <string name="share_file">Udostępnij plik</string>

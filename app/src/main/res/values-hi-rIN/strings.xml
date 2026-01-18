@@ -94,8 +94,7 @@
     <string name="dialog_message_clean_downloads">असफल और अनाथ डाउनलोड प्रविष्टियां सूची से हटा दी जाएंगी</string>
     <string name="dialog_title_delete_all_downloads">सभी डाउनलोड मिटाएं?</string>
     <string name="dialog_message_delete_all_downloads">सभी डाउनलोड प्रविष्टियां हटा दी जाएंगी और फ़ाइलें स्थायी रूप से मिटा दी जाएंगी</string>
-    <string name="no_downloads">कोई डाउनलोड नहीं</string>
-    <string name="no_downloads_summary">आपके डाउनलोड यहां दिखाई देंगे</string>
+    <string name="pref_summary_no_downloads">आपकी डाउनलोड सूची खाली है</string>
     <string name="cancel_download">डाउनलोड रद्द करें</string>
     <string name="open_download">खोलें</string>
     <string name="share_file">फ़ाइल साझा करें</string>

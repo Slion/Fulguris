@@ -111,8 +111,7 @@
     <string name="dialog_message_clean_downloads">Intrările de descărcare eșuate și orfane vor fi eliminate din listă</string>
     <string name="dialog_title_delete_all_downloads">Ștergeți toate descărcările?</string>
     <string name="dialog_message_delete_all_downloads">Toate intrările de descărcare vor fi eliminate și fișierele vor fi șterse definitiv</string>
-    <string name="no_downloads">Fără descărcări</string>
-    <string name="no_downloads_summary">Descărcările dvs. vor apărea aici</string>
+    <string name="pref_summary_no_downloads">Lista de descărcări este goală</string>
     <string name="cancel_download">Anulați descărcarea</string>
     <string name="open_download">Deschide</string>
     <string name="share_file">Partajați fișierul</string>

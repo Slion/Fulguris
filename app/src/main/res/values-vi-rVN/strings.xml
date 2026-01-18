@@ -111,8 +111,7 @@
     <string name="dialog_message_clean_downloads">Các mục tải xuống thất bại và mồ côi sẽ bị xóa khỏi danh sách</string>
     <string name="dialog_title_delete_all_downloads">Xóa tất cả các tải xuống?</string>
     <string name="dialog_message_delete_all_downloads">Tất cả các mục tải xuống sẽ bị xóa và tệp sẽ bị xóa vĩnh viễn</string>
-    <string name="no_downloads">Không có tải xuống</string>
-    <string name="no_downloads_summary">Các tải xuống của bạn sẽ xuất hiện ở đây</string>
+    <string name="pref_summary_no_downloads">Danh sách tải xuống của bạn trống</string>
     <string name="cancel_download">Hủy tải xuống</string>
     <string name="open_download">Mở</string>
     <string name="share_file">Chia sẻ tệp</string>

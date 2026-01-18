@@ -111,8 +111,7 @@
     <string name="dialog_message_clean_downloads">รายการดาวน์โหลดที่ล้มเหลวและไฟล์กำพร้าจะถูกลบออกจากรายการ</string>
     <string name="dialog_title_delete_all_downloads">ลบการดาวน์โหลดทั้งหมด?</string>
     <string name="dialog_message_delete_all_downloads">รายการดาวน์โหลดทั้งหมดจะถูกลบและไฟล์จะถูกลบอย่างถาวร</string>
-    <string name="no_downloads">ไม่มีการดาวน์โหลด</string>
-    <string name="no_downloads_summary">การดาวน์โหลดของคุณจะปรากฏที่นี่</string>
+    <string name="pref_summary_no_downloads">รายการดาวน์โหลดของคุณว่างเปล่า</string>
     <string name="cancel_download">ยกเลิกการดาวน์โหลด</string>
     <string name="open_download">เปิด</string>
     <string name="share_file">แชร์ไฟล์</string>

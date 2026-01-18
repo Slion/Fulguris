@@ -111,8 +111,7 @@
     <string name="dialog_message_clean_downloads">失敗和孤立的下載項目將從清單中移除</string>
     <string name="dialog_title_delete_all_downloads">刪除所有下載？</string>
     <string name="dialog_message_delete_all_downloads">所有下載項目將被移除，檔案將被永久刪除</string>
-    <string name="no_downloads">無下載</string>
-    <string name="no_downloads_summary">您的下載將顯示在這裡</string>
+    <string name="pref_summary_no_downloads">您的下載清單為空</string>
     <string name="cancel_download">取消下載</string>
     <string name="open_download">開啟</string>
     <string name="share_file">分享檔案</string>

@@ -111,8 +111,7 @@
     <string name="dialog_message_clean_downloads">Nepavykę ir našlaitiški atsisiuntimo įrašai bus pašalinti iš sąrašo</string>
     <string name="dialog_title_delete_all_downloads">Ištrinti visus atsisiuntimus?</string>
     <string name="dialog_message_delete_all_downloads">Visi atsisiuntimo įrašai bus pašalinti ir failai bus visam laikui ištrinti</string>
-    <string name="no_downloads">Nėra atsisiuntimų</string>
-    <string name="no_downloads_summary">Jūsų atsisiuntimai bus rodomi čia</string>
+    <string name="pref_summary_no_downloads">Jūsų atsisiuntimų sąrašas tuščias</string>
     <string name="cancel_download">Atšaukti atsisiuntimą</string>
     <string name="open_download">Atidaryti</string>
     <string name="share_file">Bendrinti failą</string>

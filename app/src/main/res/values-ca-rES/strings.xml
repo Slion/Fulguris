@@ -111,8 +111,7 @@
     <string name="dialog_message_clean_downloads">Les entrades de descàrrega fallides i orfes s\'eliminaran de la llista</string>
     <string name="dialog_title_delete_all_downloads">Esborrar totes les descàrregues?</string>
     <string name="dialog_message_delete_all_downloads">Totes les entrades de descàrrega s\'eliminaran i els fitxers s\'esborraran definitivament</string>
-    <string name="no_downloads">Cap descàrrega</string>
-    <string name="no_downloads_summary">Les teves descàrregues apareixeran aquí</string>
+    <string name="pref_summary_no_downloads">La teva llista de descàrregues està buida</string>
     <string name="cancel_download">Cancel·la descàrrega</string>
     <string name="open_download">Obre</string>
     <string name="share_file">Comparteix fitxer</string>

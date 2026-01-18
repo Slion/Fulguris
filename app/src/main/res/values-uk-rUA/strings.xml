@@ -111,8 +111,7 @@
     <string name="dialog_message_clean_downloads">Невдалі та втрачені записи про завантаження будуть видалені зі списку</string>
     <string name="dialog_title_delete_all_downloads">Видалити всі завантаження?</string>
     <string name="dialog_message_delete_all_downloads">Усі записи про завантаження будуть видалені, а файли будуть безповоротно стерті</string>
-    <string name="no_downloads">Немає завантажень</string>
-    <string name="no_downloads_summary">Ваші завантаження з\'являться тут</string>
+    <string name="pref_summary_no_downloads">Ваш список завантажень порожній</string>
     <string name="cancel_download">Скасувати завантаження</string>
     <string name="open_download">Відкрити</string>
     <string name="share_file">Поділитися файлом</string>

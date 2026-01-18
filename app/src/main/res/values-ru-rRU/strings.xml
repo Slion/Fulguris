@@ -111,8 +111,7 @@
     <string name="dialog_message_clean_downloads">Неудавшиеся и потерянные записи о загрузках будут удалены из списка</string>
     <string name="dialog_title_delete_all_downloads">Удалить все загрузки?</string>
     <string name="dialog_message_delete_all_downloads">Все записи о загрузках будут удалены, а файлы будут безвозвратно стёрты</string>
-    <string name="no_downloads">Нет загрузок</string>
-    <string name="no_downloads_summary">Ваши загрузки появятся здесь</string>
+    <string name="pref_summary_no_downloads">Ваш список загрузок пуст</string>
     <string name="cancel_download">Отменить загрузку</string>
     <string name="open_download">Открыть</string>
     <string name="share_file">Поделиться файлом</string>

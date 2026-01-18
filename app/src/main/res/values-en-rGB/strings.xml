@@ -111,8 +111,7 @@
     <string name="dialog_message_clean_downloads">Failed and orphaned download entries will be removed from the list</string>
     <string name="dialog_title_delete_all_downloads">Delete all downloads?</string>
     <string name="dialog_message_delete_all_downloads">All download entries will be removed and files will be permanently deleted</string>
-    <string name="no_downloads">No downloads</string>
-    <string name="no_downloads_summary">Your downloads will appear here</string>
+    <string name="pref_summary_no_downloads">Your download list is empty</string>
     <string name="cancel_download">Cancel download</string>
     <string name="open_download">Open</string>
     <string name="share_file">Share file</string>

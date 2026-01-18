@@ -111,8 +111,7 @@
     <string name="dialog_message_clean_downloads">Οι αποτυχημένες και ορφανές εγγραφές λήψης θα αφαιρεθούν από τη λίστα</string>
     <string name="dialog_title_delete_all_downloads">Διαγραφή όλων των λήψεων;</string>
     <string name="dialog_message_delete_all_downloads">Όλες οι εγγραφές λήψης θα αφαιρεθούν και τα αρχεία θα διαγραφούν οριστικά</string>
-    <string name="no_downloads">Χωρίς λήψεις</string>
-    <string name="no_downloads_summary">Οι λήψεις σας θα εμφανιστούν εδώ</string>
+    <string name="pref_summary_no_downloads">Η λίστα λήψεών σας είναι κενή</string>
     <string name="cancel_download">Ακύρωση λήψης</string>
     <string name="open_download">Άνοιγμα</string>
     <string name="share_file">Κοινοποίηση αρχείου</string>

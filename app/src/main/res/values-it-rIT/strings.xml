@@ -111,8 +111,7 @@
     <string name="dialog_message_clean_downloads">Le voci di download fallite e orfane saranno rimosse dalla lista</string>
     <string name="dialog_title_delete_all_downloads">Eliminare tutti i download?</string>
     <string name="dialog_message_delete_all_downloads">Tutte le voci di download saranno rimosse e i file saranno eliminati permanentemente</string>
-    <string name="no_downloads">Nessun download</string>
-    <string name="no_downloads_summary">I tuoi download appariranno qui</string>
+    <string name="pref_summary_no_downloads">Il tuo elenco download è vuoto</string>
     <string name="cancel_download">Annulla download</string>
     <string name="open_download">Apri</string>
     <string name="share_file">Condividi file</string>

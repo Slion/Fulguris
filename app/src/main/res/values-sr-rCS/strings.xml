@@ -111,8 +111,7 @@
     <string name="dialog_message_clean_downloads">Неуспели и напуштени уноси преузимања ће бити уклоњени са листе</string>
     <string name="dialog_title_delete_all_downloads">Избрисати сва преузимања?</string>
     <string name="dialog_message_delete_all_downloads">Сви уноси преузимања ће бити уклоњени и датотеке ће бити трајно избрисане</string>
-    <string name="no_downloads">Нема преузимања</string>
-    <string name="no_downloads_summary">Ваша преузимања ће се појавити овде</string>
+    <string name="pref_summary_no_downloads">Ваша листа преузимања је празна</string>
     <string name="cancel_download">Откажи преузимање</string>
     <string name="open_download">Отвори</string>
     <string name="share_file">Подели датотеку</string>

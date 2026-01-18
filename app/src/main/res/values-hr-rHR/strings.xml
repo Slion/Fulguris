@@ -111,8 +111,7 @@
     <string name="dialog_message_clean_downloads">Neuspjeli i napušteni zapisi o preuzimanju će biti uklonjeni s liste</string>
     <string name="dialog_title_delete_all_downloads">Izbrisati sva preuzimanja?</string>
     <string name="dialog_message_delete_all_downloads">Svi zapisi o preuzimanju će biti uklonjeni i datoteke će biti trajno izbrisane</string>
-    <string name="no_downloads">Nema preuzimanja</string>
-    <string name="no_downloads_summary">Vaša preuzimanja će se pojaviti ovdje</string>
+    <string name="pref_summary_no_downloads">Vaš popis preuzimanja je prazan</string>
     <string name="cancel_download">Otkaži preuzimanje</string>
     <string name="open_download">Otvori</string>
     <string name="share_file">Podijeli datoteku</string>

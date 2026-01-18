@@ -111,8 +111,7 @@
     <string name="dialog_message_clean_downloads">Las entradas de descarga fallidas y huérfanas se eliminarán de la lista</string>
     <string name="dialog_title_delete_all_downloads">¿Borrar todas las descargas?</string>
     <string name="dialog_message_delete_all_downloads">Todas las entradas de descarga se eliminarán y los archivos se borrarán permanentemente</string>
-    <string name="no_downloads">Sin descargas</string>
-    <string name="no_downloads_summary">Tus descargas aparecerán aquí</string>
+    <string name="pref_summary_no_downloads">Tu lista de descargas está vacía</string>
     <string name="cancel_download">Cancelar descarga</string>
     <string name="open_download">Abrir</string>
     <string name="share_file">Compartir archivo</string>

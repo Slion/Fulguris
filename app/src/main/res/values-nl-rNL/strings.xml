@@ -111,8 +111,7 @@
     <string name="dialog_message_clean_downloads">Mislukte en zwevende downloaditems worden uit de lijst verwijderd</string>
     <string name="dialog_title_delete_all_downloads">Alle downloads wissen?</string>
     <string name="dialog_message_delete_all_downloads">Alle downloaditems worden verwijderd en bestanden worden permanent gewist</string>
-    <string name="no_downloads">Geen downloads</string>
-    <string name="no_downloads_summary">Je downloads verschijnen hier</string>
+    <string name="pref_summary_no_downloads">Je downloadlijst is leeg</string>
     <string name="cancel_download">Download annuleren</string>
     <string name="open_download">Openen</string>
     <string name="share_file">Bestand delen</string>

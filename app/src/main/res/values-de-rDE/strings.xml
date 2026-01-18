@@ -111,8 +111,7 @@
     <string name="dialog_message_clean_downloads">Fehlgeschlagene und verwaiste Download-Einträge werden aus der Liste entfernt</string>
     <string name="dialog_title_delete_all_downloads">Alle Downloads löschen?</string>
     <string name="dialog_message_delete_all_downloads">Alle Download-Einträge werden entfernt und Dateien werden dauerhaft gelöscht</string>
-    <string name="no_downloads">Keine Downloads</string>
-    <string name="no_downloads_summary">Deine Downloads werden hier angezeigt</string>
+    <string name="pref_summary_no_downloads">Deine Download-Liste ist leer</string>
     <string name="cancel_download">Download abbrechen</string>
     <string name="open_download">Öffnen</string>
     <string name="share_file">Datei teilen</string>
