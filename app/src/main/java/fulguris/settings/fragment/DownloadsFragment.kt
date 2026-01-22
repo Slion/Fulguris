@@ -40,8 +40,6 @@ class DownloadsFragment : PreferenceFragmentCompat() {
     lateinit var downloadManager: DownloadManager
 
     private val handler = Handler(Looper.getMainLooper())
-    private val updateInterval = 1000L // Update every second
-    private var isUpdating = false
 
     private lateinit var downloadsListCategory: PreferenceCategory
     private var cleanDownloadsPref: Preference? = null
@@ -59,6 +57,12 @@ class DownloadsFragment : PreferenceFragmentCompat() {
     // Flag to track whether this is the initial load (for showing appropriate summary message)
     private var isInitialLoad = true
 
+    // Track last known download count to detect new downloads
+    private var lastKnownDownloadCount = 0
+    private var processedCount = 0
+
+    fun isUpdating() : Boolean =  lastKnownDownloadCount>processedCount
+
     companion object {
         // Delay increment for staggered download preference creation (in milliseconds)
         private const val DELAY_INCREMENT = 1L
@@ -66,17 +70,79 @@ class DownloadsFragment : PreferenceFragmentCompat() {
         private const val INITIAL_DELAY = 100L
     }
 
-    // BroadcastReceiver to listen for download completion/failure
-    private val downloadCompleteReceiver = object : BroadcastReceiver() {
+    // ContentObserver to detect changes in DownloadManager database (new downloads, status changes)
+    private val downloadObserver = object : android.database.ContentObserver(handler) {
+        override fun onChange(selfChange: Boolean, uri: Uri?, flags: Int) {
+            super.onChange(selfChange, uri, flags)
+
+            // Log all parameters
+            Timber.d("Download database changed: selfChange=$selfChange, uri=$uri, flags=$flags")
+
+            // We a download is removed we get:
+            // Download database changed: selfChange=false, uri=content://downloads/all_downloads, flags=1
+
+            // Only process if fragment is visible/resumed
+            if (!isResumed) {
+                Timber.d("Fragment not resumed, skipping download check")
+                return
+            }
+
+            // Try to extract download ID from URI
+            val downloadId = uri?.lastPathSegment?.toLongOrNull()
+            Timber.d("Extracted download ID: $downloadId")
+
+            // Check if there are new downloads
+            val query = DownloadManager.Query()
+            val cursor = try {
+                downloadManager.query(query)
+            } catch (e: Exception) {
+                Timber.e(e, "Failed to query downloads in observer")
+                null
+            }
+
+            cursor?.use {
+                val currentCount = it.count
+                Timber.d("Download count check: lastKnown=$lastKnownDownloadCount, current=$currentCount")
+
+                if (currentCount > lastKnownDownloadCount) {
+                    Timber.i("New download(s) detected: $lastKnownDownloadCount -> $currentCount, reloading list")
+                    // New download(s) started - reload the list
+                    //loadDownloads()
+                } else if (currentCount < lastKnownDownloadCount) {
+                    Timber.i("Download(s) removed: $lastKnownDownloadCount -> $currentCount, reloading list")
+                    // Download(s) removed - reload the list
+                    // We should have already removed the download preference ourselves so no need to update the list
+                    //loadDownloads()
+                } else if (downloadId != null) {
+                    // Count unchanged, but we have a specific download ID
+                    // This is likely a progress update - update just this download
+                    Timber.d("Progress update detected for download ID: $downloadId")
+                    updateDownload(downloadId)
+                } else {
+                    // Count unchanged, no specific download to update
+                    Timber.d("Download count unchanged, no specific ID to update")
+                }
+                lastKnownDownloadCount = currentCount
+            }
+        }
+    }
+
+    // BroadcastReceiver to listen for download events (start, complete, pause, etc.)
+    private val downloadEventReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             when (intent?.action) {
                 DownloadManager.ACTION_DOWNLOAD_COMPLETE -> {
                     val downloadId = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
                     Timber.d("Download completed: $downloadId")
 
-                    // Instead of reloading all downloads, just update the specific one that completed
+                    // Update the specific download that completed
                     updateDownload(downloadId)
                 }
+                DownloadManager.ACTION_NOTIFICATION_CLICKED -> {
+                    // User clicked on download notification - could open downloads list
+                    Timber.d("Download notification clicked")
+                }
+                // Note: ACTION_VIEW_DOWNLOADS is also available but typically handled by system
             }
         }
     }
@@ -123,16 +189,37 @@ class DownloadsFragment : PreferenceFragmentCompat() {
     override fun onResume() {
         super.onResume()
         loadDownloads()
-        // Note: startPeriodicUpdates() is called by populateDownloadsAsync() after preferences are loaded
 
-        // Register receiver for download completion events
-        val filter = IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE)
+
+        // Register content observer to detect download database changes (new downloads, status changes)
+        // Use all_downloads to monitor all download changes
+        try {
+            val downloadUri = "content://downloads/all_downloads".toUri()
+            Timber.d("Registering ContentObserver for URI: $downloadUri")
+            requireContext().contentResolver.registerContentObserver(
+                downloadUri,
+                true, // notifyForDescendants - observe changes to any download
+                downloadObserver
+            )
+            Timber.d("ContentObserver registered successfully")
+        } catch (e: Exception) {
+            Timber.e(e, "Failed to register download observer")
+        }
+
+        // Register receiver for download events
+        val filter = IntentFilter().apply {
+            addAction(DownloadManager.ACTION_DOWNLOAD_COMPLETE)
+            addAction(DownloadManager.ACTION_NOTIFICATION_CLICKED)
+        }
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            // We need to export it otherwise we don't get download complete notifications from system
-            requireContext().registerReceiver(downloadCompleteReceiver, filter, Context.RECEIVER_EXPORTED)
+            // We need to export it otherwise we don't get download notifications from system
+            requireContext().registerReceiver(downloadEventReceiver, filter, Context.RECEIVER_EXPORTED)
+            Timber.d("BroadcastReceiver registered (RECEIVER_EXPORTED)")
         } else {
             @Suppress("UnspecifiedRegisterReceiverFlag")
-            requireContext().registerReceiver(downloadCompleteReceiver, filter)
+            requireContext().registerReceiver(downloadEventReceiver, filter)
+            Timber.d("BroadcastReceiver registered")
         }
     }
 
@@ -142,52 +229,24 @@ class DownloadsFragment : PreferenceFragmentCompat() {
         // Cancel any ongoing population
         populationCancelled = true
 
-        stopPeriodicUpdates()
+
+        // Unregister content observer
+        try {
+            requireContext().contentResolver.unregisterContentObserver(downloadObserver)
+            Timber.d("ContentObserver unregistered successfully")
+        } catch (e: Exception) {
+            Timber.d(e, "Observer not registered or already unregistered")
+        }
 
         // Unregister receiver to prevent memory leaks
         try {
-            requireContext().unregisterReceiver(downloadCompleteReceiver)
+            requireContext().unregisterReceiver(downloadEventReceiver)
+            Timber.d("BroadcastReceiver unregistered successfully")
         } catch (e: Exception) {
             Timber.d(e, "Receiver not registered or already unregistered")
         }
     }
 
-    /**
-     * Start periodic updates for download progress
-     */
-    private fun startPeriodicUpdates() {
-        if (!isUpdating) {
-            isUpdating = true
-            handler.post(updateRunnable)
-        }
-    }
-
-    /**
-     * Stop periodic updates
-     */
-    private fun stopPeriodicUpdates() {
-        isUpdating = false
-        handler.removeCallbacks(updateRunnable)
-    }
-
-    /**
-     * Runnable to update download progress periodically.
-     * Automatically stops when no downloads are in progress.
-     */
-    private val updateRunnable = object : Runnable {
-        override fun run() {
-            if (isUpdating) {
-                val hasActiveDownloads = updateDownloads()
-                if (hasActiveDownloads) {
-                    handler.postDelayed(this, updateInterval)
-                } else {
-                    // No active downloads, stop updating
-                    Timber.i("No active downloads, stopping periodic updates")
-                    isUpdating = false
-                }
-            }
-        }
-    }
 
     /**
      * Load all downloads from DownloadManager asynchronously.
@@ -220,6 +279,7 @@ class DownloadsFragment : PreferenceFragmentCompat() {
         if (cursor == null) {
             downloadsListCategory.removeAll()
             showEmptyState()
+            lastKnownDownloadCount = 0
             return
         }
 
@@ -227,12 +287,16 @@ class DownloadsFragment : PreferenceFragmentCompat() {
             cursor.close()
             downloadsListCategory.removeAll()
             showEmptyState()
+            lastKnownDownloadCount = 0
             return
         }
 
         // Move cursor back to beginning and start async population
         cursor.moveToPosition(-1) // Move before first
         val totalDownloads = cursor.count
+
+        // Update last known count to track for new downloads
+        lastKnownDownloadCount = totalDownloads
 
         // Reset cancellation flag for this new population
         populationCancelled = false
@@ -250,7 +314,7 @@ class DownloadsFragment : PreferenceFragmentCompat() {
         downloadsListCategory.summary = null
 
         var delay = INITIAL_DELAY
-        var processedCount = 0
+        processedCount = 0
 
         // Track which download IDs we've seen (to remove stale preferences later)
         val seenDownloadIds = mutableSetOf<Long>()
@@ -274,58 +338,15 @@ class DownloadsFragment : PreferenceFragmentCompat() {
                     }
 
                     try {
-                        // We have at least one download
-                        hasAnyDownloads = true
                         processedCount++
-
-                        // Update category summary with progress
-                        val summaryResId = if (isInitialLoad) {
-                            R.string.pref_summary_loading_downloads
-                        } else {
-                            R.string.pref_summary_updating_downloads
-                        }
-                        downloadsListCategory.summary = getString(summaryResId, processedCount, totalDownloads)
 
                         val id = cursor.getLong(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_ID))
                         seenDownloadIds.add(id)
 
-                        val status = cursor.getInt(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_STATUS))
-                        val localUri = cursor.getString(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_LOCAL_URI))
-
-                        // Set flags for action states (only set once, don't need to keep checking)
-                        if (status == DownloadManager.STATUS_FAILED) {
-                            hasFailedOrOrphaned = true
-                            hasRemovable = true // Failed downloads can be removed (no file to preserve)
-                        } else if (status == DownloadManager.STATUS_SUCCESSFUL && localUri != null) {
-                            val uri = android.net.Uri.parse(localUri)
-                            val file = java.io.File(uri.path ?: "")
-                            if (!file.exists()) {
-                                hasFailedOrOrphaned = true
-                                hasRemovable = true // Orphaned downloads can be removed (no file to preserve)
-                            } else {
-                                // Check if we can preserve the file (need read or write permission)
-                                if (file.canRead() || file.canWrite()) {
-                                    hasRemovable = true
-                                }
-                            }
-                        } else if (status != DownloadManager.STATUS_SUCCESSFUL) {
-                            hasRemovable = true // Non-successful downloads can be removed (no file to preserve)
-                        }
-
-                        // Check if preference already exists
-                        val prefKey = "download_$id"
-                        var downloadPref = downloadsListCategory.findPreference<DownloadPreference>(prefKey)
-
-                        if (downloadPref != null) {
-                            // Update existing preference
-                            val downloadData = createDownloadData(cursor)
-                            downloadPref.updateFromDownloadData(downloadData)
-                        } else {
-                            // Create new preference
-                            val downloadData = createDownloadData(cursor)
-                            downloadPref = createDownloadPreference(downloadData)
-                            downloadsListCategory.addPreference(downloadPref)
-                        }
+                        // Use the shared updateDownload logic (doesn't update actions/count)
+                        updateDownloadFromCursor(cursor)
+                        //
+                        updateDownloadCount()
 
                         // Schedule next download
                         processNextDownload()
@@ -348,20 +369,12 @@ class DownloadsFragment : PreferenceFragmentCompat() {
 
                     removeStalePreferences(seenDownloadIds)
                     cursor.close()
-                    updateActionStates()
 
                     // Update category summary with final count
-                    if (processedCount == 1) {
-                        downloadsListCategory.summary = getString(R.string.pref_summary_downloads_count, processedCount)
-                    } else {
-                        downloadsListCategory.summary = getString(R.string.pref_summary_downloads_count_plural, processedCount)
-                    }
+                    updateDownloadCount()
 
                     // Mark that initial load is complete
                     isInitialLoad = false
-
-                    // Start periodic updates now that all preferences are loaded
-                    startPeriodicUpdates()
                 }, delay)
             }
         }
@@ -423,100 +436,98 @@ class DownloadsFragment : PreferenceFragmentCompat() {
     }
 
     /**
-     * Update download progress for all items that are in progress.
-     * Only updates the summary of preferences, doesn't rebuild the entire list.
-     * Returns true if there are any downloads still in progress.
+     * Create DownloadData from download ID by querying DownloadManager
+     * Returns null if the download doesn't exist
      */
-    private fun updateDownloads(): Boolean {
-        var hasActiveDownloads = false
+    private fun createDownloadData(downloadId: Long): DownloadData? {
+        val query = DownloadManager.Query().setFilterById(downloadId)
+        val cursor = downloadManager.query(query)
 
-        // Only update progress for existing preferences in the list
-        for (i in 0 until downloadsListCategory.preferenceCount) {
-            val pref = downloadsListCategory.getPreference(i) as? DownloadPreference
-            if (pref != null) {
-                // updateProgress() returns true if download is still active (running/pending/paused)
-                val isActive = pref.updateProgress()
-                if (isActive) {
-                    hasActiveDownloads = true
-                }
+        return cursor?.use {
+            if (it.moveToFirst()) {
+                createDownloadData(it)
+            } else {
+                null
             }
         }
-
-        return hasActiveDownloads
     }
 
+
     /**
-     * Update a single download by ID (e.g., when it completes).
-     * This is much more efficient than reloading the entire list.
+     * Update a single download by ID (e.g., when it completes or progresses).
+     * Uses the same logic as list population - finds existing preference or creates new one,
+     * then updates it with the latest download data.
      */
     private fun updateDownload(downloadId: Long) {
         Timber.d("updateDownload: downloadId=$downloadId")
 
-        // Find the preference for this download
-        val pref = findDownloadPreference(downloadId)
-        if (pref == null) {
-            Timber.w("updateDownload: Preference not found for download $downloadId")
-            return
-        }
-
-        // Query the download manager for updated data
+        // Query the download manager for this download
         val query = DownloadManager.Query().setFilterById(downloadId)
         val cursor = downloadManager.query(query)
 
-        cursor?.use {
-            if (it.moveToFirst()) {
-                val downloadData = createDownloadData(it)
-
-                // Update the preference with the new data
-                pref.updateFromDownloadData(downloadData)
-
-                // Check this download's status and update flags if needed
-                val status = it.getInt(it.getColumnIndexOrThrow(DownloadManager.COLUMN_STATUS))
-                val localUri = it.getString(it.getColumnIndexOrThrow(DownloadManager.COLUMN_LOCAL_URI))
-
-                // We always have at least one download
-                hasAnyDownloads = true
-
-                // Check if this download qualifies for various actions (flags can only go from false to true)
-                if (status == DownloadManager.STATUS_FAILED) {
-                    hasFailedOrOrphaned = true
-                    hasRemovable = true
-                } else if (status == DownloadManager.STATUS_SUCCESSFUL && localUri != null) {
-                    val uri = android.net.Uri.parse(localUri)
-                    val file = java.io.File(uri.path ?: "")
-                    if (!file.exists()) {
-                        hasFailedOrOrphaned = true
-                        hasRemovable = true
-                    } else {
-                        if (file.canRead() || file.canWrite()) {
-                            hasRemovable = true
-                        }
-                    }
-                } else if (status != DownloadManager.STATUS_SUCCESSFUL) {
-                    hasRemovable = true
-                }
-
-                // Update action states based on current flags
-                updateActionStates()
-
-                Timber.d("updateDownload: Updated preference for download $downloadId")
-            } else {
-                Timber.w("updateDownload: Download $downloadId not found in DownloadManager")
+        if (cursor != null && cursor.moveToFirst()) {
+            try {
+                updateDownloadFromCursor(cursor)
+                // Update action states and download count after updating the preference
+                updateDownloadCount()
+            } finally {
+                cursor.close()
             }
+        } else {
+            Timber.w("updateDownload: Download $downloadId not found in DownloadManager")
+            cursor?.close()
         }
     }
 
     /**
-     * Find a DownloadPreference by download ID
+     * Update a download from cursor data. This is the core implementation used by both
+     * list population and individual updates. Does not call updateActionStates/updateDownloadCount
+     * so caller can batch those calls.
      */
-    private fun findDownloadPreference(downloadId: Long): DownloadPreference? {
-        for (i in 0 until downloadsListCategory.preferenceCount) {
-            val pref = downloadsListCategory.getPreference(i) as? DownloadPreference
-            if (pref?.downloadId == downloadId) {
-                return pref
+    private fun updateDownloadFromCursor(cursor: Cursor) {
+        val id = cursor.getLong(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_ID))
+        val status = cursor.getInt(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_STATUS))
+        val localUri = cursor.getString(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_LOCAL_URI))
+
+        // Update flags based on this download's status
+        hasAnyDownloads = true
+
+        if (status == DownloadManager.STATUS_FAILED) {
+            hasFailedOrOrphaned = true
+            hasRemovable = true
+        } else if (status == DownloadManager.STATUS_SUCCESSFUL && localUri != null) {
+            val uri = android.net.Uri.parse(localUri)
+            val file = java.io.File(uri.path ?: "")
+            if (!file.exists()) {
+                hasFailedOrOrphaned = true
+                hasRemovable = true
+            } else {
+                if (file.canRead() || file.canWrite()) {
+                    hasRemovable = true
+                }
             }
+        } else if (status != DownloadManager.STATUS_SUCCESSFUL) {
+            hasRemovable = true
         }
-        return null
+
+        // Check if preference already exists
+        val prefKey = "download_$id"
+        var downloadPref = downloadsListCategory.findPreference<DownloadPreference>(prefKey)
+
+        if (downloadPref != null) {
+            // Update existing preference
+            val downloadData = createDownloadData(cursor)
+            downloadPref.updateFromDownloadData(downloadData)
+            // Update icon in case status or file type changed
+            setDownloadIcon(downloadPref, downloadData.status, downloadData.mimeType, downloadData.localUri)
+            Timber.d("updateDownloadFromCursor: Updated existing preference for download $id")
+        } else {
+            // Create new preference
+            val downloadData = createDownloadData(cursor)
+            downloadPref = createDownloadPreference(downloadData)
+            downloadsListCategory.addPreference(downloadPref)
+            Timber.d("updateDownloadFromCursor: Created new preference for download $id")
+        }
     }
 
     /**
@@ -650,7 +661,7 @@ class DownloadsFragment : PreferenceFragmentCompat() {
                 val fileUri = android.net.Uri.parse(localUri)
                 val file = java.io.File(fileUri.path ?: "")
                 if (!file.exists()) {
-                    pref.setIcon(R.drawable.ic_unknown_document_outline)
+                    pref.setIcon(R.drawable.ic_unknown_document_outline_error)
                     return
                 }
             } catch (e: Exception) {
@@ -857,7 +868,8 @@ class DownloadsFragment : PreferenceFragmentCompat() {
         if (isInProgress || isPaused) {
             // Cancel download
             options.add(fulguris.dialog.DialogItem(title = R.string.cancel_download) {
-                cancelDownload(downloadId)
+                // I believe we can only just remove it
+                removeDownload(downloadId)
             })
         }
 
@@ -870,7 +882,8 @@ class DownloadsFragment : PreferenceFragmentCompat() {
             // Re-download (if has URL)
             if (hasUrl) {
                 options.add(fulguris.dialog.DialogItem(title = R.string.action_download) {
-                    redownloadFile(originalUri, title)
+
+                    redownloadFile(downloadId,originalUri, title)
                 })
             }
         }
@@ -904,14 +917,6 @@ class DownloadsFragment : PreferenceFragmentCompat() {
     }
 
     /**
-     * Cancel a running download
-     */
-    private fun cancelDownload(downloadId: Long) {
-        downloadManager.remove(downloadId)
-        loadDownloads()
-    }
-
-    /**
      * Remove download entry from DownloadManager without deleting the file.
      * This is a workaround since DownloadManager.remove() always deletes both entry and file.
      *
@@ -941,7 +946,7 @@ class DownloadsFragment : PreferenceFragmentCompat() {
         }
 
         try {
-            val fileUri = android.net.Uri.parse(localUriString)
+            val fileUri = localUriString.toUri()
             val originalFile = java.io.File(fileUri.path ?: return false)
 
             if (!originalFile.exists()) {
@@ -1016,7 +1021,45 @@ class DownloadsFragment : PreferenceFragmentCompat() {
      */
     private fun removeDownload(downloadId: Long) {
         downloadManager.remove(downloadId)
-        loadDownloads()
+        removeDownloadPref(downloadId)
+        updateDownloadCount()
+    }
+
+    /**
+     * Remove a download preference by ID
+     */
+    private fun removeDownloadPref(downloadId: Long) {
+        val prefKey = "download_$downloadId"
+        downloadsListCategory.findPreference<DownloadPreference>(prefKey)?.let {
+            downloadsListCategory.removePreference(it)
+        }
+    }
+
+    /**
+     * Show downloads count and progress in downloads category summary
+     */
+    private fun updateDownloadCount() {
+
+        if (isUpdating()) {
+            // Update category summary with progress
+            val summaryResId = if (isInitialLoad) {
+                R.string.pref_summary_loading_downloads
+            } else {
+                R.string.pref_summary_updating_downloads
+            }
+            downloadsListCategory.summary = getString(summaryResId, processedCount, lastKnownDownloadCount)
+        } else {
+            if (downloadsListCategory.preferenceCount == 1) {
+                downloadsListCategory.summary = getString(R.string.pref_summary_downloads_count, downloadsListCategory.preferenceCount)
+            } else {
+                downloadsListCategory.summary = getString(R.string.pref_summary_downloads_count_plural, downloadsListCategory.preferenceCount)
+            }
+            // Notably needed for isUpdating to keep on working after redownload
+            lastKnownDownloadCount = downloadsListCategory.preferenceCount
+            processedCount = downloadsListCategory.preferenceCount
+        }
+
+        updateActionStates()
     }
 
     /**
@@ -1027,14 +1070,9 @@ class DownloadsFragment : PreferenceFragmentCompat() {
             .setTitle(R.string.dialog_title_remove_and_keep)
             .setMessage(getString(R.string.dialog_message_remove_and_keep, title))
             .setPositiveButton(R.string.action_remove) { _, _ ->
-                // Remove preference from UI immediately for instant feedback
-                val pref = findDownloadPreference(downloadId)
-                if (pref != null) {
-                    downloadsListCategory.removePreference(pref)
-                }
-
                 if (removeFromListOnly(downloadId)) {
-                    loadDownloads()
+                    removeDownloadPref(downloadId)
+                    updateDownloadCount()
                 }
             }
             .setNegativeButton(android.R.string.cancel, null)
@@ -1042,19 +1080,13 @@ class DownloadsFragment : PreferenceFragmentCompat() {
     }
 
     /**
-     * Show confirmation dialog before removing and deleting
+     * Show confirmation dialog before removing download entry and deleting associated file
      */
     private fun confirmRemoveAndDeleteDownload(downloadId: Long, title: String) {
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.dialog_title_remove_and_delete)
             .setMessage(getString(R.string.dialog_message_remove_and_delete, title))
             .setPositiveButton(R.string.action_delete) { _, _ ->
-                // Remove preference from UI immediately for instant feedback
-                val pref = findDownloadPreference(downloadId)
-                if (pref != null) {
-                    downloadsListCategory.removePreference(pref)
-                }
-
                 removeDownload(downloadId)
             }
             .setNegativeButton(android.R.string.cancel, null)
@@ -1106,7 +1138,7 @@ class DownloadsFragment : PreferenceFragmentCompat() {
             if (!file.exists()) {
                 Timber.w("File does not exist: ${file.absolutePath}")
                 requireContext().toast(R.string.file_does_not_exist)
-                loadDownloads()
+                updateDownload(downloadId)
                 return
             }
 
@@ -1121,7 +1153,7 @@ class DownloadsFragment : PreferenceFragmentCompat() {
 
             if (file.delete()) {
                 Timber.i("File deleted: ${file.absolutePath}")
-                loadDownloads()  // Refresh to show orphaned status
+                updateDownload(downloadId)
             } else {
                 // Delete failed - log detailed information
                 Timber.w("Failed to delete file: ${file.absolutePath}")
@@ -1263,7 +1295,7 @@ class DownloadsFragment : PreferenceFragmentCompat() {
      * Re-download a file from its original URL.
      * Also removes all orphaned downloads with the same local URI.
      */
-    private fun redownloadFile(originalUri: String?, title: String) {
+    private fun redownloadFile(downloadId: Long, originalUri: String?, title: String) {
         if (originalUri.isNullOrBlank()) {
             return
         }
@@ -1281,8 +1313,21 @@ class DownloadsFragment : PreferenceFragmentCompat() {
                 title
             )
 
-            downloadManager.enqueue(request)
-            loadDownloads()
+            val newDownloadId = downloadManager.enqueue(request)
+            if (newDownloadId!=-1L) {
+                removeDownload(downloadId)
+                // Create new preference
+                val downloadData = createDownloadData(newDownloadId)
+                if (downloadData!=null) {
+                    val pref = createDownloadPreference(downloadData)
+                    // Add it at the top
+                    pref.order = downloadsListCategory.getPreference(0).order - 1
+                    downloadsListCategory.addPreference(pref)
+                    updateDownloadCount()
+                }
+
+            }
+
         } catch (e: Exception) {
             Timber.e(e, "Failed to re-download file")
         }
@@ -1398,34 +1443,7 @@ class DownloadsFragment : PreferenceFragmentCompat() {
      * Show confirmation dialog before cleaning downloads (removes failed and orphaned)
      */
     private fun showCleanDownloadsDialog() {
-        val query = DownloadManager.Query()
-        val cursor = downloadManager.query(query)
 
-        var cleanCount = 0
-        if (cursor.moveToFirst()) {
-            do {
-                val status = cursor.getInt(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_STATUS))
-                val localUri = cursor.getString(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_LOCAL_URI))
-
-                // Count failed downloads
-                if (status == DownloadManager.STATUS_FAILED) {
-                    cleanCount++
-                }
-                // Count orphaned downloads (file not found)
-                else if (status == DownloadManager.STATUS_SUCCESSFUL && localUri != null) {
-                    val uri = android.net.Uri.parse(localUri)
-                    val file = java.io.File(uri.path ?: "")
-                    if (!file.exists()) {
-                        cleanCount++
-                    }
-                }
-            } while (cursor.moveToNext())
-        }
-        cursor.close()
-
-        if (cleanCount == 0) {
-            return
-        }
 
         MaterialAlertDialogBuilder(requireContext())
             .setIcon(R.drawable.ic_cleaning_services_outline)
@@ -1521,11 +1539,7 @@ class DownloadsFragment : PreferenceFragmentCompat() {
                 }
 
                 if (removeFromListOnly(downloadId)) {
-                    // Remove preference from UI immediately for instant feedback
-                    val pref = findDownloadPreference(downloadId)
-                    if (pref != null) {
-                        downloadsListCategory.removePreference(pref)
-                    }
+                    removeDownloadPref(downloadId)
                     successCount++
                 } else {
                     failCount++
@@ -1617,10 +1631,7 @@ class DownloadsFragment : PreferenceFragmentCompat() {
 
         // Remove preferences from UI immediately for instant feedback
         idsToRemove.forEach { downloadId ->
-            val pref = findDownloadPreference(downloadId)
-            if (pref != null) {
-                downloadsListCategory.removePreference(pref)
-            }
+            removeDownloadPref(downloadId)
         }
 
         // Remove from download manager
@@ -1653,10 +1664,7 @@ class DownloadsFragment : PreferenceFragmentCompat() {
 
         // Remove preferences from UI immediately for instant feedback
         idsToDelete.forEach { downloadId ->
-            val pref = findDownloadPreference(downloadId)
-            if (pref != null) {
-                downloadsListCategory.removePreference(pref)
-            }
+            removeDownloadPref(downloadId)
         }
 
         // Remove from DownloadManager (this also deletes the files)
@@ -1672,6 +1680,7 @@ class DownloadsFragment : PreferenceFragmentCompat() {
 
         loadDownloads()
     }
+
 
     /**
      * Custom preference for download items that updates its progress.
@@ -1854,6 +1863,8 @@ class DownloadsFragment : PreferenceFragmentCompat() {
         }
     }
 }
+
+
 
 
 
