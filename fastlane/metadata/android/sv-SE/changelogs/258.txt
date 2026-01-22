@@ -1,0 +1,4 @@
+📂 Stöd för nästlade bokmärkesmappar
+📤 Exportera bokmärken som HTML
+📊 Förbättringar av nedladdningslistan
+🪲 Diverse förbättringar och buggfixar

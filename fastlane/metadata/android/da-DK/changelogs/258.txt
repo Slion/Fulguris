@@ -1,0 +1,4 @@
+📂 Understøttelse af indlejrede bogmærkemapper
+📤 Eksporter bogmærker som HTML
+📊 Forbedringer af downloadliste
+🪲 Forskellige forbedringer og fejlrettelser

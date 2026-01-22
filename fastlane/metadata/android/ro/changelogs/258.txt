@@ -1,0 +1,4 @@
+📂 Suport pentru dosare de marcaje imbricate
+📤 Exportă marcaje ca HTML
+📊 Îmbunătățiri lista de descărcări
+🪲 Diverse îmbunătățiri și corecții de erori

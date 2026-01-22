@@ -1,0 +1,4 @@
+📂 Tuki sisäkkäisille kirjanmerkkikansioille
+📤 Vie kirjanmerkit HTML-muodossa
+📊 Latausluettelon parannuksia
+🪲 Erilaisia parannuksia ja bugikorjauksia

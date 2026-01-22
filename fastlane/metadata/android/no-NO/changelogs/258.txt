@@ -1,0 +1,4 @@
+📂 Støtte for nestede bokmerkemapper
+📤 Eksporter bokmerker som HTML
+📊 Forbedringer i nedlastingslisten
+🪲 Diverse forbedringer og feilrettinger

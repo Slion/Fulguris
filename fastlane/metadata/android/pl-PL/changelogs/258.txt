@@ -1,0 +1,4 @@
+📂 Obsługa zagnieżdżonych folderów zakładek
+📤 Eksportuj zakładki jako HTML
+📊 Ulepszenia listy pobierania
+🪲 Różne ulepszenia i poprawki błędów

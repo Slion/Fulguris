@@ -1,0 +1,4 @@
+📂 Suporte para pastas de favoritos aninhadas
+📤 Exportar favoritos como HTML
+📊 Melhorias na lista de downloads
+🪲 Várias melhorias e correções de bugs

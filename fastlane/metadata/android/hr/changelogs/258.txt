@@ -1,0 +1,4 @@
+📂 Podrška za ugniježđene mape oznaka
+📤 Izvoz oznaka kao HTML
+📊 Poboljšanja popisa preuzimanja
+🪲 Razna poboljšanja i ispravci grešaka

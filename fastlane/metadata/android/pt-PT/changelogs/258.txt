@@ -1,0 +1,4 @@
+📂 Suporte para pastas de marcadores aninhadas
+📤 Exportar marcadores como HTML
+📊 Melhorias na lista de transferências
+🪲 Várias melhorias e correções de erros

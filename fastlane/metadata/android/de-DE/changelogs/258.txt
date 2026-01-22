@@ -1,0 +1,4 @@
+📂 Unterstützung für verschachtelte Lesezeichen-Ordner
+📤 Lesezeichen als HTML exportieren
+📊 Verbesserungen der Download-Liste
+🪲 Verschiedene Verbesserungen und Fehlerbehebungen

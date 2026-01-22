@@ -1,0 +1,4 @@
+📂 Soporte para carpetas de marcadores anidadas
+📤 Exportar marcadores como HTML
+📊 Mejoras en la lista de descargas
+🪲 Varias mejoras y correcciones de errores

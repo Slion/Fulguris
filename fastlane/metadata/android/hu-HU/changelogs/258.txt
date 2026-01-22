@@ -1,0 +1,4 @@
+📂 Beágyazott könyvjelző mappák támogatása
+📤 Könyvjelzők exportálása HTML-ként
+📊 Letöltési lista fejlesztései
+🪲 Különféle fejlesztések és hibajavítások

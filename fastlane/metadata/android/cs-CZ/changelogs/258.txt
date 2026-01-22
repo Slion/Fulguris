@@ -1,0 +1,4 @@
+📂 Podpora vnořených složek záložek
+📤 Export záložek jako HTML
+📊 Vylepšení seznamu stahování
+🪲 Různá vylepšení a opravy chyb
