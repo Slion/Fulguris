@@ -111,6 +111,15 @@ interface BookmarkRepository {
     fun getFoldersSorted(): Single<List<Bookmark.Folder>>
 
     /**
+     * Returns immediate subfolders of the specified parent folder.
+     * If parent is null or empty, returns root-level folders.
+     *
+     * @param parentFolder the parent folder path (e.g., "Parent" or "Parent/Child"), or null for root
+     * @return an observable that emits a list of immediate subfolders.
+     */
+    fun getSubFoldersSorted(parentFolder: String?): Single<List<Bookmark.Folder>>
+
+    /**
      * Returns the names of all folders. The root folder is omitted.
      *
      * @return an observable that emits a list of folder names.

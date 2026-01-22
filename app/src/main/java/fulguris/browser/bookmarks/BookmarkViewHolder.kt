@@ -62,6 +62,13 @@ class BookmarkViewHolder(
     }
 
     /**
+     * Show or hide the edit button
+     */
+    fun setEditButtonVisibility(visible: Boolean) {
+        iButtonEdit.visibility = if (visible) View.VISIBLE else View.GONE
+    }
+
+    /**
      * Implements [ItemDragDropSwipeViewHolder.onItemOperationStart]
      * Start dragging
      */

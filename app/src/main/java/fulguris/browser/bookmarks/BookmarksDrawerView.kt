@@ -5,6 +5,7 @@ import fulguris.animation.AnimationUtils
 import fulguris.browser.BookmarksView
 import fulguris.browser.TabsManager
 import fulguris.browser.WebBrowser
+import fulguris.constant.FOLDER
 import fulguris.database.Bookmark
 import fulguris.database.bookmark.BookmarkRepository
 import fulguris.databinding.BookmarkDrawerViewBinding
@@ -78,7 +79,9 @@ class BookmarksDrawerView @JvmOverloads constructor(
 
         iBinding.bookmarkBackButton.setOnClickListener {
             if (!uiModel.isCurrentFolderRoot()) {
-                setBookmarksShown(null, true)
+                // Navigate to parent folder
+                val parentFolder = getParentFolder(uiModel.currentFolder)
+                setBookmarksShown(parentFolder, true)
                 iBinding.listBookmarks.layoutManager?.scrollToPosition(scrollIndex)
             }
         }
@@ -145,22 +148,34 @@ class BookmarksDrawerView @JvmOverloads constructor(
      */
     private fun setBookmarksShown(folder: String?, animate: Boolean) {
         bookmarksSubscription?.dispose()
-        bookmarksSubscription = bookmarkModel.getBookmarksFromFolderSorted(folder)
-            .concatWith(Single.defer {
-                if (folder == null) {
-                    bookmarkModel.getFoldersSorted()
-                } else {
-                    Single.just(emptyList())
-                }
-            })
-            .toList()
-            .map { it.flatten() }
+        bookmarksSubscription = Single.zip(
+            bookmarkModel.getSubFoldersSorted(folder),
+            bookmarkModel.getBookmarksFromFolderSorted(folder)
+        ) { folders, bookmarks ->
+            // Combine folders first, then bookmarks
+            folders + bookmarks
+        }
             .subscribeOn(databaseScheduler)
             .observeOn(mainScheduler)
             .subscribe { bookmarksAndFolders ->
                 uiModel.currentFolder = folder
-                setBookmarkDataSet(bookmarksAndFolders, animate)
-                iBinding.textTitle.text = if (folder.isNullOrBlank()) resources.getString(R.string.action_bookmarks) else folder
+
+                // Add parent folder navigation item at the beginning (except for root)
+                val itemsWithParent = if (!folder.isNullOrBlank()) {
+                    val parentFolder = createParentFolderBookmark(folder)
+                    listOf(parentFolder) + bookmarksAndFolders
+                } else {
+                    bookmarksAndFolders
+                }
+
+                setBookmarkDataSet(itemsWithParent, animate)
+                // Display only the last segment of the folder path
+                val displayTitle = if (folder.isNullOrBlank()) {
+                    resources.getString(R.string.action_bookmarks)
+                } else {
+                    folder.substringAfterLast('/', folder)
+                }
+                iBinding.textTitle.text = displayTitle
             }
     }
 
@@ -205,7 +220,14 @@ class BookmarksDrawerView @JvmOverloads constructor(
     private fun openBookmark(bookmark: Bookmark) = when (bookmark) {
         is Bookmark.Folder -> {
             scrollIndex = (iBinding.listBookmarks.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
-            setBookmarksShown(bookmark.title, true)
+            // Handle ".." parent folder navigation
+            val targetFolder = if (bookmark.title == "..") {
+                // Extract parent folder path from URL (remove FOLDER prefix)
+                bookmark.url.removePrefix(FOLDER).takeIf { it.isNotEmpty() }
+            } else {
+                bookmark.title
+            }
+            setBookmarksShown(targetFolder, true)
         }
         is Bookmark.Entry -> webBrowser.bookmarkItemClicked(bookmark)
     }
@@ -235,9 +257,37 @@ class BookmarksDrawerView @JvmOverloads constructor(
         if (uiModel.isCurrentFolderRoot()) {
             webBrowser.onBackButtonPressed()
         } else {
-            setBookmarksShown(null, true)
+            // Navigate to parent folder
+            val parentFolder = getParentFolder(uiModel.currentFolder)
+            setBookmarksShown(parentFolder, true)
             iBinding.listBookmarks.layoutManager?.scrollToPosition(scrollIndex)
         }
+    }
+
+    /**
+     * Get the parent folder path from a folder path.
+     * Returns null for root-level folders.
+     */
+    private fun getParentFolder(folderPath: String?): String? {
+        if (folderPath.isNullOrEmpty()) return null
+        val lastSlashIndex = folderPath.lastIndexOf('/')
+        return if (lastSlashIndex > 0) {
+            folderPath.substring(0, lastSlashIndex)
+        } else {
+            null // Parent is root
+        }
+    }
+
+    /**
+     * Create a parent folder bookmark for ".." navigation
+     */
+    private fun createParentFolderBookmark(currentFolder: String): Bookmark.Folder {
+        val parentPath = getParentFolder(currentFolder)
+        // Always use ".." as title for navigation, even when going back to root
+        return Bookmark.Folder.Entry(
+            url = if (parentPath.isNullOrEmpty()) "" else "$FOLDER$parentPath",
+            title = ".."
+        )
     }
 
     override fun handleUpdatedUrl(url: String) {

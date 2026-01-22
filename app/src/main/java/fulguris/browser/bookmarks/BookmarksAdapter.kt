@@ -110,7 +110,16 @@ class BookmarksAdapter(
         holder.itemView.jumpDrawablesToCurrentState()
 
         val viewModel = bookmarks[position]
-        holder.txtTitle.text = viewModel.bookmark.title
+        // For folders, display only the last segment of the path
+        val displayTitle = when (val bookmark = viewModel.bookmark) {
+            is Bookmark.Folder -> bookmark.title.substringAfterLast('/', bookmark.title)
+            else -> bookmark.title
+        }
+        holder.txtTitle.text = displayTitle
+
+        // Hide edit button for ".." parent folder navigation
+        val isParentFolder = viewModel.bookmark is Bookmark.Folder && viewModel.bookmark.title == ".."
+        holder.setEditButtonVisibility(!isParentFolder)
 
         val url = viewModel.bookmark.url
         holder.favicon.tag = url
@@ -152,6 +161,13 @@ class BookmarksAdapter(
     {
         val source = bookmarks[fromPosition].bookmark
         val destination = bookmarks[toPosition].bookmark
+
+        // Don't allow moving the ".." parent folder navigation item
+        if ((source is Bookmark.Folder && source.title == "..") ||
+            (destination is Bookmark.Folder && destination.title == "..")) {
+            return false
+        }
+
         // We can only swap bookmark entries not folders
         if (!(source is Bookmark.Entry && destination is Bookmark.Entry)) {
             // Folder are shown last in our list for now so we just can't order them

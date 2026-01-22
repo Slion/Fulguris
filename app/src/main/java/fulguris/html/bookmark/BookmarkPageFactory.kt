@@ -3,6 +3,7 @@ package fulguris.html.bookmark
 import fulguris.R
 import fulguris.activity.WebBrowserActivity
 import fulguris.constant.FILE
+import fulguris.constant.FOLDER
 import fulguris.database.Bookmark
 import fulguris.database.bookmark.BookmarkRepository
 import fulguris.di.DatabaseScheduler
@@ -59,25 +60,36 @@ class BookmarkPageFactory @Inject constructor(
     private val defaultIconFile by lazy { File(application.cacheDir, DEFAULT_ICON) }
 
     override fun buildPage(): Single<String> = bookmarkModel
-        .getAllBookmarksSorted()
-        .flattenAsObservable { it }
-        .groupBy<Bookmark.Folder, Bookmark>(Bookmark.Entry::folder) { it }
-        .flatMapSingle { bookmarksInFolder ->
-            val folder = bookmarksInFolder.key
-            return@flatMapSingle bookmarksInFolder
-                .toList()
-                .concatWith(
-                    if (folder == Bookmark.Folder.Root) {
-                        bookmarkModel.getFoldersSorted().map { it.filterIsInstance<Bookmark.Folder.Entry>() }
-                    } else {
-                        Single.just(emptyList())
+        .getFoldersSorted()
+        .flatMap { allFolders ->
+            // Build a list of all folders we need to create pages for (including root)
+            val foldersToProcess = listOf(Bookmark.Folder.Root) + allFolders.filterIsInstance<Bookmark.Folder.Entry>()
+
+            Single.just(foldersToProcess)
+                .flattenAsObservable { it }
+                .flatMapSingle { folder ->
+                    // For each folder, get its direct bookmarks and immediate subfolders
+                    val folderPath = if (folder is Bookmark.Folder.Root) null else folder.title
+
+                    // Get subfolders and bookmarks
+                    Single.zip(
+                        bookmarkModel.getSubFoldersSorted(folderPath),
+                        bookmarkModel.getBookmarksFromFolderSorted(folderPath)
+                    ) { folders, bookmarks ->
+                        // Combine folders first, then bookmarks
+                        val items = (folders + bookmarks).map { it.asViewModel() }.toMutableList()
+
+                        // Add parent folder navigation item at the beginning (except for root)
+                        if (folder !is Bookmark.Folder.Root) {
+                            items.add(0, createParentFolderViewModel(folder))
+                        }
+
+                        Pair(folder, items)
                     }
-                )
-                .toList()
-                .map { bookmarksAndFolders ->
-                    Pair(folder, bookmarksAndFolders.flatten().map { it.asViewModel() })
                 }
+                .toList()
         }
+        .flattenAsObservable { it }
         .map { (folder, viewModels) -> Pair(folder, construct(viewModels)) }
         .subscribeOn(databaseScheduler)
         .observeOn(diskScheduler)
@@ -114,6 +126,7 @@ class BookmarkPageFactory @Inject constructor(
             body {
                 val repeatableElement = id("repeated").removeElement()
                 id("content") {
+                    // Render all items in order: ".." first (if present), then folders and bookmarks
                     list.forEach {
                         val newElement = repeatableElement.clone {
                             tag("a") { attr("href", it.url) }
@@ -121,16 +134,40 @@ class BookmarkPageFactory @Inject constructor(
                             tag("img") { attr("src", if (useDarkTheme && it.iconUrlOnDark.isNotEmpty()) it.iconUrlOnDark else it.iconUrl) }
                             id("title") { appendText(it.title) }
                         }
-                        if (application.configPrefs.toolbarsBottom) {
-                            prependChild(newElement)
-                        } else {
-                            appendChild(newElement)
-                        }
-
+                        appendChild(newElement)
                     }
                 }
             }
         }
+    }
+
+    /**
+     * Creates a view model for the parent folder navigation item ("..").
+     */
+    private fun createParentFolderViewModel(currentFolder: Bookmark.Folder): BookmarkViewModel {
+        // Get parent folder path
+        val currentPath = (currentFolder as? Bookmark.Folder.Entry)?.title ?: ""
+        val parentPath = currentPath.substringBeforeLast('/', "")
+
+        // Create parent folder bookmark object
+        val parentFolder = if (parentPath.isEmpty()) {
+            Bookmark.Folder.Root
+        } else {
+            Bookmark.Folder.Entry(
+                url = "$FOLDER$parentPath",
+                title = parentPath
+            )
+        }
+
+        val parentPage = createBookmarkPage(parentFolder)
+        val url = "$FILE$parentPage"
+
+        return BookmarkViewModel(
+            title = "..",
+            url = url,
+            iconUrl = folderIconFile.toString(),
+            iconUrlOnDark = folderIconFileOnDark.toString()
+        )
     }
 
     private fun Bookmark.asViewModel(): BookmarkViewModel = when (this) {
@@ -141,9 +178,11 @@ class BookmarkPageFactory @Inject constructor(
     private fun createViewModelForFolder(folder: Bookmark.Folder): BookmarkViewModel {
         val folderPage = createBookmarkPage(folder)
         val url = "$FILE$folderPage"
+        // Display only the last segment of the folder path
+        val displayTitle = folder.title.substringAfterLast('/', folder.title)
 
         return BookmarkViewModel(
-            title = folder.title,
+            title = displayTitle,
             url = url,
             iconUrl = folderIconFile.toString(),
             iconUrlOnDark = folderIconFileOnDark.toString()
@@ -196,12 +235,20 @@ class BookmarkPageFactory @Inject constructor(
      * Create the bookmark page file.
      */
     fun createBookmarkPage(folder: Bookmark.Folder?): File {
-        val prefix = if (folder?.title?.isNotBlank() == true) {
-            "${folder.title}-"
+        val file = if (folder?.title?.isNotBlank() == true) {
+            // For nested folders, create directory structure
+            // Replace "/" with File.separator to ensure proper path handling
+            val folderPath = folder.title.replace("/", File.separator)
+            File(application.filesDir, "$folderPath${File.separator}$FILENAME")
         } else {
-            ""
+            // Root level bookmarks
+            File(application.filesDir, FILENAME)
         }
-        return File(application.filesDir, prefix + FILENAME)
+
+        // Ensure parent directories exist for nested folders
+        file.parentFile?.mkdirs()
+
+        return file
     }
 
     companion object {

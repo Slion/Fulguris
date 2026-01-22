@@ -168,11 +168,39 @@ class BookmarkDatabase @Inject constructor(
     }
 
     override fun renameFolder(oldName: String, newName: String): Completable = Completable.fromAction {
-        val contentValues = ContentValues(1).apply {
-            put(KEY_FOLDER, newName)
-        }
+        // Query all bookmarks that are in this folder or any subfolder
+        val cursor = database.query(
+            TABLE_BOOKMARK,
+            arrayOf(KEY_URL, KEY_FOLDER),
+            "$KEY_FOLDER=? OR $KEY_FOLDER LIKE ?",
+            arrayOf(oldName, "$oldName/%"),
+            null,
+            null,
+            null
+        )
 
-        database.update(TABLE_BOOKMARK, contentValues, "$KEY_FOLDER=?", arrayOf(oldName))
+        cursor.use {
+            while (it.moveToNext()) {
+                val url = it.getString(it.getColumnIndexOrThrow(KEY_URL))
+                val currentFolder = it.getStringOrNull(it.getColumnIndexOrThrow(KEY_FOLDER)) ?: ""
+
+                // Calculate the new folder path
+                val updatedFolder = when {
+                    currentFolder == oldName -> newName
+                    currentFolder.startsWith("$oldName/") -> {
+                        // Replace the old folder prefix with the new one
+                        newName + currentFolder.substring(oldName.length)
+                    }
+                    else -> currentFolder // Should not happen, but keep original if it does
+                }
+
+                // Update this bookmark's folder
+                val contentValues = ContentValues(1).apply {
+                    put(KEY_FOLDER, updatedFolder)
+                }
+                database.update(TABLE_BOOKMARK, contentValues, "$KEY_URL=?", arrayOf(url))
+            }
+        }
     }
 
     override fun deleteFolder(folderToDelete: String): Completable = Completable.fromAction {
@@ -239,6 +267,47 @@ class BookmarkDatabase @Inject constructor(
             .useMap { it.getString(it.getColumnIndex(KEY_FOLDER)) }
             .filter { !it.isNullOrEmpty() }
             .map(String::asFolder)
+    }
+
+    override fun getSubFoldersSorted(parentFolder: String?): Single<List<Bookmark.Folder>> = Single.fromCallable {
+        // Get all folder names
+        val allFolders = database
+            .query(
+                true,
+                TABLE_BOOKMARK,
+                arrayOf(KEY_FOLDER),
+                null,
+                null,
+                null,
+                null,
+                "$KEY_FOLDER ASC",
+                null
+            )
+            .useMap { it.getString(it.getColumnIndex(KEY_FOLDER)) }
+            .filter { !it.isNullOrEmpty() }
+
+        // Filter for immediate children only
+        val immediateSubfolders = mutableSetOf<String>()
+        val parentPath = if (parentFolder.isNullOrEmpty()) "" else parentFolder
+
+        allFolders.forEach { folderPath ->
+            val isChild = if (parentPath.isEmpty()) {
+                // Root level: folders that don't contain '/'
+                !folderPath.contains('/')
+            } else if (folderPath.startsWith("$parentPath/")) {
+                // Child of parent: starts with parent path and has no further '/' after parent
+                val remainder = folderPath.substring(parentPath.length + 1)
+                !remainder.contains('/')
+            } else {
+                false
+            }
+
+            if (isChild) {
+                immediateSubfolders.add(folderPath)
+            }
+        }
+
+        return@fromCallable immediateSubfolders.sorted().map(String::asFolder)
     }
 
     override fun getFolderNames(): Single<List<String>> = Single.fromCallable {
