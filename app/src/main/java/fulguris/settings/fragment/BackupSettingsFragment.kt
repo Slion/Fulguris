@@ -25,9 +25,9 @@ package fulguris.settings.fragment
 import fulguris.R
 import fulguris.bookmark.LegacyBookmarkImporter
 import fulguris.bookmark.NetscapeBookmarkFormatImporter
+import fulguris.bookmark.NetscapeBookmarkFormatExporter
 import fulguris.browser.SessionsManager
 import acr.browser.lightning.browser.sessions.Session
-import fulguris.database.bookmark.BookmarkExporter
 import fulguris.database.bookmark.BookmarkRepository
 import fulguris.dialog.BrowserDialog
 import fulguris.dialog.DialogItem
@@ -63,7 +63,6 @@ import fulguris.extensions.snackbar
 import fulguris.extensions.toast
 import io.reactivex.Scheduler
 import io.reactivex.disposables.Disposable
-import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -82,6 +81,7 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
     @Inject internal lateinit var bookmarkRepository: BookmarkRepository
     @Inject internal lateinit var application: Application
     @Inject internal lateinit var netscapeBookmarkFormatImporter: NetscapeBookmarkFormatImporter
+    @Inject internal lateinit var netscapeBookmarkFormatExporter: NetscapeBookmarkFormatExporter
     @Inject internal lateinit var legacyBookmarkImporter: LegacyBookmarkImporter
     @Inject @DatabaseScheduler
     internal lateinit var databaseScheduler: Scheduler
@@ -109,7 +109,6 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
     @Inject lateinit var sessionsManager: SessionsManager
 
     private var importSubscription: Disposable? = null
-    private var exportSubscription: Disposable? = null
     private var bookmarksSortSubscription: Disposable? = null
 
     /**
@@ -184,7 +183,6 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
     override fun onDestroyView() {
         super.onDestroyView()
 
-        exportSubscription?.dispose()
         importSubscription?.dispose()
         bookmarksSortSubscription?.dispose()
     }
@@ -192,7 +190,6 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
     override fun onDestroy() {
         super.onDestroy()
 
-        exportSubscription?.dispose()
         importSubscription?.dispose()
         bookmarksSortSubscription?.dispose()
     }
@@ -262,7 +259,7 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
         //TODO: specify default path
         val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
             addCategory(Intent.CATEGORY_OPENABLE)
-            type = "text/plain" // Specify type of newly created document
+            type = "text/html" // Specify type of newly created document
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
@@ -332,7 +329,7 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
         // Specify default file name, user can change it.
         // If that file already exists a numbered suffix is automatically generated and appended to the file name between brackets.
         // That is a neat feature as it guarantee no file will be overwritten.
-        putExtra(Intent.EXTRA_TITLE, "FulgurisBookmarks$timeStamp.txt")
+        putExtra(Intent.EXTRA_TITLE, "FulgurisBookmarks$timeStamp.html")
         }
         bookmarkExportFilePicker.launch(intent)
         // See bookmarkExportFilePicker declaration below for result handler
@@ -344,39 +341,32 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
             result: ActivityResult ->
         if (result.resultCode == Activity.RESULT_OK) {
 
-            // Using content resolver to get an input stream from selected URI
+            // Using content resolver to get an output stream from selected URI
             // See:  https://commonsware.com/blog/2016/03/15/how-consume-content-uri.html
             result.data?.data?.let{ uri ->
                 context?.contentResolver?.openOutputStream(uri)?.let { outputStream ->
-                    //val mimeType = context?.contentResolver?.getType(uri)
-
                     bookmarksSortSubscription = bookmarkRepository.getAllBookmarksSorted()
                         .subscribeOn(databaseScheduler)
+                        .observeOn(mainScheduler)
                         .subscribe { list ->
                             if (!isAdded) {
                                 return@subscribe
                             }
 
-                            exportSubscription?.dispose()
-                            exportSubscription = BookmarkExporter.exportBookmarksToFile(list, outputStream)
-                                .subscribeOn(databaseScheduler)
-                                .observeOn(mainScheduler)
-                                .subscribeBy(
-                                    onComplete = {
-                                        activity?.apply {
-                                            snackbar("${getString(R.string.bookmark_export_path)} ${uri.fileName}")
-                                        }
-                                    },
-                                    onError = { throwable ->
-                                        Timber.e(throwable,"onError: exporting bookmarks")
-                                        val activity = activity
-                                        if (activity != null && !activity.isFinishing && isAdded) {
-                                            BrowserDialog.show(activity, R.string.title_error, R.string.bookmark_export_failure)
-                                        } else {
-                                            application.toast(R.string.bookmark_export_failure)
-                                        }
-                                    }
-                                )
+                            try {
+                                netscapeBookmarkFormatExporter.exportBookmarks(list, outputStream)
+                                activity?.apply {
+                                    snackbar("${getString(R.string.bookmark_export_path)} ${uri.fileName}")
+                                }
+                            } catch (throwable: Throwable) {
+                                Timber.e(throwable,"onError: exporting bookmarks")
+                                val activity = activity
+                                if (activity != null && !activity.isFinishing && isAdded) {
+                                    BrowserDialog.show(activity, R.string.title_error, R.string.bookmark_export_failure)
+                                } else {
+                                    application.toast(R.string.bookmark_export_failure)
+                                }
+                            }
                         }
                 }
             }
@@ -440,7 +430,7 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
 
                         } catch (ex: Exception) {
                             // Our import failed and we are back on the main thread
-                            Timber.d("Error importing bookmarks: ", ex)
+                            Timber.d(ex, "Error importing bookmarks")
                             // TODO: Could just put a snackbar, though that was useful to test our coroutines as it would crash if not on the main thread
                             BrowserDialog.show(requireActivity(), R.string.title_error, R.string.import_bookmark_error)
                         }
