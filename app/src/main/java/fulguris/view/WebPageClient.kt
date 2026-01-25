@@ -64,6 +64,7 @@ import timber.log.Timber
 import java.io.ByteArrayOutputStream
 import java.util.*
 import kotlin.math.abs
+import androidx.core.net.toUri
 
 /**
  * We have one instance of this per [WebView] and our [WebPageTab] also as a reference to it.
@@ -336,23 +337,24 @@ class WebPageClient(
         iResourceCount++
         Timber.d("$ihs : onLoadResource - ${if (isForMainFrame) "Main frame" else "Resource"} - $iResourceCount - $url")
     }
-
+    
     /**
      *
      */
-    private fun updateUrlIfNeeded(url: String, isLoading: Boolean) {
-        // Update URL unless we are dealing with our special internal URL
-        (url.isSpecialUrl()).let { dontDoUpdate ->
-            webBrowser.updateUrl(if (dontDoUpdate) webPageTab.url else url, isLoading)
+    fun updateUrlIfNeeded(url: String) {
+        if (webPageTab.lastUrl != url) {
+            webPageTab.lastUrl = url
+            webBrowser.onTabChangedUrl(webPageTab)
         }
     }
+    
 
     /**
      * Overrides [WebViewClient.onPageFinished].
      * Also called when loading is interrupted using [WebView.stopLoading].
      * That means this can be called even as onPageStarted was not yet called.
      * Can be called multiple times for the same page notably on YouTube.com and bbc.com.
-     * On YouTybe.com [WebView.getProgress] is always 100% when onPageFinished is called even when aborted with stopLoading.
+     * On YouTube.com [WebView.getProgress] is always 100% when onPageFinished is called even when aborted with stopLoading.
      * However on bbc.com first call progress was below 100% and then 100% on the second call.
      */
     override fun onPageFinished(view: WebView, url: String) {
@@ -363,7 +365,9 @@ class WebPageClient(
         // We are assuming progress is 100% in at least one of the onPageFinished calls even as a result of stopLoading
         // Otherwise onLoadCompleteCallback would not be called which could cause issues
         val skip = onPageFinishedDone || view.progress!=100
-        Timber.i("$ihs : onPageFinished ${if (skip) "- skipping -" else "-"} Progress: ${view.progress} - $url - Load time: ${pageLoadDuration}ms - Resources: $iResourceCount")
+        Timber.i("$ihs : onPageFinished ${if (skip) "- skipping -" else "-"} Shown: ${view.isShown} - Progress: ${view.progress} - $url - Load time: ${pageLoadDuration}ms - Resources: $iResourceCount")
+
+        updateUrlIfNeeded(url)
 
         if (skip) {
             // onPageFinished was already called for this page load.
@@ -383,13 +387,6 @@ class WebPageClient(
         // In fact the HTML page may not be loaded yet when we hit our condition in onLoadResource
         applyDesktopModeIfNeeded(view)
 
-
-        if (view.isShown) {
-            updateUrlIfNeeded(url, false)
-            webBrowser.setBackButtonEnabled(view.canGoBack())
-            webBrowser.setForwardButtonEnabled(view.canGoForward())
-            view.postInvalidate()
-        }
         if (view.title == null || (view.title as String).isEmpty()) {
             webPageTab.titleInfo.setTitle(activity.getString(R.string.untitled))
         } else {
@@ -452,10 +449,17 @@ class WebPageClient(
      * You have no guarantee that the root HTML document has been loaded when this is called.
      * However I believe it means the first and main resource of the page has been downloaded.
      * Or it least it has started downloading as this is called after the first [onLoadResource].
+     * Notably not called on YouTube.com when navigating page history.
      */
     @SuppressLint("SetJavaScriptEnabled")
     override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {
         Timber.i("$ihs : onPageStarted - $url")
+
+        // Reset the flag to allow onPageFinished to execute for this new page
+        // This is critical for history navigation (back/forward) which may load from cache
+        // and not trigger shouldInterceptRequest for the main frame
+        // See: https://github.com/Slion/Fulguris/issues/772
+        onPageFinishedDone = false
 
         //TODO: Could update targetUrl?
         // When opening bbc.com in a new tab resolved as http://bbc.com - onLoadResource for main frame was still the targetUrl http://bbc.com
@@ -464,7 +468,9 @@ class WebPageClient(
 
         currentUrl = url
 
-        val uri  = Uri.parse(url)
+        updateUrlIfNeeded(url)
+
+        val uri  = url.toUri()
         loadDomainPreferences(uri.host ?: "", false)
         //
         resetLocationPermissionIfNeeded()
@@ -518,7 +524,6 @@ class WebPageClient(
         }
         webPageTab.titleInfo.resetFavicon()
         if (webPageTab.isShown) {
-            updateUrlIfNeeded(url, true)
             webBrowser.showActionBar()
         }
 
@@ -1163,10 +1168,10 @@ class WebPageClient(
         Timber.d("$ihs : doUpdateVisitedHistory: $isReload - $url - ${view.url}")
         super.doUpdateVisitedHistory(view, url, isReload)
 
-        if (webPageTab.lastUrl != url) {
-            webPageTab.lastUrl = url
-            webBrowser.onTabChangedUrl(webPageTab)
-        }
+        // We used that
+        //onPageFinishedDone = false
+
+        updateUrlIfNeeded(url)
     }
 
     /**

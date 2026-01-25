@@ -799,9 +799,6 @@ class TabsManager @Inject constructor(
         aTab.resumeTimers()
         aTab.onResume()
 
-        iWebBrowser.setBackButtonEnabled(aTab.canGoBack())
-        iWebBrowser.setForwardButtonEnabled(aTab.canGoForward())
-        iWebBrowser.updateUrl(aTab.url, false)
         iWebBrowser.setTabView(aTab.webView!!,aWasTabAdded,aPreviousTabClosed, aGoingBack)
         val index = indexOfTab(aTab)
         if (index >= 0) {

@@ -114,7 +114,7 @@ class TabsDrawerView @JvmOverloads constructor(
      * TODO: this is called way too often for my taste and should be optimized somehow.
      */
     private fun displayTabs() {
-        Timber.d("displayTabs");
+        Timber.d("displayTabs")
         tabsAdapter.showTabs(webBrowser.getTabModel().allTabs.map(WebPageTab::asTabViewState))
 
         if (fixScrollBug(iBinding.tabsList)) {
@@ -130,12 +130,5 @@ class TabsDrawerView @JvmOverloads constructor(
         updateTabActionButtons()
     }
 
-    override fun setGoBackEnabled(isEnabled: Boolean) {
-        //actionBack.isEnabled = isEnabled
-    }
-
-    override fun setGoForwardEnabled(isEnabled: Boolean) {
-        //actionForward.isEnabled = isEnabled
-    }
 
 }

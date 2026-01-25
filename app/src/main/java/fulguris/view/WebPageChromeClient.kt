@@ -105,15 +105,20 @@ class WebPageChromeClient(
     }
 
     /**
-     *
+     * From [WebChromeClient.onReceivedTitle]
+     * Not called when going through page history on YouTube between entries with the same title.
      */
     override fun onReceivedTitle(view: WebView?, title: String?) {
-        Timber.d("onReceivedTitle")
+        Timber.i("onReceivedTitle: $title")
+
+        // First update web page property
         if (title?.isNotEmpty() == true) {
             webPageTab.titleInfo.setTitle(title)
         } else {
             webPageTab.titleInfo.setTitle(activity.getString(R.string.untitled))
         }
+
+        // Then notify the browser
         webBrowser.onTabChangedTitle(webPageTab)
         if (view != null && view.url != null) {
             webBrowser.updateHistory(title, view.url as String)

@@ -96,14 +96,6 @@ interface WebBrowser {
     fun changeToolbarBackground(favicon: Bitmap?, color: Int, tabBackground: Drawable?)
 
     /**
-     * Updates the current URL of the page.
-     *
-     * @param url the current URL.
-     * @param isLoading true if the [url] is currently being loaded, false otherwise.
-     */
-    fun updateUrl(url: String?, isLoading: Boolean)
-
-    /**
      * Update the loading progress of the page.
      *
      * @param aProgress the loading progress of the page, an integer between 0 and 100.
@@ -200,16 +192,6 @@ interface WebBrowser {
      * Notify the browser that the user clicked on the bookmark [entry].
      */
     fun bookmarkItemClicked(entry: Bookmark.Entry)
-
-    /**
-     * Notify the UI that the forward button should be [enabled] for interaction.
-     */
-    fun setForwardButtonEnabled(enabled: Boolean)
-
-    /**
-     * Notify the UI that the back button should be [enabled] for interaction.
-     */
-    fun setBackButtonEnabled(enabled: Boolean)
 
     /**
      * Notify the UI that the [aTab] should be displayed.

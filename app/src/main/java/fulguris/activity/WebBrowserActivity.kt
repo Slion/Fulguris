@@ -788,9 +788,6 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
      * Actually show the main menu
      */
     private fun doShowMenuMain() {
-        // Make sure back and forward buttons are in correct state
-        setForwardButtonEnabled(tabsManager.currentTab?.canGoForward()?:false)
-        setBackButtonEnabled(tabsManager.currentTab?.canGoBack()?:false)
         // Switch to main menu mode
         iMenuCustom.switchMode(MenuType.MainMenu)
         // Open our menu
@@ -824,9 +821,6 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
      * Actually show the full menu
      */
     private fun doShowMenuFull() {
-        // Make sure back and forward buttons are in correct state
-        setForwardButtonEnabled(tabsManager.currentTab?.canGoForward()?:false)
-        setBackButtonEnabled(tabsManager.currentTab?.canGoBack()?:false)
         // Switch to all menu mode
         iMenuCustom.switchMode(MenuType.FullMenu)
         // Open our menu
@@ -1508,7 +1502,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
                 setIsLoading(currentView.progress < 100)
 
                 if (!hasFocus) {
-                    updateUrl(currentView.url, false)
+                    updateToolBarText()
                 } else if (hasFocus) {
                     showUrl()
                     // Select all text so that user conveniently start typing or copy current URL
@@ -2583,7 +2577,9 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         }
     }
 
-
+    /**
+     * Tell if the current tab is loading
+     */
     private fun isLoading() : Boolean = tabsManager.currentTab?.let{it.progress < 100} ?: false
 
     /**
@@ -2744,7 +2740,11 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
 
         if (tabsManager.currentTab==aTab) {
             setTaskDescription()
-            updateUrl(aTab.url,isLoading())
+            updateNavigationButtons()
+            updateToolBarText()
+            // Assuming we don't need that for now
+            // TODO: Clean-up properly
+            //bookmarksView?.handleUpdatedUrl(url)
         }
     }
 
@@ -2752,6 +2752,8 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
      *
      */
     override fun onTabChanged(aTab: WebPageTab) {
+        Timber.d("onTabChanged")
+
         if (tabsManager.currentTab==aTab) {
             setTaskDescription()
         }
@@ -2795,6 +2797,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     override fun onTabChangedTitle(aTab: WebPageTab) {
         if (tabsManager.currentTab==aTab) {
             setTaskDescription()
+            updateToolBarText()
         }
 
         // TODO: optimize for title only update
@@ -2839,10 +2842,15 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     }
 
     /**
-     *
+     * Update state of page navigation buttons both in toolbar and in menu.
+     * TODO: This is called too often for my liking.
+     * Funny enough it's called through [WebBrowserActivity.setToolbarColor].
+     * Just calling it from [WebBrowserActivity.onTabChangedUrl] will fail to update correctly.
+     * Notably when going through YouTube.com page history.
      */
-    private fun setupToolBarButtons() {
-        // Manage back and forward buttons state
+    private fun updateNavigationButtons() {
+        //Timber.d("updateNavigationButtons")
+        // Manage back and forward buttons state on our main toolbar
         tabsManager.currentTab?.apply {
             iBindingToolbarContent.buttonActionBack.apply {
                 isEnabled = canGoBack()
@@ -2855,6 +2863,10 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
                 // Since we set buttons color ourselves we need this to show it is disabled
                 alpha = if (isEnabled) 1.0f else 0.25f
             }
+
+            // Also update states of menu toolbar
+            iMenuCustom.iBinding.menuShortcutBack.isEnabled = canGoBack()
+            iMenuCustom.iBinding.menuShortcutForward.isEnabled = canGoForward()
         }
     }
 
@@ -2975,6 +2987,8 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
             // Set find in page UI visibility
             iBinding.findInPageInclude.root.isVisible = it.searchActive
         }
+
+        updateToolBarText()
     }
 
     /**
@@ -3408,9 +3422,9 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     private fun currentTabGoBack() {
         tabsManager.currentTab?.let {
             it.goBack()
-            // If no animation running yet�
+            // If no animation running yet
             if (iTabAnimator==null &&
-                    //�and user wants animation
+                    // and user wants animation
                     userPreferences.onTabBackShowAnimation) {
                 animateTabFlipRight(iTabViewContainerFront)
             }
@@ -3424,9 +3438,9 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     private fun currentTabGoForward() {
         tabsManager.currentTab?.let {
             it.goForward()
-            // If no animation running yet�
+            // If no animation running yet
             if (iTabAnimator==null
-                    //�and user wants animation
+                    // and user wants animation
                     && userPreferences.onTabBackShowAnimation) {
                 animateTabFlipLeft(iTabViewContainerFront)
             }
@@ -3702,7 +3716,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         iBindingToolbarContent.buttonActionForward.setColorFilter(currentToolBarTextColor)
 
         // Needed to delay that as otherwise disabled alpha state didn't get applied
-        mainHandler.postDelayed({ setupToolBarButtons() }, 500)
+        mainHandler.postDelayed({ updateNavigationButtons() }, 500)
 
         // Change reload icon color
         //setMenuItemColor(R.id.action_reload, currentToolBarTextColor)
@@ -3824,14 +3838,14 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
 
         if (!isColorMode()) {
             // Put back the theme color then
-            applyToolbarColor(defaultColor);
+            applyToolbarColor(defaultColor)
         }
         else if (color != Color.TRANSPARENT
                 // Do not apply meta color if forced dark mode
                 && tabsManager.currentTab?.darkMode != true)
         {
             // We have a meta theme color specified in our page HTML, use it
-            applyToolbarColor(color);
+            applyToolbarColor(color)
         }
         else if (favicon==null
                 // Use default color if forced dark mode
@@ -3872,27 +3886,19 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     override fun getUiColor(): Int = currentUiColor
 
     /**
-     * Called when current URL needs to be updated
+     * Update toolbar text according to current states and user preferences
      */
-    override fun updateUrl(url: String?, isLoading: Boolean) {
-
-        Timber.d("updateUrl: $url")
-
-        if (url == null) {
-            return
-        }
-
-        val currentTab = tabsManager.currentTab
-        bookmarksView?.handleUpdatedUrl(url)
-
-        val currentTitle = currentTab?.title
+    fun updateToolBarText() {
 
         if (!searchView.hasFocus()) {
-            Timber.d("updateUrl: $currentTitle - $url")
+
+            val text = getHeaderInfoText(userPreferences.toolbarLabel)
+            Timber.i("updateToolBarText: $text")
+
             // Set our text but don't perform filtering
             // We don't need filtering as this is just a text update from our engine rather than user performing text input and expecting search results
             // Filter deactivation was introduce to prevent https://github.com/Slion/Fulguris/issues/557
-            searchView.setText(getHeaderInfoText(userPreferences.toolbarLabel),false)
+            searchView.setText(text,false)
         }
     }
 
@@ -3964,6 +3970,11 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
 
         setIsLoading(aProgress < 100)
         iBinding.toolbarInclude.progressView.progress = aProgress
+
+        // Since toolbar text depends on loading status we need to update it it changed
+        if (!isLoading()) {
+            updateToolBarText()
+        }
     }
 
     /**
@@ -4216,16 +4227,6 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     protected fun closePanels() {
         closePanelTabs()
         closePanelBookmarks()
-    }
-
-    override fun setForwardButtonEnabled(enabled: Boolean) {
-        iMenuCustom.iBinding.menuShortcutForward.isEnabled = enabled
-        tabsView?.setGoForwardEnabled(enabled)
-    }
-
-    override fun setBackButtonEnabled(enabled: Boolean) {
-        iMenuCustom.iBinding.menuShortcutBack.isEnabled = enabled
-        tabsView?.setGoBackEnabled(enabled)
     }
 
     /**

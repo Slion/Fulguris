@@ -29,13 +29,4 @@ interface TabsView {
      */
     fun tabsInitialized()
 
-    /**
-     * Enables and disables the go back button.
-     */
-    fun setGoBackEnabled(isEnabled: Boolean)
-
-    /**
-     * Enables and disables the go forward button.
-     */
-    fun setGoForwardEnabled(isEnabled: Boolean)
 }

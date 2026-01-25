@@ -15,7 +15,7 @@ import fulguris.extensions.ihs
 import timber.log.Timber
 
 /**
- * Specialising  WebView could be useful at some point.
+ * Specialising WebView could be useful at some point.
  * We may want to get rid of [WebPageTab].
  *
  * We used that to try debug our issue with ALT + TAB scrolling back to the top of the page.

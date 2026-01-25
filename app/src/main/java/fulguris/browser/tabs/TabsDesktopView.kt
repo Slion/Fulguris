@@ -110,8 +110,5 @@ class TabsDesktopView @JvmOverloads constructor(
         updateTabActionButtons()
     }
 
-    override fun setGoBackEnabled(isEnabled: Boolean) = Unit
-
-    override fun setGoForwardEnabled(isEnabled: Boolean) = Unit
 
 }
