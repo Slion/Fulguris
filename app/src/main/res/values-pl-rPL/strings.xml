@@ -648,7 +648,7 @@
     <string name="accent_brown">Brązowy</string>
     <string name="search_homepage">Szukaj</string>
     <string name="search_incognito">Prywatne szukanie</string>
-    <string name="incognito">Prywatne</string>
+    <string name="incognito">Ukryty</string>
     <string name="unknown">Nieznany</string>
     <string name="settings_export_failure">Niestety, ale nie udało się wyeksportować ustawień!</string>
     <string name="settings_exported">Ustawienia wyeksportowane:</string>

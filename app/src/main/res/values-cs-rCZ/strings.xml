@@ -648,7 +648,7 @@
     <string name="accent_brown">Hnědá</string>
     <string name="search_homepage">Hledat</string>
     <string name="search_incognito">Soukromé vyhledávání</string>
-    <string name="incognito">Soukromé</string>
+    <string name="incognito">Skrytý</string>
     <string name="unknown">Neznámý</string>
     <string name="settings_export_failure">Omlouváme se, nastavení nelze exportovat!</string>
     <string name="settings_exported">Nastavení exportováno:</string>

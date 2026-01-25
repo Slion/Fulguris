@@ -642,7 +642,7 @@
     <string name="accent_brown">Καφέ</string>
     <string name="search_homepage">Αναζήτηση</string>
     <string name="search_incognito">Ιδιωτική αναζήτηση</string>
-    <string name="incognito">Ιδιωτικό</string>
+    <string name="incognito">Μυστικό</string>
     <string name="unknown">Άγνωστο</string>
     <string name="settings_export_failure">Λυπούμαστε, οι ρυθμίσεις δεν μπόρεσαν να εξαχθούν!</string>
     <string name="settings_exported">Οι ρυθμίσεις εξήχθησαν:</string>

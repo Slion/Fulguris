@@ -642,7 +642,7 @@
     <string name="accent_brown">Brun</string>
     <string name="search_homepage">Søg</string>
     <string name="search_incognito">Privat søgning</string>
-    <string name="incognito">Privat</string>
+    <string name="incognito">Stealth</string>
     <string name="unknown">Ukendt</string>
     <string name="settings_export_failure">Beklager, indstillinger kunne ikke eksporteres!</string>
     <string name="settings_exported">Indstillinger eksporteret:</string>

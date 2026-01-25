@@ -736,7 +736,7 @@
     <string name="search_homepage">Search</string>
 
     <string name="search_incognito">Private search</string>
-    <string name="incognito">Private</string>
+    <string name="incognito">Stealth</string>
     <string name="unknown">Unknown</string>
 
     <string name="settings_export_failure">Sorry, settings could not be exported!</string>

@@ -648,7 +648,7 @@
     <string name="accent_brown">Brown</string>
     <string name="search_homepage">Search</string>
     <string name="search_incognito">Private search</string>
-    <string name="incognito">פרטי</string>
+    <string name="incognito">התגנבות</string>
     <string name="unknown">Unknown</string>
     <string name="settings_export_failure">Sorry, settings could not be exported!</string>
     <string name="settings_exported">Settings exported:</string>

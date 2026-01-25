@@ -648,7 +648,7 @@
     <string name="accent_brown">Коричневий</string>
     <string name="search_homepage">Пошук</string>
     <string name="search_incognito">Приватний пошук</string>
-    <string name="incognito">Приватний</string>
+    <string name="incognito">Прихований</string>
     <string name="unknown">Невідомо</string>
     <string name="settings_export_failure">На жаль, налаштування не вдалося експортувати!</string>
     <string name="settings_exported">Налаштування експортовано:</string>

@@ -640,7 +640,7 @@
     <string name="accent_brown">Nâu</string>
     <string name="search_homepage">Tìm</string>
     <string name="search_incognito">Tìm kiếm riêng tư</string>
-    <string name="incognito">Riêng tư</string>
+    <string name="incognito">Tàng hình</string>
     <string name="unknown">Không xác định</string>
     <string name="settings_export_failure">Rất tiếc, không thể xuất thiết đặt!</string>
     <string name="settings_exported">Đã xuất thiết đặt:</string>

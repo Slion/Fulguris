@@ -640,7 +640,7 @@
     <string name="accent_brown">茶</string>
     <string name="search_homepage">検索</string>
     <string name="search_incognito">プライベート検索</string>
-    <string name="incognito">プライベート</string>
+    <string name="incognito">ステルス</string>
     <string name="unknown">不明</string>
     <string name="settings_export_failure">設定のエクスポートに失敗しました!</string>
     <string name="settings_exported">設定をエクスポートしました:</string>

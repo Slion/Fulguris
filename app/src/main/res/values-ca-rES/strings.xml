@@ -642,7 +642,7 @@
     <string name="accent_brown">Marró</string>
     <string name="search_homepage">Cerca</string>
     <string name="search_incognito">Cerca privada</string>
-    <string name="incognito">Privat</string>
+    <string name="incognito">Sigil</string>
     <string name="unknown">Desconegut</string>
     <string name="settings_export_failure">Ho sentim, no s\'ha pogut exportar la configuració!</string>
     <string name="settings_exported">Configuració exportada:</string>

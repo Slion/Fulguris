@@ -642,7 +642,7 @@
     <string name="accent_brown">Bruin</string>
     <string name="search_homepage">Zoeken</string>
     <string name="search_incognito">Privé zoeken</string>
-    <string name="incognito">Privé</string>
+    <string name="incognito">Stealth</string>
     <string name="unknown">Onbekend</string>
     <string name="settings_export_failure">Sorry, instellingen konden niet worden geëxporteerd!</string>
     <string name="settings_exported">Instellingen geëxporteerd:</string>

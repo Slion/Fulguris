@@ -654,7 +654,7 @@
     <string name="accent_brown">بني</string>
     <string name="search_homepage">البحث</string>
     <string name="search_incognito">بحث خاص</string>
-    <string name="incognito">خاص</string>
+    <string name="incognito">التخفي</string>
     <string name="unknown">غير معروف</string>
     <string name="settings_export_failure">عذراً، تعذر تصدير الإعدادات!</string>
     <string name="settings_exported">تم تصدير الإعدادات:</string>

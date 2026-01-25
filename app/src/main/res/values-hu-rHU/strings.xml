@@ -642,7 +642,7 @@
     <string name="accent_brown">Barna</string>
     <string name="search_homepage">Keresés</string>
     <string name="search_incognito">Privát keresés</string>
-    <string name="incognito">Privát</string>
+    <string name="incognito">Rejtett</string>
     <string name="unknown">Ismeretlen</string>
     <string name="settings_export_failure">A beállításokat nem sikerült menteni!</string>
     <string name="settings_exported">Beállítások exportálva:</string>

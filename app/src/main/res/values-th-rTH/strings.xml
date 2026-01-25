@@ -640,7 +640,7 @@
     <string name="accent_brown">สีน้ำตาล</string>
     <string name="search_homepage">ค้นหา</string>
     <string name="search_incognito">ค้นหาแบบไม่ระบุตัวตน</string>
-    <string name="incognito">ส่วนตัว</string>
+    <string name="incognito">ลับ</string>
     <string name="unknown">ไม่ทราบ</string>
     <string name="settings_export_failure">การส่งออกการตั้งค่าล้มเหลว!</string>
     <string name="settings_exported">ส่งออกการตั้งค่า:</string>

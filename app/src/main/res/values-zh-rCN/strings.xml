@@ -640,7 +640,7 @@
     <string name="accent_brown">棕</string>
     <string name="search_homepage">搜索</string>
     <string name="search_incognito">隐私搜索</string>
-    <string name="incognito">隐私</string>
+    <string name="incognito">隐身</string>
     <string name="unknown">未知</string>
     <string name="settings_export_failure">抱歉，无法导出设置！</string>
     <string name="settings_exported">导出的书签：</string>

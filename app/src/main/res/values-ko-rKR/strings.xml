@@ -640,7 +640,7 @@
     <string name="accent_brown">갈색</string>
     <string name="search_homepage">검색</string>
     <string name="search_incognito">비공개 검색</string>
-    <string name="incognito">비공개</string>
+    <string name="incognito">스텔스</string>
     <string name="unknown">알 수 없음</string>
     <string name="settings_export_failure">죄송합니다. 설정을 내보낼 수 없습니다!</string>
     <string name="settings_exported">설정 내보냄:</string>

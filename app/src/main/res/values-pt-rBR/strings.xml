@@ -642,7 +642,7 @@
     <string name="accent_brown">Marrom</string>
     <string name="search_homepage">Busca</string>
     <string name="search_incognito">Busca anônima</string>
-    <string name="incognito">Privado</string>
+    <string name="incognito">Furtivo</string>
     <string name="unknown">Desconhecido</string>
     <string name="settings_export_failure">Desculpe, não foi possível exportar as configurações!</string>
     <string name="settings_exported">Configurações exportadas:</string>

@@ -645,7 +645,7 @@
     <string name="accent_brown">Смеђа</string>
     <string name="search_homepage">Претрага</string>
     <string name="search_incognito">Приватна претрага</string>
-    <string name="incognito">Privatno</string>
+    <string name="incognito">Prikriveno</string>
     <string name="unknown">Непознато</string>
     <string name="settings_export_failure">Жао нам је, није могуће извести подешавања!</string>
     <string name="settings_exported">Извезена подешавања:</string>

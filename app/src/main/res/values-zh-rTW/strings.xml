@@ -640,7 +640,7 @@
     <string name="accent_brown">棕色</string>
     <string name="search_homepage">搜尋</string>
     <string name="search_incognito">私密搜尋</string>
-    <string name="incognito">私密</string>
+    <string name="incognito">隱身</string>
     <string name="unknown">未知</string>
     <string name="settings_export_failure">抱歉，無法匯出設定！</string>
     <string name="settings_exported">設定已匯出：</string>

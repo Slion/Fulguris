@@ -642,7 +642,7 @@
     <string name="accent_brown">Ruskea</string>
     <string name="search_homepage">Haku</string>
     <string name="search_incognito">Yksityinen haku</string>
-    <string name="incognito">Yksityinen</string>
+    <string name="incognito">Varkain</string>
     <string name="unknown">Tuntematon</string>
     <string name="settings_export_failure">Asetusten vienti epäonnistui!</string>
     <string name="settings_exported">Asetukset viety:</string>

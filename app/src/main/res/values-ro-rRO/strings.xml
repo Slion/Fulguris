@@ -645,7 +645,7 @@
     <string name="accent_brown">Maro</string>
     <string name="search_homepage">Căutare</string>
     <string name="search_incognito">Căutare privată</string>
-    <string name="incognito">Privat</string>
+    <string name="incognito">Stealth</string>
     <string name="unknown">Necunoscut</string>
     <string name="settings_export_failure">Ne pare rău, setările nu au putut fi exportate!</string>
     <string name="settings_exported">Setări exportate:</string>

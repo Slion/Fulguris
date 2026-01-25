@@ -642,7 +642,7 @@
     <string name="accent_brown">Castanho</string>
     <string name="search_homepage">Pesquisa</string>
     <string name="search_incognito">Pesquisa privada</string>
-    <string name="incognito">Privado</string>
+    <string name="incognito">Furtivo</string>
     <string name="unknown">Desconhecido</string>
     <string name="settings_export_failure">Não foi possível exportar as definições!</string>
     <string name="settings_exported">Definições exportadas:</string>
