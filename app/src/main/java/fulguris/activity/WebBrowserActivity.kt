@@ -1118,6 +1118,19 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
             true
         }
 
+        // Long press on menu navigation buttons to access page history
+        iMenuCustom.iBinding.menuShortcutBack.setOnLongClickListener {
+            showPageHistory()
+            // Had to delay dismiss for the vibrator feedback to work
+            mainHandler.post { iMenuCustom.dismiss() }
+            true
+        }
+        iMenuCustom.iBinding.menuShortcutForward.setOnLongClickListener {
+            showPageHistory()
+            // Had to delay dismiss for the vibrator feedback to work
+            mainHandler.post { iMenuCustom.dismiss() }
+            true
+        }
         //setFullscreenIfNeeded(resources.configuration) // As that's needed before bottom sheets creation
         createTabsView()
         //createTabsDialog()
