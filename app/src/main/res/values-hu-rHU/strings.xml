@@ -758,4 +758,6 @@
     <string name="extension_author_not_specified">A bővítmény szerzője nincs megadva</string>
     <string name="action_install">Telepítés</string>
     <string name="pref_title_source_code">Forráskód</string>
+    <string name="dialog_title_delete_all_bookmarks">Törli az összes könyvjelzőt?</string>
+    <string name="dialog_message_delete_all_bookmarks">Az összes könyvjelzője véglegesen törlődik</string>
 </resources>

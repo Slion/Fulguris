@@ -764,4 +764,6 @@
     <string name="extension_author_not_specified">מחבר התוסף לא צוין</string>
     <string name="action_install">התקן</string>
     <string name="pref_title_source_code">קוד מקור</string>
+    <string name="dialog_title_delete_all_bookmarks">למחוק את כל הסימניות?</string>
+    <string name="dialog_message_delete_all_bookmarks">כל הסימניות שלך יימחקו לצמיתות</string>
 </resources>

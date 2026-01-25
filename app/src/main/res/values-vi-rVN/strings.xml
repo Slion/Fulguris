@@ -756,4 +756,6 @@
     <string name="extension_author_not_specified">Tác giả tiện ích mở rộng không được chỉ định</string>
     <string name="action_install">Cài đặt</string>
     <string name="pref_title_source_code">Mã nguồn</string>
+    <string name="dialog_title_delete_all_bookmarks">Xóa tất cả dấu trang?</string>
+    <string name="dialog_message_delete_all_bookmarks">Tất cả dấu trang của bạn sẽ bị xóa vĩnh viễn</string>
 </resources>

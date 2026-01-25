@@ -756,4 +756,6 @@
     <string name="extension_author_not_specified">Pembuat ekstensi tidak ditentukan</string>
     <string name="action_install">Instal</string>
     <string name="pref_title_source_code">Kode sumber</string>
+    <string name="dialog_title_delete_all_bookmarks">Hapus semua bookmark?</string>
+    <string name="dialog_message_delete_all_bookmarks">Semua bookmark Anda akan dihapus secara permanen</string>
 </resources>

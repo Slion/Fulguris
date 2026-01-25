@@ -758,4 +758,6 @@
     <string name="extension_author_not_specified">Autore dell\'estensione non specificato</string>
     <string name="action_install">Installa</string>
     <string name="pref_title_source_code">Codice sorgente</string>
+    <string name="dialog_title_delete_all_bookmarks">Eliminare tutti i segnalibri?</string>
+    <string name="dialog_message_delete_all_bookmarks">Tutti i tuoi segnalibri verranno eliminati definitivamente</string>
 </resources>

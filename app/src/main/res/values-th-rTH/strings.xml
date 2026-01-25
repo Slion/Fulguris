@@ -756,4 +756,6 @@
     <string name="extension_author_not_specified">ไม่ได้ระบุผู้เขียนส่วนขยาย</string>
     <string name="action_install">ติดตั้ง</string>
     <string name="pref_title_source_code">โค้ดต้นฉบับ</string>
+    <string name="dialog_title_delete_all_bookmarks">ลบบุ๊กมาร์กทั้งหมดหรือไม่?</string>
+    <string name="dialog_message_delete_all_bookmarks">บุ๊กมาร์กทั้งหมดของคุณจะถูกลบอย่างถาวร</string>
 </resources>

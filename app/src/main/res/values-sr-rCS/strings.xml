@@ -761,4 +761,6 @@
     <string name="extension_author_not_specified">Аутор екстензије није наведен</string>
     <string name="action_install">Инсталирај</string>
     <string name="pref_title_source_code">Изворни код</string>
+    <string name="dialog_title_delete_all_bookmarks">Избрисати све обележиваче?</string>
+    <string name="dialog_message_delete_all_bookmarks">Сви ваши обележивачи биће трајно избрисани</string>
 </resources>

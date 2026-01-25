@@ -756,4 +756,6 @@
     <string name="extension_author_not_specified">未指定扩展作者</string>
     <string name="action_install">安装</string>
     <string name="pref_title_source_code">源代码</string>
+    <string name="dialog_title_delete_all_bookmarks">删除所有书签？</string>
+    <string name="dialog_message_delete_all_bookmarks">您的所有书签将被永久删除</string>
 </resources>

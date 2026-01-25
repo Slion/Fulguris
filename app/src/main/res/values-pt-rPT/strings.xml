@@ -758,4 +758,6 @@
     <string name="extension_author_not_specified">Autor da extensão não especificado</string>
     <string name="action_install">Instalar</string>
     <string name="pref_title_source_code">Código-fonte</string>
+    <string name="dialog_title_delete_all_bookmarks">Eliminar todos os marcadores?</string>
+    <string name="dialog_message_delete_all_bookmarks">Todos os seus marcadores serão eliminados permanentemente</string>
 </resources>

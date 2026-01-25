@@ -758,4 +758,6 @@
     <string name="extension_author_not_specified">Auteur de l\'extension non spécifié</string>
     <string name="action_install">Installer</string>
     <string name="pref_title_source_code">Code source</string>
+    <string name="dialog_title_delete_all_bookmarks">Supprimer tous les favoris ?</string>
+    <string name="dialog_message_delete_all_bookmarks">Tous vos favoris seront définitivement supprimés</string>
 </resources>

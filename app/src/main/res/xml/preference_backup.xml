@@ -22,7 +22,7 @@
             android:key="delete_bookmarks"
             android:title="@string/generic_reset"
             android:summary="@string/action_delete_all_bookmarks"
-            app:icon="@drawable/ic_delete_forever"
+            app:icon="@drawable/ic_delete_forever_outline"
             app:singleLineTitle="false" />
 
     </x.PreferenceCategory>

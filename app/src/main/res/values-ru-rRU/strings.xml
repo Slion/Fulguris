@@ -764,4 +764,6 @@
     <string name="extension_author_not_specified">Автор расширения не указан</string>
     <string name="action_install">Установить</string>
     <string name="pref_title_source_code">Исходный код</string>
+    <string name="dialog_title_delete_all_bookmarks">Удалить все закладки?</string>
+    <string name="dialog_message_delete_all_bookmarks">Все ваши закладки будут удалены навсегда</string>
 </resources>

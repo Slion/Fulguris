@@ -758,4 +758,6 @@
     <string name="extension_author_not_specified">Extensieauteur niet opgegeven</string>
     <string name="action_install">Installeren</string>
     <string name="pref_title_source_code">Broncode</string>
+    <string name="dialog_title_delete_all_bookmarks">Alle bladwijzers verwijderen?</string>
+    <string name="dialog_message_delete_all_bookmarks">Alle bladwijzers worden permanent verwijderd</string>
 </resources>

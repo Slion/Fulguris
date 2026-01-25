@@ -756,4 +756,6 @@
     <string name="extension_author_not_specified">확장 프로그램 제작자가 지정되지 않음</string>
     <string name="action_install">설치</string>
     <string name="pref_title_source_code">소스 코드</string>
+    <string name="dialog_title_delete_all_bookmarks">모든 북마크를 삭제하시겠습니까?</string>
+    <string name="dialog_message_delete_all_bookmarks">모든 북마크가 영구적으로 삭제됩니다</string>
 </resources>

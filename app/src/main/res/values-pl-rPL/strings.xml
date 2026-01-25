@@ -764,4 +764,6 @@
     <string name="extension_author_not_specified">Nie określono autora rozszerzenia</string>
     <string name="action_install">Zainstaluj</string>
     <string name="pref_title_source_code">Kod źródłowy</string>
+    <string name="dialog_title_delete_all_bookmarks">Usunąć wszystkie zakładki?</string>
+    <string name="dialog_message_delete_all_bookmarks">Wszystkie zakładki zostaną trwale usunięte</string>
 </resources>

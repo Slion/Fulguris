@@ -758,4 +758,5 @@
     <string name="extension_author_not_specified">Ο συγγραφέας της επέκτασης δεν καθορίστηκε</string>
     <string name="action_install">Εγκατάσταση</string>
     <string name="pref_title_source_code">Πηγαίος κώδικας</string>
+    <string name="dialog_title_delete_all_bookmarks">Διαγραφή όλων των σελιδοδεικτών;</string>
 </resources>

@@ -758,4 +758,6 @@
     <string name="extension_author_not_specified">Laajennuksen tekijää ei määritetty</string>
     <string name="action_install">Asenna</string>
     <string name="pref_title_source_code">Lähdekoodi</string>
+    <string name="dialog_title_delete_all_bookmarks">Poistetaanko kaikki kirjanmerkit?</string>
+    <string name="dialog_message_delete_all_bookmarks">Kaikki kirjanmerkkisi poistetaan pysyvästi</string>
 </resources>

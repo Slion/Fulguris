@@ -758,4 +758,6 @@
     <string name="extension_author_not_specified">ᱮᱠᱥᱴᱮᱱᱥᱚᱱ ᱚᱱᱚᱞᱤᱭᱟᱹ ᱵᱟᱹᱱᱩᱜ</string>
     <string name="action_install">ᱞᱟᱜᱟᱣ</string>
     <string name="pref_title_source_code">ᱥᱨᱚᱛ ᱠᱳᱰ</string>
+    <string name="dialog_title_delete_all_bookmarks">ᱡᱷᱚᱛᱚ ᱵᱩᱠᱢᱟᱨᱠ ᱢᱮᱴᱟᱣ ᱥᱮ?</string>
+    <string name="dialog_message_delete_all_bookmarks">ᱟᱢᱟᱜ ᱡᱷᱚᱛᱚ ᱵᱩᱠᱢᱟᱨᱠ ᱪᱤᱨᱛᱟ.ᱞᱟ. ᱢᱮᱴᱟᱣᱜ-ᱟ</string>
 </resources>

@@ -761,4 +761,6 @@
     <string name="extension_author_not_specified">Autor ekstenzije nije naveden</string>
     <string name="action_install">Instaliraj</string>
     <string name="pref_title_source_code">Izvorni kôd</string>
+    <string name="dialog_title_delete_all_bookmarks">Izbrisati sve oznake?</string>
+    <string name="dialog_message_delete_all_bookmarks">Sve vaše oznake bit će trajno izbrisane</string>
 </resources>

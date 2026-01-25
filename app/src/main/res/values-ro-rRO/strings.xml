@@ -761,4 +761,6 @@
     <string name="extension_author_not_specified">Autorul extensiei nu este specificat</string>
     <string name="action_install">Instalează</string>
     <string name="pref_title_source_code">Cod sursă</string>
+    <string name="dialog_title_delete_all_bookmarks">Ștergeți toate marcajele?</string>
+    <string name="dialog_message_delete_all_bookmarks">Toate marcajele vor fi șterse definitiv</string>
 </resources>

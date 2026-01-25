@@ -764,4 +764,5 @@
     <string name="extension_author_not_specified">Autor rozšíření není zadán</string>
     <string name="action_install">Nainstalovat</string>
     <string name="pref_title_source_code">Zdrojový kód</string>
+    <string name="dialog_title_delete_all_bookmarks">Smazat všechny záložky?</string>
 </resources>

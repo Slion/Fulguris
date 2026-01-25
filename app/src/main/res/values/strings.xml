@@ -486,7 +486,8 @@
     <string name="message_added_to_homescreen">Shortcut added to home screen</string>
     <string name="shortcut_message_failed_to_add">Sorry, your launcher does not support shortcuts.</string>
     <string name="action_delete_all_bookmarks">Delete all bookmarks</string>
-
+    <string name="dialog_title_delete_all_bookmarks">Delete all bookmarks?</string>
+    <string name="dialog_message_delete_all_bookmarks">All your bookmarks will be permanently deleted</string>
 
     <!-- debug strings -->
     <string name="pref_title_developer">Developer</string>

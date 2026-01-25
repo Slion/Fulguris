@@ -758,4 +758,5 @@
     <string name="extension_author_not_specified">Udvidelsens forfatter ikke angivet</string>
     <string name="action_install">Installer</string>
     <string name="pref_title_source_code">Kildekode</string>
+    <string name="dialog_title_delete_all_bookmarks">Slet alle bogmærker?</string>
 </resources>

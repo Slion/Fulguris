@@ -199,22 +199,24 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
         return true
     }
 
+    /**
+     *
+     */
     private fun showDeleteBookmarksDialog() {
-        BrowserDialog.showPositiveNegativeDialog(
-            aContext = activity as Activity,
-            title = R.string.action_delete,
-            message = R.string.action_delete_all_bookmarks,
-            positiveButton = DialogItem(title = R.string.yes) {
+        MaterialAlertDialogBuilder(requireContext())
+            .setIcon(R.drawable.ic_delete_forever_outline)
+            .setTitle(R.string.dialog_title_delete_all_bookmarks)
+            .setMessage(R.string.dialog_message_delete_all_bookmarks)
+            .setPositiveButton(R.string.action_delete) { _, _ ->
                 bookmarkRepository
                     .deleteAllBookmarks()
                     .subscribeOn(databaseScheduler)
                     .subscribe()
                 // Tell browser activity bookmarks have changed
                 (activity as SettingsActivity).userPreferences.bookmarksChanged = true
-            },
-            negativeButton = DialogItem(title = R.string.no) {},
-            onCancel = {}
-        )
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
     }
 
     private fun loadFileList(path: File?): Array<File> {

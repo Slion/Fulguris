@@ -764,4 +764,6 @@
     <string name="extension_author_not_specified">Plėtinio autorius nenurodytas</string>
     <string name="action_install">Įdiegti</string>
     <string name="pref_title_source_code">Šaltinio kodas</string>
+    <string name="dialog_title_delete_all_bookmarks">Ištrinti visas žymes?</string>
+    <string name="dialog_message_delete_all_bookmarks">Visos jūsų žymės bus negrįžtamai ištrintos</string>
 </resources>

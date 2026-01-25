@@ -756,4 +756,6 @@
     <string name="extension_author_not_specified">拡張機能の作成者が指定されていません</string>
     <string name="action_install">インストール</string>
     <string name="pref_title_source_code">ソースコード</string>
+    <string name="dialog_title_delete_all_bookmarks">すべてのブックマークを削除しますか？</string>
+    <string name="dialog_message_delete_all_bookmarks">すべてのブックマークが完全に削除されます</string>
 </resources>

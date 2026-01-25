@@ -758,4 +758,6 @@
     <string name="extension_author_not_specified">Uzantı yazarı belirtilmedi</string>
     <string name="action_install">Kur</string>
     <string name="pref_title_source_code">Kaynak kodu</string>
+    <string name="dialog_title_delete_all_bookmarks">Tüm yer imleri silinsin mi?</string>
+    <string name="dialog_message_delete_all_bookmarks">Tüm yer imleriniz kalıcı olarak silinecek</string>
 </resources>

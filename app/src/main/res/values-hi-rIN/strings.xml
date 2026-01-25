@@ -713,4 +713,6 @@
     <string name="extension_author_not_specified">एक्सटेंशन का लेखक निर्दिष्ट नहीं है</string>
     <string name="action_install">इंस्टॉल करें</string>
     <string name="pref_title_source_code">स्रोत कोड</string>
+    <string name="dialog_title_delete_all_bookmarks">सभी बुकमार्क हटाएं?</string>
+    <string name="dialog_message_delete_all_bookmarks">आपके सभी बुकमार्क स्थायी रूप से हटा दिए जाएंगे</string>
 </resources>

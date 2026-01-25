@@ -758,4 +758,5 @@
     <string name="extension_author_not_specified">Autor de l\'extensió no especificat</string>
     <string name="action_install">Instal·la</string>
     <string name="pref_title_source_code">Codi font</string>
+    <string name="dialog_title_delete_all_bookmarks">Eliminar tots els marcadors?</string>
 </resources>

@@ -758,4 +758,6 @@
     <string name="extension_author_not_specified">Utvidelsesforfatter ikke angitt</string>
     <string name="action_install">Installer</string>
     <string name="pref_title_source_code">Kildekode</string>
+    <string name="dialog_title_delete_all_bookmarks">Slett alle bokmerker?</string>
+    <string name="dialog_message_delete_all_bookmarks">Alle bokmerkene dine vil bli permanent slettet</string>
 </resources>
