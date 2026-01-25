@@ -1,0 +1,4 @@
+📂 Finestra di dialogo di conferma migliorata per eliminare tutti i segnalibri
+🗺️ Pressione prolungata sui pulsanti di navigazione del menu per accedere alla cronologia della pagina
+🧭 Correzione del titolo della pagina e dei problemi dei pulsanti di navigazione del menu durante la navigazione nella cronologia
+🪲 Vari miglioramenti e correzioni di bug

@@ -1,0 +1,4 @@
+📂 Vylepšený potvrzovací dialog pro smazání všech záložek
+🗺️ Dlouhé stisknutí navigačních tlačítek menu pro přístup k historii stránky
+🧭 Oprava problémů s názvem stránky a navigačními tlačítky menu při procházení historie
+🪲 Různá vylepšení a opravy chyb

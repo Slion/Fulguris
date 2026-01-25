@@ -1,0 +1,4 @@
+📂 Verbesserter Bestätigungsdialog zum Löschen aller Lesezeichen
+🗺️ Langes Drücken auf Menü-Navigationsschaltflächen für Zugriff auf Seitenverlauf
+🧭 Behebung von Seitentitel- und Menü-Navigationsschaltflächen-Problemen bei der Verlaufsnavigation
+🪲 Verschiedene Verbesserungen und Fehlerbehebungen

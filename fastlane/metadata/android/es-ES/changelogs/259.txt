@@ -1,0 +1,4 @@
+📂 Cuadro de diálogo de confirmación mejorado para eliminar todos los marcadores
+🗺️ Presiona largo en los botones de navegación del menú para acceder al historial de página
+🧭 Corregir problemas de título de página y botones de navegación del menú al navegar por el historial
+🪲 Varias mejoras y correcciones de errores

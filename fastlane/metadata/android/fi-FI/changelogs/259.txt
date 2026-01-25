@@ -1,0 +1,4 @@
+📂 Parannettu vahvistusikkuna kaikkien kirjanmerkkien poistamiseen
+🗺️ Pitkä painallus valikon navigointipainikkeisiin päästäksesi sivuhistoriaan
+🧭 Korjattu sivun otsikon ja valikon navigointipainikkeiden ongelmat historiassa navigoitaessa
+🪲 Erilaisia parannuksia ja bugikorjauksia

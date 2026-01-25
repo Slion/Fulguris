@@ -1,0 +1,4 @@
+📂 Tüm yer imlerini silme onay diyalogu iyileştirildi
+🗺️ Sayfa geçmişine erişmek için menü gezinme düğmelerine uzun basın
+🧭 Geçmişte gezinirken sayfa başlığı ve menü gezinme düğmeleri sorunlarını düzeltme
+🪲 Çeşitli iyileştirmeler ve hata düzeltmeleri

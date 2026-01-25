@@ -1,0 +1,4 @@
+📂 Fereastră de confirmare îmbunătățită pentru ștergerea tuturor marcajelor
+🗺️ Apăsare lungă pe butoanele de navigare din meniu pentru a accesa istoricul paginii
+🧭 Remediere probleme cu titlul paginii și butoanele de navigare din meniu la navigarea în istoric
+🪲 Diverse îmbunătățiri și corecții de erori

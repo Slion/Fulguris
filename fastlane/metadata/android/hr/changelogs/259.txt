@@ -1,0 +1,4 @@
+📂 Poboljšan dijaloški okvir potvrde za brisanje svih oznaka
+🗺️ Dugim pritiskom na gumbe navigacije izbornika pristupite povijesti stranice
+🧭 Ispravljeni problemi s naslovom stranice i gumbima navigacije izbornika pri navigaciji povijesti
+🪲 Razna poboljšanja i ispravci grešaka
