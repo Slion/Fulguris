@@ -1,121 +1,109 @@
-# Fulguris
-[![Discord Invite](https://img.shields.io/discord/828559272752840713?color=%23525dea&label=Chat&logo=discord&logoColor=white)](https://discord.com/invite/7M4Ms5dMZE)
+# ⚡ Fulguris Web Browser
 
-Fulguris is a [web browser] for Android. Through a customizable interface it offers a premium experience on a range of Android, Chromebooks and Windows 11 devices.
+<p align="center">
+  <b>Powerful, Privacy-Oriented, and Highly Customizable</b>
+  <br>
+  <i>A premium browsing experience for Android, Chromebooks, and Windows 11.</i>
+</p>
 
-# Builds
-[![Google Play](https://github.com/Slion/Fulguris/actions/workflows/build-main-fulguris-google-play.yml/badge.svg)](https://github.com/Slion/Fulguris/actions/workflows/build-main-fulguris-google-play.yml)
-[![Download](https://github.com/Slion/Fulguris/actions/workflows/build-main-fulguris-download.yml/badge.svg)](https://github.com/Slion/Fulguris/actions/workflows/build-main-fulguris-download.yml)
-[![F-Droid](https://github.com/Slion/Fulguris/actions/workflows/build-main-fulguris-fdroid.yml/badge.svg)](https://github.com/Slion/Fulguris/actions/workflows/build-main-fulguris-fdroid.yml)
-[![Rebrand](https://github.com/Slion/Fulguris/actions/workflows/build-main-styx.yml/badge.svg)](https://github.com/Slion/Fulguris/actions/workflows/build-main-styx.yml)
+<p align="center">
+  <a href="https://discord.com/invite/7M4Ms5dMZE"><img src="https://img.shields.io/discord/828559272752840713?color=%23525dea&label=Chat&logo=discord&logoColor=white" alt="Discord"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/Slion/Fulguris?color=blue&style=flat-square" alt="License"></a>
+  <a href="https://github.com/sponsors/Slion"><img src="https://img.shields.io/github/sponsors/Slion?color=ea4aaa&style=flat-square" alt="Sponsors"></a>
+  <a href="https://f-droid.org/packages/net.slions.fulguris.full.fdroid/"><img src="https://img.shields.io/f-droid/v/net.slions.fulguris.full.fdroid?color=orange&label=F-Droid&style=flat-square" alt="F-Droid"></a>
+</p>
 
-# Downloads
+---
 
-[<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png"
-     alt="Get it on Google Play"
-     height="80">](https://play.google.com/store/apps/details?id=net.slions.fulguris.full.playstore)
-[<img src="https://slions.net/badge-get-it-on.png"
-     alt="Get it on Slions"
-     height="80">](http://fulguris.slions.net)
-[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
-     alt="Get it on F-Droid"
-     height="80">](https://f-droid.org/packages/net.slions.fulguris.full.fdroid/)
+## 📖 Table of Contents
+- [🚀 Quick Downloads](#-quick-downloads)
+- [📦 Release Channels](#-release-channels-comparison)
+- [✨ Key Features](#-key-features)
+- [🔒 Permissions Explained](#-permissions-explained)
+- [🤝 How to Contribute](#-how-to-contribute)
+- [🛠️ Build Status](#️-build-status)
 
-## Release channels
-We have three official public release channels linked above and described below. While we strive to produce stable releases, the Fulguris project is a very small operation. Ultimately the community is responsible for doing the testing and validation of releases. All three variants of the app can be installed at the same time on your device. They are effectively three distinct similar apps. You can differenciate them in your launcher from their slightly modified icon design. Which versions you use and how you manage your updates will define your experience with Fulguris. Update often to help catch bugs before they reach too many users. Wait a couple of weeks and check for known issues before updating if you want to have fewer surprises and a more stable experience.
+---
 
-### 🟢 Google Play
+## 🚀 Quick Downloads
 
-Considered the most stable release channel. Optional [Firebase] statistics and crash report.
-If you have more than twenty tabs in a session, it will gently remind you to go for the low cost yearly subscription, every time you open a new tab.
+| **Google Play** | **Slions Direct (APK)** | **F-Droid** |
+| :---: | :---: | :---: |
+| [![Google Play](https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png)](https://play.google.com/store/apps/details?id=net.slions.fulguris.full.playstore) | [![Slions](https://slions.net/badge-get-it-on.png)](http://fulguris.slions.net) | [![F-Droid](https://fdroid.gitlab.io/artwork/badge/get-it-on.png)](https://f-droid.org/packages/net.slions.fulguris.full.fdroid/) |
+| *Most Stable* | *Fastest Updates* | *Maximum Privacy* |
 
-### 🟡 Download
+---
 
-Provides release candidates and stable releases. Optional [Firebase] statistics and crash report.
-Unlimited tabs without subscription. From here you get the most up to date versions.
+## 📦 Release Channels Comparison
 
-### 🟠 F-Droid
+To help you choose the right version, here’s a quick breakdown of our official channels:
 
-Provides release candidates and stable releases. No [Firebase] statistics and crash report. Unlimited tabs without subscription.
-We have no direct control of the release schedule on this channel. If a broken release reaches it, it may take a couple of weeks to fix it.
+| Feature | 🟢 Google Play | 🟡 Slions (Direct) | 🟠 F-Droid |
+| :--- | :---: | :---: | :---: |
+| **Stability** | Most Stable | Release Candidate | Stable / RC |
+| **Tab Limit** | 20 (Subscription) | **Unlimited** | **Unlimited** |
+| **Privacy** | Firebase Analytics | Firebase Analytics | **No Telemetry** |
+| **Update Speed** | Normal | **Fastest** | Depends on F-Droid |
 
+---
 
-# Contribute
+## ✨ Key Features
 
-## Test
+### 🎨 UI & Customization
+* **Vertical Tab Panel:** Efficient navigation for modern smartphone screens.
+* **Horizontal Tab Bar:** Desktop-like experience for tablets and foldable devices.
+* **Dynamic Themes:** Deep support for app-wide and web-page color schemes.
+* **Smart Dark Mode:** Force high-quality dark mode on any website.
+* **Desktop Ready:** Full support for **Samsung DeX** and **EMUI Desktop**.
 
-The best way to contribute is to use Fulguris. There is no beta test program yet. However releases tend to be published more often on [Slions.net] and it is easy to switch back to an [earlier version] if needed.
-Please report issues on [GitHub](https://github.com/slion/fulguris/issues).
+### 🛡️ Privacy & Security
+* **Integrated Ad-blocker:** Browse without annoying ads and trackers.
+* **Incognito Mode:** Browse privately without leaving a trace.
+* **Proxy Support:** Compatible with **Orbot (Tor)** and **I2P** (Beta).
+* **Lightweight:** No bloatware, just a fast and focused browsing experience.
 
-## Rate
+### ⚙️ Management & Productivity
+* **Sessions:** Group your tabs by activity (Work, Shopping, Entertainment).
+* **Multiple Search Engines:** Google, Bing, DuckDuckGo, StartPage, and more.
+* **Keyboard Support:** Full set of shortcuts for power users.
+* **Hardware Acceleration:** Smooth rendering for a lag-free experience.
 
-Give us ⭐⭐⭐⭐⭐ on [Google Play].
-If you don't think it is worth five stars yet then just [open an issue](https://github.com/slion/fulguris/issues) instead.
+---
 
-## Engage
+## 🔒 Permissions Explained
 
-You can engage with us on [our forums], on [GitHub](https://github.com/slion/fulguris/issues), on [Discord] or any other social media you can track us down to.
+We value your privacy. Permissions are only requested when strictly necessary.
 
-## Translate
+| Permission | Usage |
+| :--- | :--- |
+| `INTERNET` | Necessary to access the web. |
+| `ACCESS_NETWORK_STATE` | Stops loading resources when connection is lost. |
+| `WRITE_EXTERNAL_STORAGE` | Required for downloading files and exporting bookmarks. |
+| `CAMERA / AUDIO` | **Only used** for WebRTC (Video Calls) if granted by the user. |
+| `ACCESS_FINE_LOCATION` | **Only used** if a website (e.g., Maps) requests your location. |
 
-Please go ahead and translate on [CrowdIn](https://crowdin.com/project/fulguris-web-browser).
+---
 
-## Code
-We welcome code contributions, bug fix, new features and improvements.
-We demand high quality code, design and architecture to deliver a premium web browsing experience.
-We do our best to avoid treating users as beta testers. Therefore, if you want to deliver a new feature, expect it to take several iterations before it reaches maturity and is ready for production.
+## 🤝 How to Contribute
 
-## Finance
+Fulguris is a small community project. Your help makes a big difference!
 
-Please consider [sponsoring us on GitHub](https://github.com/sponsors/Slion) or through in-apps on [Google Play].
-The ability of this project to finance itself is what will ultimately determine its long term success.
+1.  **🐞 Report Issues:** Found a bug? [Open an issue here](https://github.com/slion/fulguris/issues).
+2.  **🌍 Translate:** Help us localize on [CrowdIn](https://crowdin.com/project/fulguris-web-browser).
+3.  **💻 Code:** We welcome high-quality PRs. Check our [Wiki](https://github.com/Slion/Fulguris/wiki) for dev tools.
+4.  **💖 Finance:** Support our longevity via [GitHub Sponsors](https://github.com/sponsors/Slion).
+5.  **⭐ Rate Us:** Give us 5 stars on Google Play!
 
-# Features
-📑Sessions
-🌍 Address bar
-🚦Vertical tab panel
-🚥Horizontal tab bar
-⚙Tabs management
-🏞Screen orientations
-🔖Bookmarks
-⌚History
-🌗Force dark mode
-🎨Themes for app and pages
-⛔Ad blocker
-🔒Privacy – Incognito mode
-🔎Search & suggestions – Google, Bing, Yahoo, StartPage, DuckDuckGo…
-♿Accessibility
-⌨Keyboard support
-⚡Hardware accelerated
-🖥️ Desktop rendering
-🖥️ Android desktop support – Samsung Dex, EMUI Desktop
-🌐 Languages
-🔧Settings – lots
-📶 Orbot Proxy support and I2P support – Beta
+---
 
-# Permissions
+## 🛠️ Build Status
 
-## Automatically granted
-* `INTERNET`: necessary to access the internet.
-* `ACCESS_NETWORK_STATE`: used by the browser to stop loading resources when network access is lost.
-* `INSTALL_SHORTCUT`: used to add shortcuts with the "Add to home screen" option.
+| Channel | Status |
+| :--- | :--- |
+| **Main Build** | ![Build Status](https://github.com/Slion/Fulguris/actions/workflows/build-main-fulguris-google-play.yml/badge.svg) |
+| **F-Droid Build** | ![F-Droid Status](https://github.com/Slion/Fulguris/actions/workflows/build-main-fulguris-fdroid.yml/badge.svg) |
 
-## Requested only when needed
-* `WRITE_EXTERNAL_STORAGE`: needed to download files and export bookmarks.
-* `READ_EXTERNAL_STORAGE`: needed to download files and import bookmarks.
-* `ACCESS_FINE_LOCATION`: needed for sites like Google Maps, requires "Location access" option to be enabled (default disabled).
-* `RECORD_AUDIO`: needed to support WebRTC, requires "WebRTC Support" option to be enabled (default disabled).
-* `CAMERA`: needed to support WebRTC, requires "WebRTC Support" option to be enabled (default disabled).
-* `MODIFY_AUDIO_SETTINGS`: needed to support WebRTC, requires "WebRTC Support" option to be enabled (default disabled).
-
-# Documentation
-
-Visit our [wiki](https://github.com/Slion/Fulguris/wiki) for information about the development and testing tools we use.
-
-[slions.net]: https://slions.net/resources/fulguris.10/
-[earlier version]: https://slions.net/resources/fulguris.10/history
-[Google Play]: https://play.google.com/store/apps/details?id=net.slions.fulguris.full.playstore
-[our forums]: https://slions.net
-[Discord]: https://discord.com/invite/7M4Ms5dMZE
-[Web browser]: https://en.wikipedia.org/wiki/Web_browser
-[Firebase]: https://firebase.google.com
+---
+<p align="center">
+  Made with ❤️ for the Open Source Community.
+</p>
