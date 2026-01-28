@@ -1,4 +1,4 @@
-# ⚡ Fulguris Web Browser
+<h1 align="center">⚡ Fulguris Web Browser</h1>
 
 <p align="center">
   <b>Powerful, Privacy-Oriented, and Highly Customizable</b>
@@ -8,7 +8,6 @@
 
 <p align="center">
   <a href="https://discord.com/invite/7M4Ms5dMZE"><img src="https://img.shields.io/discord/828559272752840713?color=%23525dea&label=Chat&logo=discord&logoColor=white" alt="Discord"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/github/license/Slion/Fulguris?color=blue&style=flat-square" alt="License"></a>
   <a href="https://github.com/sponsors/Slion"><img src="https://img.shields.io/github/sponsors/Slion?color=ea4aaa&style=flat-square" alt="Sponsors"></a>
   <a href="https://f-droid.org/packages/net.slions.fulguris.full.fdroid/"><img src="https://img.shields.io/f-droid/v/net.slions.fulguris.full.fdroid?color=orange&label=F-Droid&style=flat-square" alt="F-Droid"></a>
 </p>
