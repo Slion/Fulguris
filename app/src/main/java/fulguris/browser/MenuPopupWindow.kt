@@ -276,6 +276,7 @@ class MenuPopupWindow : PopupWindow {
         iBinding.menuItemCookies.isVisible = false
         iBinding.menuItemForceReload.isVisible = false
         iBinding.menuItemLaunchApp.isVisible = false
+        iBinding.menuItemPip.isVisible = false
         iBinding.menuItemFullMenu.isVisible = false
     }
 
@@ -317,6 +318,7 @@ class MenuPopupWindow : PopupWindow {
             MenuItemId.Cookies -> iBinding.menuItemCookies.isVisible = true
             MenuItemId.ForceReload -> iBinding.menuItemForceReload.isVisible = true
             MenuItemId.LaunchApp -> iBinding.menuItemLaunchApp.isVisible = true
+            MenuItemId.Pip -> iBinding.menuItemPip.isVisible = true
             MenuItemId.FullMenu -> iBinding.menuItemFullMenu.isVisible = true
         }
     }
@@ -367,6 +369,7 @@ class MenuPopupWindow : PopupWindow {
                     iBinding.menuItemTranslate.isVisible = false
                     iBinding.menuItemForceReload.isVisible = false
                     iBinding.menuItemLaunchApp.isVisible = false
+                    iBinding.menuItemPip.isVisible = false
                 }
 
                 // Hide ad block if not enabled in settings
@@ -377,6 +380,11 @@ class MenuPopupWindow : PopupWindow {
                 // Handle LaunchApp visibility and icon only if it's in the current menu
                 if (iBinding.menuItemLaunchApp.isVisible) {
                     updateLaunchAppMenuItem(tab.url)
+                }
+
+                // Hide PiP on devices that don't support it (requires API 26)
+                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.O) {
+                    iBinding.menuItemPip.isVisible = false
                 }
             }
         }
@@ -606,4 +614,3 @@ class MenuPopupWindow : PopupWindow {
         }
     }
 }
-

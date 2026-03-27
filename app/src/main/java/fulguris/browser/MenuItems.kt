@@ -302,6 +302,16 @@ object MenuItems {
             defaultMenu = MenuType.HiddenMenu,
             preferredMenu = MenuType.TabMenu
         ),
+        MenuItemId.Pip to MenuItem(
+            id = MenuItemId.Pip,
+            labelId = R.string.action_pip,
+            iconId = R.drawable.ic_picture_in_picture,
+            viewId = R.id.menuItemPip,
+            canBeInMainMenu = true,
+            canBeInTabMenu = true,
+            defaultMenu = MenuType.HiddenMenu,
+            preferredMenu = MenuType.TabMenu
+        ),
         MenuItemId.LaunchApp to MenuItem(
             id = MenuItemId.LaunchApp,
             labelId = R.string.action_launch_app,
@@ -346,4 +356,3 @@ object MenuItems {
         all.values.filter { it.canBeInTabMenu }
 
 }
-

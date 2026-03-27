@@ -389,6 +389,15 @@
                         />
 
                     <TextView
+                        android:id="@+id/menuItemPip"
+                        style="@style/BrowserTextMenuItem"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        app:drawableStartCompat="@drawable/ic_picture_in_picture"
+                        android:text="@string/action_pip"
+                        />
+
+                    <TextView
                         android:id="@+id/menuItemFullMenu"
                         style="@style/BrowserTextMenuItem"
                         android:visibility="gone"
@@ -402,4 +411,3 @@
         </LinearLayout>
     </LinearLayout>
 </layout>
-

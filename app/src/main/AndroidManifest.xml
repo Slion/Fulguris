@@ -111,6 +111,7 @@
             android:clearTaskOnLaunch="false"
             android:colorMode="wideColorGamut"
             android:resizeableActivity="true"
+            android:supportsPictureInPicture="true"
             android:configChanges="locale|orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden|keyboard"
             android:launchMode="singleTask"
             android:theme="@style/Theme.App.DayNight"

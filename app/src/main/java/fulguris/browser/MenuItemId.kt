@@ -57,7 +57,7 @@ enum class MenuItemId {
     Cookies,
     AddToHome,
     ForceReload,
+    Pip,
     LaunchApp,
     FullMenu,
 }
-

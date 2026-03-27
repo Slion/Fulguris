@@ -716,6 +716,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
             onMenuItemClicked(iBinding.menuItemTranslate) { dismiss(); executeAction(R.id.action_translate) }
             onMenuItemClicked(iBinding.menuItemForceReload) { dismiss(); executeAction(R.id.action_force_reload) }
             onMenuItemClicked(iBinding.menuItemLaunchApp) { dismiss(); executeAction(R.id.action_launch_app) }
+            onMenuItemClicked(iBinding.menuItemPip) { dismiss(); executeAction(R.id.action_pip) }
             onMenuItemClicked(iBinding.menuItemFullMenu) {
                 dismiss()
                 showMenuFull()
@@ -2277,6 +2278,12 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     private var skipNextTabClosedSnackbar : Boolean = false
 
     /**
+     * Set before entering PiP so that onPause can skip pausing the current tab.
+     * Needed because onPause fires before isInPictureInPictureMode becomes true.
+     */
+    private var isPipRequested = false
+
+    /**
      * Used to close empty tab after opening download link or launching app.
      */
     fun closeCurrentTabIfEmpty() {
@@ -2385,6 +2392,10 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
                         }
                     }
                 }
+                return true
+            }
+            R.id.action_pip -> {
+                enterPipMode()
                 return true
             }
             R.id.action_incognito -> {
@@ -3400,6 +3411,34 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
             }
 
     /**
+     * Enter Picture-in-Picture mode for the current tab.
+     * Video playback continues even when switching tabs or backgrounding the app.
+     * Requires API 26 (Android 8.0) or higher.
+     */
+    private fun enterPipMode() {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            try {
+                isPipRequested = true
+                val builder = android.app.PictureInPictureParams.Builder()
+                    .setAspectRatio(android.util.Rational(16, 9))
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+                    builder.setAutoEnterEnabled(true)
+                    builder.setSeamlessResizeEnabled(true)
+                }
+                val params = builder.build()
+                setPictureInPictureParams(params)
+                enterPictureInPictureMode(params)
+            } catch (e: IllegalStateException) {
+                isPipRequested = false
+                Timber.e(e, "Failed to enter PiP mode")
+                snackbar(R.string.message_pip_not_supported)
+            }
+        }
+    }
+
+
+
+    /**
      *
      */
     override fun closeBrowser() {
@@ -3413,7 +3452,14 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         super.onPause()
         Timber.d("onPause")
 
-        tabsManager.pauseAll()
+        // In PiP mode, only pause non-current tabs so video keeps playing
+        val inPip = isPipRequested ||
+            (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N && isInPictureInPictureMode)
+        if (inPip) {
+            tabsManager.pauseAllExceptCurrent()
+        } else {
+            tabsManager.pauseAll()
+        }
 
         // Dismiss any popup menu
         iMenuCustom.dismiss()
@@ -3421,6 +3467,43 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
 
         if (isIncognito() && isFinishing) {
             overridePendingTransition(R.anim.fade_in_scale, R.anim.slide_down_out)
+        }
+    }
+
+    override fun onPictureInPictureModeChanged(isInPictureInPictureMode: Boolean, newConfig: android.content.res.Configuration) {
+        super.onPictureInPictureModeChanged(isInPictureInPictureMode, newConfig)
+        isPipRequested = false
+        if (isInPictureInPictureMode) {
+            // Hide toolbars and other UI for PiP
+            iBinding.toolbarInclude.toolbar.isVisible = false
+            //iBinding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+        } else {
+            // Restore UI when exiting PiP
+            iBinding.toolbarInclude.toolbar.isVisible = true
+            //iBinding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+            // Clear auto-enter so pressing Home doesn't re-enter PiP
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+                try {
+                    setPictureInPictureParams(
+                        android.app.PictureInPictureParams.Builder()
+                            .setAutoEnterEnabled(false)
+                            .build()
+                    )
+                } catch (e: Exception) {
+                    Timber.d(e, "Failed to clear PiP auto-enter params")
+                }
+            }
+        }
+    }
+
+    /**
+     * Called when the user presses Home or switches to another app.
+     * Auto-enter PiP if a fullscreen video is currently playing (Netflix-style behavior).
+     */
+    override fun onUserLeaveHint() {
+        super.onUserLeaveHint()
+        if (customView != null && android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            enterPipMode()
         }
     }
 
@@ -3508,6 +3591,11 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
 
     override fun onStop() {
         super.onStop()
+        // When in PiP and user dismisses the PiP window, onStop is called.
+        // Make sure we pause the current tab then.
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N && !isInPictureInPictureMode) {
+            tabsManager.currentTab?.onPause()
+        }
     }
 
     /**
@@ -4371,6 +4459,23 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         decorView.requestLayout()
         setFullscreen(enabled = true, immersive = true)
         currentTab?.setVisibility(INVISIBLE)
+
+        // On Android 12+, enable auto-enter PiP so backgrounding during fullscreen video
+        // seamlessly enters PiP mode (Netflix-style)
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+            try {
+                isPipRequested = true
+                setPictureInPictureParams(
+                    android.app.PictureInPictureParams.Builder()
+                        .setAspectRatio(android.util.Rational(16, 9))
+                        .setAutoEnterEnabled(true)
+                        .setSeamlessResizeEnabled(true)
+                        .build()
+                )
+            } catch (e: Exception) {
+                Timber.d(e, "Failed to set PiP auto-enter params")
+            }
+        }
     }
 
     override fun onHideCustomView() {
@@ -4420,6 +4525,20 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
 
         customViewCallback = null
         requestedOrientation = originalOrientation
+
+        // Disable auto-enter PiP when fullscreen video is dismissed
+        isPipRequested = false
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+            try {
+                setPictureInPictureParams(
+                    android.app.PictureInPictureParams.Builder()
+                        .setAutoEnterEnabled(false)
+                        .build()
+                )
+            } catch (e: Exception) {
+                Timber.d(e, "Failed to clear PiP auto-enter params")
+            }
+        }
     }
 
     private inner class VideoCompletionListener : MediaPlayer.OnCompletionListener, MediaPlayer.OnErrorListener {
@@ -5081,4 +5200,3 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     }
 
 }
-

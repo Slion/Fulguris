@@ -424,6 +424,14 @@ class TabsManager @Inject constructor(
     }
 
     /**
+     * Pause all tabs except the current one.
+     * Used in PiP mode to keep the current tab's video playing.
+     */
+    fun pauseAllExceptCurrent() {
+        tabList.filter { it != currentTab }.forEach(WebPageTab::onPause)
+    }
+
+    /**
      * Return the tab at the given position in tabs list, or null if position is not in tabs list
      * range.
      *
