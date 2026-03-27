@@ -73,6 +73,21 @@ class PullRefreshLayout(context: Context, attrs: AttributeSet?) : SwipeRefreshLa
     }
 
     /**
+     * Prevents pull-to-refresh from triggering when the user is scrolling inside
+     * a nested CSS scrollable element (e.g. overflow:auto sidebar) within the web page.
+     * When JavaScript detects the touch is on such an element, [WebViewEx.isTouchOnNestedScrollable]
+     * is set to true, and we report the child as scrollable to block interception.
+     */
+    override fun canChildScrollUp(): Boolean {
+        callEnsureTarget()
+        val target = getTarget()
+        if (target is WebViewEx && target.isTouchOnNestedScrollable) {
+            return true
+        }
+        return super.canChildScrollUp()
+    }
+
+    /**
      *
      */
     override fun onTouchEvent(ev: MotionEvent?): Boolean {

@@ -1,5 +1,6 @@
 package fulguris.view
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.print.PrintAttributes
 import android.print.PrintDocumentAdapter
@@ -9,6 +10,7 @@ import android.util.AttributeSet
 import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.View
+import android.webkit.JavascriptInterface
 import android.webkit.WebView
 import androidx.annotation.ColorInt
 import fulguris.extensions.ihs
@@ -23,14 +25,44 @@ import timber.log.Timber
  */
 class WebViewEx : WebView {
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
+        initNestedScrollDetection()
     }
 
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-
+        initNestedScrollDetection()
     }
 
     //
     lateinit var proxy: WebPageTab
+
+    /**
+     * True when the current touch gesture started on a nested CSS scrollable element
+     * (e.g. a div with overflow:auto/scroll whose content overflows).
+     * Set from JavaScript via [NestedScrollBridge] on `touchstart`, reset on `touchend`/`touchcancel`.
+     * Read from [PullRefreshLayout.canChildScrollUp] on the UI thread.
+     */
+    @Volatile
+    var isTouchOnNestedScrollable: Boolean = false
+
+    @SuppressLint("JavascriptInterface")
+    private fun initNestedScrollDetection() {
+        addJavascriptInterface(NestedScrollBridge(), NESTED_SCROLL_JS_INTERFACE)
+    }
+
+    /**
+     * JavaScript interface that lets injected page scripts tell us whether the current
+     * touch gesture started on a nested scrollable CSS element.
+     */
+    inner class NestedScrollBridge {
+        @JavascriptInterface
+        fun setNestedScrollable(value: Boolean) {
+            isTouchOnNestedScrollable = value
+        }
+    }
+
+    companion object {
+        const val NESTED_SCROLL_JS_INTERFACE = "_fulgurisScroll"
+    }
 
     override fun dispatchKeyEvent(event: KeyEvent?): Boolean {
 

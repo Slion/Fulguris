@@ -483,7 +483,8 @@ mezzanine {
             "src/main/html/private.html",
             "src/main/js/InvertPage.js",
             "src/main/js/SetMetaViewport.js",
-            "src/main/js/ThemeColor.js"
+            "src/main/js/ThemeColor.js",
+            "src/main/js/NestedScrollDetect.js"
     )
 }
 

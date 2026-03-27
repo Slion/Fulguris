@@ -9,6 +9,7 @@ import fulguris.html.ListPageReader
 import fulguris.html.bookmark.BookmarkPageReader
 import fulguris.html.homepage.HomePageReader
 import fulguris.js.InvertPage
+import fulguris.js.NestedScrollDetect
 import fulguris.js.TextReflow
 import fulguris.js.ThemeColor
 import fulguris.js.SetMetaViewport
@@ -195,6 +196,9 @@ class AppModule {
 
     @Provides
     fun providesSetMetaViewport(): SetMetaViewport = mezzanine<SetMetaViewport>()
+
+    @Provides
+    fun providesNestedScrollDetect(): NestedScrollDetect = mezzanine<NestedScrollDetect>()
 }
 
 @Qualifier

@@ -25,6 +25,7 @@ import kotlinx.coroutines.launch as coroutineLaunch
 import kotlinx.coroutines.withContext
 import fulguris.html.homepage.HomePageFactory
 import fulguris.js.InvertPage
+import fulguris.js.NestedScrollDetect
 import fulguris.js.SetMetaViewport
 import fulguris.js.TextReflow
 import fulguris.permissions.PermissionsManager
@@ -95,6 +96,7 @@ class WebPageClient(
     val textReflowJs: TextReflow = hiltEntryPoint.textReflowJs
     val invertPageJs: InvertPage = hiltEntryPoint.invertPageJs
     val setMetaViewport: SetMetaViewport = hiltEntryPoint.setMetaViewport
+    val nestedScrollDetectJs: NestedScrollDetect = hiltEntryPoint.nestedScrollDetectJs
     val homePageFactory: HomePageFactory = hiltEntryPoint.homePageFactory
     val abpBlockerManager: AbpBlockerManager = hiltEntryPoint.abpBlockerManager
     val noopBlocker: NoOpAdBlocker = hiltEntryPoint.noopBlocker
@@ -337,7 +339,7 @@ class WebPageClient(
         iResourceCount++
         Timber.d("$ihs : onLoadResource - ${if (isForMainFrame) "Main frame" else "Resource"} - $iResourceCount - $url")
     }
-    
+
     /**
      *
      */
@@ -347,7 +349,7 @@ class WebPageClient(
             webBrowser.onTabChangedUrl(webPageTab)
         }
     }
-    
+
 
     /**
      * Overrides [WebViewClient.onPageFinished].
@@ -378,6 +380,14 @@ class WebPageClient(
 
         // Flag that we have called onPageFinished
         onPageFinishedDone = true
+
+        // Inject nested scroll detection so that pull-to-refresh is suppressed when
+        // the user scrolls inside a CSS overflow:auto/scroll element (e.g. a sidebar).
+        // Only inject if pull-to-refresh is enabled and JavaScript is enabled.
+        // Though if the config changes we could be missing it...
+        if (view.context.configPrefs.pullToRefresh && view.settings.javaScriptEnabled) {
+            view.evaluateJavascript(nestedScrollDetectJs.provideJs(), null)
+        }
 
         // Execute and clear callback registered with loadUrl
         webPageTab.onLoadCompleteCallback?.invoke()
@@ -1228,4 +1238,3 @@ class WebPageClient(
         super.onSafeBrowsingHit(view, request, threatType, callback)
     }
 }
-
