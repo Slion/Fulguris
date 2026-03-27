@@ -252,7 +252,7 @@ class BookmarkDatabase @Inject constructor(
     }
 
     override fun getFoldersSorted(): Single<List<Bookmark.Folder>> = Single.fromCallable {
-        return@fromCallable database
+        val rawFolders = database
             .query(
                 true,
                 TABLE_BOOKMARK,
@@ -266,7 +266,18 @@ class BookmarkDatabase @Inject constructor(
             )
             .useMap { it.getString(it.getColumnIndex(KEY_FOLDER)) }
             .filter { !it.isNullOrEmpty() }
-            .map(String::asFolder)
+
+        // Include intermediate parent folders that may not have direct bookmarks.
+        // E.g., from "Wikipedia/Pages" we also generate "Wikipedia".
+        val allFolders = mutableSetOf<String>()
+        rawFolders.forEach { folder ->
+            val parts = folder.split('/')
+            for (i in 1..parts.size) {
+                allFolders.add(parts.subList(0, i).joinToString("/"))
+            }
+        }
+
+        return@fromCallable allFolders.sorted().map(String::asFolder)
     }
 
     override fun getSubFoldersSorted(parentFolder: String?): Single<List<Bookmark.Folder>> = Single.fromCallable {
@@ -291,19 +302,13 @@ class BookmarkDatabase @Inject constructor(
         val parentPath = if (parentFolder.isNullOrEmpty()) "" else parentFolder
 
         allFolders.forEach { folderPath ->
-            val isChild = if (parentPath.isEmpty()) {
-                // Root level: folders that don't contain '/'
-                !folderPath.contains('/')
+            if (parentPath.isEmpty()) {
+                // Root level: extract first path segment as immediate child
+                immediateSubfolders.add(folderPath.substringBefore('/'))
             } else if (folderPath.startsWith("$parentPath/")) {
-                // Child of parent: starts with parent path and has no further '/' after parent
+                // Child of parent: extract immediate child path
                 val remainder = folderPath.substring(parentPath.length + 1)
-                !remainder.contains('/')
-            } else {
-                false
-            }
-
-            if (isChild) {
-                immediateSubfolders.add(folderPath)
+                immediateSubfolders.add("$parentPath/${remainder.substringBefore('/')}")
             }
         }
 
