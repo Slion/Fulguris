@@ -10,6 +10,8 @@ import fulguris.html.bookmark.BookmarkPageReader
 import fulguris.html.homepage.HomePageReader
 import fulguris.js.InvertPage
 import fulguris.js.NestedScrollDetect
+import fulguris.js.BlobDownload
+import fulguris.js.BlobHook
 import fulguris.js.TextReflow
 import fulguris.js.ThemeColor
 import fulguris.js.SetMetaViewport
@@ -199,6 +201,12 @@ class AppModule {
 
     @Provides
     fun providesNestedScrollDetect(): NestedScrollDetect = mezzanine<NestedScrollDetect>()
+
+    @Provides
+    fun providesBlobDownload(): BlobDownload = mezzanine<BlobDownload>()
+
+    @Provides
+    fun providesBlobHook(): BlobHook = mezzanine<BlobHook>()
 }
 
 @Qualifier

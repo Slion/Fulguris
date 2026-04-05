@@ -1,0 +1,6 @@
+{
+    "chat.tools.terminal.autoApprove": {
+        ".\\gradlew.bat": true,
+        "adb": true
+    }
+}

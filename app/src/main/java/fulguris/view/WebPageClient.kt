@@ -97,6 +97,7 @@ class WebPageClient(
     val invertPageJs: InvertPage = hiltEntryPoint.invertPageJs
     val setMetaViewport: SetMetaViewport = hiltEntryPoint.setMetaViewport
     val nestedScrollDetectJs: NestedScrollDetect = hiltEntryPoint.nestedScrollDetectJs
+    val blobHookJs: fulguris.js.BlobHook = hiltEntryPoint.blobHookJs
     val homePageFactory: HomePageFactory = hiltEntryPoint.homePageFactory
     val abpBlockerManager: AbpBlockerManager = hiltEntryPoint.abpBlockerManager
     val noopBlocker: NoOpAdBlocker = hiltEntryPoint.noopBlocker
@@ -387,6 +388,12 @@ class WebPageClient(
         // Though if the config changes we could be missing it...
         if (view.context.configPrefs.pullToRefresh && view.settings.javaScriptEnabled) {
             view.evaluateJavascript(nestedScrollDetectJs.provideJs(), null)
+        }
+
+        // Hook URL.createObjectURL so we can download blob: URLs even after the
+        // page revokes them (e.g. GitHub file downloads).
+        if (view.settings.javaScriptEnabled) {
+            view.evaluateJavascript(blobHookJs.provideJs(), null)
         }
 
         // Execute and clear callback registered with loadUrl

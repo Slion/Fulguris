@@ -419,7 +419,7 @@ class WebPageTab(
         webBrowser = activity as WebBrowser
         titleInfo = WebPageHeader(activity)
         maxFling = ViewConfiguration.get(activity).scaledMaximumFlingVelocity.toFloat()
-	
+
         // Mark our URL
         iTargetUrl = Uri.parse(tabInitializer.url())
 
@@ -545,7 +545,7 @@ class WebPageTab(
      */
     private fun createDownloadListener() {
         // We want to receive download complete notifications
-        iDownloadListener = LightningDownloadListener(activity)
+        iDownloadListener = LightningDownloadListener(activity) { webView }
         webView?.setDownloadListener(iDownloadListener.also {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 // We need to export it otherwise we don't get download ready notifications
@@ -916,7 +916,7 @@ class WebPageTab(
         //onLoadCompleteCallback?.invoke()
         //onLoadCompleteCallback = null
     }
-    
+
     /**
      * Layer type notably determines if we use hardware acceleration and WebGL
      */

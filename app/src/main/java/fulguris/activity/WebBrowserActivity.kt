@@ -4079,6 +4079,15 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     }
 
     /**
+     * Called from [WebViewEx.BlobDownloadBridge.onProgress] when BlobHook.js reports
+     * progress on a large Response.blob() download (e.g. GitHub file downloads).
+     * Reuses the existing page-load progress bar to give visual feedback.
+     */
+    fun onBlobDownloadProgress(percent: Int) {
+        iBinding.toolbarInclude.progressView.progress = percent
+    }
+
+    /**
      *
      */
     protected fun addItemToHistory(title: String?, url: String) {
