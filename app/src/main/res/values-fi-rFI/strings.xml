@@ -3,6 +3,7 @@
     <string name="action_reload">Päivitä</string>
     <string name="action_force_reload">Pakota lataamaan uudelleen</string>
     <string name="action_launch_app">Käynnistä</string>
+    <string name="action_pip">Kuva kuvassa</string>
     <string name="action_menu">Lisää</string>
     <string name="action_new_tab">Uusi välilehti</string>
     <string name="action_duplicate_tab">Kopioi välilehti</string>
@@ -112,6 +113,10 @@
     <string name="dialog_title_delete_all_downloads">Tyhjennä kaikki lataukset?</string>
     <string name="dialog_message_delete_all_downloads">Kaikki latauskohteet poistetaan ja tiedostot tyhjennetään pysyvästi</string>
     <string name="pref_summary_no_downloads">Latausluettelosi on tyhjä</string>
+    <string name="pref_summary_loading_downloads">Ladataan %1$d / %2$d</string>
+    <string name="pref_summary_updating_downloads">Päivitetään %1$d / %2$d</string>
+    <string name="pref_summary_downloads_count">Sinulla on %d lataus</string>
+    <string name="pref_summary_downloads_count_plural">Sinulla on %d latausta</string>
     <string name="cancel_download">Peruuta lataus</string>
     <string name="open_download">Avaa</string>
     <string name="share_file">Jaa tiedosto</string>
@@ -189,6 +194,7 @@
     <string name="message_link_copied">Linkki kopioitu leikepöydälle</string>
     <string name="message_blocked_local">Paikallisten tiedostojen lataaminen on estetty</string>
     <string name="message_no_app_available">Ei sovellusta saatavilla tämän linkin avaamiseen</string>
+    <string name="message_pip_not_supported">Kuva kuvassa ei ole tuettu</string>
     <string name="licenses">Avoimen lähdekoodin lisenssit</string>
     <string name="suggestion">Hae</string>
     <string name="checking_for_updates">Tarkistetaan päivityksiä</string>
@@ -457,6 +463,8 @@
     <string name="message_added_to_homescreen">Pikakuvake lisätty kotinäytölle</string>
     <string name="shortcut_message_failed_to_add">Käynnistinohjelmasi ei tue pikakuvakkeita.</string>
     <string name="action_delete_all_bookmarks">Poista kaikki kirjanmerkit</string>
+    <string name="dialog_title_delete_all_bookmarks">Poistetaanko kaikki kirjanmerkit?</string>
+    <string name="dialog_message_delete_all_bookmarks">Kaikki kirjanmerkkisi poistetaan pysyvästi</string>
     <string name="pref_title_developer">Kehittäjä</string>
     <string name="pref_summary_developer">Virheenkorjaus- ja lokiasetukset</string>
     <string name="debug_leak_canary">LeakCanary</string>
@@ -758,6 +766,4 @@
     <string name="extension_author_not_specified">Laajennuksen tekijää ei määritetty</string>
     <string name="action_install">Asenna</string>
     <string name="pref_title_source_code">Lähdekoodi</string>
-    <string name="dialog_title_delete_all_bookmarks">Poistetaanko kaikki kirjanmerkit?</string>
-    <string name="dialog_message_delete_all_bookmarks">Kaikki kirjanmerkkisi poistetaan pysyvästi</string>
 </resources>

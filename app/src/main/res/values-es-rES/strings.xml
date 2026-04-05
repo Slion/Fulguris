@@ -3,6 +3,7 @@
     <string name="action_reload">Recargar</string>
     <string name="action_force_reload">Forzar recarga</string>
     <string name="action_launch_app">Iniciar</string>
+    <string name="action_pip">Imagen en imagen</string>
     <string name="action_menu">Menú</string>
     <string name="action_new_tab">Nueva pestaña</string>
     <string name="action_duplicate_tab">Duplicar pestaña</string>
@@ -112,6 +113,10 @@
     <string name="dialog_title_delete_all_downloads">¿Borrar todas las descargas?</string>
     <string name="dialog_message_delete_all_downloads">Todas las entradas de descarga se eliminarán y los archivos se borrarán permanentemente</string>
     <string name="pref_summary_no_downloads">Tu lista de descargas está vacía</string>
+    <string name="pref_summary_loading_downloads">Cargando %1$d / %2$d</string>
+    <string name="pref_summary_updating_downloads">Actualizando %1$d / %2$d</string>
+    <string name="pref_summary_downloads_count">Tienes %d descarga</string>
+    <string name="pref_summary_downloads_count_plural">Tienes %d descargas</string>
     <string name="cancel_download">Cancelar descarga</string>
     <string name="open_download">Abrir</string>
     <string name="share_file">Compartir archivo</string>
@@ -189,6 +194,7 @@
     <string name="message_link_copied">Enlace copiado al portapapeles</string>
     <string name="message_blocked_local">Se ha bloqueado la carga del archivo local</string>
     <string name="message_no_app_available">No hay ninguna aplicación disponible para abrir este enlace</string>
+    <string name="message_pip_not_supported">La imagen en imagen no es compatible</string>
     <string name="licenses">Licencias de código abierto</string>
     <string name="suggestion">Buscar por</string>
     <string name="checking_for_updates">Comprobando actualizaciones…</string>
@@ -457,6 +463,8 @@
     <string name="message_added_to_homescreen">Acceso directo añadido a la pantalla de inicio</string>
     <string name="shortcut_message_failed_to_add">Lo sentimos, su lanzador no soporta atajos.</string>
     <string name="action_delete_all_bookmarks">Eliminar todos los marcadores</string>
+    <string name="dialog_title_delete_all_bookmarks">¿Eliminar todos los marcadores?</string>
+    <string name="dialog_message_delete_all_bookmarks">Todos tus marcadores se eliminarán permanentemente</string>
     <string name="pref_title_developer">Desarrollador</string>
     <string name="pref_summary_developer">Configuración de depuración y registros</string>
     <string name="debug_leak_canary">LeakCanary</string>
@@ -758,6 +766,4 @@
     <string name="extension_author_not_specified">Autor de la extensión no especificado</string>
     <string name="action_install">Instalar</string>
     <string name="pref_title_source_code">Código fuente</string>
-    <string name="dialog_title_delete_all_bookmarks">¿Eliminar todos los marcadores?</string>
-    <string name="dialog_message_delete_all_bookmarks">Todos tus marcadores se eliminarán permanentemente</string>
 </resources>

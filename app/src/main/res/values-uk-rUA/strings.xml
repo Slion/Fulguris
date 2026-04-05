@@ -3,6 +3,7 @@
     <string name="action_reload">Оновити</string>
     <string name="action_force_reload">Примусове перезавантаження</string>
     <string name="action_launch_app">Запустити</string>
+    <string name="action_pip">Зображення в зображенні</string>
     <string name="action_menu">Меню</string>
     <string name="action_new_tab">Нова вкладка</string>
     <string name="action_duplicate_tab">Створити копію вкладки</string>
@@ -112,6 +113,10 @@
     <string name="dialog_title_delete_all_downloads">Видалити всі завантаження?</string>
     <string name="dialog_message_delete_all_downloads">Усі записи про завантаження будуть видалені, а файли будуть безповоротно стерті</string>
     <string name="pref_summary_no_downloads">Ваш список завантажень порожній</string>
+    <string name="pref_summary_loading_downloads">Завантаження %1$d / %2$d</string>
+    <string name="pref_summary_updating_downloads">Оновлення %1$d / %2$d</string>
+    <string name="pref_summary_downloads_count">У вас %d завантаження</string>
+    <string name="pref_summary_downloads_count_plural">У вас %d завантажень</string>
     <string name="cancel_download">Скасувати завантаження</string>
     <string name="open_download">Відкрити</string>
     <string name="share_file">Поділитися файлом</string>
@@ -189,6 +194,7 @@
     <string name="message_link_copied">Посилання скопійовано до буфера</string>
     <string name="message_blocked_local">Локальний файл було заблоковано для завантаження</string>
     <string name="message_no_app_available">Немає доступного додатка для відкриття цього посилання</string>
+    <string name="message_pip_not_supported">Зображення в зображенні не підтримується</string>
     <string name="licenses">Ліцензії з відкритим кодом</string>
     <string name="suggestion">Шукати</string>
     <string name="checking_for_updates">Перевірка оновлень…</string>
@@ -457,6 +463,8 @@
     <string name="message_added_to_homescreen">Ярлик додано на головний екран</string>
     <string name="shortcut_message_failed_to_add">На жаль, ваш лаунчер не підтримує ярлики.</string>
     <string name="action_delete_all_bookmarks">Видалити всі закладки</string>
+    <string name="dialog_title_delete_all_bookmarks">Видалити всі закладки?</string>
+    <string name="dialog_message_delete_all_bookmarks">Усі ваші закладки будуть видалені назавжди</string>
     <string name="pref_title_developer">Розробник</string>
     <string name="pref_summary_developer">Налаштування налагодження та журналів</string>
     <string name="debug_leak_canary">LeakCanary</string>
@@ -764,6 +772,4 @@
     <string name="extension_author_not_specified">Автор розширення не вказаний</string>
     <string name="action_install">Встановити</string>
     <string name="pref_title_source_code">Вихідний код</string>
-    <string name="dialog_title_delete_all_bookmarks">Видалити всі закладки?</string>
-    <string name="dialog_message_delete_all_bookmarks">Усі ваші закладки будуть видалені назавжди</string>
 </resources>

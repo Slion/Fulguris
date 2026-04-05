@@ -3,6 +3,7 @@
     <string name="action_reload">รีโหลด</string>
     <string name="action_force_reload">บังคับโหลดใหม่</string>
     <string name="action_launch_app">เปิด</string>
+    <string name="action_pip">ภาพซ้อนภาพ</string>
     <string name="action_menu">เมนู</string>
     <string name="action_new_tab">แท็บใหม่</string>
     <string name="action_duplicate_tab">ทำสำเนาแท็บ</string>
@@ -112,6 +113,10 @@
     <string name="dialog_title_delete_all_downloads">ลบการดาวน์โหลดทั้งหมด?</string>
     <string name="dialog_message_delete_all_downloads">รายการดาวน์โหลดทั้งหมดจะถูกลบและไฟล์จะถูกลบอย่างถาวร</string>
     <string name="pref_summary_no_downloads">รายการดาวน์โหลดของคุณว่างเปล่า</string>
+    <string name="pref_summary_loading_downloads">กำลังโหลด %1$d / %2$d</string>
+    <string name="pref_summary_updating_downloads">กำลังอัปเดต %1$d / %2$d</string>
+    <string name="pref_summary_downloads_count">คุณมี %d การดาวน์โหลด</string>
+    <string name="pref_summary_downloads_count_plural">คุณมี %d การดาวน์โหลด</string>
     <string name="cancel_download">ยกเลิกการดาวน์โหลด</string>
     <string name="open_download">เปิด</string>
     <string name="share_file">แชร์ไฟล์</string>
@@ -189,6 +194,7 @@
     <string name="message_link_copied">คัดลอกลิงก์ไปยังคลิปบอร์ดแล้ว</string>
     <string name="message_blocked_local">การโหลดไฟล์ท้องถิ่นถูกบล็อก</string>
     <string name="message_no_app_available">ไม่มีแอปที่สามารถเปิดลิงก์นี้ได้</string>
+    <string name="message_pip_not_supported">ไม่รองรับภาพซ้อนภาพ</string>
     <string name="licenses">ใบอนุญาตโอเพนซอร์ส</string>
     <string name="suggestion">ค้นหา</string>
     <string name="checking_for_updates">กำลังตรวจสอบอัปเดต</string>
@@ -457,6 +463,8 @@
     <string name="message_added_to_homescreen">เพิ่มทางลัดไปยังหน้าจอหลักแล้ว</string>
     <string name="shortcut_message_failed_to_add">ขออภัย ตัวเปิดของคุณไม่รองรับทางลัด</string>
     <string name="action_delete_all_bookmarks">ลบบุ๊กมาร์กทั้งหมด</string>
+    <string name="dialog_title_delete_all_bookmarks">ลบบุ๊กมาร์กทั้งหมดหรือไม่?</string>
+    <string name="dialog_message_delete_all_bookmarks">บุ๊กมาร์กทั้งหมดของคุณจะถูกลบอย่างถาวร</string>
     <string name="pref_title_developer">นักพัฒนา</string>
     <string name="pref_summary_developer">การตั้งค่าการแก้ไขข้อบกพร่องและบันทึก</string>
     <string name="debug_leak_canary">LeakCanary</string>
@@ -756,6 +764,4 @@
     <string name="extension_author_not_specified">ไม่ได้ระบุผู้เขียนส่วนขยาย</string>
     <string name="action_install">ติดตั้ง</string>
     <string name="pref_title_source_code">โค้ดต้นฉบับ</string>
-    <string name="dialog_title_delete_all_bookmarks">ลบบุ๊กมาร์กทั้งหมดหรือไม่?</string>
-    <string name="dialog_message_delete_all_bookmarks">บุ๊กมาร์กทั้งหมดของคุณจะถูกลบอย่างถาวร</string>
 </resources>

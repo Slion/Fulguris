@@ -3,6 +3,7 @@
     <string name="action_reload">Last inn på nytt</string>
     <string name="action_force_reload">Tving omlasting</string>
     <string name="action_launch_app">Start</string>
+    <string name="action_pip">Bilde i bilde</string>
     <string name="action_menu">Mer</string>
     <string name="action_new_tab">Ny fane</string>
     <string name="action_duplicate_tab">Dupliser fane</string>
@@ -112,6 +113,10 @@
     <string name="dialog_title_delete_all_downloads">Slett alle nedlastinger?</string>
     <string name="dialog_message_delete_all_downloads">Alle nedlastingsoppføringer vil bli fjernet og filer vil bli permanent slettet</string>
     <string name="pref_summary_no_downloads">Nedlastingslisten din er tom</string>
+    <string name="pref_summary_loading_downloads">Laster %1$d / %2$d</string>
+    <string name="pref_summary_updating_downloads">Oppdaterer %1$d / %2$d</string>
+    <string name="pref_summary_downloads_count">Du har %d nedlasting</string>
+    <string name="pref_summary_downloads_count_plural">Du har %d nedlastinger</string>
     <string name="cancel_download">Avbryt nedlasting</string>
     <string name="open_download">Åpne</string>
     <string name="share_file">Del fil</string>
@@ -189,6 +194,7 @@
     <string name="message_link_copied">Lenke kopiert til utklippstavlen</string>
     <string name="message_blocked_local">Lokal fil har blitt blokkert fra lasting</string>
     <string name="message_no_app_available">Ingen app tilgjengelig for å åpne denne lenken</string>
+    <string name="message_pip_not_supported">Bilde i bilde støttes ikke</string>
     <string name="licenses">Open Source-lisenser</string>
     <string name="suggestion">Søk etter</string>
     <string name="checking_for_updates">Sjekker etter oppdateringer</string>
@@ -457,6 +463,8 @@
     <string name="message_added_to_homescreen">Snarvei lagt til på startskjermen</string>
     <string name="shortcut_message_failed_to_add">Beklager, oppstarteren din støtter ikke snarveier.</string>
     <string name="action_delete_all_bookmarks">Slett alle bokmerker</string>
+    <string name="dialog_title_delete_all_bookmarks">Slett alle bokmerker?</string>
+    <string name="dialog_message_delete_all_bookmarks">Alle bokmerkene dine vil bli permanent slettet</string>
     <string name="pref_title_developer">Utvikler</string>
     <string name="pref_summary_developer">Feilsøkings- og logginnstillinger</string>
     <string name="debug_leak_canary">LeakCanary</string>
@@ -758,6 +766,4 @@
     <string name="extension_author_not_specified">Utvidelsesforfatter ikke angitt</string>
     <string name="action_install">Installer</string>
     <string name="pref_title_source_code">Kildekode</string>
-    <string name="dialog_title_delete_all_bookmarks">Slett alle bokmerker?</string>
-    <string name="dialog_message_delete_all_bookmarks">Alle bokmerkene dine vil bli permanent slettet</string>
 </resources>

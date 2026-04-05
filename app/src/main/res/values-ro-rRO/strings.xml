@@ -3,6 +3,7 @@
     <string name="action_reload">Reîncarcă</string>
     <string name="action_force_reload">Forțează reîncărcarea</string>
     <string name="action_launch_app">Lansează</string>
+    <string name="action_pip">Imagine în imagine</string>
     <string name="action_menu">Mai mult</string>
     <string name="action_new_tab">Filă nouă</string>
     <string name="action_duplicate_tab">Duplicare filă</string>
@@ -112,6 +113,10 @@
     <string name="dialog_title_delete_all_downloads">Ștergeți toate descărcările?</string>
     <string name="dialog_message_delete_all_downloads">Toate intrările de descărcare vor fi eliminate și fișierele vor fi șterse definitiv</string>
     <string name="pref_summary_no_downloads">Lista de descărcări este goală</string>
+    <string name="pref_summary_loading_downloads">Se încarcă %1$d / %2$d</string>
+    <string name="pref_summary_updating_downloads">Se actualizează %1$d / %2$d</string>
+    <string name="pref_summary_downloads_count">Aveți %d descărcare</string>
+    <string name="pref_summary_downloads_count_plural">Aveți %d descărcări</string>
     <string name="cancel_download">Anulați descărcarea</string>
     <string name="open_download">Deschide</string>
     <string name="share_file">Partajați fișierul</string>
@@ -189,6 +194,7 @@
     <string name="message_link_copied">Link copiat în clipboard</string>
     <string name="message_blocked_local">Fișierul local a fost blocat de la încărcare</string>
     <string name="message_no_app_available">Nu există nicio aplicație disponibilă pentru a deschide acest link</string>
+    <string name="message_pip_not_supported">Imaginea în imagine nu este acceptată</string>
     <string name="licenses">Licențe Open Source</string>
     <string name="suggestion">Caută</string>
     <string name="checking_for_updates">Verificare actualizări…</string>
@@ -457,6 +463,8 @@
     <string name="message_added_to_homescreen">Scurtătură adăugată pe ecranul de pornire</string>
     <string name="shortcut_message_failed_to_add">Ne pare rău, launcher-ul tău nu suportă scurtături.</string>
     <string name="action_delete_all_bookmarks">Șterge toate marcajele</string>
+    <string name="dialog_title_delete_all_bookmarks">Ștergeți toate marcajele?</string>
+    <string name="dialog_message_delete_all_bookmarks">Toate marcajele vor fi șterse definitiv</string>
     <string name="pref_title_developer">Dezvoltator</string>
     <string name="pref_summary_developer">Setări depanare și jurnale</string>
     <string name="debug_leak_canary">LeakCanary</string>
@@ -761,6 +769,4 @@
     <string name="extension_author_not_specified">Autorul extensiei nu este specificat</string>
     <string name="action_install">Instalează</string>
     <string name="pref_title_source_code">Cod sursă</string>
-    <string name="dialog_title_delete_all_bookmarks">Ștergeți toate marcajele?</string>
-    <string name="dialog_message_delete_all_bookmarks">Toate marcajele vor fi șterse definitiv</string>
 </resources>

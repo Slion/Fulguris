@@ -3,6 +3,7 @@
     <string name="action_reload">Osveži</string>
     <string name="action_force_reload">Приморај поновно учитавање</string>
     <string name="action_launch_app">Покрени</string>
+    <string name="action_pip">Слика у слици</string>
     <string name="action_menu">Prikaži više</string>
     <string name="action_new_tab">Novi jezičak</string>
     <string name="action_duplicate_tab">Duplicate tab</string>
@@ -112,6 +113,10 @@
     <string name="dialog_title_delete_all_downloads">Избрисати сва преузимања?</string>
     <string name="dialog_message_delete_all_downloads">Сви уноси преузимања ће бити уклоњени и датотеке ће бити трајно избрисане</string>
     <string name="pref_summary_no_downloads">Ваша листа преузимања је празна</string>
+    <string name="pref_summary_loading_downloads">Учитавање %1$d / %2$d</string>
+    <string name="pref_summary_updating_downloads">Ажурирање %1$d / %2$d</string>
+    <string name="pref_summary_downloads_count">Имате %d преузимање</string>
+    <string name="pref_summary_downloads_count_plural">Имате %d преузимања</string>
     <string name="cancel_download">Откажи преузимање</string>
     <string name="open_download">Отвори</string>
     <string name="share_file">Подели датотеку</string>
@@ -189,6 +194,7 @@
     <string name="message_link_copied">Veza kopirana na klipbord</string>
     <string name="message_blocked_local">Učitavanje lokalnog fajla je blokirano</string>
     <string name="message_no_app_available">Нема доступне апликације за отварање ове везе</string>
+    <string name="message_pip_not_supported">Слика у слици није подржана</string>
     <string name="licenses">Licence otvorenog kôda</string>
     <string name="suggestion">Traži</string>
     <string name="checking_for_updates">Provera ažuriranja…</string>
@@ -457,6 +463,8 @@
     <string name="message_added_to_homescreen">Prečica dodata na početni ekran</string>
     <string name="shortcut_message_failed_to_add">Žao nam je, vaš pokretač ne podržava prečice.</string>
     <string name="action_delete_all_bookmarks">Obriši sve obeleživače</string>
+    <string name="dialog_title_delete_all_bookmarks">Избрисати све обележиваче?</string>
+    <string name="dialog_message_delete_all_bookmarks">Сви ваши обележивачи биће трајно избрисани</string>
     <string name="pref_title_developer">Програмер</string>
     <string name="pref_summary_developer">Подешавања отклањања грешака и записа</string>
     <string name="debug_leak_canary">LeakCanary</string>
@@ -761,6 +769,4 @@
     <string name="extension_author_not_specified">Аутор екстензије није наведен</string>
     <string name="action_install">Инсталирај</string>
     <string name="pref_title_source_code">Изворни код</string>
-    <string name="dialog_title_delete_all_bookmarks">Избрисати све обележиваче?</string>
-    <string name="dialog_message_delete_all_bookmarks">Сви ваши обележивачи биће трајно избрисани</string>
 </resources>

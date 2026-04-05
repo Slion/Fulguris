@@ -3,6 +3,7 @@
     <string name="action_reload">重新載入</string>
     <string name="action_force_reload">強制重新載入</string>
     <string name="action_launch_app">啟動</string>
+    <string name="action_pip">畫中畫</string>
     <string name="action_menu">Menu</string>
     <string name="action_new_tab">新增分頁</string>
     <string name="action_duplicate_tab">複製分頁</string>
@@ -112,6 +113,10 @@
     <string name="dialog_title_delete_all_downloads">刪除所有下載？</string>
     <string name="dialog_message_delete_all_downloads">所有下載項目將被移除，檔案將被永久刪除</string>
     <string name="pref_summary_no_downloads">您的下載清單為空</string>
+    <string name="pref_summary_loading_downloads">正在載入 %1$d / %2$d</string>
+    <string name="pref_summary_updating_downloads">正在更新 %1$d / %2$d</string>
+    <string name="pref_summary_downloads_count">您有 %d 個下載</string>
+    <string name="pref_summary_downloads_count_plural">您有 %d 個下載</string>
     <string name="cancel_download">取消下載</string>
     <string name="open_download">開啟</string>
     <string name="share_file">分享檔案</string>
@@ -189,6 +194,7 @@
     <string name="message_link_copied">連結已複製至剪貼簿</string>
     <string name="message_blocked_local">本機檔已被封鎖載入</string>
     <string name="message_no_app_available">沒有可用的應用程式開啟此連結</string>
+    <string name="message_pip_not_supported">不支援畫中畫</string>
     <string name="licenses">開放原始碼授權</string>
     <string name="suggestion">搜尋…</string>
     <string name="checking_for_updates">正在檢查更新…</string>
@@ -457,6 +463,8 @@
     <string name="message_added_to_homescreen">捷徑已新增至主畫面</string>
     <string name="shortcut_message_failed_to_add">很抱歉，您的啟動器不支援捷徑功能。</string>
     <string name="action_delete_all_bookmarks">刪除所有書籤</string>
+    <string name="dialog_title_delete_all_bookmarks">刪除所有書籤？</string>
+    <string name="dialog_message_delete_all_bookmarks">您的所有書籤將被永久刪除</string>
     <string name="pref_title_developer">開發者</string>
     <string name="pref_summary_developer">偵錯和日誌設定</string>
     <string name="debug_leak_canary">LeakCanary</string>
@@ -756,6 +764,4 @@
     <string name="extension_author_not_specified">未指定擴充功能作者</string>
     <string name="action_install">安裝</string>
     <string name="pref_title_source_code">原始碼</string>
-    <string name="dialog_title_delete_all_bookmarks">刪除所有書籤？</string>
-    <string name="dialog_message_delete_all_bookmarks">您的所有書籤將被永久刪除</string>
 </resources>

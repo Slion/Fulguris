@@ -3,6 +3,7 @@
     <string name="action_reload">Újratölt</string>
     <string name="action_force_reload">Újratöltés kényszerítése</string>
     <string name="action_launch_app">Indítás</string>
+    <string name="action_pip">Kép a képben</string>
     <string name="action_menu">Több</string>
     <string name="action_new_tab">Új Lap</string>
     <string name="action_duplicate_tab">Lap duplikálása</string>
@@ -112,6 +113,10 @@
     <string name="dialog_title_delete_all_downloads">Összes letöltés törlése?</string>
     <string name="dialog_message_delete_all_downloads">Minden letöltési bejegyzés el lesz távolítva és a fájlok véglegesen törölve lesznek</string>
     <string name="pref_summary_no_downloads">A letöltési listád üres</string>
+    <string name="pref_summary_loading_downloads">Betöltés %1$d / %2$d</string>
+    <string name="pref_summary_updating_downloads">Frissítés %1$d / %2$d</string>
+    <string name="pref_summary_downloads_count">%d letöltése van</string>
+    <string name="pref_summary_downloads_count_plural">%d letöltése van</string>
     <string name="cancel_download">Letöltés megszakítása</string>
     <string name="open_download">Megnyitás</string>
     <string name="share_file">Fájl megosztása</string>
@@ -189,6 +194,7 @@
     <string name="message_link_copied">Link másolva a vágólapra</string>
     <string name="message_blocked_local">Helyi fájl betöltése blokkolva</string>
     <string name="message_no_app_available">Nincs elérhető alkalmazás a link megnyitásához</string>
+    <string name="message_pip_not_supported">A kép a képben nem támogatott</string>
     <string name="licenses">Nyílt forráskódú licencek</string>
     <string name="suggestion">Keresés</string>
     <string name="checking_for_updates">Frissítések keresése…</string>
@@ -457,6 +463,8 @@
     <string name="message_added_to_homescreen">Parancsikon hozzáadva a kezdőképernyőhöz</string>
     <string name="shortcut_message_failed_to_add">Sajnos az alkalmazásindítód nem támogatja a gyorsindító parancsikonokat.</string>
     <string name="action_delete_all_bookmarks">Összes könyvjelző törlése</string>
+    <string name="dialog_title_delete_all_bookmarks">Törli az összes könyvjelzőt?</string>
+    <string name="dialog_message_delete_all_bookmarks">Az összes könyvjelzője véglegesen törlődik</string>
     <string name="pref_title_developer">Fejlesztő</string>
     <string name="pref_summary_developer">Hibakeresési és naplózási beállítások</string>
     <string name="debug_leak_canary">LeakCanary</string>
@@ -758,6 +766,4 @@
     <string name="extension_author_not_specified">A bővítmény szerzője nincs megadva</string>
     <string name="action_install">Telepítés</string>
     <string name="pref_title_source_code">Forráskód</string>
-    <string name="dialog_title_delete_all_bookmarks">Törli az összes könyvjelzőt?</string>
-    <string name="dialog_message_delete_all_bookmarks">Az összes könyvjelzője véglegesen törlődik</string>
 </resources>

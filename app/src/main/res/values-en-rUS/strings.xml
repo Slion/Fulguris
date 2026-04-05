@@ -457,6 +457,7 @@
     <string name="message_added_to_homescreen">Shortcut added to home screen</string>
     <string name="shortcut_message_failed_to_add">Sorry, your launcher does not support shortcuts.</string>
     <string name="action_delete_all_bookmarks">Delete all bookmarks</string>
+    <string name="dialog_title_delete_all_bookmarks">Delete all bookmarks?</string>
     <string name="pref_title_developer">Developer</string>
     <string name="pref_summary_developer">Debug and logs settings</string>
     <string name="debug_leak_canary">LeakCanary</string>
@@ -758,5 +759,4 @@
     <string name="extension_author_not_specified">Extension author not specified</string>
     <string name="action_install">Install</string>
     <string name="pref_title_source_code">Source code</string>
-    <string name="dialog_title_delete_all_bookmarks">Delete all bookmarks?</string>
 </resources>

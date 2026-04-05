@@ -3,6 +3,7 @@
     <string name="action_reload">Muat ulang</string>
     <string name="action_force_reload">Paksa muat ulang</string>
     <string name="action_launch_app">Luncurkan</string>
+    <string name="action_pip">Gambar dalam gambar</string>
     <string name="action_menu">Menu</string>
     <string name="action_new_tab">Tab baru</string>
     <string name="action_duplicate_tab">Duplikat tab</string>
@@ -112,6 +113,10 @@
     <string name="dialog_title_delete_all_downloads">Hapus semua unduhan?</string>
     <string name="dialog_message_delete_all_downloads">Semua entri unduhan akan dihapus dan file akan dihapus secara permanen</string>
     <string name="pref_summary_no_downloads">Daftar unduhan Anda kosong</string>
+    <string name="pref_summary_loading_downloads">Memuat %1$d / %2$d</string>
+    <string name="pref_summary_updating_downloads">Memperbarui %1$d / %2$d</string>
+    <string name="pref_summary_downloads_count">Anda memiliki %d unduhan</string>
+    <string name="pref_summary_downloads_count_plural">Anda memiliki %d unduhan</string>
     <string name="cancel_download">Batalkan unduhan</string>
     <string name="open_download">Buka</string>
     <string name="share_file">Bagikan file</string>
@@ -189,6 +194,7 @@
     <string name="message_link_copied">Tautan telah tersalin ke dalam clipboard</string>
     <string name="message_blocked_local">Tidak bisa memuat file yang tersimpan</string>
     <string name="message_no_app_available">Tidak ada aplikasi yang tersedia untuk membuka tautan ini</string>
+    <string name="message_pip_not_supported">Gambar dalam gambar tidak didukung</string>
     <string name="licenses">Lisensi Open Source</string>
     <string name="suggestion">Cari</string>
     <string name="checking_for_updates">Mengecek adanya pembaruan…</string>
@@ -457,6 +463,8 @@
     <string name="message_added_to_homescreen">Pintasan telah ditambahkan ke layar utama</string>
     <string name="shortcut_message_failed_to_add">Maaf, launcher Anda tidak bisa membuat pintasan ke layar utama.</string>
     <string name="action_delete_all_bookmarks">Hapus semua penanda</string>
+    <string name="dialog_title_delete_all_bookmarks">Hapus semua bookmark?</string>
+    <string name="dialog_message_delete_all_bookmarks">Semua bookmark Anda akan dihapus secara permanen</string>
     <string name="pref_title_developer">Pengembang</string>
     <string name="pref_summary_developer">Pengaturan debug dan log</string>
     <string name="debug_leak_canary">LeakCanary</string>
@@ -756,6 +764,4 @@
     <string name="extension_author_not_specified">Pembuat ekstensi tidak ditentukan</string>
     <string name="action_install">Instal</string>
     <string name="pref_title_source_code">Kode sumber</string>
-    <string name="dialog_title_delete_all_bookmarks">Hapus semua bookmark?</string>
-    <string name="dialog_message_delete_all_bookmarks">Semua bookmark Anda akan dihapus secara permanen</string>
 </resources>

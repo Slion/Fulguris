@@ -3,6 +3,7 @@
     <string name="action_reload">Obnovit</string>
     <string name="action_force_reload">Vynutit znovu načtení</string>
     <string name="action_launch_app">Spustit</string>
+    <string name="action_pip">Obraz v obraze</string>
     <string name="action_menu">Více</string>
     <string name="action_new_tab">Nová karta</string>
     <string name="action_duplicate_tab">Duplikovat kartu</string>
@@ -112,6 +113,10 @@
     <string name="dialog_title_delete_all_downloads">Smazat všechna stahování?</string>
     <string name="dialog_message_delete_all_downloads">Všechny záznamy stahování budou odebrány a soubory budou trvale smazány</string>
     <string name="pref_summary_no_downloads">Váš seznam stahování je prázdný</string>
+    <string name="pref_summary_loading_downloads">Načítání %1$d / %2$d</string>
+    <string name="pref_summary_updating_downloads">Aktualizace %1$d / %2$d</string>
+    <string name="pref_summary_downloads_count">Máte %d stažení</string>
+    <string name="pref_summary_downloads_count_plural">Máte %d stažení</string>
     <string name="cancel_download">Zrušit stahování</string>
     <string name="open_download">Otevřít</string>
     <string name="share_file">Sdílet soubor</string>
@@ -189,6 +194,7 @@
     <string name="message_link_copied">Odkaz zkopírován do schránky</string>
     <string name="message_blocked_local">Načítání místního souboru bylo zablokováno</string>
     <string name="message_no_app_available">Žádná aplikace není k dispozici pro otevření tohoto odkazu</string>
+    <string name="message_pip_not_supported">Obraz v obraze není podporován</string>
     <string name="licenses">Licence Open Source</string>
     <string name="suggestion">Hledat</string>
     <string name="checking_for_updates">Kontrola aktualizací…</string>
@@ -457,6 +463,8 @@
     <string name="message_added_to_homescreen">Shortcut added to home screen</string>
     <string name="shortcut_message_failed_to_add">Omlouváme se, váš spouštěč nepodporuje zkratky.</string>
     <string name="action_delete_all_bookmarks">Smazat všechny záložky</string>
+    <string name="dialog_title_delete_all_bookmarks">Smazat všechny záložky?</string>
+    <string name="dialog_message_delete_all_bookmarks">Všechny vaše záložky budou trvale smazány</string>
     <string name="pref_title_developer">Vývojář</string>
     <string name="pref_summary_developer">Nastavení ladění a protokolů</string>
     <string name="debug_leak_canary">LeakCanary</string>
@@ -764,5 +772,4 @@
     <string name="extension_author_not_specified">Autor rozšíření není zadán</string>
     <string name="action_install">Nainstalovat</string>
     <string name="pref_title_source_code">Zdrojový kód</string>
-    <string name="dialog_title_delete_all_bookmarks">Smazat všechny záložky?</string>
 </resources>

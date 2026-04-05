@@ -3,6 +3,7 @@
     <string name="action_reload">刷新</string>
     <string name="action_force_reload">强制重新加载</string>
     <string name="action_launch_app">启动</string>
+    <string name="action_pip">画中画</string>
     <string name="action_menu">菜单</string>
     <string name="action_new_tab">新建标签页</string>
     <string name="action_duplicate_tab">克隆标签页</string>
@@ -112,6 +113,10 @@
     <string name="dialog_title_delete_all_downloads">删除所有下载？</string>
     <string name="dialog_message_delete_all_downloads">所有下载条目将被移除，文件将被永久删除</string>
     <string name="pref_summary_no_downloads">您的下载列表为空</string>
+    <string name="pref_summary_loading_downloads">正在加载 %1$d / %2$d</string>
+    <string name="pref_summary_updating_downloads">正在更新 %1$d / %2$d</string>
+    <string name="pref_summary_downloads_count">您有 %d 个下载</string>
+    <string name="pref_summary_downloads_count_plural">您有 %d 个下载</string>
     <string name="cancel_download">取消下载</string>
     <string name="open_download">打开</string>
     <string name="share_file">分享文件</string>
@@ -189,6 +194,7 @@
     <string name="message_link_copied">链接已复制到剪切板</string>
     <string name="message_blocked_local">已阻止本地文件加载</string>
     <string name="message_no_app_available">没有可用的应用程序打开此链接</string>
+    <string name="message_pip_not_supported">不支持画中画</string>
     <string name="licenses">开放源代码许可</string>
     <string name="suggestion">搜索</string>
     <string name="checking_for_updates">正在检查更新……</string>
@@ -457,6 +463,8 @@
     <string name="message_added_to_homescreen">快捷方式已添加到桌面</string>
     <string name="shortcut_message_failed_to_add">抱歉，你的桌面应用不支持快捷方式</string>
     <string name="action_delete_all_bookmarks">删除所有书签</string>
+    <string name="dialog_title_delete_all_bookmarks">删除所有书签？</string>
+    <string name="dialog_message_delete_all_bookmarks">您的所有书签将被永久删除</string>
     <string name="pref_title_developer">开发者</string>
     <string name="pref_summary_developer">调试和日志设置</string>
     <string name="debug_leak_canary">LeakCanary</string>
@@ -756,6 +764,4 @@
     <string name="extension_author_not_specified">未指定扩展作者</string>
     <string name="action_install">安装</string>
     <string name="pref_title_source_code">源代码</string>
-    <string name="dialog_title_delete_all_bookmarks">删除所有书签？</string>
-    <string name="dialog_message_delete_all_bookmarks">您的所有书签将被永久删除</string>
 </resources>

@@ -3,6 +3,7 @@
     <string name="action_reload">Neu laden</string>
     <string name="action_force_reload">Neu laden erzwingen</string>
     <string name="action_launch_app">Starten</string>
+    <string name="action_pip">Bild in Bild</string>
     <string name="action_menu">Mehr</string>
     <string name="action_new_tab">Neuer Tab</string>
     <string name="action_duplicate_tab">Tab duplizieren</string>
@@ -112,6 +113,10 @@
     <string name="dialog_title_delete_all_downloads">Alle Downloads löschen?</string>
     <string name="dialog_message_delete_all_downloads">Alle Download-Einträge werden entfernt und Dateien werden dauerhaft gelöscht</string>
     <string name="pref_summary_no_downloads">Deine Download-Liste ist leer</string>
+    <string name="pref_summary_loading_downloads">Lädt %1$d / %2$d</string>
+    <string name="pref_summary_updating_downloads">Aktualisiert %1$d / %2$d</string>
+    <string name="pref_summary_downloads_count">Sie haben %d Download</string>
+    <string name="pref_summary_downloads_count_plural">Sie haben %d Downloads</string>
     <string name="cancel_download">Download abbrechen</string>
     <string name="open_download">Öffnen</string>
     <string name="share_file">Datei teilen</string>
@@ -189,6 +194,7 @@
     <string name="message_link_copied">Link in Zwischenablage kopiert</string>
     <string name="message_blocked_local">Lokale Datei wurde beim Laden blockiert</string>
     <string name="message_no_app_available">Keine App zum Öffnen dieses Links verfügbar</string>
+    <string name="message_pip_not_supported">Bild in Bild wird nicht unterstützt</string>
     <string name="licenses">Open Source Lizenzen</string>
     <string name="suggestion">Suche nach</string>
     <string name="checking_for_updates">Suche nach Updates…</string>
@@ -457,6 +463,8 @@
     <string name="message_added_to_homescreen">Verknüpfung wurde zum Startbildschirm hinzugefügt</string>
     <string name="shortcut_message_failed_to_add">Ihr Launcher unterstützt keine Verknüpfungen!</string>
     <string name="action_delete_all_bookmarks">Alle Lesezeichen löschen</string>
+    <string name="dialog_title_delete_all_bookmarks">Alle Lesezeichen löschen?</string>
+    <string name="dialog_message_delete_all_bookmarks">Alle Ihre Lesezeichen werden dauerhaft gelöscht</string>
     <string name="pref_title_developer">Entwickler</string>
     <string name="pref_summary_developer">Debug- und Protokolleinstellungen</string>
     <string name="debug_leak_canary">LeakCanary</string>
@@ -758,5 +766,4 @@
     <string name="extension_author_not_specified">Autor der Erweiterung nicht angegeben</string>
     <string name="action_install">Installieren</string>
     <string name="pref_title_source_code">Quellcode</string>
-    <string name="dialog_title_delete_all_bookmarks">Alle Lesezeichen löschen?</string>
 </resources>

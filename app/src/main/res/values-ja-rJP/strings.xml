@@ -3,6 +3,7 @@
     <string name="action_reload">再読み込み</string>
     <string name="action_force_reload">強制再読み込み</string>
     <string name="action_launch_app">起動</string>
+    <string name="action_pip">ピクチャー・イン・ピクチャー</string>
     <string name="action_menu">メニュー</string>
     <string name="action_new_tab">新しいタブ</string>
     <string name="action_duplicate_tab">タブを複製</string>
@@ -112,6 +113,10 @@
     <string name="dialog_title_delete_all_downloads">すべてのダウンロードを削除しますか？</string>
     <string name="dialog_message_delete_all_downloads">すべてのダウンロードエントリーが削除され、ファイルは完全に消去されます</string>
     <string name="pref_summary_no_downloads">ダウンロードリストは空です</string>
+    <string name="pref_summary_loading_downloads">読み込み中 %1$d / %2$d</string>
+    <string name="pref_summary_updating_downloads">更新中 %1$d / %2$d</string>
+    <string name="pref_summary_downloads_count">%d 件のダウンロード</string>
+    <string name="pref_summary_downloads_count_plural">%d 件のダウンロード</string>
     <string name="cancel_download">ダウンロードをキャンセル</string>
     <string name="open_download">開く</string>
     <string name="share_file">ファイルを共有</string>
@@ -189,6 +194,7 @@
     <string name="message_link_copied">リンクをクリップボードにコピーしました</string>
     <string name="message_blocked_local">ファイルを読み込めませんでした</string>
     <string name="message_no_app_available">このリンクを開くアプリが利用できません</string>
+    <string name="message_pip_not_supported">ピクチャー・イン・ピクチャーはサポートされていません</string>
     <string name="licenses">オープンソース ライセンス</string>
     <string name="suggestion">検索 :</string>
     <string name="checking_for_updates">アップデートを確認しています…</string>
@@ -457,6 +463,8 @@
     <string name="message_added_to_homescreen">ホーム画面にショートカットを追加しました</string>
     <string name="shortcut_message_failed_to_add">申し訳ありませんが、ランチャーはショートカットをサポートしていません。</string>
     <string name="action_delete_all_bookmarks">すべてのブックマークを削除する</string>
+    <string name="dialog_title_delete_all_bookmarks">すべてのブックマークを削除しますか？</string>
+    <string name="dialog_message_delete_all_bookmarks">すべてのブックマークが完全に削除されます</string>
     <string name="pref_title_developer">開発者</string>
     <string name="pref_summary_developer">デバッグとログの設定</string>
     <string name="debug_leak_canary">leakcanary</string>
@@ -756,6 +764,4 @@
     <string name="extension_author_not_specified">拡張機能の作成者が指定されていません</string>
     <string name="action_install">インストール</string>
     <string name="pref_title_source_code">ソースコード</string>
-    <string name="dialog_title_delete_all_bookmarks">すべてのブックマークを削除しますか？</string>
-    <string name="dialog_message_delete_all_bookmarks">すべてのブックマークが完全に削除されます</string>
 </resources>

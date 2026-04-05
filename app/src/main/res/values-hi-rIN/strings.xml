@@ -3,6 +3,7 @@
     <string name="action_reload">पुनः लोड करें</string>
     <string name="action_force_reload">बलपूर्वक पुनः लोड करें</string>
     <string name="action_launch_app">लॉन्च करें</string>
+    <string name="action_pip">पिक्चर इन पिक्चर</string>
     <string name="action_menu">मेन्यू</string>
     <string name="action_new_tab">नया टैब</string>
     <string name="action_duplicate_tab">टैब डुप्लिकेट करें</string>
@@ -95,6 +96,10 @@
     <string name="dialog_title_delete_all_downloads">सभी डाउनलोड मिटाएं?</string>
     <string name="dialog_message_delete_all_downloads">सभी डाउनलोड प्रविष्टियां हटा दी जाएंगी और फ़ाइलें स्थायी रूप से मिटा दी जाएंगी</string>
     <string name="pref_summary_no_downloads">आपकी डाउनलोड सूची खाली है</string>
+    <string name="pref_summary_loading_downloads">लोड हो रहा है %1$d / %2$d</string>
+    <string name="pref_summary_updating_downloads">अपडेट हो रहा है %1$d / %2$d</string>
+    <string name="pref_summary_downloads_count">आपके पास %d डाउनलोड है</string>
+    <string name="pref_summary_downloads_count_plural">आपके पास %d डाउनलोड हैं</string>
     <string name="cancel_download">डाउनलोड रद्द करें</string>
     <string name="open_download">खोलें</string>
     <string name="share_file">फ़ाइल साझा करें</string>
@@ -172,6 +177,7 @@
     <string name="message_link_copied">लिंक क्लिपबोर्ड पर कॉपी हो गया</string>
     <string name="message_blocked_local">स्थानीय फ़ाइल लोड होने से रोकी गई</string>
     <string name="message_no_app_available">इस लिंक को खोलने के लिए कोई ऐप उपलब्ध नहीं है</string>
+    <string name="message_pip_not_supported">पिक्चर-इन-पिक्चर समर्थित नहीं है</string>
     <string name="licenses">ओपन सोर्स लाइसेंस</string>
     <string name="suggestion">खोजें</string>
     <string name="checking_for_updates">अपडेट की जांच हो रही है…</string>
@@ -424,6 +430,8 @@
     <string name="message_added_to_homescreen">होम स्क्रीन में शॉर्टकट जोड़ा गया</string>
     <string name="shortcut_message_failed_to_add">क्षमा करें, आपका लॉन्चर शॉर्टकट का समर्थन नहीं करता।</string>
     <string name="action_delete_all_bookmarks">सभी बुकमार्क हटाएं</string>
+    <string name="dialog_title_delete_all_bookmarks">सभी बुकमार्क हटाएं?</string>
+    <string name="dialog_message_delete_all_bookmarks">आपके सभी बुकमार्क स्थायी रूप से हटा दिए जाएंगे</string>
     <string name="pref_title_developer">डेवलपर</string>
     <string name="pref_summary_developer">डिबग और लॉग सेटिंग्स</string>
     <string name="app_restart">परिवर्तन प्रभावी होने के लिए कृपया ऐप पुनः आरंभ करें</string>
@@ -713,6 +721,4 @@
     <string name="extension_author_not_specified">एक्सटेंशन का लेखक निर्दिष्ट नहीं है</string>
     <string name="action_install">इंस्टॉल करें</string>
     <string name="pref_title_source_code">स्रोत कोड</string>
-    <string name="dialog_title_delete_all_bookmarks">सभी बुकमार्क हटाएं?</string>
-    <string name="dialog_message_delete_all_bookmarks">आपके सभी बुकमार्क स्थायी रूप से हटा दिए जाएंगे</string>
 </resources>

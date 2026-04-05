@@ -3,6 +3,7 @@
     <string name="action_reload">Herlaai</string>
     <string name="action_force_reload">Dwing herlaai</string>
     <string name="action_launch_app">Begin</string>
+    <string name="action_pip">Prent-in-prent</string>
     <string name="action_menu">Kieslys</string>
     <string name="action_new_tab">Nuwe oortjie</string>
     <string name="action_duplicate_tab">Duplikaat oortjie</string>
@@ -112,6 +113,10 @@
     <string name="dialog_title_delete_all_downloads">Vee alle aflaaie uit?</string>
     <string name="dialog_message_delete_all_downloads">Alle aflaairekords sal verwyder word en lêers sal permanent uitgevee word</string>
     <string name="pref_summary_no_downloads">Jou aflaaie-lys is leeg</string>
+    <string name="pref_summary_loading_downloads">Laai %1$d / %2$d</string>
+    <string name="pref_summary_updating_downloads">Opdateer %1$d / %2$d</string>
+    <string name="pref_summary_downloads_count">Jy het %d aflaai</string>
+    <string name="pref_summary_downloads_count_plural">Jy het %d aflaaie</string>
     <string name="cancel_download">Kanselleer aflaai</string>
     <string name="open_download">Maak oop</string>
     <string name="share_file">Deel lêer</string>
@@ -189,6 +194,7 @@
     <string name="message_link_copied">Link copied to clipboard</string>
     <string name="message_blocked_local">Local file has been blocked from loading</string>
     <string name="message_no_app_available">Geen toepassing beskikbaar om hierdie skakel te open nie</string>
+    <string name="message_pip_not_supported">Prent-in-prent word nie ondersteun nie</string>
     <string name="licenses">Open Source Licenses</string>
     <string name="suggestion">Search for</string>
     <string name="checking_for_updates">Checking for updates…</string>
@@ -457,6 +463,8 @@
     <string name="message_added_to_homescreen">Shortcut added to home screen</string>
     <string name="shortcut_message_failed_to_add">Sorry, your launcher does not support shortcuts.</string>
     <string name="action_delete_all_bookmarks">Delete all bookmarks</string>
+    <string name="dialog_title_delete_all_bookmarks">Vee alle boekmerke uit?</string>
+    <string name="dialog_message_delete_all_bookmarks">Al jou boekmerke sal permanent uitgevee word</string>
     <string name="pref_title_developer">Ontwikkelaar</string>
     <string name="pref_summary_developer">Ontfout en loggings instellings</string>
     <string name="debug_leak_canary">LeakCanary</string>
@@ -758,5 +766,4 @@
     <string name="extension_author_not_specified">Uitbreidingouteur nie gespesifiseer nie</string>
     <string name="action_install">Installeer</string>
     <string name="pref_title_source_code">Bronkode</string>
-    <string name="dialog_title_delete_all_bookmarks">Vee alle boekmerke uit?</string>
 </resources>

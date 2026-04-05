@@ -3,6 +3,7 @@
     <string name="action_reload">Ladda om</string>
     <string name="action_force_reload">Tvinga omladdning</string>
     <string name="action_launch_app">Starta</string>
+    <string name="action_pip">Bild i bild</string>
     <string name="action_menu">Mer</string>
     <string name="action_new_tab">Ny flik</string>
     <string name="action_duplicate_tab">Duplicera flik</string>
@@ -112,6 +113,10 @@
     <string name="dialog_title_delete_all_downloads">Radera alla nedladdningar?</string>
     <string name="dialog_message_delete_all_downloads">Alla nedladdningsposter kommer att tas bort och filer kommer att raderas permanent</string>
     <string name="pref_summary_no_downloads">Din nedladdningslista är tom</string>
+    <string name="pref_summary_loading_downloads">Laddar %1$d / %2$d</string>
+    <string name="pref_summary_updating_downloads">Uppdaterar %1$d / %2$d</string>
+    <string name="pref_summary_downloads_count">Du har %d nedladdning</string>
+    <string name="pref_summary_downloads_count_plural">Du har %d nedladdningar</string>
     <string name="cancel_download">Avbryt nedladdning</string>
     <string name="open_download">Öppna</string>
     <string name="share_file">Dela fil</string>
@@ -189,6 +194,7 @@
     <string name="message_link_copied">Länk kopierad till urklipp</string>
     <string name="message_blocked_local">Lokal fil har blockerats från att ladda</string>
     <string name="message_no_app_available">Ingen app tillgänglig för att öppna denna länk</string>
+    <string name="message_pip_not_supported">Bild i bild stöds inte</string>
     <string name="licenses">Open Source-licenser</string>
     <string name="suggestion">Sök efter</string>
     <string name="checking_for_updates">Söker efter uppdateringar…</string>
@@ -457,6 +463,8 @@
     <string name="message_added_to_homescreen">Genväg tillagd till hemskärm</string>
     <string name="shortcut_message_failed_to_add">Tyvärr, din launcher stöder inte genvägar.</string>
     <string name="action_delete_all_bookmarks">Radera alla bokmärken</string>
+    <string name="dialog_title_delete_all_bookmarks">Ta bort alla bokmärken?</string>
+    <string name="dialog_message_delete_all_bookmarks">Alla dina bokmärken kommer att raderas permanent</string>
     <string name="pref_title_developer">Utvecklare</string>
     <string name="pref_summary_developer">Inställningar för felsökning och loggar</string>
     <string name="debug_leak_canary">LeakCanary</string>
@@ -758,6 +766,4 @@
     <string name="extension_author_not_specified">Tilläggsförfattare inte angiven</string>
     <string name="action_install">Installera</string>
     <string name="pref_title_source_code">Källkod</string>
-    <string name="dialog_title_delete_all_bookmarks">Ta bort alla bokmärken?</string>
-    <string name="dialog_message_delete_all_bookmarks">Alla dina bokmärken kommer att raderas permanent</string>
 </resources>

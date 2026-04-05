@@ -3,6 +3,7 @@
     <string name="action_reload">새로고침</string>
     <string name="action_force_reload">강제 새로고침</string>
     <string name="action_launch_app">실행</string>
+    <string name="action_pip">화면 속 화면</string>
     <string name="action_menu">Menu</string>
     <string name="action_new_tab">새 탭</string>
     <string name="action_duplicate_tab">탭 복제</string>
@@ -112,6 +113,10 @@
     <string name="dialog_title_delete_all_downloads">모든 다운로드를 삭제하시겠습니까?</string>
     <string name="dialog_message_delete_all_downloads">모든 다운로드 항목이 제거되고 파일이 영구적으로 삭제됩니다</string>
     <string name="pref_summary_no_downloads">다운로드 목록이 비어 있습니다</string>
+    <string name="pref_summary_loading_downloads">불러오는 중 %1$d / %2$d</string>
+    <string name="pref_summary_updating_downloads">업데이트 중 %1$d / %2$d</string>
+    <string name="pref_summary_downloads_count">다운로드 %d개</string>
+    <string name="pref_summary_downloads_count_plural">다운로드 %d개</string>
     <string name="cancel_download">다운로드 취소</string>
     <string name="open_download">열기</string>
     <string name="share_file">파일 공유</string>
@@ -189,6 +194,7 @@
     <string name="message_link_copied">링크가 클립보드로 복사되었습니다</string>
     <string name="message_blocked_local">로컬 파일 불러오기가 차단되었습니다</string>
     <string name="message_no_app_available">이 링크를 열 수 있는 앱이 없습니다</string>
+    <string name="message_pip_not_supported">화면 속 화면이 지원되지 않습니다</string>
     <string name="licenses">오픈 소스 라이선스</string>
     <string name="suggestion">다음을 검색</string>
     <string name="checking_for_updates">업데이트 확인 중…</string>
@@ -457,6 +463,8 @@
     <string name="message_added_to_homescreen">홈 화면에 바로가기를 추가했습니다</string>
     <string name="shortcut_message_failed_to_add">죄송합니다, 홈 화면이 바로가기를 지원하지 않습니다.</string>
     <string name="action_delete_all_bookmarks">모든 즐겨찾기 삭제</string>
+    <string name="dialog_title_delete_all_bookmarks">모든 북마크를 삭제하시겠습니까?</string>
+    <string name="dialog_message_delete_all_bookmarks">모든 북마크가 영구적으로 삭제됩니다</string>
     <string name="pref_title_developer">개발자</string>
     <string name="pref_summary_developer">디버그 및 로그 설정</string>
     <string name="debug_leak_canary">LeakCanary</string>
@@ -756,6 +764,4 @@
     <string name="extension_author_not_specified">확장 프로그램 제작자가 지정되지 않음</string>
     <string name="action_install">설치</string>
     <string name="pref_title_source_code">소스 코드</string>
-    <string name="dialog_title_delete_all_bookmarks">모든 북마크를 삭제하시겠습니까?</string>
-    <string name="dialog_message_delete_all_bookmarks">모든 북마크가 영구적으로 삭제됩니다</string>
 </resources>

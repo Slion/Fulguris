@@ -3,6 +3,7 @@
     <string name="action_reload">Ververs</string>
     <string name="action_force_reload">Geforceerd herladen</string>
     <string name="action_launch_app">Starten</string>
+    <string name="action_pip">Beeld in beeld</string>
     <string name="action_menu">Menu</string>
     <string name="action_new_tab">Nieuw Tabblad</string>
     <string name="action_duplicate_tab">Tabblad Duplicaten</string>
@@ -112,6 +113,10 @@
     <string name="dialog_title_delete_all_downloads">Alle downloads wissen?</string>
     <string name="dialog_message_delete_all_downloads">Alle downloaditems worden verwijderd en bestanden worden permanent gewist</string>
     <string name="pref_summary_no_downloads">Je downloadlijst is leeg</string>
+    <string name="pref_summary_loading_downloads">Laden %1$d / %2$d</string>
+    <string name="pref_summary_updating_downloads">Bijwerken %1$d / %2$d</string>
+    <string name="pref_summary_downloads_count">U heeft %d download</string>
+    <string name="pref_summary_downloads_count_plural">U heeft %d downloads</string>
     <string name="cancel_download">Download annuleren</string>
     <string name="open_download">Openen</string>
     <string name="share_file">Bestand delen</string>
@@ -189,6 +194,7 @@
     <string name="message_link_copied">Link gekopieerd naar klembord</string>
     <string name="message_blocked_local">Lokaal bestand werd geblokkeerd</string>
     <string name="message_no_app_available">Geen app beschikbaar om deze link te openen</string>
+    <string name="message_pip_not_supported">Beeld in beeld wordt niet ondersteund</string>
     <string name="licenses">Open-bron licenties</string>
     <string name="suggestion">Zoek voor</string>
     <string name="checking_for_updates">Controleren op updates…</string>
@@ -457,6 +463,8 @@
     <string name="message_added_to_homescreen">Snelkoppeling aan startscherm toegevoegd</string>
     <string name="shortcut_message_failed_to_add">Sorry, je launcher ondersteunt geen snelkoppelingen.</string>
     <string name="action_delete_all_bookmarks">Verwijder alle bladwijzers</string>
+    <string name="dialog_title_delete_all_bookmarks">Alle bladwijzers verwijderen?</string>
+    <string name="dialog_message_delete_all_bookmarks">Alle bladwijzers worden permanent verwijderd</string>
     <string name="pref_title_developer">Ontwikkelaar</string>
     <string name="pref_summary_developer">Debug- en loginstellingen</string>
     <string name="debug_leak_canary">LeakCanary</string>
@@ -758,6 +766,4 @@
     <string name="extension_author_not_specified">Extensieauteur niet opgegeven</string>
     <string name="action_install">Installeren</string>
     <string name="pref_title_source_code">Broncode</string>
-    <string name="dialog_title_delete_all_bookmarks">Alle bladwijzers verwijderen?</string>
-    <string name="dialog_message_delete_all_bookmarks">Alle bladwijzers worden permanent verwijderd</string>
 </resources>

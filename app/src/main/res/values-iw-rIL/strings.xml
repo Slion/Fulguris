@@ -3,6 +3,7 @@
     <string name="action_reload">Reload</string>
     <string name="action_force_reload">אלץ טעינה מחדש</string>
     <string name="action_launch_app">הפעל</string>
+    <string name="action_pip">תמונה בתוך תמונה</string>
     <string name="action_menu">Menu</string>
     <string name="action_new_tab">New tab</string>
     <string name="action_duplicate_tab">Duplicate tab</string>
@@ -112,6 +113,10 @@
     <string name="dialog_title_delete_all_downloads">למחוק את כל ההורדות?</string>
     <string name="dialog_message_delete_all_downloads">כל רשומות ההורדה יוסרו והקבצים יימחקו לצמיתות</string>
     <string name="pref_summary_no_downloads">רשימת ההורדות שלך ריקה</string>
+    <string name="pref_summary_loading_downloads">טוען %1$d / %2$d</string>
+    <string name="pref_summary_updating_downloads">מעדכן %1$d / %2$d</string>
+    <string name="pref_summary_downloads_count">יש לך %d הורדה</string>
+    <string name="pref_summary_downloads_count_plural">יש לך %d הורדות</string>
     <string name="cancel_download">בטל הורדה</string>
     <string name="open_download">פתח</string>
     <string name="share_file">שתף קובץ</string>
@@ -189,6 +194,7 @@
     <string name="message_link_copied">Link copied to clipboard</string>
     <string name="message_blocked_local">Local file has been blocked from loading</string>
     <string name="message_no_app_available">אין אפליקציה זמינה לפתיחת קישור זה</string>
+    <string name="message_pip_not_supported">תמונה בתוך תמונה אינה נתמכת</string>
     <string name="licenses">Open Source Licenses</string>
     <string name="suggestion">Search for</string>
     <string name="checking_for_updates">Checking for updates…</string>
@@ -457,6 +463,8 @@
     <string name="message_added_to_homescreen">Shortcut added to home screen</string>
     <string name="shortcut_message_failed_to_add">Sorry, your launcher does not support shortcuts.</string>
     <string name="action_delete_all_bookmarks">Delete all bookmarks</string>
+    <string name="dialog_title_delete_all_bookmarks">למחוק את כל הסימניות?</string>
+    <string name="dialog_message_delete_all_bookmarks">כל הסימניות שלך יימחקו לצמיתות</string>
     <string name="pref_title_developer">מפתח</string>
     <string name="pref_summary_developer">הגדרות ניפוי באגים ויומנים</string>
     <string name="debug_leak_canary">LeakCanary</string>
@@ -764,6 +772,4 @@
     <string name="extension_author_not_specified">מחבר התוסף לא צוין</string>
     <string name="action_install">התקן</string>
     <string name="pref_title_source_code">קוד מקור</string>
-    <string name="dialog_title_delete_all_bookmarks">למחוק את כל הסימניות?</string>
-    <string name="dialog_message_delete_all_bookmarks">כל הסימניות שלך יימחקו לצמיתות</string>
 </resources>

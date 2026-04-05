@@ -3,6 +3,7 @@
     <string name="action_reload">إعادة تحميل</string>
     <string name="action_force_reload">فرض إعادة التحميل</string>
     <string name="action_launch_app">تشغيل</string>
+    <string name="action_pip">صورة داخل صورة</string>
     <string name="action_menu">القائمة الرئيسية</string>
     <string name="action_new_tab">علامة تبويب جديدة</string>
     <string name="action_duplicate_tab">تكرار التبويب</string>
@@ -112,6 +113,10 @@
     <string name="dialog_title_delete_all_downloads">حذف جميع التنزيلات؟</string>
     <string name="dialog_message_delete_all_downloads">سيتم إزالة جميع سجلات التنزيل وحذف الملفات نهائيًا</string>
     <string name="pref_summary_no_downloads">قائمة التنزيلات فارغة</string>
+    <string name="pref_summary_loading_downloads">جارٍ التحميل %1$d / %2$d</string>
+    <string name="pref_summary_updating_downloads">جارٍ التحديث %1$d / %2$d</string>
+    <string name="pref_summary_downloads_count">لديك %d تنزيل</string>
+    <string name="pref_summary_downloads_count_plural">لديك %d تنزيلات</string>
     <string name="cancel_download">إلغاء التنزيل</string>
     <string name="open_download">فتح</string>
     <string name="share_file">مشاركة الملف</string>
@@ -189,6 +194,7 @@
     <string name="message_link_copied">تم نسخ الرابط إلى الحافظة</string>
     <string name="message_blocked_local">تم حظر المِلَفّ المحلي من التحميل</string>
     <string name="message_no_app_available">لا يوجد تطبيق متاح لفتح هذا الرابط</string>
+    <string name="message_pip_not_supported">صورة داخل صورة غير مدعومة</string>
     <string name="licenses">التراخيص المفتوحة المصدر</string>
     <string name="suggestion">البحث عن</string>
     <string name="checking_for_updates">جارٍ التحقق من وجود تحديثات…</string>
@@ -457,6 +463,8 @@
     <string name="message_added_to_homescreen">تمت إضافة الاختصار إلى الشاشة الرئيسية</string>
     <string name="shortcut_message_failed_to_add">عذراً، المشغل الخاص بك لا يدعم الاختصارات.</string>
     <string name="action_delete_all_bookmarks">حذف جميع الإشارات المرجعية</string>
+    <string name="dialog_title_delete_all_bookmarks">حذف جميع الإشارات المرجعية؟</string>
+    <string name="dialog_message_delete_all_bookmarks">ستُحذف جميع علاماتك المرجعية نهائياً</string>
     <string name="pref_title_developer">مطور</string>
     <string name="pref_summary_developer">إعدادات التصحيح والسجلات</string>
     <string name="debug_leak_canary">LeakCanary</string>
@@ -770,5 +778,4 @@
     <string name="extension_author_not_specified">لم يتم تحديد مؤلف الامتداد</string>
     <string name="action_install">تثبيت</string>
     <string name="pref_title_source_code">الكود المصدري</string>
-    <string name="dialog_title_delete_all_bookmarks">حذف جميع الإشارات المرجعية؟</string>
 </resources>

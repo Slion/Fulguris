@@ -3,6 +3,7 @@
     <string name="action_reload">Recarregar</string>
     <string name="action_force_reload">Forçar recarregamento</string>
     <string name="action_launch_app">Iniciar</string>
+    <string name="action_pip">Imagem em imagem</string>
     <string name="action_menu">Menu</string>
     <string name="action_new_tab">Nova aba</string>
     <string name="action_duplicate_tab">Duplicar aba</string>
@@ -112,6 +113,10 @@
     <string name="dialog_title_delete_all_downloads">Excluir todos os downloads?</string>
     <string name="dialog_message_delete_all_downloads">Todas as entradas de download serão removidas e os arquivos serão excluídos permanentemente</string>
     <string name="pref_summary_no_downloads">Sua lista de downloads está vazia</string>
+    <string name="pref_summary_loading_downloads">Carregando %1$d / %2$d</string>
+    <string name="pref_summary_updating_downloads">Atualizando %1$d / %2$d</string>
+    <string name="pref_summary_downloads_count">Você tem %d download</string>
+    <string name="pref_summary_downloads_count_plural">Você tem %d downloads</string>
     <string name="cancel_download">Cancelar download</string>
     <string name="open_download">Abrir</string>
     <string name="share_file">Compartilhar arquivo</string>
@@ -189,6 +194,7 @@
     <string name="message_link_copied">Link copiado para a área de transferência</string>
     <string name="message_blocked_local">Bloqueado o carregamento do arquivo local</string>
     <string name="message_no_app_available">Nenhum app disponível para abrir este link</string>
+    <string name="message_pip_not_supported">Imagem em imagem não é suportada</string>
     <string name="licenses">Licenças Open Source</string>
     <string name="suggestion">Pesquisar por</string>
     <string name="checking_for_updates">Verificando por atualizações…</string>
@@ -457,6 +463,8 @@
     <string name="message_added_to_homescreen">Atalho adicionado à tela inicial</string>
     <string name="shortcut_message_failed_to_add">Desculpe, seu launcher não suporta atalhos.</string>
     <string name="action_delete_all_bookmarks">Excluir todos os favoritos</string>
+    <string name="dialog_title_delete_all_bookmarks">Excluir todos os favoritos?</string>
+    <string name="dialog_message_delete_all_bookmarks">Todos os seus favoritos serão excluídos permanentemente</string>
     <string name="pref_title_developer">Desenvolvedor</string>
     <string name="pref_summary_developer">Configurações de depuração e registros</string>
     <string name="debug_leak_canary">LeakCanary</string>
@@ -758,6 +766,4 @@
     <string name="extension_author_not_specified">Autor da extensão não especificado</string>
     <string name="action_install">Instalar</string>
     <string name="pref_title_source_code">Código-fonte</string>
-    <string name="dialog_title_delete_all_bookmarks">Excluir todos os favoritos?</string>
-    <string name="dialog_message_delete_all_bookmarks">Todos os seus favoritos serão excluídos permanentemente</string>
 </resources>

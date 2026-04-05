@@ -3,6 +3,7 @@
     <string name="action_reload">Recarrega</string>
     <string name="action_force_reload">Forçar recàrrega</string>
     <string name="action_launch_app">Llançar</string>
+    <string name="action_pip">Imatge en imatge</string>
     <string name="action_menu">More</string>
     <string name="action_new_tab">Pestanya nova</string>
     <string name="action_duplicate_tab">Duplica pestanya</string>
@@ -112,6 +113,10 @@
     <string name="dialog_title_delete_all_downloads">Esborrar totes les descàrregues?</string>
     <string name="dialog_message_delete_all_downloads">Totes les entrades de descàrrega s\'eliminaran i els fitxers s\'esborraran definitivament</string>
     <string name="pref_summary_no_downloads">La teva llista de descàrregues està buida</string>
+    <string name="pref_summary_loading_downloads">Carregant %1$d / %2$d</string>
+    <string name="pref_summary_updating_downloads">Actualitzant %1$d / %2$d</string>
+    <string name="pref_summary_downloads_count">Tens %d descàrrega</string>
+    <string name="pref_summary_downloads_count_plural">Tens %d descàrregues</string>
     <string name="cancel_download">Cancel·la descàrrega</string>
     <string name="open_download">Obre</string>
     <string name="share_file">Comparteix fitxer</string>
@@ -189,6 +194,7 @@
     <string name="message_link_copied">S\'ha copiat l\'enllaç al porta-retalls</string>
     <string name="message_blocked_local">S\'ha bloquejat la càrrega del fitxer local</string>
     <string name="message_no_app_available">No hi ha cap aplicació disponible per obrir aquest enllaç</string>
+    <string name="message_pip_not_supported">La imatge en imatge no és compatible</string>
     <string name="licenses">Llicències de codi obert</string>
     <string name="suggestion">Cerca</string>
     <string name="checking_for_updates">S\'està comprovant si hi ha actualitzacions…</string>
@@ -457,6 +463,8 @@
     <string name="message_added_to_homescreen">Drecera afegida a la pantalla d\'inici</string>
     <string name="shortcut_message_failed_to_add">Ho sentim, el vostre llançador no admet dreceres.</string>
     <string name="action_delete_all_bookmarks">Eliminar totes les adreces d\'interès</string>
+    <string name="dialog_title_delete_all_bookmarks">Eliminar tots els marcadors?</string>
+    <string name="dialog_message_delete_all_bookmarks">Tots els vostres marcadors seran eliminats permanentment</string>
     <string name="pref_title_developer">Desenvolupador</string>
     <string name="pref_summary_developer">Configuració de depuració i registres</string>
     <string name="debug_leak_canary">LeakCanary</string>
@@ -758,5 +766,4 @@
     <string name="extension_author_not_specified">Autor de l\'extensió no especificat</string>
     <string name="action_install">Instal·la</string>
     <string name="pref_title_source_code">Codi font</string>
-    <string name="dialog_title_delete_all_bookmarks">Eliminar tots els marcadors?</string>
 </resources>

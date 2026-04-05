@@ -3,6 +3,7 @@
     <string name="action_reload">Yenile</string>
     <string name="action_force_reload">Yeniden yüklemeyi zorla</string>
     <string name="action_launch_app">Başlat</string>
+    <string name="action_pip">İçinde resim</string>
     <string name="action_menu">Daha fazla</string>
     <string name="action_new_tab">Yeni sekme</string>
     <string name="action_duplicate_tab">Sekmeyi çoğalt</string>
@@ -112,6 +113,10 @@
     <string name="dialog_title_delete_all_downloads">Tüm indirmeleri sil?</string>
     <string name="dialog_message_delete_all_downloads">Tüm indirme girdileri kaldırılacak ve dosyalar kalıcı olarak silinecek</string>
     <string name="pref_summary_no_downloads">İndirme listeniz boş</string>
+    <string name="pref_summary_loading_downloads">Yükleniyor %1$d / %2$d</string>
+    <string name="pref_summary_updating_downloads">Güncelleniyor %1$d / %2$d</string>
+    <string name="pref_summary_downloads_count">%d indirmeniz var</string>
+    <string name="pref_summary_downloads_count_plural">%d indirmeniz var</string>
     <string name="cancel_download">İndirmeyi iptal et</string>
     <string name="open_download">Aç</string>
     <string name="share_file">Dosyayı paylaş</string>
@@ -189,6 +194,7 @@
     <string name="message_link_copied">Bağlantı panoya kopyalandı</string>
     <string name="message_blocked_local">Yerel dosyanın yüklenmesi engellendi</string>
     <string name="message_no_app_available">Bu bağlantıyı açacak uygulama yok</string>
+    <string name="message_pip_not_supported">İçinde resim desteklenmiyor</string>
     <string name="licenses">Açık Kaynak Lisansları</string>
     <string name="suggestion">Bunu ara:</string>
     <string name="checking_for_updates">Güncellemeler kontrol ediliyor…</string>
@@ -457,6 +463,8 @@
     <string name="message_added_to_homescreen">Kısayol ana ekrana eklendi</string>
     <string name="shortcut_message_failed_to_add">Üzgünüz, başlatıcınız kısayolları desteklemiyor.</string>
     <string name="action_delete_all_bookmarks">Tüm yer imlerini sil</string>
+    <string name="dialog_title_delete_all_bookmarks">Tüm yer imleri silinsin mi?</string>
+    <string name="dialog_message_delete_all_bookmarks">Tüm yer imleriniz kalıcı olarak silinecek</string>
     <string name="pref_title_developer">Geliştirici</string>
     <string name="pref_summary_developer">Hata ayıklama ve günlük ayarları</string>
     <string name="debug_leak_canary">LeakCanary</string>
@@ -758,6 +766,4 @@
     <string name="extension_author_not_specified">Uzantı yazarı belirtilmedi</string>
     <string name="action_install">Kur</string>
     <string name="pref_title_source_code">Kaynak kodu</string>
-    <string name="dialog_title_delete_all_bookmarks">Tüm yer imleri silinsin mi?</string>
-    <string name="dialog_message_delete_all_bookmarks">Tüm yer imleriniz kalıcı olarak silinecek</string>
 </resources>

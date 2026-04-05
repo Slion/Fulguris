@@ -3,6 +3,7 @@
     <string name="action_reload">Перезагрузить</string>
     <string name="action_force_reload">Принудительная перезагрузка</string>
     <string name="action_launch_app">Запустить</string>
+    <string name="action_pip">Картинка в картинке</string>
     <string name="action_menu">Меню</string>
     <string name="action_new_tab">Создать вкладку</string>
     <string name="action_duplicate_tab">Дублировать вкладку</string>
@@ -112,6 +113,10 @@
     <string name="dialog_title_delete_all_downloads">Удалить все загрузки?</string>
     <string name="dialog_message_delete_all_downloads">Все записи о загрузках будут удалены, а файлы будут безвозвратно стёрты</string>
     <string name="pref_summary_no_downloads">Ваш список загрузок пуст</string>
+    <string name="pref_summary_loading_downloads">Загрузка %1$d / %2$d</string>
+    <string name="pref_summary_updating_downloads">Обновление %1$d / %2$d</string>
+    <string name="pref_summary_downloads_count">У вас %d загрузка</string>
+    <string name="pref_summary_downloads_count_plural">У вас %d загрузок</string>
     <string name="cancel_download">Отменить загрузку</string>
     <string name="open_download">Открыть</string>
     <string name="share_file">Поделиться файлом</string>
@@ -189,6 +194,7 @@
     <string name="message_link_copied">Ссылка скопирована в буфер обмена</string>
     <string name="message_blocked_local">Загрузка локального файла заблокирована</string>
     <string name="message_no_app_available">Нет доступного приложения для открытия этой ссылки</string>
+    <string name="message_pip_not_supported">Картинка в картинке не поддерживается</string>
     <string name="licenses">Лицензии с открытым исходным кодом</string>
     <string name="suggestion">Искать</string>
     <string name="checking_for_updates">Проверка обновлений...</string>
@@ -457,6 +463,8 @@
     <string name="message_added_to_homescreen">Ярлык добавлен на домашний экран</string>
     <string name="shortcut_message_failed_to_add">Извините, ваш лаунчер не поддерживает ярлыки.</string>
     <string name="action_delete_all_bookmarks">Удалить все закладки</string>
+    <string name="dialog_title_delete_all_bookmarks">Удалить все закладки?</string>
+    <string name="dialog_message_delete_all_bookmarks">Все ваши закладки будут удалены навсегда</string>
     <string name="pref_title_developer">Разработчик</string>
     <string name="pref_summary_developer">Настройки отладки и журналов</string>
     <string name="debug_leak_canary">LeakCanary</string>
@@ -764,6 +772,4 @@
     <string name="extension_author_not_specified">Автор расширения не указан</string>
     <string name="action_install">Установить</string>
     <string name="pref_title_source_code">Исходный код</string>
-    <string name="dialog_title_delete_all_bookmarks">Удалить все закладки?</string>
-    <string name="dialog_message_delete_all_bookmarks">Все ваши закладки будут удалены навсегда</string>
 </resources>

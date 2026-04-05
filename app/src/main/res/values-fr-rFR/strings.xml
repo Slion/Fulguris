@@ -3,6 +3,7 @@
     <string name="action_reload">Recharger</string>
     <string name="action_force_reload">Forcer le rechargement</string>
     <string name="action_launch_app">Lancer</string>
+    <string name="action_pip">Image dans l\'image</string>
     <string name="action_menu">Plus</string>
     <string name="action_new_tab">Nouvel onglet</string>
     <string name="action_duplicate_tab">Dupliquer l\'onglet</string>
@@ -112,6 +113,10 @@
     <string name="dialog_title_delete_all_downloads">Supprimer tous les téléchargements ?</string>
     <string name="dialog_message_delete_all_downloads">Toutes les entrées de téléchargement seront supprimées et les fichiers seront définitivement effacés</string>
     <string name="pref_summary_no_downloads">Votre liste de téléchargements est vide</string>
+    <string name="pref_summary_loading_downloads">Chargement %1$d / %2$d</string>
+    <string name="pref_summary_updating_downloads">Mise à jour %1$d / %2$d</string>
+    <string name="pref_summary_downloads_count">Vous avez %d téléchargement</string>
+    <string name="pref_summary_downloads_count_plural">Vous avez %d téléchargements</string>
     <string name="cancel_download">Annuler le téléchargement</string>
     <string name="open_download">Ouvrir</string>
     <string name="share_file">Partager le fichier</string>
@@ -189,6 +194,7 @@
     <string name="message_link_copied">Adresse copiée dans le presse-papiers</string>
     <string name="message_blocked_local">Le fichier local a été bloqué au chargement</string>
     <string name="message_no_app_available">Aucune application disponible pour ouvrir ce lien</string>
+    <string name="message_pip_not_supported">L\'image dans l\'image n\'est pas prise en charge</string>
     <string name="licenses">Licences open source</string>
     <string name="suggestion">Recherche</string>
     <string name="checking_for_updates">Recherche de mises à jour…</string>
@@ -457,6 +463,8 @@
     <string name="message_added_to_homescreen">Ajouté à l\'écran d\'accueil</string>
     <string name="shortcut_message_failed_to_add">Désolé, votre lanceur d\'applications ne supporte pas les raccourcis.</string>
     <string name="action_delete_all_bookmarks">Supprimer tous les favoris</string>
+    <string name="dialog_title_delete_all_bookmarks">Supprimer tous les favoris ?</string>
+    <string name="dialog_message_delete_all_bookmarks">Tous vos favoris seront définitivement supprimés</string>
     <string name="pref_title_developer">Développeur</string>
     <string name="pref_summary_developer">Paramètres de débogage et journaux</string>
     <string name="debug_leak_canary">LeakCanary</string>
@@ -758,6 +766,4 @@
     <string name="extension_author_not_specified">Auteur de l\'extension non spécifié</string>
     <string name="action_install">Installer</string>
     <string name="pref_title_source_code">Code source</string>
-    <string name="dialog_title_delete_all_bookmarks">Supprimer tous les favoris ?</string>
-    <string name="dialog_message_delete_all_bookmarks">Tous vos favoris seront définitivement supprimés</string>
 </resources>

@@ -3,6 +3,7 @@
     <string name="action_reload">Reload</string>
     <string name="action_force_reload">Priverstinai perkrauti</string>
     <string name="action_launch_app">Paleisti</string>
+    <string name="action_pip">Vaizdas vaizde</string>
     <string name="action_menu">Menu</string>
     <string name="action_new_tab">Nauja kortelė</string>
     <string name="action_duplicate_tab">Duplicate tab</string>
@@ -112,6 +113,10 @@
     <string name="dialog_title_delete_all_downloads">Ištrinti visus atsisiuntimus?</string>
     <string name="dialog_message_delete_all_downloads">Visi atsisiuntimo įrašai bus pašalinti ir failai bus visam laikui ištrinti</string>
     <string name="pref_summary_no_downloads">Jūsų atsisiuntimų sąrašas tuščias</string>
+    <string name="pref_summary_loading_downloads">Kraunama %1$d / %2$d</string>
+    <string name="pref_summary_updating_downloads">Atnaujinama %1$d / %2$d</string>
+    <string name="pref_summary_downloads_count">Turite %d atsisiuntimą</string>
+    <string name="pref_summary_downloads_count_plural">Turite %d atsisiuntimų</string>
     <string name="cancel_download">Atšaukti atsisiuntimą</string>
     <string name="open_download">Atidaryti</string>
     <string name="share_file">Bendrinti failą</string>
@@ -189,6 +194,7 @@
     <string name="message_link_copied">Link copied to clipboard</string>
     <string name="message_blocked_local">Local file has been blocked from loading</string>
     <string name="message_no_app_available">Nėra programos, kuri atidarytų šią nuorodą</string>
+    <string name="message_pip_not_supported">Vaizdas vaizde nepalaikomas</string>
     <string name="licenses">Open Source Licenses</string>
     <string name="suggestion">Search for</string>
     <string name="checking_for_updates">Checking for updates…</string>
@@ -457,6 +463,8 @@
     <string name="message_added_to_homescreen">Shortcut added to home screen</string>
     <string name="shortcut_message_failed_to_add">Sorry, your launcher does not support shortcuts.</string>
     <string name="action_delete_all_bookmarks">Delete all bookmarks</string>
+    <string name="dialog_title_delete_all_bookmarks">Ištrinti visas žymes?</string>
+    <string name="dialog_message_delete_all_bookmarks">Visos jūsų žymės bus negrįžtamai ištrintos</string>
     <string name="pref_title_developer">Kūrėjas</string>
     <string name="pref_summary_developer">Derinimo ir žurnalų nustatymai</string>
     <string name="debug_leak_canary">LeakCanary</string>
@@ -764,6 +772,4 @@
     <string name="extension_author_not_specified">Plėtinio autorius nenurodytas</string>
     <string name="action_install">Įdiegti</string>
     <string name="pref_title_source_code">Šaltinio kodas</string>
-    <string name="dialog_title_delete_all_bookmarks">Ištrinti visas žymes?</string>
-    <string name="dialog_message_delete_all_bookmarks">Visos jūsų žymės bus negrįžtamai ištrintos</string>
 </resources>

@@ -3,6 +3,7 @@
     <string name="action_reload">Recarregar</string>
     <string name="action_force_reload">Forçar recarregamento</string>
     <string name="action_launch_app">Iniciar</string>
+    <string name="action_pip">Imagem em imagem</string>
     <string name="action_menu">Menu</string>
     <string name="action_new_tab">Novo separador</string>
     <string name="action_duplicate_tab">Duplicar separador</string>
@@ -112,6 +113,10 @@
     <string name="dialog_title_delete_all_downloads">Eliminar todas as transferências?</string>
     <string name="dialog_message_delete_all_downloads">Todas as entradas de transferência serão removidas e os ficheiros serão eliminados permanentemente</string>
     <string name="pref_summary_no_downloads">A sua lista de transferências está vazia</string>
+    <string name="pref_summary_loading_downloads">A carregar %1$d / %2$d</string>
+    <string name="pref_summary_updating_downloads">A atualizar %1$d / %2$d</string>
+    <string name="pref_summary_downloads_count">Tem %d transferência</string>
+    <string name="pref_summary_downloads_count_plural">Tem %d transferências</string>
     <string name="cancel_download">Cancelar transferência</string>
     <string name="open_download">Abrir</string>
     <string name="share_file">Partilhar ficheiro</string>
@@ -189,6 +194,7 @@
     <string name="message_link_copied">Ligação copiada para a área de transferência</string>
     <string name="message_blocked_local">Bloqueado o carregamento do ficheiro local</string>
     <string name="message_no_app_available">Nenhuma aplicação disponível para abrir esta ligação</string>
+    <string name="message_pip_not_supported">Imagem em imagem não é suportada</string>
     <string name="licenses">Licenças Open Source</string>
     <string name="suggestion">Pesquisar por</string>
     <string name="checking_for_updates">A procurar atualizações…</string>
@@ -457,6 +463,8 @@
     <string name="message_added_to_homescreen">Atalho adicionado ao ecrã</string>
     <string name="shortcut_message_failed_to_add">Lamentamos mas o seu launcher não permite atalhos.</string>
     <string name="action_delete_all_bookmarks">Apagar todos os marcadores</string>
+    <string name="dialog_title_delete_all_bookmarks">Eliminar todos os marcadores?</string>
+    <string name="dialog_message_delete_all_bookmarks">Todos os seus marcadores serão eliminados permanentemente</string>
     <string name="pref_title_developer">Programador</string>
     <string name="pref_summary_developer">Definições de depuração e registos</string>
     <string name="debug_leak_canary">LeakCanary</string>
@@ -758,6 +766,4 @@
     <string name="extension_author_not_specified">Autor da extensão não especificado</string>
     <string name="action_install">Instalar</string>
     <string name="pref_title_source_code">Código-fonte</string>
-    <string name="dialog_title_delete_all_bookmarks">Eliminar todos os marcadores?</string>
-    <string name="dialog_message_delete_all_bookmarks">Todos os seus marcadores serão eliminados permanentemente</string>
 </resources>

@@ -3,6 +3,7 @@
     <string name="action_reload">Επαναφόρτωση</string>
     <string name="action_force_reload">Αναγκαστική επαναφόρτωση</string>
     <string name="action_launch_app">Εκκίνηση</string>
+    <string name="action_pip">Εικόνα μέσα σε εικόνα</string>
     <string name="action_menu">Menu</string>
     <string name="action_new_tab">Νέα καρτέλα</string>
     <string name="action_duplicate_tab">Διπλότυπη καρτέλα</string>
@@ -112,6 +113,10 @@
     <string name="dialog_title_delete_all_downloads">Διαγραφή όλων των λήψεων;</string>
     <string name="dialog_message_delete_all_downloads">Όλες οι εγγραφές λήψης θα αφαιρεθούν και τα αρχεία θα διαγραφούν οριστικά</string>
     <string name="pref_summary_no_downloads">Η λίστα λήψεών σας είναι κενή</string>
+    <string name="pref_summary_loading_downloads">Φόρτωση %1$d / %2$d</string>
+    <string name="pref_summary_updating_downloads">Ενημέρωση %1$d / %2$d</string>
+    <string name="pref_summary_downloads_count">Έχετε %d λήψη</string>
+    <string name="pref_summary_downloads_count_plural">Έχετε %d λήψεις</string>
     <string name="cancel_download">Ακύρωση λήψης</string>
     <string name="open_download">Άνοιγμα</string>
     <string name="share_file">Κοινοποίηση αρχείου</string>
@@ -189,6 +194,7 @@
     <string name="message_link_copied">Ο σύνδεσμος αντιγράφτηκε</string>
     <string name="message_blocked_local">Τοπικά αρχεία εχουν μπλοκαριστεί απο την φόρτωση</string>
     <string name="message_no_app_available">Δεν υπάρχει διαθέσιμη εφαρμογή για να ανοίξετε αυτόν τον σύνδεσμο</string>
+    <string name="message_pip_not_supported">Εικόνα μέσα σε εικόνα δεν υποστηρίζεται</string>
     <string name="licenses">Άδειες ανοιχτού κώδικα</string>
     <string name="suggestion">Αναζήτηση για</string>
     <string name="checking_for_updates">Έλεγχος για ενημερώσεις</string>
@@ -457,6 +463,8 @@
     <string name="message_added_to_homescreen">Η συντόμευση προστέθηκε στην αρχική οθόνη</string>
     <string name="shortcut_message_failed_to_add">Λυπούμαστε, το πρόγραμμα εκκίνησής σας δεν υποστηρίζει συντομεύσεις.</string>
     <string name="action_delete_all_bookmarks">Διαγραφή όλων των σελιδοδεικτών</string>
+    <string name="dialog_title_delete_all_bookmarks">Διαγραφή όλων των σελιδοδεικτών;</string>
+    <string name="dialog_message_delete_all_bookmarks">Όλοι οι σελιδοδείκτες σας θα διαγραφούν μόνιμα</string>
     <string name="pref_title_developer">Προγραμματιστής</string>
     <string name="pref_summary_developer">Ρυθμίσεις εντοπισμού σφαλμάτων και αρχείων καταγραφής</string>
     <string name="debug_leak_canary">LeakCanary</string>
@@ -758,5 +766,4 @@
     <string name="extension_author_not_specified">Ο συγγραφέας της επέκτασης δεν καθορίστηκε</string>
     <string name="action_install">Εγκατάσταση</string>
     <string name="pref_title_source_code">Πηγαίος κώδικας</string>
-    <string name="dialog_title_delete_all_bookmarks">Διαγραφή όλων των σελιδοδεικτών;</string>
 </resources>
