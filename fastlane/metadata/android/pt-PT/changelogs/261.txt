@@ -1,0 +1,4 @@
+📥 Transferências Blob
+📺 Imagem em imagem
+📂 Correção de pastas de favoritos que contêm apenas pastas
+🔄 Melhoria do puxar para atualizar

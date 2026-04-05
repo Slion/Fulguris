@@ -1,0 +1,4 @@
+📥 Blob-nedlastinger
+📺 Bilde i bilde
+📂 Fiks bokmerkemapper som kun inneholder mapper
+🔄 Forbedret dra ned for å oppdatere

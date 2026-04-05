@@ -1,0 +1,4 @@
+📥 Blob atsisiuntimai
+📺 Vaizdas vaizde
+📂 Žymių aplankų, kuriuose yra tik aplankai, taisymas
+🔄 Žemyn traukimo atnaujinimui gerinimas

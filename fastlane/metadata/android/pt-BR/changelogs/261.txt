@@ -1,0 +1,4 @@
+📥 Downloads Blob
+📺 Imagem em imagem
+📂 Correção de pastas de favoritos contendo apenas pastas
+🔄 Melhoria do puxar para atualizar

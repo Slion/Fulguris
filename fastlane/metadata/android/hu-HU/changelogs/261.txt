@@ -1,0 +1,4 @@
+📥 Blob letöltések
+📺 Kép a képben
+📂 Csak almappákat tartalmazó könyvjelzőmappák javítása
+🔄 Lehúzás a frissítéshez javítva

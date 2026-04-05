@@ -1,0 +1,4 @@
+📥 Blob preuzimanja
+📺 Slika u slici
+📂 Ispravka fascikli obeleživača koje sadrže samo fascikle
+🔄 Poboljšanje prevlačenja za osvežavanje

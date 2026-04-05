@@ -1,0 +1,4 @@
+📥 Téléchargements Blob
+📺 Image dans l'image
+📂 Correction des dossiers de favoris ne contenant que des dossiers
+🔄 Amélioration du glisser pour actualiser
