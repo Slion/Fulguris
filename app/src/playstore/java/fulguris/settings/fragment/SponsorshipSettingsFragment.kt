@@ -71,7 +71,7 @@ class SponsorshipSettingsFragment : AbstractSettingsFragment(),
         // Connect our billing client
         context?.let {
             playStoreBillingClient = BillingClient.newBuilder(it)
-                .enablePendingPurchases() // required or app will crash
+                .enablePendingPurchases(PendingPurchasesParams.newBuilder().enableOneTimeProducts().build())
                 .setListener(this).build()
         }
     }
@@ -112,17 +112,13 @@ class SponsorshipSettingsFragment : AbstractSettingsFragment(),
 
     /**
      * Callback from [BillingClient] after opening connection.
-     * It might make sense to get [SkuDetails] and [Purchases][Purchase] at this point.
+     * It might make sense to get [ProductDetails] and [Purchases][Purchase] at this point.
      */
     override fun onBillingSetupFinished(billingResult: BillingResult) {
         when (billingResult.responseCode) {
             BillingClient.BillingResponseCode.OK -> {
                 Timber.d( "onBillingSetupFinished successfully")
-                //querySkuDetailsAsync(BillingClient.SkuType.INAPP, GameSku.INAPP_SKUS)
-                // Ask client for list of available subscriptions
                 populatePreferenceScreen()
-                // Ask client for a list of purchase belonging to our customer
-                //queryPurchasesAsync()
             }
             BillingClient.BillingResponseCode.BILLING_UNAVAILABLE -> {
                 //Some apps may choose to make decisions based on this knowledge.
@@ -194,57 +190,71 @@ class SponsorshipSettingsFragment : AbstractSettingsFragment(),
         if (!isSubscriptionSupported()) {
             return
         }
-        // Ask servers for our product list AKA SKUs
-        val params = SkuDetailsParams.newBuilder().setSkusList(SUBS_SKUS).setType(BillingClient.SkuType.SUBS).build()
-        playStoreBillingClient.querySkuDetailsAsync(params) { billingResult, skuDetailsList ->
+        // Ask servers for our product list
+        val productList = SUBS_SKUS.map { sku ->
+            QueryProductDetailsParams.Product.newBuilder()
+                .setProductId(sku)
+                .setProductType(BillingClient.ProductType.SUBS)
+                .build()
+        }
+        val params = QueryProductDetailsParams.newBuilder().setProductList(productList).build()
+        playStoreBillingClient.queryProductDetailsAsync(params) { billingResult, productDetailsList ->
             when (billingResult.responseCode) {
                 BillingClient.BillingResponseCode.OK -> {
                     Timber.d( "populateSubscriptions OK")
-                    if (skuDetailsList.orEmpty().isNotEmpty()) {
-                        // We got a valid list of SKUs for our subscriptions
-                        var purchases = playStoreBillingClient.queryPurchasesAsync(BillingClient.SkuType.SUBS, PurchasesResponseListener { billingResult, purchases ->
+                    if (productDetailsList.isNotEmpty()) {
+                        // We got a valid list of product details for our subscriptions
+                        val purchaseParams = QueryPurchasesParams.newBuilder()
+                            .setProductType(BillingClient.ProductType.SUBS)
+                            .build()
+                        playStoreBillingClient.queryPurchasesAsync(purchaseParams) { billingResult, purchases ->
                           if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-                              //Timber.d( "Purchases dump: ")
                               if (purchases.isEmpty()) {
                                   // No valid subscriptions anymore, just downgrade then
-                                  // We only do this here for now so unless user goes to Sponsorship activity after expiration she should still be able to use her expired subscriptions
                                   userPreferences.sponsorship = Sponsorship.TIN
                               } else {
                                   purchases.forEach {
-                                      //Timber.d( it.toString())
                                       // Take this opportunity to update our entitlements
-                                      // That should fix things up for re-installations
-                                      if (it.skus.contains(SPONSOR_BRONZE)  && it.isAcknowledged) {
+                                      if (it.products.contains(SPONSOR_BRONZE)  && it.isAcknowledged) {
                                           userPreferences.sponsorship = Sponsorship.BRONZE
                                       }
                                   }
                               }
 
-                              // TODO: do we need to check the result?
-                              skuDetailsList?.forEach { skuDetails ->
-                                  Timber.d( skuDetails.toString())
+                              productDetailsList.forEach { productDetails ->
+                                  Timber.d( productDetails.toString())
                                   val pref = x.SwitchPreference(requireContext())
                                   pref.isSingleLineTitle = false
-                                  pref.title = skuDetails.title
-                                  pref.summary = skuDetails.price + formatPeriod(skuDetails.subscriptionPeriod) + "\n" + skuDetails.description
+                                  pref.title = productDetails.title
+                                  // Extract price and period from subscription offer details
+                                  val offerDetails = productDetails.subscriptionOfferDetails?.firstOrNull()
+                                  val pricingPhase = offerDetails?.pricingPhases?.pricingPhaseList?.firstOrNull()
+                                  val price = pricingPhase?.formattedPrice ?: ""
+                                  val period = pricingPhase?.billingPeriod ?: ""
+                                  pref.summary = price + formatPeriod(period) + "\n" + productDetails.description
                                   pref.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_payment, activity?.theme)
-                                  // Check if that SKU is an active subscription
-                                  pref.isChecked = purchases.firstOrNull { purchase -> purchase.skus.contains(skuDetails.sku) && purchase.isAcknowledged } != null
+                                  // Check if that product is an active subscription
+                                  pref.isChecked = purchases.firstOrNull { purchase -> purchase.products.contains(productDetails.productId) && purchase.isAcknowledged } != null
                                   //
                                   pref.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue: Any ->
                                       if (newValue == true) {
                                           // User is trying to buy that subscription
                                           // Launch subscription workflow
-                                          val purchaseParams = BillingFlowParams.newBuilder().setSkuDetails(skuDetails).build()
+                                          val productDetailsParamsList = listOf(
+                                              BillingFlowParams.ProductDetailsParams.newBuilder()
+                                                  .setProductDetails(productDetails)
+                                                  .apply { offerDetails?.offerToken?.let { setOfferToken(it) } }
+                                                  .build()
+                                          )
+                                          val purchaseFlowParams = BillingFlowParams.newBuilder()
+                                              .setProductDetailsParamsList(productDetailsParamsList)
+                                              .build()
                                           activity?.let {
-                                              playStoreBillingClient.launchBillingFlow(it, purchaseParams)
-                                              // TODO: Check the result?
-                                              // https://developer.android.com/reference/com/android/billingclient/api/BillingClient#launchBillingFlow(android.app.Activity,%20com.android.billingclient.api.BillingFlowParams)
-                                              // Purchase results are delivered in onPurchasesUpdated
+                                              playStoreBillingClient.launchBillingFlow(it, purchaseFlowParams)
                                           }
                                       } else {
-                                          // USer is trying to cancel subscription maybe
-                                          showPlayStoreSubscriptions(skuDetails.sku)
+                                          // User is trying to cancel subscription maybe
+                                          showPlayStoreSubscriptions(productDetails.productId)
                                       }
                                       false
                                   }
@@ -263,11 +273,11 @@ class SponsorshipSettingsFragment : AbstractSettingsFragment(),
                               Timber.e( "queryPurchasesAsync failed")
                               Timber.e( billingResult.debugMessage)
                           }
-                        })
+                        }
                     }
                 }
                 else -> {
-                    Timber.e( "querySkuDetailsAsync failed")
+                    Timber.e( "queryProductDetailsAsync failed")
                     Timber.e( billingResult.debugMessage)
                 }
             }
@@ -336,7 +346,7 @@ class SponsorshipSettingsFragment : AbstractSettingsFragment(),
                                 billingResult -> Timber.d( "onAcknowledgePurchaseResponse: $billingResult")
                                 when (billingResult.responseCode) {
                                     BillingClient.BillingResponseCode.OK -> {
-                                        if (it.skus.contains(SPONSOR_BRONZE) ) {
+                                        if (it.products.contains(SPONSOR_BRONZE) ) {
                                             // Purchase acknowledgement was successful
                                             // Update  sponsorship in our settings so that changes can take effect in the app
                                             userPreferences.sponsorship = Sponsorship.BRONZE
