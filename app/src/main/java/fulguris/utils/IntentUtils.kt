@@ -98,25 +98,38 @@ import java.util.regex.Pattern
     }
 
     /**
-     * TODO: Review and test that fallback logic
+     * Try launching the given [intent] and fall back to its `browser_fallback_url` if any.
+     *
+     * Per the Android intent scheme spec, when an `intent://` URL targets an app that is not
+     * installed, the `browser_fallback_url` extra (if present) takes precedence over going to
+     * the Play Store. This avoids landing on `ERR_UNKNOWN_URL_SCHEME` or a blank tab.
+     * See https://github.com/Slion/Fulguris/issues/799
      */
     fun Activity.startActivityWithFallback(tab: WebView?, intent: Intent, onlyFallback: Boolean): Boolean {
         Timber.d("startActivityWithFallback")
-        if (!onlyFallback && startActivityForIntent(intent)) {
-            Timber.d("Intent successfully started.")
-            // Intent was successfully handled
-            return true
-        } else {
-            Timber.d("Failed to start intent, checking for fallback URL.")
-            // Check for a fallback URL if the intent could not be started
-            val fallbackUrl = intent.getStringExtra("browser_fallback_url")
-            if (!fallbackUrl.isNullOrEmpty()) {
-                Timber.d("Fallback URL found: $fallbackUrl")
-                tab?.loadUrl(fallbackUrl)
-                return true
+        val fallbackUrl = intent.getStringExtra("browser_fallback_url")
+
+        if (!onlyFallback) {
+            // If the intent's target app is not installed and we have a fallback URL,
+            // prefer the fallback URL over the Play Store / market intent.
+            val canResolve = packageManager.resolveActivity(intent, 0) != null
+            if (canResolve || fallbackUrl.isNullOrEmpty()) {
+                if (startActivityForIntent(intent)) {
+                    Timber.d("Intent successfully started.")
+                    return true
+                }
+            } else {
+                Timber.d("Intent has no resolvable activity, using fallback URL instead of market intent.")
             }
-            Timber.d("No fallback URL found.")
         }
+
+        Timber.d("Checking for fallback URL.")
+        if (!fallbackUrl.isNullOrEmpty()) {
+            Timber.d("Fallback URL found: $fallbackUrl")
+            tab?.loadUrl(fallbackUrl)
+            return true
+        }
+        Timber.d("No fallback URL found.")
         return false
     }
 
@@ -268,5 +281,3 @@ import java.util.regex.Pattern
             startActivity(Intent.createChooser(shareIntent, getString(aTitleId)))
         }
     }
-
-

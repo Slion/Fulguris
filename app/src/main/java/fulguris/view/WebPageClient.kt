@@ -937,7 +937,9 @@ class WebPageClient(
 
                     if (resolveInfos.isEmpty()) {
                         Timber.w("No apps found to handle intent")
-                        return false
+                        // No app installed: still honour browser_fallback_url if any.
+                        // See https://github.com/Slion/Fulguris/issues/799
+                        return activity.startActivityWithFallback(view, intent, true)
                     }
 
                     // Determine if we have a single app or multiple apps
@@ -1011,22 +1013,19 @@ class WebPageClient(
         // Looks like it's intended to block everything that's not one of those
         // Will stop loading custom app schemes like: spotify:// or whatsapp://
         // That basically prevents showing the error page saying ERR_UNKNOWN_URL_SCHEME
-        // But in some situations we may actually want to show it
+        // We always stop loading for unsupported schemes so that pages redirecting to a
+        // custom scheme whose app is not installed (e.g. enalibaba:// on alibaba.com)
+        // do not land on an ugly ERR_UNKNOWN_URL_SCHEME page. The user stays on the
+        // current page instead. See https://github.com/Slion/Fulguris/issues/799
         if (!URLUtil.isNetworkUrl(url)
             && !URLUtil.isFileUrl(url)
             && !URLUtil.isAboutUrl(url)
             && !URLUtil.isDataUrl(url)
             && !URLUtil.isJavaScriptUrl(url)
         ) {
-            if (aSkipErrorPage) {
-                webView.stopLoading()
-                Timber.w("$ihs : Stop loading")
-                return true
-            }
-            // Should load error page
-            // Test this by navigating to an unknown scheme like youtube:// as it's not a thing apparently
-            // or simply use something like unsupported://example.com
-            return false
+            webView.stopLoading()
+            Timber.w("$ihs : Stop loading unsupported scheme: $url")
+            return true
         }
         return when {
             headers.isEmpty() -> false
