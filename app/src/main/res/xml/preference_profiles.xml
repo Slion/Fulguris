@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ Profiles settings list. See https://github.com/Slion/Fulguris/issues/618
+-->
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:a="http://schemas.android.com/apk/res-auto">
+
+    <x.Preference
+        a:key="@string/pref_key_add_profile"
+        a:title="@string/pref_title_profile_add"
+        a:summary="@string/pref_summary_profile_add"
+        a:icon="@drawable/ic_add"
+        a:iconSpaceReserved="false"
+        a:singleLineTitle="false"
+        a:allowDividerAbove="true"
+        a:order="10" />
+
+    <x.Preference
+        a:key="@string/pref_key_delete_all_profiles"
+        a:title="@string/pref_title_profiles_delete_all"
+        a:summary="@string/pref_summary_profiles_delete_all"
+        a:icon="@drawable/ic_delete_forever_outline"
+        a:iconSpaceReserved="false"
+        a:singleLineTitle="false"
+        a:allowDividerAbove="true"
+        a:order="20" />
+
+    <x.PreferenceCategory
+        a:key="@string/pref_key_profiles"
+        a:icon="@drawable/ic_account_circle_outline"
+        a:title="@string/pref_title_profiles"
+        a:singleLineTitle="false"
+        a:order="100" />
+
+</PreferenceScreen>

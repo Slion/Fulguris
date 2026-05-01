@@ -36,6 +36,15 @@
         />
 
     <Preference
+        x:fragment="fulguris.settings.fragment.ProfilesSettingsFragment"
+        x:key="@string/pref_key_profiles"
+        x:summary="@string/pref_summary_profiles"
+        x:title="@string/pref_title_profiles"
+        x:icon="@drawable/ic_account_circle_outline"
+        x:singleLineTitle="false"
+        />
+
+    <Preference
         x:fragment="fulguris.settings.fragment.AdBlockSettingsFragment"
         x:title="@string/settings_adblock"
         x:summary="@string/pref_summary_adblock"

@@ -315,7 +315,7 @@ class DomainPreferences constructor(
         }
 
         val origin = "https://$domain"
-        android.webkit.GeolocationPermissions.getInstance().getAllowed(origin) { allowed ->
+        ProfilePreferences.activeGeolocationPermissions().getAllowed(origin) { allowed ->
             callback(allowed == true)
         }
     }
@@ -334,7 +334,7 @@ class DomainPreferences constructor(
         }
 
         // First, check if this domain exists in the origins list
-        android.webkit.GeolocationPermissions.getInstance().getOrigins { origins: Set<String>? ->
+        ProfilePreferences.activeGeolocationPermissions().getOrigins { origins: Set<String>? ->
             val matchingOrigin = origins?.firstOrNull { origin ->
                 try {
                     // Parse the origin as a URI to properly extract just the host
@@ -349,7 +349,7 @@ class DomainPreferences constructor(
 
             if (matchingOrigin != null) {
                 // Domain has a permission state, check if it's granted or denied
-                android.webkit.GeolocationPermissions.getInstance().getAllowed(matchingOrigin) { allowed ->
+                ProfilePreferences.activeGeolocationPermissions().getAllowed(matchingOrigin) { allowed ->
                     callback(allowed)
                 }
             } else {
@@ -371,7 +371,7 @@ class DomainPreferences constructor(
         }
 
         val origin = "https://$domain"
-        android.webkit.GeolocationPermissions.getInstance().allow(origin)
+        ProfilePreferences.activeGeolocationPermissions().allow(origin)
         Timber.d("Granted geolocation permission for: $origin")
     }
 
@@ -387,7 +387,7 @@ class DomainPreferences constructor(
         }
 
         val origin = "https://$domain"
-        android.webkit.GeolocationPermissions.getInstance().clear(origin)
+        ProfilePreferences.activeGeolocationPermissions().clear(origin)
         Timber.i("Revoked geolocation permission for: $origin")
     }
 

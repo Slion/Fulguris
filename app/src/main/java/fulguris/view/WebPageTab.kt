@@ -50,8 +50,11 @@ import android.webkit.WebSettings.LayoutAlgorithm
 import android.webkit.WebView
 import androidx.annotation.RequiresApi
 import androidx.collection.ArrayMap
+import androidx.webkit.ProfileStore
 import androidx.webkit.WebSettingsCompat
+import androidx.webkit.WebViewCompat
 import androidx.webkit.WebViewFeature
+import fulguris.settings.preferences.ProfilePreferences
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.EntryPointAccessors
 import fulguris.constant.Hosts
@@ -530,6 +533,14 @@ class WebPageTab(
             setOnTouchListener(tl)
 
             initializeSettings()
+
+            // Isolate browsing data (cookies, cache, storage) per active profile.
+            // Must be called before the first page load.
+            if (WebViewFeature.isFeatureSupported(WebViewFeature.MULTI_PROFILE)) {
+                val storeName = ProfilePreferences.toProfileStoreName(userPreferences.activeProfile)
+                ProfileStore.getInstance().getOrCreateProfile(storeName)
+                WebViewCompat.setProfile(this, storeName)
+            }
         }
 
         initializePreferences()

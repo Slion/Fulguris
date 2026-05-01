@@ -3,6 +3,8 @@ package fulguris.settings.fragment
 import fulguris.BuildConfig
 import fulguris.R
 import android.os.Bundle
+import androidx.preference.Preference
+import androidx.webkit.WebViewFeature
 import x.PreferenceFragmentBase
 
 /**
@@ -16,6 +18,11 @@ class RootSettingsFragment : PreferenceFragmentBase() {
         if (BuildConfig.BUILD_TYPE!="debug") {
             // Hide debug page in release builds
             //findPreference<Preference>(getString(R.string.pref_key_debug))?.isVisible = false
+        }
+
+        // Hide Profiles settings on devices where the WebView multi-profile feature is not supported
+        if (!WebViewFeature.isFeatureSupported(WebViewFeature.MULTI_PROFILE)) {
+            findPreference<Preference>(getString(R.string.pref_key_profiles))?.isVisible = false
         }
     }
 

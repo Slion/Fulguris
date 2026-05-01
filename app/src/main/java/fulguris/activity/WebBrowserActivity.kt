@@ -176,6 +176,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     private var verticalTabBar: Boolean = false
     private var tabBarInDrawer: Boolean = false
     private var swapBookmarksAndTabs: Boolean = false
+    private var activeProfile: String = ""
 
     private var originalOrientation: Int = 0
     private var currentUiColor = Color.BLACK
@@ -1017,6 +1018,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         analytics = userPreferences.analytics
         crashReport = userPreferences.crashReport
         showCloseTabButton = userPreferences.showCloseTabButton
+        activeProfile = userPreferences.activeProfile
 
         if (!isIncognito()) {
             // For some reason that was crashing when incognito
@@ -3652,6 +3654,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
                 || analytics != userPreferences.analytics
                 || crashReport != userPreferences.crashReport
                 || showCloseTabButton != userPreferences.showCloseTabButton
+                || activeProfile != userPreferences.activeProfile
         ) {
             restart()
         }

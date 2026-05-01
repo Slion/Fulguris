@@ -32,6 +32,7 @@ import fulguris.extensions.launch
 import fulguris.extensions.reverseDomainName
 import fulguris.favicon.FaviconModel
 import fulguris.settings.preferences.DomainPreferences
+import fulguris.settings.preferences.ProfilePreferences
 import fulguris.utils.Utils
 import android.annotation.SuppressLint
 import android.content.SharedPreferences
@@ -202,7 +203,7 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
         }
 
         // Check for geolocation origins
-        android.webkit.GeolocationPermissions.getInstance().getOrigins { origins: Set<String>? ->
+        ProfilePreferences.activeGeolocationPermissions().getOrigins { origins: Set<String>? ->
             hasGeolocationOrigins = !origins.isNullOrEmpty()
 
             // Update button states
@@ -254,7 +255,7 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
      *
      */
     private fun clearGeolocationPermissions() {
-        android.webkit.GeolocationPermissions.getInstance().clearAll()
+        ProfilePreferences.activeGeolocationPermissions().clearAll()
         //activity?.snackbar("Geolocation permissions cleared")
     }
 
@@ -427,7 +428,7 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
         }
 
         // 2. Add domains with geolocation permissions
-        android.webkit.GeolocationPermissions.getInstance().getOrigins { origins: Set<String>? ->
+        ProfilePreferences.activeGeolocationPermissions().getOrigins { origins: Set<String>? ->
             hasGeolocationOrigins = !origins.isNullOrEmpty()
 
             origins?.forEach { origin ->

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ Profile detail page: sessions assignment, rename, delete.
+ See https://github.com/Slion/Fulguris/issues/618
+-->
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:a="http://schemas.android.com/apk/res-auto">
+
+    <x.Preference
+        a:key="@string/pref_key_profile_rename"
+        a:title="@string/pref_title_profile_rename"
+        a:icon="@drawable/ic_edit_outline"
+        a:iconSpaceReserved="false"
+        a:singleLineTitle="false"
+        a:order="10" />
+
+    <x.Preference
+        a:key="@string/pref_key_profile_delete"
+        a:title="@string/pref_title_profile_delete"
+        a:icon="@drawable/ic_account_circle_off_outline"
+        a:iconSpaceReserved="false"
+        a:singleLineTitle="false"
+        a:order="20" />
+
+    <x.Preference
+        a:key="@string/pref_key_profile_clear"
+        a:title="@string/pref_title_profile_clear"
+        a:summary="@string/pref_summary_profile_clear"
+        a:icon="@drawable/ic_delete_forever_outline"
+        a:iconSpaceReserved="false"
+        a:singleLineTitle="false"
+        a:order="30" />
+
+    <x.Preference
+        a:key="@string/pref_key_profile_clear_cookies"
+        a:title="@string/pref_title_profile_clear_cookies"
+        a:summary="@string/pref_summary_profile_clear_cookies"
+        a:icon="@drawable/ic_cookie_off_outline"
+        a:iconSpaceReserved="false"
+        a:singleLineTitle="false"
+        a:order="31" />
+
+    <x.Preference
+        a:key="@string/pref_key_profile_clear_storage"
+        a:title="@string/pref_title_profile_clear_storage"
+        a:summary="@string/pref_summary_profile_clear_storage"
+        a:icon="@drawable/ic_database_off_outline"
+        a:iconSpaceReserved="false"
+        a:singleLineTitle="false"
+        a:order="31" />
+
+    <x.Preference
+        a:key="@string/pref_key_profile_clear_geolocation"
+        a:title="@string/pref_title_profile_clear_geolocation"
+        a:summary="@string/pref_summary_profile_clear_geolocation"
+        a:icon="@drawable/ic_location_off_outline"
+        a:iconSpaceReserved="false"
+        a:singleLineTitle="false"
+        a:order="32" />
+
+    <x.PreferenceCategory
+        a:key="@string/pref_key_profile_sessions"
+        a:title="@string/pref_title_profile_sessions"
+        a:summary="@string/pref_summary_profile_sessions"
+        a:singleLineTitle="false"
+        a:order="100" />
+
+</PreferenceScreen>

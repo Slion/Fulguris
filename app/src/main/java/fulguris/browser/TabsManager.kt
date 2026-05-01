@@ -6,6 +6,7 @@ import acr.browser.lightning.browser.sessions.Session
 import fulguris.extensions.snackbar
 import fulguris.search.SearchEngineProvider
 import fulguris.settings.NewTabPosition
+import fulguris.settings.preferences.ProfilePreferences
 import fulguris.settings.preferences.UserPreferences
 import fulguris.ssl.SslState
 import android.app.Activity
@@ -787,6 +788,11 @@ class TabsManager @Inject constructor(
         isInitialized = false
         // Change current session
         sessionsManager.setCurrentSession(aSessionName)
+        // Auto-switch the active profile to whichever profile is assigned to this session.
+        val targetProfile = ProfilePreferences.sessionProfile(aSessionName)
+        if (userPreferences.activeProfile != targetProfile) {
+            userPreferences.activeProfile = targetProfile
+        }
         // Save it again to preserve new current session name
         sessionsManager.saveSessions()
         // Then reload our tabs

@@ -7,6 +7,9 @@ import fulguris.R
 import fulguris.extensions.findPreference
 import fulguris.extensions.findViewsByType
 import fulguris.settings.fragment.AbstractSettingsFragment
+import fulguris.settings.fragment.DetailSwitchPreference
+import fulguris.settings.fragment.ProfileDetailSettingsFragment
+import fulguris.settings.fragment.ProfilesSettingsFragment
 import fulguris.settings.fragment.RootSettingsFragment
 import fulguris.settings.fragment.ResponsiveSettingsFragment
 import android.os.Bundle
@@ -23,6 +26,9 @@ import fulguris.extensions.ihs
 import timber.log.Timber
 
 const val FRAGMENT_CLASS_NAME = "FRAGMENT"
+const val FRAGMENT_ARGS = "FRAGMENT_ARGS"
+/** String extra: profile name — used to deep-link directly to a [ProfileDetailSettingsFragment]. */
+const val PROFILE_ARG = "profile_name"
 
 /**
  * TODO: Review title update implementation for both single and dual pane modes
@@ -91,7 +97,27 @@ class SettingsActivity : ThemedSettingsActivity() {
                 intent.getStringExtra(FRAGMENT_CLASS_NAME)?.let{
                     Timber.d("$ihs : Intent fragment: - $it")
                     val classType = Class.forName(it)
-                    startFragment(classType)
+                    if (classType == ProfileDetailSettingsFragment::class.java) {
+                        // ProfileDetailSettingsFragment is nested under ProfilesSettingsFragment.
+                        // First navigate to ProfilesSettingsFragment, then post a second step to
+                        // open the specific profile detail once the fragment is committed.
+                        val profileName = intent.getStringExtra(PROFILE_ARG)
+                            ?: ProfileDetailSettingsFragment.ARG_PROFILE_DEFAULT
+                        Timber.d("$ihs : Deep-link to profile detail: '$profileName'")
+                        startFragment(ProfilesSettingsFragment::class.java)
+                        responsive.view?.post {
+                            val profilesFrag = responsive.childFragmentManager.fragments
+                                .filterIsInstance<ProfilesSettingsFragment>()
+                                .firstOrNull()
+                                ?: (currentFragment() as? ProfilesSettingsFragment)
+                            profilesFrag?.preferenceScreen
+                                ?.findPreference<DetailSwitchPreference>(profileName)
+                                ?.let { pref -> profilesFrag.onPreferenceTreeClick(pref) }
+                        }
+                    } else {
+                        val args = intent.getBundleExtra(FRAGMENT_ARGS)
+                        startFragment(classType, args)
+                    }
                 }
             } else {
                 val classType = Class.forName(iFragmentClassName)
@@ -250,10 +276,11 @@ class SettingsActivity : ThemedSettingsActivity() {
      * Start fragment matching the given type.
      * That should only work if the currently loaded fragment is our root/header fragment.
      */
-    private fun startFragment(aClass: Class<*>) {
+    private fun startFragment(aClass: Class<*>, args: android.os.Bundle? = null) {
         // We need to find the preference that's associated with that fragment, before we can start it.
         (currentFragment() as? RootSettingsFragment)?.let {
             it.preferenceScreen.findPreference(aClass)?.let { pref ->
+                if (args != null) pref.extras.putAll(args)
                 it.onPreferenceTreeClick(pref)
             }
         }

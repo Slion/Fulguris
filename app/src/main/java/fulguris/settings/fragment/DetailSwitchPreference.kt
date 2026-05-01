@@ -27,6 +27,7 @@ import androidx.preference.PreferenceViewHolder
 import androidx.preference.SwitchPreference
 import com.google.android.material.materialswitch.MaterialSwitch
 import fulguris.R
+import timber.log.Timber
 
 /**
  * A SwitchPreference that allows separate click handlers for the switch and the preference itself.
@@ -57,6 +58,7 @@ open class DetailSwitchPreference(
         holder.itemView.isFocusable = false
 
         val switch: MaterialSwitch? = holder.itemView.findViewById(R.id.detail_switch_widget)
+        Timber.d("DetailSwitchPreference.onBindViewHolder: key='$key' isChecked=$isChecked switch=${switch != null}")
         switch?.isChecked = isChecked
         switch?.setOnClickListener {
             val newValue = (it as MaterialSwitch).isChecked
@@ -93,8 +95,7 @@ open class DetailSwitchPreference(
             return
         }
 
-        // Default behavior - toggle the switch
-        super.onClick()
+        // Switch has its own click listener — item tap with no handler does nothing.
     }
 
     // layout resource must be set before onBindViewHolder
@@ -104,4 +105,3 @@ open class DetailSwitchPreference(
         widgetLayoutResource = R.layout.detail_switch_preference_widget
     }
 }
-

@@ -400,6 +400,8 @@ class UserPreferences @Inject constructor(
      */
     var locale by preferences.stringPreference(R.string.pref_key_locale, "")
 
+    var activeProfile by preferences.stringPreference(R.string.pref_key_active_profile, fulguris.settings.preferences.ProfilePreferences.DEFAULT)
+
     /**
      * Define behavior for blocklist updates (on, off, only on non-metered connections).
      * Update check is only happening at browser start.

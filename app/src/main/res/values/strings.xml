@@ -619,6 +619,37 @@
 
     <string name="pref_summary_no_overrides">No overrides</string>
 
+    <!-- Profile settings -->
+    <string name="pref_title_profiles">Profiles</string>
+    <string name="pref_summary_profiles">Manage browsing profiles</string>
+    <string name="pref_title_profile_add">Add profile</string>
+    <string name="pref_summary_profile_add">Create a new browsing profile</string>
+    <string name="pref_title_profiles_delete_all">Delete all</string>
+    <string name="pref_summary_profiles_delete_all">Delete every profile and reset to defaults</string>
+    <string name="pref_title_profile_rename">Rename</string>
+    <string name="pref_title_profile_delete">Delete</string>
+    <string name="pref_title_profile_sessions">Sessions</string>
+    <string name="pref_summary_profile_sessions">Sessions that automatically switch to this profile</string>
+    <string name="profile_name_prompt">Enter profile name:</string>
+    <string name="profile_already_exists">A profile with that name already exists!</string>
+    <string name="profile_cant_rename_default">The default profile cannot be renamed.</string>
+    <string name="profile_session_assign_hint">To assign this session to a profile, open that profile and enable it there.</string>
+    <string name="pref_title_profile_clear">Clear all data</string>
+    <string name="pref_summary_profile_clear">Clear cookies, web storage and geolocation permissions</string>
+    <string name="dialog_message_profile_clear">This will permanently delete all cookies, web storage (localStorage, IndexedDB, databases, AppCache), and geolocation permissions for the profile \u201C%1$s\u201D.\n\nThis cannot be undone.</string>
+    <string name="pref_title_profile_clear_cookies">Clear cookies</string>
+    <string name="pref_summary_profile_clear_cookies">Remove all cookies stored by this profile</string>
+    <string name="dialog_message_profile_clear_cookies">This will permanently delete all cookies for the profile \u201C%1$s\u201D.\n\nThis cannot be undone.</string>
+    <string name="pref_title_profile_clear_storage">Clear web storage</string>
+    <string name="pref_summary_profile_clear_storage">Remove localStorage, IndexedDB, databases and AppCache</string>
+    <string name="dialog_message_profile_clear_storage">This will permanently delete all web storage (localStorage, IndexedDB, databases, AppCache) for the profile \u201C%1$s\u201D.\n\nThis cannot be undone.</string>
+    <string name="pref_title_profile_clear_geolocation">Clear geolocation permissions</string>
+    <string name="pref_summary_profile_clear_geolocation">Revoke all granted geolocation access for this profile</string>
+    <string name="dialog_message_profile_clear_geolocation">This will revoke all geolocation permissions for the profile \u201C%1$s\u201D.\n\nThis cannot be undone.</string>
+    <string name="dialog_title_profile_deletion">Delete profile?</string>
+    <string name="dialog_message_profile_deletion">Profile \"<xliff:g id="profile_name" example="Work">%s</xliff:g>\" will be permanently deleted. This action cannot be undone.</string>
+    <string name="question_delete_all_profiles">Delete all profiles?</string>
+
     <string name="pref_title_task_label">Task label</string>
     <string name="pref_title_task_icon">Task icon</string>
     <string name="pref_summary_on_task_icon">Use page icon</string>

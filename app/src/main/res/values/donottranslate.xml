@@ -185,6 +185,19 @@
     <string name="pref_key_clear_location_permissions">pref_key_clear_location_permissions</string>
     <string name="pref_key_delete_all_domains_settings">pref_key_delete_all_domains_settings</string>
 
+    <!-- Profile settings -->
+    <string name="pref_key_active_profile">pref_key_active_profile</string>
+    <string name="pref_key_profiles">pref_key_profiles</string>
+    <string name="pref_key_add_profile">pref_key_add_profile</string>
+    <string name="pref_key_delete_all_profiles">pref_key_delete_all_profiles</string>
+    <string name="pref_key_profile_rename">pref_key_profile_rename</string>
+    <string name="pref_key_profile_delete">pref_key_profile_delete</string>
+    <string name="pref_key_profile_clear">pref_key_profile_clear</string>
+    <string name="pref_key_profile_clear_cookies">pref_key_profile_clear_cookies</string>
+    <string name="pref_key_profile_clear_storage">pref_key_profile_clear_storage</string>
+    <string name="pref_key_profile_clear_geolocation">pref_key_profile_clear_geolocation</string>
+    <string name="pref_key_profile_sessions">pref_key_profile_sessions</string>
+
     <string name="pref_key_page_history">pref_key_page_history</string>
 
     <!-- Display settings -->
