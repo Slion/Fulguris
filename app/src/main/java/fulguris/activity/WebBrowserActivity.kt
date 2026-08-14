@@ -1213,7 +1213,13 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     private fun setupButtonMore() {
 
         iBindingToolbarContent.buttonMore.setOnClickListener {
-            // Without that handler we don't get audio feedback on F(x)tec Pro�
+            // Without that handler we don't get audio feedback on F(x)tec Pro
+            // On TV there is no touch input, so the remote select key reaches this click
+            // listener (the GestureDetector below only reacts to MotionEvent). Open the menu
+            // here or the button would only play its ripple without doing anything.
+            if (packageManager.hasSystemFeature("android.software.leanback")) {
+                showMenuMain()
+            }
         }
 
         val menuSwipeDetector = GestureDetectorCompat(this, object : GestureDetector.SimpleOnGestureListener() {
