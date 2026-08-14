@@ -47,6 +47,13 @@ class AdBlockerPreferenceFragment: PreferenceFragmentCompat() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (requireContext().packageManager.hasSystemFeature("android.software.leanback")) {
+            listView.requestFocus()
+        }
+    }
+
     override fun onPause() {
         super.onPause()
         // Cancel pending navigation when user navigates away from this slide

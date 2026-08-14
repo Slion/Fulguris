@@ -8,7 +8,9 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import fulguris.R
 import fulguris.activity.IntroActivity
+import fulguris.extensions.flash
 import fulguris.extensions.openBrowserChooser
+import fulguris.extensions.requestFocusOnPreference
 import timber.log.Timber
 
 /**
@@ -45,7 +47,29 @@ class AcceptTermsPreferenceFragment: PreferenceFragmentCompat() {
             } else {
                 Timber.d("User toggled terms acceptance off")
             }
+
+            // On TV the row rebinds after a toggle and loses its focus, which makes the
+            // cursor jump to the first preference. Re-assert focus on the switch row.
+            if (requireContext().packageManager.hasSystemFeature("android.software.leanback")) {
+                requestFocusOnPreference(R.string.pref_key_accept_terms)
+            }
             true
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // On TV, request focus on the list so D-pad UP/DOWN works for preference selection
+        if (requireContext().packageManager.hasSystemFeature("android.software.leanback")) {
+            listView.requestFocus()
+        }
+
+        // When we enter the slide and terms are not yet accepted, flash the switch to draw attention
+        val acceptTermsSwitch = findPreference<x.SwitchPreference>(getString(R.string.pref_key_accept_terms))
+        if (acceptTermsSwitch?.isChecked != true) {
+            listView.post {
+                flash(R.string.pref_key_accept_terms)
+            }
         }
     }
 

@@ -5,11 +5,15 @@ import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.View
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import com.github.appintro.AppIntro2
+import com.github.appintro.R as AppIntroR
 import com.github.appintro.AppIntroFragment
 import com.github.appintro.AppIntroPageTransformerType
 import dagger.hilt.android.AndroidEntryPoint
@@ -52,6 +56,12 @@ class IntroActivity : AppIntro2() {
         //setTheme(R.style.Theme_App_Dark)
 
         super.onCreate(savedInstanceState)
+
+        // On TV, prevent ViewPager2's internal RecyclerView from stealing D-pad focus from slide content
+        if (packageManager.hasSystemFeature("android.software.leanback")) {
+            (findViewById<ViewPager2>(AppIntroR.id.view_pager)?.getChildAt(0) as? RecyclerView)
+                ?.isFocusable = false
+        }
 
         // Restore slide position if activity was recreated
         if (savedInstanceState != null) {
@@ -339,6 +349,36 @@ class IntroActivity : AppIntro2() {
             imageDrawable = R.drawable.ic_chat_info_outline,
             backgroundColorRes = R.color.intro_accept_terms_background
         )
+    }
+
+    // Remote control key handling for Android TV
+    override fun onKeyDown(code: Int, event: KeyEvent): Boolean {
+        return when (code) {
+            // The D-pad and arrow keys are intentionally left to the default focus traversal,
+            // they should only be used to move the focus cursor around the current slide.
+            // Fast forward advances to the next slide, honoring the current slide's policy
+            KeyEvent.KEYCODE_MEDIA_FAST_FORWARD -> {
+                if (!onCanRequestNextPage()) { onIllegallyRequestedNextPage(); return true }
+                if (currentSlidePosition == totalSlidesNumber - 1) {
+                    // On last slide: focus the Done button and flash its ripple
+                    val doneButton = findViewById<View>(AppIntroR.id.done)
+                    doneButton?.requestFocus()
+                    doneButton?.let { flashButton(it) }
+                } else {
+                    goToNextSlide(false)
+                }
+                true
+            }
+            // Rewind goes back to the previous slide
+            KeyEvent.KEYCODE_MEDIA_REWIND -> { goToPreviousSlide(); true }
+            else -> super.onKeyDown(code, event)
+        }
+    }
+
+    private fun flashButton(button: View, times: Int = 3, delayMs: Long = 300) {
+        button.isPressed = true
+        button.isPressed = false
+        if (times > 1) button.postDelayed({ flashButton(button, times - 1, delayMs) }, delayMs)
     }
 
     override fun onSkipPressed(currentFragment: Fragment?) {

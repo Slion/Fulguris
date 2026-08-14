@@ -15,4 +15,11 @@ class TelemetryPreferenceFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.preference_telemetry, rootKey)
     }
+
+    override fun onResume() {
+        super.onResume()
+        if (requireContext().packageManager.hasSystemFeature("android.software.leanback")) {
+            listView.requestFocus()
+        }
+    }
 }

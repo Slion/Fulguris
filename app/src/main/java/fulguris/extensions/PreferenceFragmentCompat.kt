@@ -1,6 +1,7 @@
 package fulguris.extensions
 
 import androidx.annotation.StringRes
+import androidx.core.view.doOnPreDraw
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import timber.log.Timber
@@ -20,8 +21,8 @@ fun <T : Preference?> PreferenceFragmentCompat.find(@StringRes aId: Int): T? {
  * @param times Number of times to flash (default: 2)
  * @param delayMs Delay in milliseconds between flashes (default: 800)
  */
-fun PreferenceFragmentCompat.flash(@StringRes preferenceKeyResId: Int, times: Int = 2, delayMs: Long = 800) {
-    flash(getString(preferenceKeyResId), times, delayMs)
+fun PreferenceFragmentCompat.flash(@StringRes preferenceKeyResId: Int, times: Int = 2, delayMs: Long = 800, focus: Boolean = true) {
+    flash(getString(preferenceKeyResId), times, delayMs, focus)
 }
 
 /**
@@ -32,7 +33,7 @@ fun PreferenceFragmentCompat.flash(@StringRes preferenceKeyResId: Int, times: In
  * @param times Number of times to flash (default: 2)
  * @param delayMs Delay in milliseconds between flashes (default: 800)
  */
-fun PreferenceFragmentCompat.flash(aKey: String, times: Int = 2, delayMs: Long = 800) {
+fun PreferenceFragmentCompat.flash(aKey: String, times: Int = 2, delayMs: Long = 800, focus: Boolean = true) {
     val preference = findPreference<Preference>(aKey)
 
     preference?.let { pref ->
@@ -43,12 +44,12 @@ fun PreferenceFragmentCompat.flash(aKey: String, times: Int = 2, delayMs: Long =
         // This needs to account for nested preferences in categories
         var position = findPreferencePositionInAdapter(preferenceScreen, pref)
 
-        Timber.d("Flash: Searching for preference key=$aKey, calculated position=$position, recyclerView.childCount=${recyclerView.childCount}, times=$times, delayMs=$delayMs")
+        Timber.d("Flash: Searching for preference key=$aKey, calculated position=$position, recyclerView.childCount=${recyclerView.childCount}, times=$times, delayMs=$delayMs, focus=$focus")
 
         if (position >= 0 && position < recyclerView.childCount) {
             val targetView = recyclerView.getChildAt(position)
             // Trigger ripple animation multiple times
-            flashView(targetView, times, 0, aKey, delayMs)
+            flashView(targetView, times, 0, aKey, delayMs, focus)
         } else {
             Timber.w("Could not find preference view at position $position (childCount=${recyclerView.childCount}, key: $aKey)")
             // Try alternative approach: use the RecyclerView's layout manager
@@ -58,7 +59,7 @@ fun PreferenceFragmentCompat.flash(aKey: String, times: Int = 2, delayMs: Long =
                 Timber.d("Flash: Adapter position=$adapterPosition")
                 if (adapterPosition >= 0) {
                     layoutManager?.findViewByPosition(adapterPosition)?.let { targetView ->
-                        flashView(targetView, times, 0, aKey, delayMs)
+                        flashView(targetView, times, 0, aKey, delayMs, focus)
                     } ?: Timber.w("Could not find view at adapter position $adapterPosition")
                 }
             }
@@ -69,26 +70,62 @@ fun PreferenceFragmentCompat.flash(aKey: String, times: Int = 2, delayMs: Long =
 }
 
 /**
+ * Moves the D-pad focus to the row of a preference.
+ * Used to keep focus on a row that just changed state (e.g. a switch that was
+ * toggled) so the cursor doesn't jump to the first preference when the row rebinds.
+ *
+ * @param preferenceKeyResId The string resource ID of the preference key
+ */
+fun PreferenceFragmentCompat.requestFocusOnPreference(@StringRes preferenceKeyResId: Int) {
+    requestFocusOnPreference(getString(preferenceKeyResId))
+}
+
+/**
+ * Moves the D-pad focus to the row of a preference.
+ *
+ * @param aKey The string of the preference key to focus
+ */
+fun PreferenceFragmentCompat.requestFocusOnPreference(aKey: String) {
+    findPreference<Preference>(aKey)?.let { pref ->
+        val recyclerView = listView
+        // Wait until the next layout pass so this runs after the RecyclerView
+        // rebinds the row following a toggle
+        recyclerView.doOnPreDraw { view: android.view.View ->
+            val position = findPreferencePositionInAdapter(preferenceScreen, pref)
+            val rowView = if (position >= 0 && position < recyclerView.childCount) {
+                recyclerView.getChildAt(position)
+            } else {
+                val adapterPosition = findPreferenceAdapterPosition(preferenceScreen, pref)
+                recyclerView.layoutManager?.findViewByPosition(adapterPosition)
+            }
+            rowView?.requestFocus()
+            true
+        }
+    }
+}
+
+/**
  * Flash a view multiple times with a delay between flashes.
  */
-private fun flashView(view: android.view.View, totalTimes: Int, currentCount: Int, key: String, delayMs: Long) {
-    if (currentCount >= totalTimes) {
-        Timber.d("Completed $totalTimes flashes for preference (key: $key)")
-        return
-    }
-
+private fun flashView(view: android.view.View, totalTimes: Int, currentCount: Int, key: String, delayMs: Long, focus: Boolean = true) {
     // Trigger ripple animation by simulating press state
     view.isPressed = true
     view.isPressed = false
 
     Timber.d("Triggered ripple effect ${currentCount + 1}/$totalTimes on preference (key: $key)")
 
-    // Schedule next flash after a delay
-    if (currentCount + 1 < totalTimes) {
-        view.postDelayed({
-            flashView(view, totalTimes, currentCount + 1, key, delayMs)
-        }, delayMs)
+    if (currentCount + 1 >= totalTimes) {
+        Timber.d("Completed $totalTimes flashes for preference (key: $key)")
+        // Move focus to the flashed preference once the flashes are done, so TV users
+        // know where to look without the focus fighting the ripple animation
+        if (focus) view.requestFocus()
+        return
     }
+
+    // Schedule next flash after a delay
+    view.postDelayed({
+        flashView(view, totalTimes, currentCount + 1, key, delayMs, focus)
+    }, delayMs)
 }
 
 /**
