@@ -58,9 +58,14 @@
         </intent>
     </queries>
 
+    <!-- Android TV support -->
+    <uses-feature
+        android:name="android.software.leanback"
+        android:required="false" />
     <application
         android:name="fulguris.App"
         android:allowBackup="true"
+        android:banner="@drawable/tv_banner"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher"
@@ -77,6 +82,10 @@
             https://developer.samsung.com/sdp/blog/en/2019/04/05/seven-mistakes-to-avoid-when-developing-for-the-galaxy-fold
         -->
         <meta-data android:name="android.max_aspect" android:value="3.0" />
+        <!-- Declare compatibility with Android TV -->
+        <meta-data
+            android:name="com.google.android.tv.region"
+            android:value="true" />
         <!--
             Make sure you start fullscreen on Huawei/Honor foldable internal display, see:
             https://developer.huawei.com/consumer/en/doc/90101
@@ -97,6 +106,11 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.LAUNCHER" />
                 <category android:name="android.intent.category.APP_BROWSER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
             </intent-filter>
         </activity>
 
