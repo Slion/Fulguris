@@ -59,10 +59,6 @@ class AcceptTermsPreferenceFragment: PreferenceFragmentCompat() {
 
     override fun onResume() {
         super.onResume()
-        // On TV, request focus on the list so D-pad UP/DOWN works for preference selection
-        if (requireContext().packageManager.hasSystemFeature("android.software.leanback")) {
-            listView.requestFocus()
-        }
 
         // When we enter the slide and terms are not yet accepted, flash the switch to draw attention
         val acceptTermsSwitch = findPreference<x.SwitchPreference>(getString(R.string.pref_key_accept_terms))
