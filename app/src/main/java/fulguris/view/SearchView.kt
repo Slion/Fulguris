@@ -149,14 +149,14 @@ class SearchView @JvmOverloads constructor(
     }
 
     override fun onKeyPreIme(keyCode: Int, event: KeyEvent): Boolean {
-        if (keyCode == KeyEvent.KEYCODE_BACK && isEditing) {
+        // ESC and BACK follow the same two-stage exit: keyboard first, then cancel editing.
+        if ((keyCode == KeyEvent.KEYCODE_BACK || keyCode == KeyEvent.KEYCODE_ESCAPE) && isEditing) {
             if (event.action == KeyEvent.ACTION_UP) {
                 if (isKeyboardShown) {
-                    // First back only hides the keyboard, keeping the suggestion popup so it can
-                    // be browsed with the directional keys.
+                    // First press hides the keyboard, keeping the suggestion popup.
                     hideKeyboard()
                 } else {
-                    // Second back cancels the edition.
+                    // Second press cancels the edition.
                     cancelEditing()
                 }
             }
@@ -178,10 +178,9 @@ class SearchView @JvmOverloads constructor(
             keyCode == KeyEvent.KEYCODE_DPAD_RIGHT
 
     override fun showDropDown() {
-        // Only show suggestions while actually editing so the popup doesn't appear when the field
-        // is merely focused for directional navigation, where it would otherwise capture the back
-        // and directional keys used to leave the field.
-        if (!isEditing) {
+        // Suppress during the guard window to avoid the popup flickering open-close-open
+        // while the URL is being set and the TV IME's stale commits are being absorbed.
+        if (!isEditing || isEditGuarded) {
             return
         }
         super.showDropDown()
