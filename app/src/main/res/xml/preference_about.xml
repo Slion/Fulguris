@@ -45,6 +45,13 @@
         <intent a:action="com.android.webview.SHOW_DEV_UI" />
     </x.Preference>
 
+    <x.Preference
+        a:key="@string/pref_key_android"
+        a:title="@string/android"
+        x:icon="@drawable/ic_android"
+        x:singleLineTitle="false"
+        x:enableCopying="true" />
+
     <Preference
         a:title="@string/pref_title_introduction"
         a:summary="@string/pref_summary_introduction"

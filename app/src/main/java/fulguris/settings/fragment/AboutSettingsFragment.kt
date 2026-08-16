@@ -31,8 +31,10 @@ import com.android.volley.*
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import org.json.JSONObject
+import android.content.Intent
 import android.net.Uri
 import android.os.Build
+import android.provider.Settings
 import timber.log.Timber
 import fulguris.extensions.ihs
 
@@ -123,6 +125,17 @@ class AboutSettingsFragment : AbstractSettingsFragment() {
             summary = webViewSummary
         )
 
+        clickablePreference(
+            preference = getString(R.string.pref_key_android),
+            summary = "API ${Build.VERSION.SDK_INT} - ${androidSecurityPatch}",
+            onClick = {
+                openSystemAboutDeviceSettings()
+                true
+            }
+        ).apply {
+            title = "${getString(R.string.android)} ${Build.VERSION.RELEASE}"
+        }
+
         // Don't check for updates here - wait until onResume when fragment is actually shown
 
         // Add body to our email link to provide info about device and software
@@ -146,6 +159,39 @@ class AboutSettingsFragment : AbstractSettingsFragment() {
 
     val androidInfo
         get() = "Android ${Build.VERSION.RELEASE} - API ${Build.VERSION.SDK_INT}"
+
+    /**
+     * Security patch level of the installed Android ROM, in YYYY-MM-DD format.
+     * `Build.VERSION.SECURITY_PATCH` was added in API 23, so fall back to the build time for older devices.
+     */
+    val androidSecurityPatch
+        get() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            Build.VERSION.SECURITY_PATCH
+        } else {
+            @Suppress("DEPRECATION")
+            java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.US).format(java.util.Date(Build.TIME))
+        }
+
+    /**
+     * Open the system "About device" settings page, which shows the Android version,
+     * build number, security patch level, and more.
+     *
+     * Follows the same defensive fallback pattern as the default browser preference
+     * in [GeneralSettingsFragment]: try the dedicated intent first, then the generic
+     * settings screen, then give up silently on devices where neither resolves.
+     */
+    private fun openSystemAboutDeviceSettings() {
+        try {
+            startActivity(Intent(Settings.ACTION_DEVICE_INFO_SETTINGS))
+        } catch (_: Exception) {
+            // Fallback for devices that don't support this intent
+            try {
+                startActivity(Intent(Settings.ACTION_SETTINGS))
+            } catch (_: Exception) {
+                // Last resort - do nothing
+            }
+        }
+    }
 
     val deviceInfo
         get() = "Model ${Build.MODEL} - Brand ${Build.BRAND} - Manufacturer ${Build.MANUFACTURER}"
