@@ -6,16 +6,17 @@ See: [BrowserActivity.setSearchBarColors]
 -->
 <selector xmlns:android="http://schemas.android.com/apk/res/android" >
     <!--
-    Background while not focused.
+    Background while not focused: fully transparent so the address bar blends into the toolbar.
+    No pill and, together with the container elevation being dropped to zero, no shadow.
     -->
     <item android:state_focused="false" >
         <shape>
-            <solid android:color="@color/white"/>
+            <solid android:color="@android:color/transparent"/>
             <corners android:radius="18dp"/>
         </shape>
     </item>
     <!--
-    Background while focused.
+    Background while focused: the pill, tinted at runtime. See [BrowserActivity.setSearchBarColors]
     -->
     <item android:state_focused="true" >
         <shape>

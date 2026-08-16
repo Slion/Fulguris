@@ -24,12 +24,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <!--
-    Make sure search_container remains focusable otherwise we get funny issues
-    with the search field gaining focus while scrolling through tabs in drawer.
-    This being focusable serves as a workaround as it gets focus before the search view
-    and thus the auto complete popup won't come up out of the blue.
+    In touch mode this container stays focusable to absorb stray focus while scrolling
+    through tabs in the drawer, so the auto complete popup won't come up out of the blue.
+    In non touch mode (D-pad / keyboard navigation) it must NOT be focusable so the search
+    field itself receives focus and can be reached with directional navigation.
+    This is handled at runtime by AddressBarLayout as the touch mode changes.
+    android:addStatesFromChildren makes the container reflect the focused visual state of
+    the search field so we get the focus highlight when the field is focused.
     -->
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <fulguris.view.AddressBarLayout
         android:orientation="horizontal"
         android:layout_weight="1"
         android:layout_width="1dp"
@@ -41,11 +44,9 @@
         android:background="@drawable/address_bar_background"
         android:clipChildren="false"
         android:clipToPadding="false"
-        android:elevation="2dp"
         android:gravity="center"
         android:descendantFocusability="beforeDescendants"
-        android:focusableInTouchMode="true"
-        android:focusable="true"
+        android:addStatesFromChildren="true"
         >
 
         <fulguris.view.ImageView
@@ -79,7 +80,6 @@
             android:imeOptions="actionGo"
             android:importantForAutofill="no"
             android:inputType="textUri"
-            android:selectAllOnFocus="true"
             android:textColor="?attr/autoCompleteTitleColor"
             android:textColorHint="?attr/autoCompleteUrlColor"
             android:textCursorDrawable="@null"
@@ -94,6 +94,7 @@
             android:focusableInTouchMode="true"
             android:clickable="true"
             android:focusable="true"
+            android:nextFocusDown="@id/web_view"
             />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </fulguris.view.AddressBarLayout>
 </layout>

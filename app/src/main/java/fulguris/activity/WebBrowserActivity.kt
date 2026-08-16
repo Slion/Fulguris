@@ -1154,6 +1154,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
             onFocusChangeListener = searchListener
             setOnEditorActionListener(searchListener)
             onPreFocusListener = searchListener
+            editListener = searchListener
             addTextChangedListener(StyleRemovingTextWatcher())
 
             initializeSearchSuggestions(this)
@@ -1471,11 +1472,29 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     private inner class SearchListenerClass : OnKeyListener,
             OnEditorActionListener,
             OnFocusChangeListener,
-            SearchView.PreFocusListener {
+            SearchView.PreFocusListener,
+            SearchView.EditListener {
 
         override fun onKey(view: View, keyCode: Int, keyEvent: KeyEvent): Boolean {
             when (keyCode) {
-                KeyEvent.KEYCODE_ENTER -> {
+                KeyEvent.KEYCODE_ENTER,
+                KeyEvent.KEYCODE_NUMPAD_ENTER,
+                KeyEvent.KEYCODE_DPAD_CENTER,
+                KeyEvent.KEYCODE_BUTTON_A -> {
+                    // When the field is focused for navigation but not yet editing, let the
+                    // key start the edition (handled in SearchView.onKeyDown) rather than
+                    // triggering a search straight away.
+                    if (!searchView.isEditing) {
+                        return false
+                    }
+                    // Ignore the key up that belongs to the press which just started editing.
+                    if (searchView.shouldSwallowConfirmUp()) {
+                        return true
+                    }
+                    // Act on key up only so we don't run the action twice.
+                    if (keyEvent.action != KeyEvent.ACTION_UP) {
+                        return true
+                    }
                     searchView.let {
                         if (it.listSelection == ListView.INVALID_POSITION) {
                             // No suggestion pop up item selected, just trigger a search then
@@ -1524,10 +1543,11 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
                 if (!hasFocus) {
                     updateToolBarText()
                 } else if (hasFocus) {
-                    showUrl()
-                    // Select all text so that user conveniently start typing or copy current URL
-                    (v as SearchView).selectAll()
-                    iBindingToolbarContent.addressBarInclude.searchSslStatus.visibility = GONE
+                    // Focusing for navigation shows the label; the URL only appears once the
+                    // edition starts (see onEditStart).
+                    if (!(v as SearchView).isEditing) {
+                        showLabel()
+                    }
                 }
             }
 
@@ -1536,7 +1556,31 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
                 searchView.let {
                     inputMethodManager.hideSoftInputFromWindow(it.windowToken, 0)
                 }
+            } else {
+                // Sync the SSL icon with whatever the field is showing.
+                if ((v as SearchView).isEditing) {
+                    iBindingToolbarContent.addressBarInclude.searchSslStatus.visibility = GONE
+                } else {
+                    iBindingToolbarContent.addressBarInclude.searchSslStatus.updateVisibilityForContent()
+                }
             }
+        }
+
+        override fun onEditStart(fromPointer: Boolean) {
+            // Entering edit mode: show the URL instead of the label; hide the SSL icon.
+            showUrl()
+            iBindingToolbarContent.addressBarInclude.searchSslStatus.visibility = GONE
+            if (fromPointer) {
+                searchView.selectAll()
+            } else {
+                searchView.setSelection(searchView.length())
+            }
+        }
+
+        override fun onEditEnd() {
+            // Leaving edit mode: show the label and restore the SSL icon.
+            showLabel()
+            iBindingToolbarContent.addressBarInclude.searchSslStatus.updateVisibilityForContent()
         }
 
         override fun onPreFocus() {
@@ -1582,6 +1626,14 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
             // Special URLs like home page and history just show search field then
             searchView.setText("")
         }
+    }
+
+    /**
+     * Show the toolbar label (per user settings) in the address field, even while it is focused
+     * for navigation. The URL is only shown once the edition starts.
+     */
+    private fun showLabel() {
+        searchView.setText(getHeaderInfoText(userPreferences.toolbarLabel), false)
     }
 
     var drawerOpened : Boolean = false

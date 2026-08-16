@@ -1,0 +1,243 @@
+"""URL address bar UI test cases, driven over adb.
+
+Each test is a function taking (serial, package, ctx) and returning None on success or
+raising AssertionError with a message on failure.
+
+Run via run.py.
+"""
+from __future__ import annotations
+
+import os
+import sys
+import time
+
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "tools"))
+import adb
+
+OUT_DIR = os.path.join(os.path.dirname(__file__), "out")
+
+
+def _ensure_out() -> str:
+    os.makedirs(OUT_DIR, exist_ok=True)
+    return OUT_DIR
+
+
+def _focus_field_for_navigation(serial: str) -> None:
+    """Focus the field without touch, in navigation mode (KEYCODE_SEARCH -> requestFocus)."""
+    adb.key(serial, adb.KEY_SEARCH, wait=0.7)
+
+
+def _enter_edit(serial: str) -> None:
+    """Focus for navigation then press center to enter edit mode."""
+    _focus_field_for_navigation(serial)
+    adb.key(serial, adb.KEY_DPAD_CENTER, wait=0.8)
+
+
+# A known page whose title (label) differs from its URL.
+KNOWN_URL = "example.com"
+KNOWN_DOMAIN = "example.com"
+
+
+# --- State tests -----------------------------------------------------------
+
+
+def test_unfocused_shows_label(serial: str, package: str, ctx: dict) -> None:
+    adb.navigate(serial, package, KNOWN_URL)
+    text = adb.field_text(serial)
+    assert text, "unfocused field should show a label"
+    assert not text.lower().startswith("http"), f"unfocused should show the label, not the URL, got '{text}'"
+
+
+def test_navigation_shows_label_not_url(serial: str, package: str, ctx: dict) -> None:
+    adb.navigate(serial, package, KNOWN_URL)
+    label = adb.field_text(serial)
+    _focus_field_for_navigation(serial)
+    assert adb.field_focused(serial), "field should be focused"
+    assert not adb.ime_shown(serial), "navigation focus must not show the keyboard"
+    nav_text = adb.field_text(serial)
+    assert nav_text == label, f"navigation should keep showing the label '{label}', got '{nav_text}'"
+    assert not nav_text.lower().startswith("http"), "navigation should show the label, not the URL"
+
+
+def test_edit_shows_url(serial: str, package: str, ctx: dict) -> None:
+    adb.navigate(serial, package, KNOWN_URL)
+    _enter_edit(serial)
+    assert adb.ime_shown(serial), "editing should show the keyboard"
+    text = adb.field_text(serial).lower()
+    assert KNOWN_DOMAIN in text or text.startswith("http"), f"edit mode should show the URL, got '{text}'"
+
+
+def test_no_select_all_on_dpad_edit(serial: str, package: str, ctx: dict) -> None:
+    adb.navigate(serial, package, KNOWN_URL)
+    _enter_edit(serial)
+    adb.type_text(serial, "ZZZ", wait=0.6)
+    text = adb.field_text(serial).lower()
+    assert KNOWN_DOMAIN in text, f"D-pad edit must not select all; URL should remain, got '{text}'"
+    assert text.rstrip().endswith("zzz"), f"typed text should append at the end, got '{text}'"
+
+
+# --- Tests -----------------------------------------------------------------
+
+
+def test_launch_focus_is_webview(serial: str, package: str, ctx: dict) -> None:
+    adb.restart(serial, package)
+    assert adb.webview_focused(serial), "expected the web view to be focused after launch"
+
+
+def test_directional_focus_is_navigation_not_edit(serial: str, package: str, ctx: dict) -> None:
+    """Focusing with a non-pointer input focuses for navigation only, no keyboard."""
+    adb.restart(serial, package)
+    _focus_field_for_navigation(serial)
+    assert adb.field_focused(serial), "the address field should be focused"
+    assert not adb.ime_shown(serial), "the keyboard must NOT show on directional focus"
+
+
+def test_center_enters_edit_mode(serial: str, package: str, ctx: dict) -> None:
+    adb.restart(serial, package)
+    _focus_field_for_navigation(serial)
+    assert not adb.ime_shown(serial), "precondition: keyboard hidden in navigation"
+    adb.key(serial, adb.KEY_DPAD_CENTER, wait=0.8)
+    assert adb.ime_shown(serial), "center/enter should enter edit mode and show the keyboard"
+
+
+def test_type_and_validate_navigates(serial: str, package: str, ctx: dict) -> None:
+    adb.restart(serial, package)
+    _enter_edit(serial)
+    adb.clear_field(serial)
+    adb.type_text(serial, "example.com", wait=0.5)
+    adb.key(serial, adb.KEY_ENTER, wait=3.0)
+    assert not adb.ime_shown(serial), "keyboard should hide after validating"
+    assert adb.webview_focused(serial), "focus should return to the web view after navigating"
+
+
+def test_back_two_stage_keyboard_then_cancel(serial: str, package: str, ctx: dict) -> None:
+    """First back hides keyboard but keeps the field; second back cancels back to the label."""
+    adb.navigate(serial, package, "example.org")
+
+    # Navigation shows the label; capture it as the value a cancel returns to.
+    _focus_field_for_navigation(serial)
+    expected = adb.field_text(serial)
+    adb.key(serial, adb.KEY_DPAD_CENTER, wait=0.8)
+    adb.type_text(serial, "somethingelse", wait=0.4)
+    assert adb.ime_shown(serial), "precondition: keyboard shown while editing"
+
+    # First back: keyboard hidden, field still focused (still editing).
+    adb.key(serial, adb.KEY_BACK, wait=0.8)
+    assert not adb.ime_shown(serial), "first back should hide the keyboard"
+    assert adb.field_focused(serial), "first back should keep the field focused"
+
+    # Second back: cancel back to the navigation label, keep field focused.
+    adb.key(serial, adb.KEY_BACK, wait=0.8)
+    restored = adb.field_text(serial)
+    assert adb.field_focused(serial), "second back should keep the field focused (navigation)"
+    assert restored == expected, f"cancel should return to the label '{expected}', got '{restored}'"
+
+
+def test_back_from_navigation_returns_to_web(serial: str, package: str, ctx: dict) -> None:
+    adb.restart(serial, package)
+    _focus_field_for_navigation(serial)
+    assert adb.field_focused(serial), "precondition: field focused for navigation"
+    adb.key(serial, adb.KEY_BACK, wait=0.8)
+    assert adb.webview_focused(serial), "back from navigation should return to the web view"
+
+
+def test_down_from_navigation_returns_to_web(serial: str, package: str, ctx: dict) -> None:
+    adb.restart(serial, package)
+    _focus_field_for_navigation(serial)
+    assert adb.field_focused(serial), "precondition: field focused for navigation"
+    adb.key(serial, adb.KEY_DPAD_DOWN, wait=0.8)
+    assert not adb.field_focused(serial), "down from navigation should leave the field"
+
+
+def test_suggestions_navigable_without_touch(serial: str, package: str, ctx: dict) -> None:
+    """Type, hide keyboard with back, navigate the popup with down and open with center."""
+    adb.restart(serial, package)
+    _enter_edit(serial)
+    adb.clear_field(serial)
+    adb.type_text(serial, "wikipedia", wait=1.0)
+    assert adb.dropdown_present(serial), "suggestions popup should appear while typing"
+
+    # First back hides the keyboard but the popup must remain.
+    adb.key(serial, adb.KEY_BACK, wait=0.9)
+    assert not adb.ime_shown(serial), "back should hide the keyboard"
+    assert adb.dropdown_present(serial), "the suggestions popup must remain after hiding keyboard"
+
+    # Navigate into the popup and open a suggestion.
+    adb.key(serial, adb.KEY_DPAD_DOWN, wait=0.6)
+    adb.key(serial, adb.KEY_DPAD_CENTER, wait=3.0)
+    assert not adb.ime_shown(serial), "keyboard should be hidden after opening a suggestion"
+    assert adb.webview_focused(serial), "opening a suggestion should navigate and focus the web view"
+
+
+def test_touch_tap_enters_edit(serial: str, package: str, ctx: dict) -> None:
+    """Pointer/touch goes straight to edit mode (keyboard shown)."""
+    adb.restart(serial, package)
+    center = adb.field_center(serial)
+    assert center, "could not locate the address field bounds"
+    adb.tap(serial, center[0], center[1], wait=0.9)
+    assert adb.ime_shown(serial), "tapping the field should enter edit mode and show the keyboard"
+
+
+def test_retap_after_cancel_reenters_edit(serial: str, package: str, ctx: dict) -> None:
+    adb.restart(serial, package)
+    center = adb.field_center(serial)
+    assert center, "could not locate the address field bounds"
+    adb.tap(serial, center[0], center[1], wait=0.9)
+    adb.key(serial, adb.KEY_BACK, wait=0.7)  # hide keyboard
+    adb.key(serial, adb.KEY_BACK, wait=0.7)  # cancel
+    adb.tap(serial, center[0], center[1], wait=0.9)
+    assert adb.ime_shown(serial), "tapping again after cancel should re-enter edit mode"
+
+
+def test_pill_only_when_focused(serial: str, package: str, ctx: dict) -> None:
+    """Capture unfocused vs focused screenshots of the address bar for review.
+
+    When Pillow is available we assert the pill region changes between states.
+    """
+    out = _ensure_out()
+    adb.restart(serial, package)
+    unfocused = os.path.join(out, f"pill_unfocused_{serial.replace(':', '_')}.png")
+    focused = os.path.join(out, f"pill_focused_{serial.replace(':', '_')}.png")
+    adb.screenshot(serial, unfocused)
+    _focus_field_for_navigation(serial)
+    time.sleep(0.4)
+    adb.screenshot(serial, focused)
+
+    field = adb.field_node(serial)
+    if not field or not field.bounds:
+        # Screenshots saved for manual review; can't assert region without bounds.
+        return
+    try:
+        from PIL import Image
+    except ImportError:
+        # Pillow not installed: leave screenshots for manual review.
+        ctx["notes"].append("pill test: Pillow not installed, screenshots saved for manual review")
+        return
+    x1, y1, x2, y2 = field.bounds
+    box = (x1, max(0, y1 - 8), x2, y2 + 8)
+    a = Image.open(unfocused).convert("RGB").crop(box)
+    b = Image.open(focused).convert("RGB").crop(box)
+    diff = sum(
+        abs(pa[0] - pb[0]) + abs(pa[1] - pb[1]) + abs(pa[2] - pb[2])
+        for pa, pb in zip(a.getdata(), b.getdata())
+    ) / (a.size[0] * a.size[1] * 3)
+    assert diff > 3.0, f"pill region barely changed between states (mean diff {diff:.2f})"
+
+
+ALL_TESTS = [
+    test_launch_focus_is_webview,
+    test_unfocused_shows_label,
+    test_directional_focus_is_navigation_not_edit,
+    test_navigation_shows_label_not_url,
+    test_center_enters_edit_mode,
+    test_edit_shows_url,
+    test_no_select_all_on_dpad_edit,
+    test_type_and_validate_navigates,
+    test_back_two_stage_keyboard_then_cancel,
+    test_back_from_navigation_returns_to_web,
+    test_down_from_navigation_returns_to_web,
+    test_suggestions_navigable_without_touch,
+    test_touch_tap_enters_edit,
+    test_retap_after_cancel_reenters_edit,
+    test_pill_only_when_focused,
+]
