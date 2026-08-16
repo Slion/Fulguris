@@ -11,7 +11,9 @@ import fulguris.settings.fragment.RootSettingsFragment
 import fulguris.settings.fragment.ResponsiveSettingsFragment
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.InputDevice
 import android.view.MenuItem
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
@@ -34,6 +36,21 @@ class SettingsActivity : ThemedSettingsActivity() {
 
     lateinit var responsive: ResponsiveSettingsFragment
     private var iFragmentClassName: String? = null
+
+    /**
+     * On Android TV a gamepad's D-pad and analog sticks are delivered as [InputDevice.SOURCE_JOYSTICK]
+     * motion events, which the framework turns into DPAD key events only when no view consumes the
+     * motion first. [androidx.slidingpanelayout.widget.SlidingPaneLayout] wraps the detail pane in a
+     * private TouchBlocker whose onGenericMotionEvent always returns true, swallowing those events and
+     * leaving focus stuck in the detail pane. Returning false for joystick motion bypasses that view
+     * tree so the framework can synthesize the DPAD keys, restoring gamepad navigation in both panes.
+     */
+    override fun dispatchGenericMotionEvent(event: MotionEvent): Boolean {
+        if ((event.source and InputDevice.SOURCE_CLASS_JOYSTICK) != 0) {
+            return false
+        }
+        return super.dispatchGenericMotionEvent(event)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Timber.d("$ihs : onCreate")
