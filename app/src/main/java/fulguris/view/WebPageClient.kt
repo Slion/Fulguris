@@ -532,11 +532,15 @@ class WebPageClient(
             // We know this URL has an invalid certificate
             SslState.Invalid
         } else {
-            // This URL has either a valid certificate or none
+            // This URL has either a valid certificate, no encryption, or is a special internal page
             if (URLUtil.isHttpsUrl(url)) {
                 SslState.Valid
-            } else {
+            } else if (url.isSpecialUrl() || !url.isScheme("http") && !url.isScheme("https")) {
+                // Internal pages and non-http(s) schemes (file://, fulguris://, about:…) get no icon
                 SslState.None
+            } else {
+                // Plain HTTP: show the "encryption off" icon
+                SslState.Insecure
             }
         }
         webPageTab.titleInfo.resetFavicon()
@@ -697,6 +701,11 @@ class WebPageClient(
         if (!sslErrorUrls.contains(error.url)) {
             sslErrorUrls.add(error.url)
         }
+        // Reflect the error right away: show the "encryption off" icon in the address bar
+        // even before the dialog is dismissed.
+        if (sslState != SslState.Invalid) {
+            sslState = SslState.Invalid
+        }
 
         when (domainPreferences.sslError) {
             NoYesAsk.YES -> return handler.proceed()
@@ -706,7 +715,7 @@ class WebPageClient(
                 // Capture error domain cause it will have changed by the time we run the action
                 val errorDomain = domainPreferences.domain
                 activity.makeSnackbar(activity.getString(R.string.message_ssl_error_aborted), 5000, Gravity.BOTTOM)
-                    .setIcon(R.drawable.ic_unsecured)
+                    .setIcon(R.drawable.ic_encrypted_off_outline)
                     .setAction(R.string.settings) {
                         (activity as? WebBrowserActivity)?.showDomainSettings(errorDomain)
                     }
@@ -737,7 +746,7 @@ class WebPageClient(
             setMessage(alertMessage)
             setCancelable(true)
             setView(view)
-            setIcon(R.drawable.ic_unsecured)
+            setIcon(R.drawable.ic_encrypted_off_outline)
             setOnCancelListener { handler.cancel() }
             setPositiveButton(activity.getString(R.string.action_yes)) { _, _ ->
                 if (dontAskAgain.isChecked) {

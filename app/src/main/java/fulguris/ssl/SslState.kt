@@ -16,6 +16,11 @@ sealed class SslState {
     object Valid : SslState()
 
     /**
+     * Plain HTTP (no encryption).
+     */
+    object Insecure : SslState()
+
+    /**
      * Broken SSL connection.
      *
      * @param sslError The error that is causing the invalid SSL state.

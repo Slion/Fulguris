@@ -99,7 +99,7 @@
         a:useSimpleSummaryProvider="true"
         a:defaultValue="ASK"
         a:entries="@array/AbortProceedAsk"
-        a:icon="@drawable/ic_unsecured"
+        a:icon="@drawable/ic_encrypted_off_outline"
         a:singleLineTitle="false"
         a:enumClassName="fulguris.settings.NoYesAsk"
         />

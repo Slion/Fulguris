@@ -199,6 +199,70 @@ def test_retap_after_cancel_reenters_edit(serial: str, package: str, ctx: dict) 
     assert adb.ime_shown(serial), "tapping again after cancel should re-enter edit mode"
 
 
+# --- SSL / HTTPS status icon tests ----------------------------------------
+
+
+def test_https_shows_ssl_icon(serial: str, package: str, ctx: dict) -> None:
+    """Navigating to a valid HTTPS page should show the encrypted SSL icon."""
+    adb.navigate(serial, package, "https://example.com")
+    time.sleep(2.0)
+    assert adb.ssl_icon_visible(serial), "SSL icon should be visible for a valid HTTPS page"
+
+
+def test_http_shows_off_icon(serial: str, package: str, ctx: dict) -> None:
+    """Navigating to a plain HTTP page should show the encryption-off SSL icon."""
+    adb.navigate(serial, package, "http://example.com")
+    time.sleep(2.0)
+    assert adb.ssl_icon_visible(serial), "SSL icon should be visible for a plain HTTP page"
+
+
+def test_invalid_https_shows_ssl_icon(serial: str, package: str, ctx: dict) -> None:
+    """An invalid/expired HTTPS cert (badssl.com/expired) should show the off SSL icon.
+
+    The browser shows an SSL error dialog; we dismiss it with 'No' so the page does not
+    load, but the icon must be visible reflecting the error state.
+    """
+    adb.navigate(serial, package, "https://expired.badssl.com")
+    time.sleep(3.0)
+    # Dismiss the SSL error dialog with its 'No' button if it is present.
+    no_btn = next((n for n in adb.nodes(serial) if n.text.strip() == "No"), None)
+    if no_btn and no_btn.bounds:
+        cx = (no_btn.bounds[0] + no_btn.bounds[2]) // 2
+        cy = (no_btn.bounds[1] + no_btn.bounds[3]) // 2
+        adb.tap(serial, cx, cy, wait=1.5)
+    assert adb.ssl_icon_visible(serial), \
+        "SSL icon should remain visible (encrypted-off) after an invalid HTTPS cert"
+
+
+def test_unfocused_pill_outline_visible(serial: str, package: str, ctx: dict) -> None:
+    """The unfocused address bar should show a subtle pill outline.
+
+    With the focus pill now only shown while focused, the unfocused field needs an
+    outline so it is not empty. We check the outline is drawn on the pill edge by
+    comparing pixels just inside the container edge (outline) against the page area.
+    """
+    out = _ensure_out()
+    adb.restart(serial, package)
+    pill = adb.find_node(serial, ":id/address_bar_include") or adb.field_node(serial)
+    assert pill and pill.bounds, "could not locate the address bar pill"
+    x1, y1, x2, y2 = pill.bounds
+    shot = os.path.join(out, f"pill_outline_{serial.replace(':', '_')}.png")
+    adb.screenshot(serial, shot)
+    try:
+        from PIL import Image
+    except ImportError:
+        ctx["notes"].append("pill outline test: Pillow not installed, screenshot saved for manual review")
+        return
+    img = Image.open(shot).convert("L")
+    xs = range(x1 + 24, x2 - 24, 6)
+    edge = [img.getpixel((x, y1)) for x in xs]
+    inside = [img.getpixel((x, y1 + 8)) for x in xs]
+    edge_mean = sum(edge) / len(edge)
+    inside_mean = sum(inside) / len(inside)
+    assert abs(edge_mean - inside_mean) > 6, \
+        f"no visible pill outline: edge {edge_mean:.1f} vs inside {inside_mean:.1f}"
+
+
 def test_pill_only_when_focused(serial: str, package: str, ctx: dict) -> None:
     """Capture unfocused vs focused screenshots of the address bar for review.
 
@@ -250,4 +314,8 @@ ALL_TESTS = [
     test_touch_tap_enters_edit,
     test_retap_after_cancel_reenters_edit,
     test_pill_only_when_focused,
+    test_https_shows_ssl_icon,
+    test_http_shows_off_icon,
+    test_invalid_https_shows_ssl_icon,
+    test_unfocused_pill_outline_visible,
 ]

@@ -243,7 +243,7 @@
             x:useSimpleSummaryProvider="true"
             x:defaultValue="ASK"
             x:entries="@array/AbortProceedAsk"
-            x:icon="@drawable/ic_unsecured"
+            x:icon="@drawable/ic_encrypted_off_outline"
             x:singleLineTitle="false"
             x:enumClassName="fulguris.settings.NoYesAsk"
             x:dependency="@string/pref_key_ssl_error_override"

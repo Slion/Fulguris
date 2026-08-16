@@ -340,6 +340,20 @@ def screenshot(serial: str, path: str) -> None:
         f.write(subprocess.run(cmd, capture_output=True).stdout)
 
 
+def ssl_icon_visible(serial: str) -> bool:
+    """True if the SSL status icon in the address bar is currently visible (not GONE).
+
+    uiautomator omits GONE views from the dump, so presence with a non-empty
+    bounds box means the icon is shown.
+    """
+    n = find_node(serial, ":id/search_ssl_status")
+    if not n or not n.bounds:
+        return False
+    w = n.bounds[2] - n.bounds[0]
+    h = n.bounds[3] - n.bounds[1]
+    return w > 0 and h > 0
+
+
 def device_label(serial: str) -> str:
     model = _adb(serial, ["shell", "getprop", "ro.product.model"]).strip()
     return f"{serial} ({model})" if model else serial
