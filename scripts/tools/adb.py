@@ -12,6 +12,7 @@ import subprocess
 import sys
 import time
 import xml.etree.ElementTree as ET
+from collections.abc import Callable
 from dataclasses import dataclass
 
 # Default debug package / launcher activity for the slionsFullDownload debug flavor.
@@ -71,18 +72,38 @@ def install_apk(serial: str, apk: str) -> bool:
 
 
 def _adb(serial: str | None, args: list[str], timeout: int = 30) -> str:
+    """Run an adb command, retrying a few times on timeout / transient failure.
+
+    Network adb devices (e.g. an Android TV over Wi-Fi) can be slow enough for
+    commands like `uiautomator dump` to intermittently time out, so we retry
+    before giving up rather than letting one slow round trip fail a test.
+    """
     cmd = ["adb"]
     if serial:
         cmd += ["-s", serial]
     cmd += args
-    result = subprocess.run(
-        cmd,
-        capture_output=True,
-        encoding="utf-8",
-        errors="replace",
-        timeout=timeout,
-    )
-    return result.stdout or ""
+    last_error: Exception | None = None
+    for _ in range(3):
+        try:
+            result = subprocess.run(
+                cmd,
+                capture_output=True,
+                encoding="utf-8",
+                errors="replace",
+                timeout=timeout,
+            )
+            out = result.stdout or ""
+            if "offline" in out or "error: device" in out or "no devices" in out:
+                # Connection dropped; retry so the device has a moment to come back.
+                time.sleep(1.0)
+                continue
+            return out
+        except subprocess.TimeoutExpired as e:
+            last_error = e
+            time.sleep(1.0)
+    if last_error:
+        raise last_error
+    return ""
 
 
 def list_devices() -> list[str]:
@@ -129,9 +150,53 @@ def force_stop(serial: str, package: str) -> None:
     _adb(serial, ["shell", "am", "force-stop", package])
 
 
-def launch(serial: str, package: str, wait: float = 5.0) -> None:
+def foreground_package(serial: str) -> str | None:
+    """Package of the top resumed (foreground) activity, if any."""
+    out = _adb(serial, ["shell", "dumpsys", "activity", "activities"])
+    m = re.search(r"(?:topResumedActivity|mResumedActivity)=.*?([\w.]+)/", out)
+    return m.group(1) if m else None
+
+
+def wait_until(predicate: Callable[[], bool], timeout: float = 10.0, interval: float = 0.3) -> bool:
+    """Poll a predicate until it is true or the timeout elapses."""
+    deadline = time.time() + timeout
+    while time.time() < deadline:
+        if predicate():
+            return True
+        time.sleep(interval)
+    return predicate()
+
+
+def _start_app(serial: str, package: str) -> None:
     _adb(serial, ["shell", "am", "start", "-n", f"{package}/{LAUNCH_ACTIVITY}"])
-    time.sleep(wait)
+    time.sleep(2.0)
+
+
+def settle(serial: str, package: str, timeout: float = 60.0) -> bool:
+    """Wait until the app is in the foreground and its main UI is ready.
+
+    Launches the app if it is not already foregrounded. Returns True once the
+    address field is present in the view hierarchy, which means the main
+    browser screen is up and can receive input. Slow devices (e.g. an Android
+    TV over network adb) need this; a fixed sleep is not reliable.
+    """
+
+    def ready() -> bool:
+        if foreground_package(serial) != package:
+            _start_app(serial, package)
+            return False
+        try:
+            return ":id/search" in dump_ui(serial)
+        except Exception:  # noqa: BLE001 - adb hiccup, keep polling
+            return False
+
+    return wait_until(ready, timeout, interval=0.5)
+
+
+def launch(serial: str, package: str, wait: float = 5.0) -> None:
+    _start_app(serial, package)
+    if not settle(serial, package):
+        print(f"WARNING: {package} did not settle on {device_label(serial)}")
 
 
 def restart(serial: str, package: str, wait: float = 5.0) -> None:
@@ -141,7 +206,10 @@ def restart(serial: str, package: str, wait: float = 5.0) -> None:
 
 
 def navigate(serial: str, package: str, url: str) -> None:
-    """Restart then load the given URL, clearing whatever the edit field already holds."""
+    """Restart then load the given URL, clearing whatever the edit field already holds.
+
+    Waits for the app to be foregrounded and settled before sending any keys.
+    """
     restart(serial, package)
     key(serial, KEY_SEARCH, 0.7)      # focus for navigation
     key(serial, KEY_DPAD_CENTER, 0.7)  # enter edit mode

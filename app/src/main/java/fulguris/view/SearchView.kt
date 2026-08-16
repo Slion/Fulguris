@@ -6,6 +6,9 @@ import android.util.AttributeSet
 import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.ViewConfiguration
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputConnection
+import android.view.inputmethod.InputConnectionWrapper
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.R
 import androidx.appcompat.widget.AppCompatAutoCompleteTextView
@@ -26,12 +29,20 @@ class SearchView @JvmOverloads constructor(
      * editing and the label the rest of the time.
      */
     interface EditListener {
-        fun onEditStart(fromPointer: Boolean)
+        fun onEditStart()
         fun onEditEnd()
     }
 
     var onPreFocusListener: PreFocusListener? = null
     var editListener: EditListener? = null
+
+    /**
+     * When true, the InputConnection wrapper silently drops empty IME commits. Set by the
+     * host activity during the brief window after entering edit mode so the leanback TV IME
+     * cannot wipe the freshly selected URL text on its first connection.
+     */
+    var isEditGuarded: Boolean = false
+
     private var isBeingClicked: Boolean = false
     private var timePressedNs: Long = 0
 
@@ -69,6 +80,19 @@ class SearchView @JvmOverloads constructor(
             return true
         }
         return false
+    }
+
+    override fun onCreateInputConnection(outAttrs: EditorInfo): InputConnection? {
+        val base = super.onCreateInputConnection(outAttrs) ?: return null
+        return object : InputConnectionWrapper(base, true) {
+            override fun commitText(text: CharSequence?, newCursorPosition: Int): Boolean {
+                // Block the TV leanback IME's empty initialisation commit that wipes the URL.
+                if (isEditGuarded && text != null && text.isEmpty() && this@SearchView.length() > 0) {
+                    return true
+                }
+                return super.commitText(text, newCursorPosition)
+            }
+        }
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -165,12 +189,12 @@ class SearchView @JvmOverloads constructor(
 
     /**
      * Enter edit mode: show the cursor and keyboard. The host swaps the label for the URL and
-     * handles the text selection (no select all for directional navigation).
+     * selects all of its text.
      */
     private fun startEditing(fromPointer: Boolean) {
         isEditing = true
         isCursorVisible = true
-        editListener?.onEditStart(fromPointer)
+        editListener?.onEditStart()
         if (!fromPointer) {
             // The framework shows the keyboard on its own for pointer / touch focus.
             inputMethodManager?.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)

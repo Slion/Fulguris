@@ -67,13 +67,23 @@ def test_edit_shows_url(serial: str, package: str, ctx: dict) -> None:
     assert KNOWN_DOMAIN in text or text.startswith("http"), f"edit mode should show the URL, got '{text}'"
 
 
-def test_no_select_all_on_dpad_edit(serial: str, package: str, ctx: dict) -> None:
+def test_dpad_edit_selects_all(serial: str, package: str, ctx: dict) -> None:
+    """Entering edit mode via D-pad selects all, so typing replaces the URL."""
     adb.navigate(serial, package, KNOWN_URL)
-    _enter_edit(serial)
-    adb.type_text(serial, "ZZZ", wait=0.6)
-    text = adb.field_text(serial).lower()
-    assert KNOWN_DOMAIN in text, f"D-pad edit must not select all; URL should remain, got '{text}'"
-    assert text.rstrip().endswith("zzz"), f"typed text should append at the end, got '{text}'"
+    _focus_field_for_navigation(serial)
+    adb.key(serial, adb.KEY_DPAD_CENTER, wait=0.8)
+    # The URL must still be there (selected) before any typing. On Android TV the IME used to
+    # deliver a stale commit that wiped the freshly selected URL, leaving the field blank.
+    edit_text = adb.field_text(serial)
+    assert KNOWN_DOMAIN in edit_text.lower() or edit_text.lower().startswith("http"), \
+        f"edit mode must keep the selected URL in the field, got '{edit_text}'"
+    adb.type_text(serial, "Z", wait=0.5)
+    # Hide the keyboard (stays in edit mode) so the field text is readable; on TV the
+    # fullscreen leanback IME would otherwise be what uiautomator captures.
+    adb.key(serial, adb.KEY_BACK, wait=0.8)
+    text = adb.field_text(serial)
+    assert KNOWN_DOMAIN not in text.lower(), f"D-pad edit must select all; URL should be replaced, got '{text}'"
+    assert text.strip().lower() == "z", f"typing should replace the whole URL, got '{text}'"
 
 
 # --- Tests -----------------------------------------------------------------
@@ -231,7 +241,7 @@ ALL_TESTS = [
     test_navigation_shows_label_not_url,
     test_center_enters_edit_mode,
     test_edit_shows_url,
-    test_no_select_all_on_dpad_edit,
+    test_dpad_edit_selects_all,
     test_type_and_validate_navigates,
     test_back_two_stage_keyboard_then_cancel,
     test_back_from_navigation_returns_to_web,

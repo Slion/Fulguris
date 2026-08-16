@@ -1566,15 +1566,10 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
             }
         }
 
-        override fun onEditStart(fromPointer: Boolean) {
-            // Entering edit mode: show the URL instead of the label; hide the SSL icon.
+        override fun onEditStart() {
             showUrl()
             iBindingToolbarContent.addressBarInclude.searchSslStatus.visibility = GONE
-            if (fromPointer) {
-                searchView.selectAll()
-            } else {
-                searchView.setSelection(searchView.length())
-            }
+            postEditStartGuard()
         }
 
         override fun onEditEnd() {
@@ -1634,6 +1629,28 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
      */
     private fun showLabel() {
         searchView.setText(getHeaderInfoText(userPreferences.toolbarLabel), false)
+    }
+
+    /**
+     * On Android TV the leanback IME delivers stale commits that wipe the URL right after
+     * entering edit mode. Check 150 ms later and restore if needed; all stale commits arrive
+     * within ~50 ms so this window is always sufficient.
+     */
+    private fun postEditStartGuard() {
+        searchView.isEditGuarded = true
+        // 400 ms clears two problems in one shot:
+        //   touch — super.onTouchEvent places the cursor at the tap point; we run after it.
+        //   TV    — the leanback IME fires onShown at ~288 ms and can wipe the URL; we run after it.
+        mainHandler.postDelayed({
+            if (searchView.isEditing) {
+                if (searchView.text.isNullOrEmpty()) {
+                    val url = tabsManager.currentTab?.url ?: return@postDelayed
+                    if (!url.isSpecialUrl()) showUrl()
+                }
+                searchView.selectAll()
+            }
+            searchView.isEditGuarded = false
+        }, 400)
     }
 
     var drawerOpened : Boolean = false

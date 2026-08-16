@@ -74,3 +74,4 @@ vendor/bundle
 # Crowdin - prevent accidental auto-upload configuration
 crowdin.properties
 __pycache__
+.kotlin
