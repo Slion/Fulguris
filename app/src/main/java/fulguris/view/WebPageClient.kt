@@ -381,6 +381,8 @@ class WebPageClient(
 
         // Flag that we have called onPageFinished
         onPageFinishedDone = true
+        // The page is done loading: hide the stop button / progress bar
+        webPageTab.isLoading = false
 
         // Inject nested scroll detection so that pull-to-refresh is suppressed when
         // the user scrolls inside a CSS overflow:auto/scroll element (e.g. a sidebar).
@@ -477,6 +479,7 @@ class WebPageClient(
         // and not trigger shouldInterceptRequest for the main frame
         // See: https://github.com/Slion/Fulguris/issues/772
         onPageFinishedDone = false
+        webPageTab.isLoading = true
 
         //TODO: Could update targetUrl?
         // When opening bbc.com in a new tab resolved as http://bbc.com - onLoadResource for main frame was still the targetUrl http://bbc.com

@@ -172,6 +172,16 @@ def _start_app(serial: str, package: str) -> None:
     time.sleep(2.0)
 
 
+def view_present(serial: str, view_id: str) -> bool:
+    """Fast check whether a view with the given resource id is in the top activity.
+
+    Uses `dumpsys activity top` (~0.2s) instead of a full uiautomator dump
+    (1-3s). Matches the `app:id/<view_id>` token in a view line.
+    """
+    out = _adb(serial, ["shell", "dumpsys", "activity", "top"])
+    return f"app:id/{view_id}" in out
+
+
 def settle(serial: str, package: str, timeout: float = 60.0) -> bool:
     """Wait until the app is in the foreground and its main UI is ready.
 
@@ -186,7 +196,7 @@ def settle(serial: str, package: str, timeout: float = 60.0) -> bool:
             _start_app(serial, package)
             return False
         try:
-            return ":id/search" in dump_ui(serial)
+            return view_present(serial, "search")
         except Exception:  # noqa: BLE001 - adb hiccup, keep polling
             return False
 
@@ -205,23 +215,46 @@ def restart(serial: str, package: str, wait: float = 5.0) -> None:
     launch(serial, package, wait)
 
 
-def navigate(serial: str, package: str, url: str) -> None:
-    """Restart then load the given URL, clearing whatever the edit field already holds.
+def enter_edit(serial: str) -> None:
+    """Focus the address field for navigation then enter edit mode.
+
+    After entering edit mode the field selects all its text (the address bar's edit
+    guard runs ~400ms in), so a subsequent ``type_text`` replaces the current URL.
+    We deliberately do NOT empty the field first: on the TV-style address bar an empty
+    field drops out of edit mode and shows the label again, which would swallow the
+    typed characters. Replacing the selection avoids that whole class of flakiness.
+    """
+    key(serial, KEY_SEARCH, 0.7)      # focus for navigation
+    key(serial, KEY_DPAD_CENTER, 0.9)  # enter edit mode; guard selects all text
+
+
+def navigate(serial: str, package: str, url: str, reset: bool = True) -> None:
+    """Load the given URL, replacing whatever the edit field already holds.
 
     Waits for the app to be foregrounded and settled before sending any keys.
+    By default the app is restarted first for a clean, deterministic state (the
+    convention for this test suite). Pass reset=False to skip the restart when
+    the app is already running; this is faster but leaves the previous tab/page
+    state in place, so only use it in tests that do not depend on a fresh launch.
     """
-    restart(serial, package)
-    key(serial, KEY_SEARCH, 0.7)      # focus for navigation
-    key(serial, KEY_DPAD_CENTER, 0.7)  # enter edit mode
-    clear_field(serial)
-    type_text(serial, url, 0.4)
+    if reset:
+        restart(serial, package)
+    else:
+        settle(serial, package)
+    enter_edit(serial)
+    type_text(serial, url, 0.4)  # replaces the selected URL
     key(serial, KEY_ENTER, 3.0)
 
 
 def clear_field(serial: str) -> None:
-    """Clear the focused edit field: move to the end then delete a generous number of chars."""
+    """Clear the focused edit field: move to the end then delete a generous number of chars.
+
+    Uses the `input keyevent -n <count>` repeat flag so the deletes are one adb
+    call instead of one per key (161 round trips -> 2), which is much faster on
+    Windows where each adb invocation is a subprocess.
+    """
     _adb(serial, ["shell", "input", "keyevent", "123"])  # KEYCODE_MOVE_END
-    _adb(serial, ["shell", "input", "keyevent"] + ["67"] * 160)  # KEYCODE_DEL x160
+    _adb(serial, ["shell", "input", "keyevent", "-n", "160", "67"])  # KEYCODE_DEL x160
     time.sleep(0.3)
 
 
@@ -233,6 +266,49 @@ def key(serial: str, keycode: int, wait: float = 0.5) -> None:
 def tap(serial: str, x: int, y: int, wait: float = 0.7) -> None:
     _adb(serial, ["shell", "input", "tap", str(x), str(y)])
     time.sleep(wait)
+
+
+# Meta / combo key codes for key_combination.
+KEY_CTRL_LEFT = 113
+KEY_TAB = 61
+
+
+def key_combination(serial: str, *keycodes: int, wait: float = 0.6) -> None:
+    """Send a chord of keys pressed together (e.g. CTRL+TAB).
+
+    Uses `input keycombination` (Android 10+), which is the only reliable way to
+    deliver a modified key like CTRL+TAB over adb; plain `input keyevent` cannot
+    hold a modifier down across another key.
+    """
+    _adb(serial, ["shell", "input", "keycombination", *[str(k) for k in keycodes]])
+    time.sleep(wait)
+
+
+def ctrl_tab(serial: str, wait: float = 0.9) -> None:
+    """Switch to the next/most-recent tab with CTRL+TAB, as a keyboard user would."""
+    key_combination(serial, KEY_CTRL_LEFT, KEY_TAB, wait=wait)
+
+
+def open_tab_switcher(serial: str, wait: float = 1.0) -> bool:
+    """Open the tab list by tapping the toolbar tabs button. Returns False if absent."""
+    n = find_node(serial, ":id/tabs_button")
+    if not n or not n.bounds:
+        return False
+    x1, y1, x2, y2 = n.bounds
+    tap(serial, (x1 + x2) // 2, (y1 + y2) // 2, wait)
+    return True
+
+
+def tab_entries(serial: str) -> list[tuple[str, tuple[int, int]]]:
+    """(title, center) for each tab row in the open tab switcher (`textTab` views)."""
+    result: list[tuple[str, tuple[int, int]]] = []
+    for nd in nodes(serial):
+        if nd.resource_id.endswith("textTab") and nd.bounds:
+            x1, y1, x2, y2 = nd.bounds
+            result.append((nd.text, ((x1 + x2) // 2, (y1 + y2) // 2)))
+    return result
+
+
 
 
 def type_text(serial: str, text: str, wait: float = 0.5) -> None:
@@ -357,3 +433,46 @@ def ssl_icon_visible(serial: str) -> bool:
 def device_label(serial: str) -> str:
     model = _adb(serial, ["shell", "getprop", "ro.product.model"]).strip()
     return f"{serial} ({model})" if model else serial
+
+
+def _button_view_flag(serial: str, view_id: str) -> str | None:
+    """First character of the FLAGS field for a view in `dumpsys activity top`.
+
+    V=visible, I=invisible, G=gone. Returns None if the view is not in the dump.
+    Much faster than a uiautomator dump (~0.2s vs several seconds).
+    """
+    out = _adb(serial, ["shell", "dumpsys", "activity", "top"])
+    m = re.search(
+        r"\{[0-9a-f]+ ([VIG])[A-Z.]* [A-Z.]* \d+,\d+-\d+,\d+ #[0-9a-f]+ app:id/" + re.escape(view_id) + r"\}",
+        out,
+    )
+    return m.group(1) if m else None
+
+
+def reload_button_state(serial: str) -> str:
+    """Current state of the toolbar reload/stop button: VISIBLE, INVISIBLE, GONE, NOTFOUND."""
+    flag = _button_view_flag(serial, "button_reload")
+    if flag is None:
+        return "NOTFOUND"
+    return {"V": "VISIBLE", "I": "INVISIBLE", "G": "GONE"}[flag]
+
+
+def reload_button_visible(serial: str) -> bool:
+    return reload_button_state(serial) == "VISIBLE"
+
+
+def reload_button_center(serial: str) -> tuple[int, int] | None:
+    """Screen center of the toolbar reload/stop button, for tapping it.
+
+    uiautomator does not expose the button itself, but it sits immediately to the
+    left of the tabs button with the same size, so we derive its position from
+    tabs_button (which uiautomator does report). Only meaningful while the button
+    is visible.
+    """
+    n = find_node(serial, ":id/tabs_button")
+    if not n or not n.bounds:
+        return None
+    x1, y1, x2, y2 = n.bounds
+    w = x2 - x1
+    return x1 - w // 2, (y1 + y2) // 2
+

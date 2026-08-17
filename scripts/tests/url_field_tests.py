@@ -163,7 +163,8 @@ def test_suggestions_navigable_without_touch(serial: str, package: str, ctx: dic
     """Type, hide keyboard with back, navigate the popup with down and open with center."""
     adb.restart(serial, package)
     _enter_edit(serial)
-    adb.clear_field(serial)
+    # Entering edit selects the current URL; typing replaces it (emptying the field
+    # would drop out of edit mode on the TV-style address bar and swallow the input).
     adb.type_text(serial, "wikipedia", wait=1.0)
     assert adb.dropdown_present(serial), "suggestions popup should appear while typing"
 
@@ -298,6 +299,188 @@ def test_pill_only_when_focused(serial: str, package: str, ctx: dict) -> None:
     assert diff > 3.0, f"pill region barely changed between states (mean diff {diff:.2f})"
 
 
+# --- Reload / stop button tests --------------------------------------------
+# The toolbar button doubles as reload (refresh icon) and stop (X icon):
+#   - While the current tab is loading it is VISIBLE and shows the stop icon.
+#   - Once loaded, on a scrollable page it is GONE (pull-to-refresh takes over),
+#     and on a short/non-scrollable page it stays VISIBLE (refresh) by design.
+# Regressions we guard against: the stop button sticking after a load finished
+# (stale progress / restored tab), never appearing during a load, or not tracking
+# the current tab when switching tabs.
+#
+# We read the state with the fast dumpsys view probe (adb.reload_button_state).
+# A "scrollable, loaded" page => GONE; a short page (example.com) => VISIBLE.
+
+# A tall, always-scrollable page. A cache-busting query makes every load hit the
+# network so the stop button is reliably observable (a cached reload is too fast).
+SCROLLABLE_URL = "https://en.wikipedia.org/wiki/Web_browser"
+SHORT_URL = "example.com"
+
+
+def _fresh_url(base: str) -> str:
+    sep = "&" if "?" in base else "?"
+    return f"{base}{sep}cb={int(time.time() * 1000)}"
+
+
+def _wait_reload_button_gone(serial: str, timeout: float = 25.0) -> str:
+    """Poll until the reload/stop button is GONE; return the final state."""
+    deadline = time.time() + timeout
+    state = adb.reload_button_state(serial)
+    while state != "GONE" and time.time() < deadline:
+        time.sleep(0.5)
+        state = adb.reload_button_state(serial)
+    return state
+
+
+def _wait_reload_button(serial: str, target: str, timeout: float = 25.0) -> str:
+    deadline = time.time() + timeout
+    state = adb.reload_button_state(serial)
+    while state != target and time.time() < deadline:
+        time.sleep(0.4)
+        state = adb.reload_button_state(serial)
+    return state
+
+
+def _navigate_current_tab(serial: str, url: str, post_enter_wait: float = 0.15) -> None:
+    """Type a URL into the address bar and submit, returning to the app quickly so
+    the caller can sample the loading state. Assumes the app is already foregrounded.
+
+    Verifies the URL actually landed in the field (the address bar's edit guard can
+    occasionally swallow the first attempt) and retries once, so navigation is reliable
+    even when the session is busy with many tabs."""
+    probe = url.split("//")[-1][:12]
+    for _ in range(2):
+        adb.enter_edit(serial)
+        adb.type_text(serial, url, wait=0.4)  # replaces the selected URL
+        if probe in adb.field_text(serial):
+            break
+    adb.key(serial, adb.KEY_ENTER, wait=post_enter_wait)
+
+
+def _saw_stop_button(serial: str, timeout: float = 15.0) -> bool:
+    """True if the button becomes VISIBLE (stop) at least once within the timeout."""
+    deadline = time.time() + timeout
+    while time.time() < deadline:
+        if adb.reload_button_state(serial) == "VISIBLE":
+            return True
+    return False
+
+
+def _ctrl_tab_to(serial: str, label: str, tries: int = 4) -> bool:
+    """CTRL+TAB (most-recent toggle) until the address label matches, or give up."""
+    for _ in range(tries):
+        adb.ctrl_tab(serial)
+        if adb.field_text(serial) == label:
+            return True
+    return adb.field_text(serial) == label
+
+
+def test_reload_button_hidden_after_load(serial: str, package: str, ctx: dict) -> None:
+    """On a loaded, scrollable page the reload/stop button must stay hidden.
+
+    Core regression: the button used to hide, then reappear after the page finished
+    (stale out-of-order progress event), or stick showing the stop icon on a tab
+    restored at launch. It must go GONE and stay GONE while the page is idle.
+    """
+    adb.navigate(serial, package, SCROLLABLE_URL)
+    state = _wait_reload_button_gone(serial)
+    assert state == "GONE", f"reload button should be hidden after load, got {state}"
+    # Keep watching: the button must NOT reappear while the page is idle.
+    for _ in range(12):  # ~6s of idle watching at 0.5s polls
+        time.sleep(0.5)
+        state = adb.reload_button_state(serial)
+        assert state == "GONE", \
+            f"stop button reappeared after the page finished loading (state={state})"
+
+
+def test_stop_button_visible_during_load(serial: str, package: str, ctx: dict) -> None:
+    """While a fresh (uncached) page loads, the stop button is visible."""
+    adb.settle(serial, package)
+    _navigate_current_tab(serial, _fresh_url(SCROLLABLE_URL))
+    assert _saw_stop_button(serial, timeout=15.0), \
+        "stop button was never visible during page load"
+    _wait_reload_button_gone(serial)  # let it finish so we leave a clean state
+
+
+def test_reload_button_hidden_after_reload(serial: str, package: str, ctx: dict) -> None:
+    """After a load, a second fresh navigation shows the stop button again, then hides."""
+    adb.navigate(serial, package, SCROLLABLE_URL)
+    assert _wait_reload_button_gone(serial) == "GONE", "precondition: button hidden after load"
+    # A second fresh (cache-busted) navigation: loads (stop visible) then hides again.
+    _navigate_current_tab(serial, _fresh_url(SCROLLABLE_URL))
+    assert _saw_stop_button(serial, timeout=15.0), "stop button not shown during reload/second load"
+    assert _wait_reload_button_gone(serial) == "GONE", "button should hide again after the reload"
+
+
+def test_stop_button_click_stops_load(serial: str, package: str, ctx: dict) -> None:
+    """Tapping the stop button while loading aborts the load (button leaves the stop state)."""
+    adb.settle(serial, package)
+    _navigate_current_tab(serial, _fresh_url(SCROLLABLE_URL))
+    assert _saw_stop_button(serial, timeout=15.0), "precondition: stop button visible while loading"
+    center = adb.reload_button_center(serial)
+    assert center, "could not locate the reload/stop button"
+    adb.tap(serial, center[0], center[1], wait=1.0)
+    # After stopping, the load ends: the button settles to a stable non-loading state
+    # (GONE if the partial page is scrollable, else VISIBLE showing refresh) and,
+    # crucially, does not keep flipping back to the stop state.
+    time.sleep(1.5)
+    s1 = adb.reload_button_state(serial)
+    time.sleep(1.5)
+    s2 = adb.reload_button_state(serial)
+    assert s1 == s2, f"button state kept changing after stop ({s1} -> {s2}); load did not stop"
+
+
+def test_short_page_shows_reload_button(serial: str, package: str, ctx: dict) -> None:
+    """On a short, non-scrollable page the reload button stays visible by design."""
+    adb.navigate(serial, package, SHORT_URL)
+    state = _wait_reload_button(serial, "VISIBLE", timeout=20.0)
+    assert state == "VISIBLE", f"short page should keep the reload button visible, got {state}"
+
+
+def test_reload_button_tracks_tab_on_ctrl_tab(serial: str, package: str, ctx: dict) -> None:
+    """Switching tabs with CTRL+TAB updates the reload button for the current tab.
+
+    Tab A is a scrollable loaded page (button GONE); tab B is a short page (button
+    VISIBLE). Cycling between them must flip the button to match whichever tab shows.
+    """
+    # Tab A: scrollable page -> button GONE.
+    adb.navigate(serial, package, SCROLLABLE_URL)
+    assert _wait_reload_button_gone(serial) == "GONE", "tab A (scrollable) should hide the button"
+    label_a = adb.field_text(serial)
+    # Tab B: navigating opens a new tab for the URL; a short page -> button VISIBLE.
+    adb.navigate(serial, package, SHORT_URL, reset=False)
+    assert _wait_reload_button(serial, "VISIBLE") == "VISIBLE", "tab B (short) should show the button"
+    label_b = adb.field_text(serial)
+    assert label_a != label_b, "the two tabs should have distinct labels"
+    # Switch back to A -> GONE, then to B -> VISIBLE (CTRL+TAB toggles most-recent).
+    assert _ctrl_tab_to(serial, label_a), "CTRL+TAB should reach tab A"
+    assert _wait_reload_button(serial, "GONE") == "GONE", \
+        "after switching to the scrollable tab the button must hide"
+    assert _ctrl_tab_to(serial, label_b), "CTRL+TAB should reach tab B"
+    assert _wait_reload_button(serial, "VISIBLE") == "VISIBLE", \
+        "after switching to the short tab the button must show"
+
+
+def test_reload_button_tracks_tab_via_tab_menu(serial: str, package: str, ctx: dict) -> None:
+    """Same as above but switching tabs by touch through the tab list drawer."""
+    # Ensure two tabs exist: a scrollable one and a short one.
+    adb.navigate(serial, package, SCROLLABLE_URL)
+    assert _wait_reload_button_gone(serial) == "GONE", "scrollable tab should hide the button"
+    label_scroll = adb.field_text(serial)
+    adb.navigate(serial, package, SHORT_URL, reset=False)
+    assert _wait_reload_button(serial, "VISIBLE") == "VISIBLE", "short tab should show the button"
+
+    # Open the tab drawer and tap the scrollable tab: button must hide.
+    assert adb.open_tab_switcher(serial), "tabs button not available"
+    entries = adb.tab_entries(serial)
+    target = next((c for (t, c) in entries if t == label_scroll), None)
+    assert target, f"scrollable tab '{label_scroll}' not found in tab list {[t for t,_ in entries]}"
+    adb.tap(serial, target[0], target[1], wait=1.2)
+    assert adb.field_text(serial) == label_scroll, "tapping the tab row should switch to it"
+    assert _wait_reload_button(serial, "GONE") == "GONE", \
+        "after switching to the scrollable tab via the menu the button must hide"
+
+
 ALL_TESTS = [
     test_launch_focus_is_webview,
     test_unfocused_shows_label,
@@ -318,4 +501,12 @@ ALL_TESTS = [
     test_http_shows_off_icon,
     test_invalid_https_shows_ssl_icon,
     test_unfocused_pill_outline_visible,
+    test_reload_button_hidden_after_load,
+    test_stop_button_visible_during_load,
+    test_reload_button_hidden_after_reload,
+    test_stop_button_click_stops_load,
+    test_short_page_shows_reload_button,
+    test_reload_button_tracks_tab_on_ctrl_tab,
+    test_reload_button_tracks_tab_via_tab_menu,
 ]
+

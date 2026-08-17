@@ -1978,6 +1978,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
 
     // For CTRL+TAB implementation
     private var iRecentTabIndex = -1;
+
     private var iCapturedRecentTabsIndices : Set<WebPageTab>? = null
 
     private fun tabSwitchInProgress() = iRecentTabIndex!=-1
@@ -2677,9 +2678,11 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     }
 
     /**
-     * Tell if the current tab is loading
+     * Tell if the current tab is loading.
+     * Backed by [WebPageTab.isLoading], which is driven by the page lifecycle so that stale
+     * or out-of-order WebView progress reports cannot make the stop button stick or flicker.
      */
-    private fun isLoading() : Boolean = tabsManager.currentTab?.let{it.progress < 100} ?: false
+    private fun isLoading() : Boolean = tabsManager.currentTab?.isLoading ?: false
 
     /**
      * Enable or disable pull-to-refresh according to user preferences and state
@@ -2695,7 +2698,6 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         // Disable pull to refresh if no vertical scroll as it bugs with frame internal scroll
         // See: https://github.com/Slion/Lightning-Browser/projects/1
         iTabViewContainerFront.isEnabled = currentTabView?.canScrollVertically()?:false
-
         updateReloadButton()
     }
 
@@ -3088,6 +3090,13 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         }
 
         updateToolBarText()
+
+        // setTabView swaps our containers without re-evaluating them: the pull-to-refresh
+        // enabled state (and thus the reload button) would otherwise still reflect the
+        // previous tab's scrollability. Re-evaluate now, and again once the tab
+        // transition animation has settled and the new web view has been laid out.
+        setupPullToRefresh(resources.configuration)
+        mainHandler.postDelayed({ setupPullToRefresh(resources.configuration) }, 600)
     }
 
     /**
@@ -4144,8 +4153,21 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
             iTappedTab = null
         }
 
+        // Advance the progress bar while the page is loading; always let a 100% report
+        // through so the bar can finish and auto-hide. Stale out-of-order sub-100 events
+        // that arrive after completion are ignored (aTab.isLoading is already false).
+        if (aTab.isLoading || aProgress >= 100) {
+            iBinding.toolbarInclude.progressView.progress = aProgress
+        }
+        // The first time we reach 100% the page is considered loaded. A progress event
+        // never re-marks the page as loading (only a fresh navigation does via
+        // onPageStarted / the load* / go* methods), so a late subframe dipping below 100
+        // after completion cannot bring the stop button back, and a page whose
+        // onPageFinished is skipped or missed still clears here rather than sticking.
+        if (aProgress >= 100) {
+            aTab.isLoading = false
+        }
         setIsLoading(aProgress < 100)
-        iBinding.toolbarInclude.progressView.progress = aProgress
 
         // Since toolbar text depends on loading status we need to update it it changed
         if (!isLoading()) {
@@ -4847,6 +4869,9 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
             iBindingToolbarContent.addressBarInclude.searchSslStatus.updateVisibilityForContent()
         }
 
+        // Refresh the button from the current tab loading state rather than the passed
+        // parameter, which may reflect a stale/out-of-order progress report.
+
         // Set stop or reload icon according to current load status
         //setMenuItemIcon(R.id.action_reload, if (isLoading) R.drawable.ic_action_delete else R.drawable.ic_action_refresh)
         updateReloadButton()
@@ -4884,7 +4909,8 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     private fun refreshOrStop() {
         val currentTab = tabsManager.currentTab
         if (currentTab != null) {
-            if (currentTab.progress < 100) {
+            // Match the action to what the button shows (stop while loading, reload otherwise).
+            if (isLoading()) {
                 currentTab.stopLoading()
             } else {
                 currentTab.reload()

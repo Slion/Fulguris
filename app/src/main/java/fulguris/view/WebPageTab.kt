@@ -336,10 +336,17 @@ class WebPageTab(
         get() = webView?.progress ?: 100
 
     /**
-     * Tells if a web page is currently loading.
+     * Whether the page is currently loading.
+     *
+     * Driven by the page lifecycle rather than derived on the fly from [progress]: a fresh
+     * navigation (loadUrl/reload/history) and onPageStarted set it, while onPageFinished,
+     * stopLoading and the first 100% progress report clear it. A progress event never sets it
+     * back to true, so stale or out-of-order WebView progress reports — after restoreState the
+     * WebView never reports 100, and late subframe events dip back below 100 after completion —
+     * cannot leave the stop button stuck on or make it flicker.
      */
-    val isLoading
-        get() = progress != 100
+    var isLoading = false
+        internal set
 
     /**
      * Get the current user agent used by the WebView.
@@ -909,6 +916,7 @@ class WebPageTab(
      */
     fun stopLoading() {
         webView?.stopLoading()
+        isLoading = false
 
         // SL: I don't think we need this here as onPageFinished is called when we stop loading
         // Execute callback since load was explicitly stopped
@@ -1209,6 +1217,9 @@ class WebPageTab(
      * in its history to the previous page.
      */
     fun goBack() {
+        // History navigation may not fire onPageStarted (notably YouTube.com), so mark
+        // loading here to show the stop button right away.
+        isLoading = true
         webView?.goBack()
     }
 
@@ -1217,6 +1228,9 @@ class WebPageTab(
      * in its history to the next page.
      */
     fun goForward() {
+        // History navigation may not fire onPageStarted (notably YouTube.com), so mark
+        // loading here to show the stop button right away.
+        isLoading = true
         webView?.goForward()
     }
 
@@ -1227,6 +1241,9 @@ class WebPageTab(
      * @param steps Number of steps to navigate (negative for back, positive for forward)
      */
     fun goBackOrForward(steps: Int) {
+        // History navigation may not fire onPageStarted (notably YouTube.com), so mark
+        // loading here to show the stop button right away.
+        isLoading = true
         webView?.goBackOrForward(steps)
     }
 
@@ -1332,6 +1349,9 @@ class WebPageTab(
      * Will be executed once and then cleared automatically.
      */
     fun loadUrl(aUrl: String, onLoadComplete: (() -> Unit)? = null) {
+
+        // Mark loading for the new page load so the stop button shows right away
+        isLoading = true
 
         iTargetUrl = Uri.parse(aUrl)
 
