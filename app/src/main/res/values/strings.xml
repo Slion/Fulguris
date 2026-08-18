@@ -3,6 +3,12 @@
 
     <string name="action_reload">Reload</string>
     <string name="action_force_reload">Force reload</string>
+    <string name="action_cursor">Cursor</string>
+    <string name="cursor_mode_on">Cursor mode on</string>
+    <string name="cursor_mode_off">Cursor mode off</string>
+    <string name="pref_title_cursor_hotkey">Cursor mode hotkey</string>
+    <string name="pref_summary_cursor_hotkey">Long-press the fast-forward button to toggle the on-screen cursor</string>
+    <string name="pref_title_cursor_speed">Cursor speed</string>
     <string name="action_launch_app">Launch</string>
     <string name="action_pip">Picture in picture</string>
     <string name="action_menu">Menu</string>

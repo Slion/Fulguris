@@ -33,6 +33,7 @@ KEY_DPAD_CENTER = 23
 KEY_ENTER = 66
 KEY_SEARCH = 84
 KEY_BUTTON_A = 96
+KEY_MEDIA_FAST_FORWARD = 90
 
 
 def repo_root() -> str:
@@ -148,6 +149,17 @@ def detect_package(serial: str) -> str:
 
 def force_stop(serial: str, package: str) -> None:
     _adb(serial, ["shell", "am", "force-stop", package])
+
+
+_leanback_cache: dict[str, bool] = {}
+
+
+def is_leanback(serial: str) -> bool:
+    """True if the device advertises the Android TV (leanback) system feature."""
+    if serial not in _leanback_cache:
+        out = _adb(serial, ["shell", "pm", "list", "features"])
+        _leanback_cache[serial] = "android.software.leanback" in out
+    return _leanback_cache[serial]
 
 
 def foreground_package(serial: str) -> str | None:
@@ -327,6 +339,17 @@ def clear_field(serial: str) -> None:
 
 def key(serial: str, keycode: int, wait: float = 0.5) -> None:
     _adb(serial, ["shell", "input", "keyevent", str(keycode)])
+    time.sleep(wait)
+
+
+def key_longpress(serial: str, keycode: int, wait: float = 0.8) -> None:
+    """Send a system long-press key event (sets FLAG_LONG_PRESS).
+
+    Used to drive the cursor-mode toggle hotkey (KEYCODE_MEDIA_FAST_FORWARD) over adb.
+    The cursor controller honors FLAG_LONG_PRESS as a secondary trigger alongside its own
+    hold timer, so this reliably flips cursor mode.
+    """
+    _adb(serial, ["shell", "input", "keyevent", "--longpress", str(keycode)])
     time.sleep(wait)
 
 

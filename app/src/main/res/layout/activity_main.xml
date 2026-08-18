@@ -115,6 +115,15 @@
                             <include layout="@layout/touch_tab_switcher"
                                 android:id="@+id/fabInclude" />
 
+                            <!-- Android TV cursor overlay, controlled by fulguris.cursor.CursorController.
+                                 Transparent and non-focusable; drawn above the web view. -->
+                            <fulguris.cursor.CursorView
+                                android:id="@+id/cursorOverlay"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:alpha="0"
+                                android:visibility="gone" />
+
                         </androidx.coordinatorlayout.widget.CoordinatorLayout>
                     </LinearLayout>
 

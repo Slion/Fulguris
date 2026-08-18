@@ -33,6 +33,8 @@
     <bool name="pref_default_portrait_pull_to_refresh">true</bool>
     <bool name="pref_default_landscape_pull_to_refresh">false</bool>
     <bool name="pref_default_webrtc">true</bool>
+    <bool name="pref_default_cursor_hotkey">true</bool>
+    <integer name="pref_default_cursor_speed">50</integer>
     <bool name="pref_default_search_in_new_tab">true</bool>
     <bool name="pref_default_url_in_new_tab">true</bool>
     <bool name="pref_default_homepage_in_new_tab">true</bool>

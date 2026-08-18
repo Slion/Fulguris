@@ -101,6 +101,8 @@
     <string name="pref_key_dark_mode">pref_key_dark_mode</string>
     <string name="pref_key_dark_mode_override">pref_key_dark_mode_override</string>
     <string name="pref_key_webrtc">pref_key_webrtc</string>
+    <string name="pref_key_cursor_hotkey">pref_key_cursor_hotkey</string>
+    <string name="pref_key_cursor_speed">pref_key_cursor_speed</string>
     <string name="pref_key_location">pref_key_location</string>
     <string name="pref_key_location_override">pref_key_location_override</string>
     <string name="pref_key_content_control">pref_key_content_control</string>

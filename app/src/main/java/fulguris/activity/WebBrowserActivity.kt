@@ -22,6 +22,7 @@ import android.graphics.Point
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.StateListDrawable
+import android.hardware.input.InputManager
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.*
@@ -82,6 +83,8 @@ import fulguris.browser.cleanup.ExitCleanup
 import fulguris.browser.sessions.SessionsPopupWindow
 import fulguris.browser.tabs.TabsDesktopView
 import fulguris.browser.tabs.TabsDrawerView
+import fulguris.cursor.CursorController
+import fulguris.cursor.CursorSettings
 import fulguris.database.Bookmark
 import fulguris.database.HistoryEntry
 import fulguris.database.SearchSuggestion
@@ -245,6 +248,21 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     private lateinit var tabsDialog: BottomSheetDialog
     private lateinit var bookmarksDialog: BottomSheetDialog
 
+    // Android TV cursor mode. All the logic lives in the self-contained fulguris.cursor package;
+    // this activity only forwards input events and wires the overlay / menu / settings.
+    private lateinit var iCursorController: CursorController
+    private var iInputManager: InputManager? = null
+    private val iCursorSettings = object : CursorSettings {
+        override val hotkeyEnabled: Boolean get() = userPreferences.cursorHotkeyEnabled
+        override val speed: Int get() = userPreferences.cursorSpeed
+    }
+    // Registered so the Cursor menu item can appear/disappear live as a gamepad is (dis)connected.
+    private val iInputDeviceListener = object : InputManager.InputDeviceListener {
+        override fun onInputDeviceAdded(deviceId: Int) {}
+        override fun onInputDeviceRemoved(deviceId: Int) {}
+        override fun onInputDeviceChanged(deviceId: Int) {}
+    }
+
     // Options settings menu
     private val iBottomSheet = BottomSheetDialogFragment(supportFragmentManager)
 
@@ -393,6 +411,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         queue = Volley.newRequestQueue(this)
         createMenuCustom()
         createMenuSessions()
+        createCursorController()
         tabsDialog = BottomSheetDialog(this)
         bookmarksDialog = BottomSheetDialog(this)
 
@@ -717,6 +736,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
             onMenuItemClicked(iBinding.menuItemForceReload) { dismiss(); executeAction(R.id.action_force_reload) }
             onMenuItemClicked(iBinding.menuItemLaunchApp) { dismiss(); executeAction(R.id.action_launch_app) }
             onMenuItemClicked(iBinding.menuItemPip) { dismiss(); executeAction(R.id.action_pip) }
+            onMenuItemClicked(iBinding.menuItemCursor) { dismiss(); executeAction(R.id.action_toggle_cursor) }
             onMenuItemClicked(iBinding.menuItemFullMenu) {
                 dismiss()
                 showMenuFull()
@@ -733,6 +753,53 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
             // Make it full screen gesture friendly
             setOnDismissListener { justClosedMenuCountdown() }
         }
+    }
+
+    /**
+     * Create the Android TV cursor controller and hook it up to the overlay view.
+     * See the fulguris.cursor package for the actual implementation.
+     */
+    private fun createCursorController() {
+        iCursorController = CursorController(
+            overlay = iBinding.cursorOverlay,
+            targetProvider = { currentTabView },
+            settings = iCursorSettings,
+            onModeChanged = { enabled ->
+                application.toast(getString(if (enabled) R.string.cursor_mode_on else R.string.cursor_mode_off))
+                vibrate()
+                if (!enabled) {
+                    // Give D-pad navigation a predictable starting point once the cursor is gone.
+                    iBindingToolbarContent.buttonMore.requestFocus()
+                }
+            }
+        )
+    }
+
+    /**
+     * True when cursor mode should be offered to the user: on Android TV, or whenever a gamepad,
+     * joystick or D-pad-capable remote is currently connected. Queried live when the menu opens.
+     */
+    fun isCursorModeAvailable(): Boolean {
+        if (packageManager.hasSystemFeature("android.software.leanback")) return true
+        for (id in InputDevice.getDeviceIds()) {
+            val device = InputDevice.getDevice(id) ?: continue
+            if (device.isVirtual) continue
+            val sources = device.sources
+            if (sources and InputDevice.SOURCE_GAMEPAD == InputDevice.SOURCE_GAMEPAD
+                || sources and InputDevice.SOURCE_JOYSTICK == InputDevice.SOURCE_JOYSTICK
+                || sources and InputDevice.SOURCE_DPAD == InputDevice.SOURCE_DPAD) {
+                return true
+            }
+        }
+        return false
+    }
+
+    /** Whether cursor mode is currently on. Used to sync the menu checkbox. */
+    fun isCursorModeEnabled(): Boolean = ::iCursorController.isInitialized && iCursorController.enabled
+
+    /** Toggle cursor mode, wired to both the hotkey and the menu item. */
+    fun toggleCursorMode() {
+        if (::iCursorController.isInitialized) iCursorController.toggle()
     }
 
     /**
@@ -2079,6 +2146,13 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
 
         //Timber.d("dispatchKeyEvent $event")
 
+        // Android TV cursor mode gets first dibs on key events. In particular the media
+        // fast-forward toggle must be intercepted here, before it can reach a page's MediaSession
+        // (e.g. a playing video), and D-pad presses drive the cursor rather than focus navigation.
+        if (::iCursorController.isInitialized && iCursorController.dispatchKeyEvent(event)) {
+            return true
+        }
+
         if (event.action == KeyEvent.ACTION_UP && (event.keyCode==KeyEvent.KEYCODE_CTRL_LEFT||event.keyCode==KeyEvent.KEYCODE_CTRL_RIGHT)) {
 
             // Keep track of CTRL states
@@ -2349,6 +2423,18 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     }
 
     /**
+     * Route analog joystick / gamepad-stick motion to the cursor while cursor mode is on.
+     * When cursor mode is off we defer to the default handling (return of super), which lets the
+     * framework synthesize D-pad keys from joystick HAT motion for normal focus navigation.
+     */
+    override fun dispatchGenericMotionEvent(event: MotionEvent): Boolean {
+        if (::iCursorController.isInitialized && iCursorController.onGenericMotionEvent(event)) {
+            return true
+        }
+        return super.dispatchGenericMotionEvent(event)
+    }
+
+    /**
      * Used to skip the undo tab close option for empty tabs we closed automatically
      */
     private var skipNextTabClosedSnackbar : Boolean = false
@@ -2472,6 +2558,10 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
             }
             R.id.action_pip -> {
                 enterPipMode()
+                return true
+            }
+            R.id.action_toggle_cursor -> {
+                toggleCursorMode()
                 return true
             }
             R.id.action_incognito -> {
@@ -3675,6 +3765,8 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
 
     override fun onStop() {
         super.onStop()
+        iInputManager?.unregisterInputDeviceListener(iInputDeviceListener)
+        iInputManager = null
         // When in PiP and user dismisses the PiP window, onStop is called.
         // Make sure we pause the current tab then.
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N && !isInPictureInPictureMode) {
@@ -3710,12 +3802,18 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         // That would do, not strictly needed though
         lastTabView = null
 
+        if (::iCursorController.isInitialized) iCursorController.release()
+
         //
         super.onDestroy()
     }
 
     override fun onStart() {
         super.onStart()
+        // Track gamepad connect/disconnect so the Cursor menu item can appear/disappear live.
+        iInputManager = (getSystemService(Context.INPUT_SERVICE) as? InputManager)?.also {
+            it.registerInputDeviceListener(iInputDeviceListener, mainHandler)
+        }
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {

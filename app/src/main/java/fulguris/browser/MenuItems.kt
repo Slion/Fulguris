@@ -226,6 +226,15 @@ object MenuItems {
             canBeInTabMenu = true,
             defaultMenu = MenuType.TabMenu
         ),
+        MenuItemId.Cursor to MenuItem(
+            id = MenuItemId.Cursor,
+            labelId = R.string.action_cursor,
+            iconId = R.drawable.ic_arrow_selector_tool_fill,
+            viewId = R.id.menuItemCursor,
+            canBeInMainMenu = true,
+            canBeInTabMenu = true,
+            defaultMenu = MenuType.MainMenu
+        ),
         MenuItemId.DomainSettings to MenuItem(
             id = MenuItemId.DomainSettings,
             labelId = R.string.pref_title_domains,

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>start</title>
+<style>
+  html, body { margin: 0; }
+  /* Taller than the viewport so the page is scrollable for the edge-scroll test. */
+  #target {
+    display: block; position: absolute; top: 0; left: 0;
+    width: 100%; height: 220vh;
+    background: linear-gradient(#dfe7ef, #b9c6d6);
+    color: #123; font: 24px sans-serif;
+  }
+</style>
+</head>
+<body>
+<!--
+  Target page for scripts/tests/cursor_tests.py. It reports what the Fulguris Android TV cursor
+  does to it by changing document.title (which Fulguris mirrors into the toolbar label, readable
+  over adb without a screenshot):
+    - mouseover -> "hover"                  (SOURCE_MOUSE hover reaches the page)
+    - click     -> "<clientX>,<clientY>"    (the click lands, and where)
+    - scroll    -> "sy<scrollY>"            (pushing past an edge scrolls the page)
+-->
+<a id="target" href="javascript:void 0"
+   onmouseover="document.title='hover'"
+   onclick="document.title=Math.round(event.clientX)+','+Math.round(event.clientY); return false;">
+   Cursor test target
+</a>
+<script>
+  window.addEventListener('scroll', function () {
+    document.title = 'sy' + Math.round(window.scrollY);
+  });
+</script>
+</body>
+</html>
+

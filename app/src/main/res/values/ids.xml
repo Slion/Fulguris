@@ -50,6 +50,7 @@
     <item name="action_exit" type="id" />
     <item name="action_block" type="id" />
     <item name="action_translate" type="id" />
+    <item name="action_toggle_cursor" type="id" />
     <item name="onConfigurationChange" type="id" />
 
 </resources>

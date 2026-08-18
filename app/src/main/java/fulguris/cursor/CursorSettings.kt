@@ -20,45 +20,18 @@
  * All Rights Reserved.
  */
 
-package fulguris.browser
+package fulguris.cursor
 
 /**
- * Unique identifier for each menu item action.
- * Note: Enum names are persisted in SharedPreferences, renaming will reset menus to default configuration.
+ * Everything [CursorController] needs to read from the hosting app's settings.
+ *
+ * Kept as a tiny interface (rather than a dependency on Fulguris' `UserPreferences`) so the whole
+ * `cursor` package stays free of app specifics and can be pulled into a standalone library.
  */
-enum class MenuItemId {
-    // Main menu items
-    TabMenu,
-    Sessions,
-    Bookmarks,
-    History,
-    Downloads,
-    NewTab,
-    Incognito,
-    Options,
-    Settings,
-    Exit,
+interface CursorSettings {
+    /** Whether the long-press hardware hotkey may toggle cursor mode. The menu item ignores this. */
+    val hotkeyEnabled: Boolean
 
-    // Tab menu items
-    MainMenu,
-    TabHistory,
-    Share,
-    Find,
-    DomainSettings,
-    Translate,
-    ReaderMode,
-    AdBlock,
-    DarkMode,
-    DesktopMode,
-    AddBookmark,
-    Print,
-    Requests,
-    Console,
-    Cookies,
-    AddToHome,
-    ForceReload,
-    Pip,
-    LaunchApp,
-    Cursor,
-    FullMenu,
+    /** Cursor speed, 1..100. Scales both key-step and joystick movement. */
+    val speed: Int
 }

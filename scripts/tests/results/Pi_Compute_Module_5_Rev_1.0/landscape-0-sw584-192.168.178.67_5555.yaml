@@ -1,16 +1,16 @@
-# Fulguris UI test run — SM-A225F · portrait-0-sw384
-timestamp: '2026-08-18T23:19:22+00:00'
+# Fulguris UI test run — Pi Compute Module 5 Rev 1.0 · landscape-0-sw584
+timestamp: '2026-08-18T23:29:15+00:00'
 device:
-  serial: R58R91GBTZK
-  model: SM-A225F
-  brand: Samsung
-  product_name: Galaxy A22 5G
-  android: '13'
+  serial: 192.168.178.67:5555
+  model: Pi Compute Module 5 Rev 1.0
+  brand: Raspberry
+  product_name: Raspberry Pi 5 TV box
+  android: '16'
 config:
-  id: portrait-0-sw384
-  orientation: portrait
+  id: landscape-0-sw584
+  orientation: landscape
   rotation: 0
-  smallest_width_dp: 384
+  smallest_width_dp: 584
 package: net.slions.fulguris.full.download.debug
 options:
   restart: false
@@ -21,110 +21,110 @@ summary:
   passed: 35
   failed: 0
   total: 35
-  duration_s: 697.4
+  duration_s: 592.4
 tests:
 - name: test_launch_focus_is_webview
   status: pass
-  duration_s: 8.0
+  duration_s: 5.6
 - name: test_unfocused_shows_label
   status: pass
-  duration_s: 14.9
+  duration_s: 10.6
 - name: test_directional_focus_is_navigation_not_edit
   status: pass
-  duration_s: 13.6
+  duration_s: 11.0
 - name: test_navigation_shows_label_not_url
   status: pass
-  duration_s: 18.2
+  duration_s: 15.4
 - name: test_center_enters_edit_mode
   status: pass
-  duration_s: 11.9
+  duration_s: 9.8
 - name: test_edit_shows_url
   status: pass
-  duration_s: 14.2
+  duration_s: 11.9
 - name: test_dpad_edit_selects_all
   status: pass
-  duration_s: 17.0
+  duration_s: 15.4
 - name: test_type_and_validate_navigates
   status: pass
-  duration_s: 18.0
+  duration_s: 16.0
 - name: test_back_two_stage_keyboard_then_cancel
   status: pass
-  duration_s: 23.7
+  duration_s: 20.6
 - name: test_back_from_navigation_returns_to_web
   status: pass
-  duration_s: 15.6
+  duration_s: 14.0
 - name: test_down_from_navigation_returns_to_web
   status: pass
-  duration_s: 15.4
+  duration_s: 14.0
 - name: test_suggestions_navigable_without_touch
   status: pass
-  duration_s: 20.2
+  duration_s: 19.1
 - name: test_touch_tap_enters_edit
   status: pass
-  duration_s: 12.2
+  duration_s: 11.2
 - name: test_retap_after_cancel_reenters_edit
   status: pass
-  duration_s: 15.5
+  duration_s: 13.7
 - name: test_pill_only_when_focused
   status: pass
-  duration_s: 14.4
+  duration_s: 12.2
 - name: test_https_shows_ssl_icon
   status: pass
-  duration_s: 13.6
+  duration_s: 12.3
 - name: test_http_shows_off_icon
   status: pass
-  duration_s: 13.5
+  duration_s: 12.3
 - name: test_invalid_https_shows_ssl_icon
   status: pass
-  duration_s: 18.6
+  duration_s: 17.1
 - name: test_unfocused_pill_outline_visible
   status: pass
-  duration_s: 11.7
+  duration_s: 10.6
 - name: test_reload_button_hidden_after_load
   status: pass
-  duration_s: 19.4
+  duration_s: 15.3
 - name: test_stop_button_visible_during_load
   status: pass
-  duration_s: 11.8
+  duration_s: 7.0
 - name: test_reload_button_hidden_after_reload
   status: pass
-  duration_s: 22.0
+  duration_s: 17.3
 - name: test_stop_button_click_stops_load
   status: pass
-  duration_s: 17.9
+  duration_s: 14.7
 - name: test_short_page_shows_reload_button
   status: pass
-  duration_s: 17.1
+  duration_s: 8.5
 - name: test_reload_button_tracks_tab_on_ctrl_tab
   status: pass
-  duration_s: 32.9
+  duration_s: 30.0
 - name: test_reload_button_tracks_tab_via_tab_menu
   status: pass
-  duration_s: 32.9
+  duration_s: 30.2
 - name: test_cursor_toggle_hotkey_shows_and_hides_overlay
   status: pass
-  duration_s: 27.2
+  duration_s: 21.4
 - name: test_cursor_toggle_exit_focuses_menu_button
   status: pass
-  duration_s: 26.9
+  duration_s: 19.8
 - name: test_cursor_movement_dpad_right_moves_right
   status: pass
-  duration_s: 27.8
+  duration_s: 21.6
 - name: test_cursor_movement_dpad_down_moves_down
   status: pass
-  duration_s: 27.4
+  duration_s: 21.2
 - name: test_cursor_movement_edge_scrolls_page
   status: pass
-  duration_s: 27.7
+  duration_s: 20.8
 - name: test_cursor_click_hover_fires_mouseover
   status: pass
-  duration_s: 24.6
+  duration_s: 18.6
 - name: test_cursor_click_activates_under_cursor
   status: pass
-  duration_s: 23.3
+  duration_s: 17.4
 - name: test_cursor_menu_item_visible_on_leanback
   status: pass
-  duration_s: 16.8
+  duration_s: 17.6
 - name: test_cursor_menu_item_toggles_mode
   status: pass
-  duration_s: 16.7
+  duration_s: 23.7
