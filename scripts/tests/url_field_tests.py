@@ -33,6 +33,21 @@ def _enter_edit(serial: str) -> None:
     adb.key(serial, adb.KEY_DPAD_CENTER, wait=0.8)
 
 
+def _reset(serial: str, package: str, restart: bool | None = None) -> None:
+    """Bring the app to a known foreground state before a test.
+
+    With no explicit argument the runner's default decides (run.py --restart):
+    by default the app is NOT restarted between tests (faster on the TV), it is
+    only settled (launched if missing). Tests should set up their own state in
+    the running app (navigate to a known page) instead of restarting; only a
+    test that explicitly verifies the fresh-launch behavior passes restart=True.
+    """
+    if adb.RESTART_BETWEEN_TESTS if restart is None else restart:
+        adb.restart(serial, package)
+    else:
+        adb.settle(serial, package)
+
+
 # A known page whose title (label) differs from its URL.
 KNOWN_URL = "example.com"
 KNOWN_DOMAIN = "example.com"
@@ -90,20 +105,20 @@ def test_dpad_edit_selects_all(serial: str, package: str, ctx: dict) -> None:
 
 
 def test_launch_focus_is_webview(serial: str, package: str, ctx: dict) -> None:
-    adb.restart(serial, package)
+    _reset(serial, package, restart=True)  # fresh launch: initial focus must land on the web view
     assert adb.webview_focused(serial), "expected the web view to be focused after launch"
 
 
 def test_directional_focus_is_navigation_not_edit(serial: str, package: str, ctx: dict) -> None:
     """Focusing with a non-pointer input focuses for navigation only, no keyboard."""
-    adb.restart(serial, package)
+    adb.navigate(serial, package, KNOWN_URL, reset=False)  # leaves the web view focused
     _focus_field_for_navigation(serial)
     assert adb.field_focused(serial), "the address field should be focused"
     assert not adb.ime_shown(serial), "the keyboard must NOT show on directional focus"
 
 
 def test_center_enters_edit_mode(serial: str, package: str, ctx: dict) -> None:
-    adb.restart(serial, package)
+    adb.navigate(serial, package, KNOWN_URL, reset=False)  # navigation ends with keyboard hidden
     _focus_field_for_navigation(serial)
     assert not adb.ime_shown(serial), "precondition: keyboard hidden in navigation"
     adb.key(serial, adb.KEY_DPAD_CENTER, wait=0.8)
@@ -111,11 +126,12 @@ def test_center_enters_edit_mode(serial: str, package: str, ctx: dict) -> None:
 
 
 def test_type_and_validate_navigates(serial: str, package: str, ctx: dict) -> None:
-    adb.restart(serial, package)
+    adb.navigate(serial, package, KNOWN_URL, reset=False)  # clean loaded state, no popup
     _enter_edit(serial)
     adb.clear_field(serial)
     adb.type_text(serial, "example.com", wait=0.5)
     adb.key(serial, adb.KEY_ENTER, wait=3.0)
+    adb.note_tab_opened()  # validating a URL opens a new tab (urlInNewTab)
     assert not adb.ime_shown(serial), "keyboard should hide after validating"
     assert adb.webview_focused(serial), "focus should return to the web view after navigating"
 
@@ -144,7 +160,7 @@ def test_back_two_stage_keyboard_then_cancel(serial: str, package: str, ctx: dic
 
 
 def test_back_from_navigation_returns_to_web(serial: str, package: str, ctx: dict) -> None:
-    adb.restart(serial, package)
+    adb.navigate(serial, package, KNOWN_URL, reset=False)  # leaves the web view focused
     _focus_field_for_navigation(serial)
     assert adb.field_focused(serial), "precondition: field focused for navigation"
     adb.key(serial, adb.KEY_BACK, wait=0.8)
@@ -152,7 +168,7 @@ def test_back_from_navigation_returns_to_web(serial: str, package: str, ctx: dic
 
 
 def test_down_from_navigation_returns_to_web(serial: str, package: str, ctx: dict) -> None:
-    adb.restart(serial, package)
+    adb.navigate(serial, package, KNOWN_URL, reset=False)  # leaves the web view focused
     _focus_field_for_navigation(serial)
     assert adb.field_focused(serial), "precondition: field focused for navigation"
     adb.key(serial, adb.KEY_DPAD_DOWN, wait=0.8)
@@ -161,7 +177,7 @@ def test_down_from_navigation_returns_to_web(serial: str, package: str, ctx: dic
 
 def test_suggestions_navigable_without_touch(serial: str, package: str, ctx: dict) -> None:
     """Type, hide keyboard with back, navigate the popup with down and open with center."""
-    adb.restart(serial, package)
+    adb.navigate(serial, package, KNOWN_URL, reset=False)  # clean loaded state, no popup
     _enter_edit(serial)
     # Entering edit selects the current URL; typing replaces it (emptying the field
     # would drop out of edit mode on the TV-style address bar and swallow the input).
@@ -176,13 +192,14 @@ def test_suggestions_navigable_without_touch(serial: str, package: str, ctx: dic
     # Navigate into the popup and open a suggestion.
     adb.key(serial, adb.KEY_DPAD_DOWN, wait=0.6)
     adb.key(serial, adb.KEY_DPAD_CENTER, wait=3.0)
+    adb.note_tab_opened()  # opening a suggestion opens a new tab (searchInNewTab)
     assert not adb.ime_shown(serial), "keyboard should be hidden after opening a suggestion"
     assert adb.webview_focused(serial), "opening a suggestion should navigate and focus the web view"
 
 
 def test_touch_tap_enters_edit(serial: str, package: str, ctx: dict) -> None:
     """Pointer/touch goes straight to edit mode (keyboard shown)."""
-    adb.restart(serial, package)
+    adb.navigate(serial, package, KNOWN_URL, reset=False)  # navigation ends with keyboard hidden
     center = adb.field_center(serial)
     assert center, "could not locate the address field bounds"
     adb.tap(serial, center[0], center[1], wait=0.9)
@@ -190,7 +207,7 @@ def test_touch_tap_enters_edit(serial: str, package: str, ctx: dict) -> None:
 
 
 def test_retap_after_cancel_reenters_edit(serial: str, package: str, ctx: dict) -> None:
-    adb.restart(serial, package)
+    adb.navigate(serial, package, KNOWN_URL, reset=False)  # navigation ends with keyboard hidden
     center = adb.field_center(serial)
     assert center, "could not locate the address field bounds"
     adb.tap(serial, center[0], center[1], wait=0.9)
@@ -243,7 +260,7 @@ def test_unfocused_pill_outline_visible(serial: str, package: str, ctx: dict) ->
     comparing pixels just inside the container edge (outline) against the page area.
     """
     out = _ensure_out()
-    adb.restart(serial, package)
+    adb.navigate(serial, package, KNOWN_URL, reset=False)  # unfocused pill, no focus state
     pill = adb.find_node(serial, ":id/address_bar_include") or adb.field_node(serial)
     assert pill and pill.bounds, "could not locate the address bar pill"
     x1, y1, x2, y2 = pill.bounds
@@ -270,7 +287,7 @@ def test_pill_only_when_focused(serial: str, package: str, ctx: dict) -> None:
     When Pillow is available we assert the pill region changes between states.
     """
     out = _ensure_out()
-    adb.restart(serial, package)
+    adb.navigate(serial, package, KNOWN_URL, reset=False)  # unfocused pill, no focus state
     unfocused = os.path.join(out, f"pill_unfocused_{serial.replace(':', '_')}.png")
     focused = os.path.join(out, f"pill_focused_{serial.replace(':', '_')}.png")
     adb.screenshot(serial, unfocused)
@@ -448,6 +465,7 @@ def test_reload_button_tracks_tab_on_ctrl_tab(serial: str, package: str, ctx: di
     assert _wait_reload_button_gone(serial) == "GONE", "tab A (scrollable) should hide the button"
     label_a = adb.field_text(serial)
     # Tab B: navigating opens a new tab for the URL; a short page -> button VISIBLE.
+    # (Both tabs stay alive for the test; the runner closes them afterwards.)
     adb.navigate(serial, package, SHORT_URL, reset=False)
     assert _wait_reload_button(serial, "VISIBLE") == "VISIBLE", "tab B (short) should show the button"
     label_b = adb.field_text(serial)
@@ -463,7 +481,8 @@ def test_reload_button_tracks_tab_on_ctrl_tab(serial: str, package: str, ctx: di
 
 def test_reload_button_tracks_tab_via_tab_menu(serial: str, package: str, ctx: dict) -> None:
     """Same as above but switching tabs by touch through the tab list drawer."""
-    # Ensure two tabs exist: a scrollable one and a short one.
+    # Ensure two tabs exist: a scrollable one and a short one. Both stay alive
+    # for the test; the runner closes them afterwards.
     adb.navigate(serial, package, SCROLLABLE_URL)
     assert _wait_reload_button_gone(serial) == "GONE", "scrollable tab should hide the button"
     label_scroll = adb.field_text(serial)
@@ -509,4 +528,35 @@ ALL_TESTS = [
     test_reload_button_tracks_tab_on_ctrl_tab,
     test_reload_button_tracks_tab_via_tab_menu,
 ]
+
+# One-line description per test, shown in the markdown reports (results.py).
+# Keep in sync with ALL_TESTS — results.save_run() warns about missing entries.
+TEST_DESCRIPTIONS = {
+    "test_launch_focus_is_webview": "After a fresh launch, initial focus lands on the web view",
+    "test_unfocused_shows_label": "Unfocused address bar shows the page label, not the URL",
+    "test_directional_focus_is_navigation_not_edit": "D-pad focus enters navigation mode without showing the keyboard",
+    "test_navigation_shows_label_not_url": "Navigation focus keeps showing the label, not the URL",
+    "test_center_enters_edit_mode": "D-pad center/enter enters edit mode and shows the keyboard",
+    "test_edit_shows_url": "Edit mode shows the URL, not the label",
+    "test_dpad_edit_selects_all": "Entering edit via D-pad selects all, so typing replaces the URL",
+    "test_type_and_validate_navigates": "Typing a URL and pressing enter navigates and returns focus to the web view",
+    "test_back_two_stage_keyboard_then_cancel": "First back hides the keyboard, second back cancels back to the label",
+    "test_back_from_navigation_returns_to_web": "Back from navigation focus returns to the web view",
+    "test_down_from_navigation_returns_to_web": "D-pad down from navigation focus leaves the field for the web view",
+    "test_suggestions_navigable_without_touch": "Suggestions popup can be navigated and opened with D-pad only",
+    "test_touch_tap_enters_edit": "Touch tap on the field goes straight to edit mode with keyboard",
+    "test_retap_after_cancel_reenters_edit": "Tapping again after a cancel re-enters edit mode",
+    "test_pill_only_when_focused": "The focus pill is only drawn while the field is focused",
+    "test_https_shows_ssl_icon": "A valid HTTPS page shows the encrypted SSL icon",
+    "test_http_shows_off_icon": "A plain HTTP page shows the encryption-off SSL icon",
+    "test_invalid_https_shows_ssl_icon": "An expired HTTPS cert shows the SSL error icon (dialog dismissed)",
+    "test_unfocused_pill_outline_visible": "The unfocused address bar still shows a subtle pill outline",
+    "test_reload_button_hidden_after_load": "Reload/stop button stays hidden on a loaded scrollable page",
+    "test_stop_button_visible_during_load": "Stop button is visible while a fresh page is loading",
+    "test_reload_button_hidden_after_reload": "Stop button reappears during a second load, then hides again",
+    "test_stop_button_click_stops_load": "Tapping the stop button aborts the page load",
+    "test_short_page_shows_reload_button": "On a short non-scrollable page the reload button stays visible",
+    "test_reload_button_tracks_tab_on_ctrl_tab": "CTRL+TAB tab switch updates the reload button to match the tab",
+    "test_reload_button_tracks_tab_via_tab_menu": "Tab switch via the tab list drawer updates the reload button",
+}
 

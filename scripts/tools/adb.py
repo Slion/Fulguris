@@ -210,9 +210,14 @@ def launch(serial: str, package: str, wait: float = 5.0) -> None:
 
 
 def restart(serial: str, package: str, wait: float = 5.0) -> None:
+    global TABS_OPENED
     force_stop(serial, package)
     time.sleep(0.5)
     launch(serial, package, wait)
+    # A fresh launch restores the previous session, so any tabs this test
+    # "opened" before the restart no longer exist; only count tabs opened
+    # after it (keeps the runner's end-of-test cleanup accurate).
+    TABS_OPENED = 0
 
 
 def enter_edit(serial: str) -> None:
@@ -228,22 +233,84 @@ def enter_edit(serial: str) -> None:
     key(serial, KEY_DPAD_CENTER, 0.9)  # enter edit mode; guard selects all text
 
 
-def navigate(serial: str, package: str, url: str, reset: bool = True) -> None:
+# Whether navigate() (when called without an explicit reset=...) restarts the
+# app first. The test runner sets this via reset_between_tests() based on its
+# --restart flag: no restart by default (faster), restart per test on request.
+RESTART_BETWEEN_TESTS = True
+
+# Whether the runner auto-closes the tabs a test created (see TABS_OPENED).
+# Closing is pure hygiene — the tab count has NO performance impact (Fulguris
+# runs hundreds fine) — but tests should leave the app as they found it.
+# --keep-tabs turns the auto-close off.
+KEEP_TABS = False
+
+
+# Number of tabs the current test has opened via navigate(). The runner resets
+# this before each test and closes them again afterwards (hygiene — see
+# KEEP_TABS). A typed URL opens a new tab by default (urlInNewTab), so each
+# navigate() adds one.
+TABS_OPENED = 0
+
+
+def reset_between_tests(restart: bool) -> None:
+    """Set whether navigate() without an explicit reset= restarts the app."""
+    global RESTART_BETWEEN_TESTS
+    RESTART_BETWEEN_TESTS = restart
+
+
+def set_keep_tabs(keep: bool) -> None:
+    """Set whether the runner leaves test-created tabs open (default: close them)."""
+    global KEEP_TABS
+    KEEP_TABS = keep
+
+
+def reset_tab_counter() -> None:
+    """Reset the per-test opened-tab count (called by the runner before each test)."""
+    global TABS_OPENED
+    TABS_OPENED = 0
+
+
+def note_tab_opened() -> None:
+    """Record that the current test opened a tab outside of navigate()
+
+    (e.g. by typing a URL + ENTER or opening a suggestion, both of which open
+    a new tab by default). Keeps the runner's end-of-test closing exact — it
+    must never close more tabs than the test created.
+    """
+    global TABS_OPENED
+    TABS_OPENED += 1
+
+
+def navigate(serial: str, package: str, url: str, reset: bool | None = None) -> None:
     """Load the given URL, replacing whatever the edit field already holds.
 
     Waits for the app to be foregrounded and settled before sending any keys.
-    By default the app is restarted first for a clean, deterministic state (the
-    convention for this test suite). Pass reset=False to skip the restart when
-    the app is already running; this is faster but leaves the previous tab/page
-    state in place, so only use it in tests that do not depend on a fresh launch.
+    When ``reset`` is None, the suite-wide default (see reset_between_tests)
+    decides: restart the app for a clean, deterministic state, or just settle
+    on the already-running app (faster, but leaves the previous tab/page state
+    in place — only safe in tests that do not depend on a fresh launch).
+
+    In no-restart mode the address field is first returned to the unfocused
+    label state (back: hide keyboard / cancel edit / leave the field) so the
+    previous test's field state cannot leak into the URL typing below.
+
+    A typed URL opens a NEW tab by default (urlInNewTab), so this increments
+    the runner's tab counter; the runner closes those tabs again after the test
+    unless --keep-tabs is set. Closing is cheap (CTRL+W only, no uiautomator).
     """
-    if reset:
+    global TABS_OPENED
+    if (RESTART_BETWEEN_TESTS if reset is None else reset):
         restart(serial, package)
     else:
         settle(serial, package)
+        for _ in range(3):
+            if not field_focused(serial):
+                break
+            key(serial, KEY_BACK, 0.8)
     enter_edit(serial)
     type_text(serial, url, 0.4)  # replaces the selected URL
     key(serial, KEY_ENTER, 3.0)
+    TABS_OPENED += 1
 
 
 def clear_field(serial: str) -> None:
@@ -287,6 +354,19 @@ def key_combination(serial: str, *keycodes: int, wait: float = 0.6) -> None:
 def ctrl_tab(serial: str, wait: float = 0.9) -> None:
     """Switch to the next/most-recent tab with CTRL+TAB, as a keyboard user would."""
     key_combination(serial, KEY_CTRL_LEFT, KEY_TAB, wait=wait)
+
+
+KEY_CTRL_W = 51  # CTRL+W closes the current tab
+
+
+def close_tabs(serial: str, count: int, wait: float = 0.9) -> None:
+    """Close ``count`` tabs with CTRL+W. Cheap: key chords only, no uiautomator.
+
+    Pure session hygiene — the tab count has no performance impact — it just
+    keeps tests from leaving a pile-up behind (the session persists tabs).
+    """
+    for _ in range(count):
+        key_combination(serial, KEY_CTRL_LEFT, KEY_CTRL_W, wait=wait)
 
 
 def open_tab_switcher(serial: str, wait: float = 1.0) -> bool:
@@ -430,9 +510,157 @@ def ssl_icon_visible(serial: str) -> bool:
     return w > 0 and h > 0
 
 
+# User-friendly product names for known devices, keyed by ro.product.model.
+# ro.product.brand gives the vendor ("samsung") but Android exposes no marketing
+# name ("Galaxy A22 5G") via getprop, so known models are mapped here.
+FRIENDLY_NAMES = {
+    "SM-A225F": "Galaxy A22 5G",
+    "Pi Compute Module 5 Rev 1.0": "Raspberry Pi 5 TV box",
+}
+
+
+def product_name(model: str) -> str:
+    """User-friendly name for a device model, falling back to the model string."""
+    return FRIENDLY_NAMES.get(model, model)
+
+
 def device_label(serial: str) -> str:
     model = _adb(serial, ["shell", "getprop", "ro.product.model"]).strip()
-    return f"{serial} ({model})" if model else serial
+    name = product_name(model)
+    return f"{serial} ({name})" if name else serial
+
+
+# --- Orientation & device configuration ------------------------------------
+# Fulguris keeps separate settings per "configuration" (see fulguris.settings.Config
+# and Context.configId): orientation + rotation + smallest-width-dp. Foldables get
+# distinct configs because smallestScreenWidthDp changes between inner/outer screens.
+# The helpers below force the device orientation and report the same triplet so a
+# test run can be recorded against the exact configuration it ran in.
+
+# adb user_rotation values (Surface rotation constants).
+ROTATION_0 = 0    # natural
+ROTATION_90 = 1
+ROTATION_180 = 2
+ROTATION_270 = 3
+
+# Orientation names accepted by set_orientation / the runner's --orientation flag.
+ORIENTATIONS = ("portrait", "landscape", "sensor")
+
+
+def _int(value: str, default: int = 0) -> int:
+    try:
+        return int(str(value).strip())
+    except (TypeError, ValueError):
+        return default
+
+
+def wm_size(serial: str) -> tuple[int, int]:
+    """Physical (natural-orientation) display size in pixels, e.g. (1080, 2340)."""
+    out = _adb(serial, ["shell", "wm", "size"])
+    m = re.search(r"Physical size:\s*(\d+)x(\d+)", out)
+    if not m:
+        m = re.search(r"(\d+)x(\d+)", out)
+    return (int(m.group(1)), int(m.group(2))) if m else (0, 0)
+
+
+def wm_density(serial: str) -> int:
+    """Display density in dpi (e.g. 420). Falls back to 160 (1x) if unknown."""
+    out = _adb(serial, ["shell", "wm", "density"])
+    m = re.search(r"Physical density:\s*(\d+)", out)
+    if not m:
+        m = re.search(r"(\d+)", out)
+    return int(m.group(1)) if m else 160
+
+
+def user_rotation(serial: str) -> int:
+    """Current forced display rotation as a 0..3 Surface constant."""
+    return _int(_adb(serial, ["shell", "settings", "get", "system", "user_rotation"]), 0)
+
+
+def auto_rotate(serial: str) -> bool:
+    """Whether accelerometer (auto) rotation is enabled."""
+    return _int(_adb(serial, ["shell", "settings", "get", "system", "accelerometer_rotation"]), 0) == 1
+
+
+def orientation_state(serial: str) -> tuple[int, int]:
+    """Snapshot (accelerometer_rotation, user_rotation) so it can be restored later."""
+    accel = _int(_adb(serial, ["shell", "settings", "get", "system", "accelerometer_rotation"]), 0)
+    return accel, user_rotation(serial)
+
+
+def restore_orientation(serial: str, accel: int, rotation: int) -> None:
+    """Restore a state captured by orientation_state()."""
+    _adb(serial, ["shell", "settings", "put", "system", "user_rotation", str(rotation)])
+    _adb(serial, ["shell", "settings", "put", "system", "accelerometer_rotation", str(accel)])
+
+
+def set_orientation(serial: str, orientation: str, wait: float = 1.5) -> None:
+    """Force the device orientation.
+
+    "portrait"/"landscape" disable auto-rotate and pin the display so the natural
+    orientation ends up portrait/landscape respectively (works on both portrait-
+    native phones and landscape-native TVs/tablets). "sensor" re-enables
+    auto-rotation. Fulguris does not lock orientation, so it simply reconfigures.
+    Devices that ignore user_rotation (e.g. a fixed-orientation TV) are left as-is.
+    """
+    if orientation == "sensor":
+        _adb(serial, ["shell", "settings", "put", "system", "accelerometer_rotation", "1"])
+        time.sleep(wait)
+        return
+    if orientation not in ("portrait", "landscape"):
+        raise ValueError(f"unknown orientation '{orientation}'")
+    phys_w, phys_h = wm_size(serial)
+    natural_landscape = phys_w > phys_h
+    want_landscape = orientation == "landscape"
+    # Rotate 90° from natural when the natural orientation is the opposite one.
+    rotation = ROTATION_90 if (want_landscape != natural_landscape) else ROTATION_0
+    _adb(serial, ["shell", "settings", "put", "system", "accelerometer_rotation", "0"])
+    _adb(serial, ["shell", "settings", "put", "system", "user_rotation", str(rotation)])
+    time.sleep(wait)
+
+
+def smallest_width_dp(serial: str) -> int:
+    """Smallest screen width in dp (density-independent), matching Android's swNNN.
+
+    This does not change with rotation, so it distinguishes device/screen classes
+    (e.g. a foldable's inner vs outer screen) the same way Fulguris's configId does.
+    """
+    w, h = wm_size(serial)
+    density = wm_density(serial)
+    if density <= 0:
+        density = 160
+    return round(min(w, h) / (density / 160.0))
+
+
+def device_config(serial: str) -> dict:
+    """Describe the device and its current Fulguris-style configuration.
+
+    Returns orientation/rotation/smallest_width_dp plus a ``config_id`` string of
+    the form ``landscape-90-sw360`` mirroring fulguris.settings.Config ids (minus
+    the ``[Config]`` file prefix), so runs can be grouped and compared per config.
+    """
+    phys_w, phys_h = wm_size(serial)
+    natural_landscape = phys_w > phys_h
+    rot = user_rotation(serial)
+    rotated = rot in (ROTATION_90, ROTATION_270)
+    is_landscape = natural_landscape != rotated
+    orientation = "landscape" if is_landscape else "portrait"
+    sw_dp = smallest_width_dp(serial)
+    model = _adb(serial, ["shell", "getprop", "ro.product.model"]).strip()
+    brand = _adb(serial, ["shell", "getprop", "ro.product.brand"]).strip()
+    android = _adb(serial, ["shell", "getprop", "ro.build.version.release"]).strip()
+    return {
+        "serial": serial,
+        "model": model,
+        "brand": brand.title() if brand else "",
+        "product_name": product_name(model),
+        "android": android,
+        "orientation": orientation,
+        "rotation": rot * 90,
+        "smallest_width_dp": sw_dp,
+        "auto_rotate": auto_rotate(serial),
+        "config_id": f"{orientation}-{rot * 90}-sw{sw_dp}",
+    }
 
 
 def _button_view_flag(serial: str, view_id: str) -> str | None:

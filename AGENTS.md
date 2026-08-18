@@ -51,6 +51,7 @@ new tools or tests rather than shelling out to adb yourself.
 python scripts/tests/run.py --all              # every test on every connected device
 python scripts/tests/run.py --device SERIAL    # one device
 python scripts/tests/run.py --all --test suggestions   # only tests whose name matches
+python scripts/tests/run.py --device SERIAL --orientation landscape  # force orientation
 python scripts/tests/run.py --list             # list available tests
 ```
 
@@ -61,6 +62,32 @@ The current suite covers the URL/address bar focus/edit model: label vs URL
 content, D-pad navigation vs edit mode, two-stage back (hide keyboard then
 cancel), suggestion navigation without touch, tap-to-edit, and focus pill
 visibility.
+
+**Orientation & configuration.** `--orientation portrait|landscape|sensor`
+forces the device orientation before the run (and restores it after). Fulguris
+keeps separate settings per *configuration* — orientation + rotation +
+smallest-width-dp (see `fulguris.settings.Config` / `Context.configId`), which
+is how foldables get distinct inner/outer-screen settings. Each run detects and
+records that configuration (`adb.device_config()` returns a matching
+`config_id` like `landscape-90-sw384`).
+
+**Results & regressions.** Every run is saved under a folder named after the
+device **model** (see `scripts/tests/results.py`):
+
+    scripts/tests/results/<MODEL>/<config-id>-<serial>.yaml    # machine-readable record
+    scripts/tests/results/<MODEL>/<config-id>-<serial>.md      # human-readable table
+
+There is one file pair per configuration + device serial, overwritten on each
+run — the **git history of each file is the time dimension**. The Markdown
+table lists every test with a short description (from `TEST_DESCRIPTIONS` in
+`url_field_tests.py` — add an entry for every new test), its result (✅/❌/⚠️)
+and duration. History is thus tracked **per device model and per
+configuration**. The runner compares each run against the previous one for the
+same model+config+serial and prints `REGRESSIONS`/`fixed` lines (pass↔fail
+transitions). The `results/` files are **committed** — that's the point, so
+runs can be compared across time, devices and configurations — so stage the
+new/changed `.yaml`/`.md` files after each run. Pass `--no-save` to skip
+recording. Uses PyYAML (`pip install pyyaml`).
 
 ## Workflow: fixing a bug
 
@@ -123,8 +150,15 @@ visibility.
 - TV gotchas baked into the tooling: the leanback IME is fullscreen (field text
   during edit may read the IME hint), and `dumpsys window windows` is the
   reliable way to detect the autocomplete popup.
-- Keep tests deterministic: reset state at the start of each test
-  (restart/navigate, clear the field) rather than relying on the previous
-  test's end state.
+- Keep tests deterministic: reset state at the start of each test (settle +
+  navigate, clear the field) rather than relying on the previous test's end
+  state. The runner does NOT restart the app between tests by default (much
+  faster on the TV); pass `--restart` to `run.py` for a fresh launch per test.
+  Tests that genuinely need a fresh launch (initial focus, clean tab state) call
+  `adb.restart(...)` / `_reset(..., restart=True)` themselves — fine even in
+  no-restart mode.
+  The session persists tabs across runs, and the runner closes the tabs each
+  test created after the test (hygiene — tab count has NO performance impact,
+  the browser runs hundreds fine). Pass `--keep-tabs` to `run.py` to leave them.
 - Localization: see `L10N.md` and `.github/copilot-instructions.md` — string
   work uses `subs/l10n/android/strings.py`, not hand-edited XML.
