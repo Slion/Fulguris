@@ -1,0 +1,29 @@
+# Fulguris UI test run — LM-G850 · portrait-0-sw411
+timestamp: '2026-08-19T11:51:22+00:00'
+device:
+  serial: 192.168.178.83:5555
+  model: LM-G850
+  brand: Lge
+  product_name: LM-G850
+  android: '12'
+config:
+  id: portrait-0-sw411
+  orientation: portrait
+  rotation: 0
+  smallest_width_dp: 411
+package: net.slions.fulguris.full.download.debug
+options:
+  restart: false
+  keep_tabs: false
+  orientation: null
+  test_filter: null
+summary:
+  passed: 0
+  failed: 1
+  total: 1
+  duration_s: 80.0
+tests:
+- name: test_repeated_rotations_keep_page
+  status: fail
+  duration_s: 78.8
+  message: after rotation 1 to landscape the app lost the foreground

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>scrub-init</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #202830; }
+  /* A custom drag target that mimics YouTube's scrub bar: it only "seeks" on a genuine
+     pointerdown -> pointermove -> pointerup, not on a bare tap. */
+  #bar { position: fixed; top: 40%; left: 0; width: 100%; height: 20%;
+         background: linear-gradient(#3a6, #274); }
+</style>
+</head>
+<body>
+<!--
+  E (drag-style click) verification page for scripts/tests/cursor_tests.py.
+  Title: scrub-init -> initial | seek@<x> -> a real down/move/up drag landed on the bar.
+-->
+<div id="bar"></div>
+<script>
+  var bar = document.getElementById('bar');
+  var down = false, moved = false;
+  bar.addEventListener('pointerdown', function () { down = true; moved = false; });
+  bar.addEventListener('pointermove', function () { if (down) moved = true; });
+  bar.addEventListener('pointerup', function (e) {
+    if (down && moved) document.title = 'seek@' + Math.round(e.clientX);
+    down = false;
+  });
+</script>
+</body>
+</html>

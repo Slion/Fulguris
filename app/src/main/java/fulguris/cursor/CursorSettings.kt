@@ -32,6 +32,15 @@ interface CursorSettings {
     /** Whether the long-press hardware hotkey may toggle cursor mode. The menu item ignores this. */
     val hotkeyEnabled: Boolean
 
-    /** Cursor speed, 1..100. Scales both key-step and joystick movement. */
+    /** Cursor speed, 1..100. Mapped to a physical travel speed (cm/s) using the display's DPI. */
     val speed: Int
+
+    /** Cursor acceleration, 0..100. Mapped to a physical acceleration (cm/s²) while a direction is held. */
+    val acceleration: Int
+
+    /**
+     * Milliseconds of no cursor movement after which the cursor fades out. 0 means never fade.
+     * Any new movement fades it straight back in.
+     */
+    val fadeTimeoutMs: Int
 }

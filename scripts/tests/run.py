@@ -42,16 +42,19 @@ import adb
 import results as results_store
 import url_field_tests as suite
 import cursor_tests
+import rotation_tests
 
 # All tests across every suite, plus a merged description map for the reports.
-ALL_TESTS = suite.ALL_TESTS + cursor_tests.ALL_TESTS
-TEST_DESCRIPTIONS = {**suite.TEST_DESCRIPTIONS, **cursor_tests.TEST_DESCRIPTIONS}
+ALL_TESTS = suite.ALL_TESTS + cursor_tests.ALL_TESTS + rotation_tests.ALL_TESTS
+TEST_DESCRIPTIONS = {**suite.TEST_DESCRIPTIONS, **cursor_tests.TEST_DESCRIPTIONS,
+                     **rotation_tests.TEST_DESCRIPTIONS}
 
 # Named feature groups that can be run as a subset via --group. url_field_tests has no groups of
 # its own; cursor_tests defines the cursor feature groups. "cursor" is a convenience alias for all
 # of them.
 FEATURE_GROUPS = dict(cursor_tests.FEATURE_GROUPS)
 FEATURE_GROUPS["cursor"] = cursor_tests.ALL_TESTS
+FEATURE_GROUPS.update(rotation_tests.FEATURE_GROUPS)
 
 
 def select_tests(name: str | None, group: str | None):

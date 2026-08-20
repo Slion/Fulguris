@@ -57,7 +57,17 @@ class UserPreferences @Inject constructor(
     /**
      * Android TV cursor speed, 1..100.
      */
-    var cursorSpeed by preferences.intPreference(R.string.pref_key_cursor_speed, 50)
+    var cursorSpeed by preferences.intPreference(R.string.pref_key_cursor_speed, 30)
+
+    /**
+     * Android TV cursor acceleration, 0..100.
+     */
+    var cursorAcceleration by preferences.intPreference(R.string.pref_key_cursor_acceleration, 30)
+
+    /**
+     * Milliseconds of cursor inactivity after which the Android TV cursor fades out. 0 = never.
+     */
+    var cursorFadeTimeoutMs by preferences.intPreference(R.string.pref_key_cursor_fade_timeout, 3000)
 
     /**
      * True if the browser should block ads, false otherwise.

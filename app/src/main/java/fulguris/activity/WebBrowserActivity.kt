@@ -252,9 +252,14 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     // this activity only forwards input events and wires the overlay / menu / settings.
     private lateinit var iCursorController: CursorController
     private var iInputManager: InputManager? = null
+    // While an HTML5 video is fullscreen the cursor must dispatch into (and overlay) the fullscreen
+    // custom view instead of the WebView. See onShowCustomView / onHideCustomView.
+    private var iCursorTargetOverride: View? = null
     private val iCursorSettings = object : CursorSettings {
         override val hotkeyEnabled: Boolean get() = userPreferences.cursorHotkeyEnabled
         override val speed: Int get() = userPreferences.cursorSpeed
+        override val acceleration: Int get() = userPreferences.cursorAcceleration
+        override val fadeTimeoutMs: Int get() = userPreferences.cursorFadeTimeoutMs
     }
     // Registered so the Cursor menu item can appear/disappear live as a gamepad is (dis)connected.
     private val iInputDeviceListener = object : InputManager.InputDeviceListener {
@@ -762,7 +767,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     private fun createCursorController() {
         iCursorController = CursorController(
             overlay = iBinding.cursorOverlay,
-            targetProvider = { currentTabView },
+            targetProvider = { iCursorTargetOverride ?: currentTabView },
             settings = iCursorSettings,
             onModeChanged = { enabled ->
                 application.toast(getString(if (enabled) R.string.cursor_mode_on else R.string.cursor_mode_off))
@@ -800,6 +805,68 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     /** Toggle cursor mode, wired to both the hotkey and the menu item. */
     fun toggleCursorMode() {
         if (::iCursorController.isInitialized) iCursorController.toggle()
+    }
+
+    /**
+     * While an HTML5 video is fullscreen (onShowCustomView), the visible/interactive view is the
+     * custom fullscreen view added on top of the decor view — not the WebView. Move the cursor
+     * overlay on top of it and retarget synthetic event dispatch there so the cursor stays visible
+     * and functional (e.g. YouTube fullscreen).
+     */
+    private fun attachCursorOverlayToFullscreen(target: View) {
+        val overlay = iBinding.cursorOverlay
+        (overlay.parent as? ViewGroup)?.removeView(overlay)
+        fullscreenContainerView?.addView(overlay, FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT))
+        iCursorTargetOverride = target
+    }
+
+    /** Restore the cursor overlay to the web view frame and retarget dispatch to the WebView. */
+    private fun detachCursorOverlayFromFullscreen() {
+        iCursorTargetOverride = null
+        if (!::iBinding.isInitialized) return
+        val overlay = iBinding.cursorOverlay
+        (overlay.parent as? ViewGroup)?.removeView(overlay)
+        iBinding.webViewFrame.addView(overlay, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT))
+    }
+
+    /**
+     * Bridge hardware media keys to the current page's `<video>`. Short-press play/pause toggles,
+     * rewind/fast-forward seek ±10s. Works generically wherever a page has an HTML5 video in its
+     * top document (cross-origin iframes, e.g. some embeds, are not reachable — a known limitation).
+     * Returns true when the key was handled (and consumed). Long-press fast-forward is the cursor
+     * toggle and is handled earlier, so only its short press reaches here.
+     */
+    private fun handleMediaKey(event: KeyEvent): Boolean {
+        when (event.keyCode) {
+            KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE,
+            KeyEvent.KEYCODE_MEDIA_PLAY,
+            KeyEvent.KEYCODE_MEDIA_PAUSE,
+            KeyEvent.KEYCODE_MEDIA_REWIND,
+            KeyEvent.KEYCODE_MEDIA_FAST_FORWARD -> {
+                // Only intercept when a real web page is showing; otherwise leave the keys to the
+                // system (e.g. a background music app).
+                if (currentTabView == null) return false
+                if (event.action == KeyEvent.ACTION_UP) controlPageMedia(event.keyCode)
+                return true
+            }
+        }
+        return false
+    }
+
+    private fun controlPageMedia(keyCode: Int) {
+        val web = currentTabView ?: return
+        val op = when (keyCode) {
+            KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE -> "if(v.paused){v.play()}else{v.pause()}"
+            KeyEvent.KEYCODE_MEDIA_PLAY -> "v.play()"
+            KeyEvent.KEYCODE_MEDIA_PAUSE -> "v.pause()"
+            KeyEvent.KEYCODE_MEDIA_REWIND -> "v.currentTime=Math.max(0,v.currentTime-10)"
+            KeyEvent.KEYCODE_MEDIA_FAST_FORWARD -> "v.currentTime=Math.min(v.duration||1e9,v.currentTime+10)"
+            else -> return
+        }
+        // Pick the playing video if any, else the first one on the page.
+        val js = "(function(){try{var vs=[].slice.call(document.querySelectorAll('video'));" +
+                "var v=vs.filter(function(x){return !x.paused})[0]||vs[0];if(!v)return;$op;}catch(e){}})()"
+        web.evaluateJavascript(js, null)
     }
 
     /**
@@ -2150,6 +2217,12 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         // fast-forward toggle must be intercepted here, before it can reach a page's MediaSession
         // (e.g. a playing video), and D-pad presses drive the cursor rather than focus navigation.
         if (::iCursorController.isInitialized && iCursorController.dispatchKeyEvent(event)) {
+            return true
+        }
+
+        // Hardware media keys drive the current page's video (short-press). Long-press fast-forward
+        // was already claimed above for the cursor toggle; a short press falls through to here.
+        if (handleMediaKey(event)) {
             return true
         }
 
@@ -4660,6 +4733,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         }
         decorView.addView(fullscreenContainerView, COVER_SCREEN_PARAMS)
         fullscreenContainerView?.addView(customView, COVER_SCREEN_PARAMS)
+        attachCursorOverlayToFullscreen(view)
         decorView.requestLayout()
         setFullscreen(enabled = true, immersive = true)
         currentTab?.setVisibility(INVISIBLE)
@@ -4711,6 +4785,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
             parent.removeView(fullscreenContainerView)
             fullscreenContainerView?.removeAllViews()
         }
+        detachCursorOverlayFromFullscreen()
 
         fullscreenContainerView = null
         customView = null

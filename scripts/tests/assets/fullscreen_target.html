@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>fs-init</title>
+<style>
+  html, body { margin: 0; height: 100%; }
+  #box { width: 100%; height: 100%;
+         background: linear-gradient(135deg, #c00, #00c);
+         color: #fff; font: 22px sans-serif; }
+</style>
+</head>
+<body>
+<!--
+  D (fullscreen) verification page for scripts/tests/cursor_tests.py.
+  First tap requests HTML5 fullscreen on the box (fires WebChromeClient.onShowCustomView in
+  Fulguris). Once fullscreen, a click reports its coordinates in the title, proving the cursor's
+  synthetic click reaches the fullscreen custom view (not the hidden WebView). Title states:
+    fs-init -> initial   |   fs-on -> fullscreen entered   |   fsclick@x,y -> click while fullscreen
+-->
+<div id="box" onclick="
+  var b=this;
+  if(!(document.fullscreenElement||document.webkitFullscreenElement)){
+    (b.requestFullscreen||b.webkitRequestFullscreen).call(b);
+  } else {
+    document.title='fsclick@'+Math.round(event.clientX)+','+Math.round(event.clientY);
+  }">Tap to go fullscreen</div>
+<script>
+  function fsChanged(){
+    document.title=(document.fullscreenElement||document.webkitFullscreenElement)?'fs-on':'fs-off';
+  }
+  document.addEventListener('fullscreenchange', fsChanged);
+  document.addEventListener('webkitfullscreenchange', fsChanged);
+</script>
+</body>
+</html>

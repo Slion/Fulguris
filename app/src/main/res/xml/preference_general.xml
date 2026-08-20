@@ -146,6 +146,52 @@
     </x.PreferenceCategory>
 
     <x.PreferenceCategory
+        android:title="@string/action_cursor"
+        app:singleLineTitle="false">
+
+        <x.SwitchPreference
+            app:key="@string/pref_key_cursor_hotkey"
+            app:title="@string/pref_title_cursor_hotkey"
+            app:summary="@string/pref_summary_cursor_hotkey"
+            app:defaultValue="@bool/pref_default_cursor_hotkey"
+            app:icon="@drawable/ic_arrow_selector_tool_fill"
+            app:singleLineTitle="false" />
+
+        <SeekBarPreference
+            app:key="@string/pref_key_cursor_speed"
+            app:title="@string/pref_title_cursor_speed"
+            android:max="100"
+            app:min="1"
+            app:defaultValue="@integer/pref_default_cursor_speed"
+            app:showSeekBarValue="true"
+            app:icon="@drawable/ic_arrow_selector_tool_fill"
+            app:singleLineTitle="false" />
+
+        <SeekBarPreference
+            app:key="@string/pref_key_cursor_acceleration"
+            app:title="@string/pref_title_cursor_acceleration"
+            android:max="100"
+            app:min="0"
+            app:defaultValue="@integer/pref_default_cursor_acceleration"
+            app:showSeekBarValue="true"
+            app:icon="@drawable/ic_arrow_selector_tool_fill"
+            app:singleLineTitle="false" />
+
+        <SeekBarPreference
+            app:key="@string/pref_key_cursor_fade_timeout"
+            app:title="@string/pref_title_cursor_fade_timeout"
+            app:summary="@string/pref_summary_cursor_fade_timeout"
+            android:max="10000"
+            app:min="0"
+            app:seekBarIncrement="500"
+            app:defaultValue="@integer/pref_default_cursor_fade_timeout"
+            app:showSeekBarValue="true"
+            app:icon="@drawable/ic_arrow_selector_tool_fill"
+            app:singleLineTitle="false" />
+
+    </x.PreferenceCategory>
+
+    <x.PreferenceCategory
         android:title="@string/settings_network"
         app:singleLineTitle="false">
 
@@ -255,30 +301,6 @@
             app:iconSpaceReserved="false"
             app:singleLineTitle="false" />
 
-
-    </x.PreferenceCategory>
-
-    <x.PreferenceCategory
-        android:title="@string/action_cursor"
-        app:singleLineTitle="false">
-
-        <x.SwitchPreference
-            app:key="@string/pref_key_cursor_hotkey"
-            app:title="@string/pref_title_cursor_hotkey"
-            app:summary="@string/pref_summary_cursor_hotkey"
-            app:defaultValue="@bool/pref_default_cursor_hotkey"
-            app:icon="@drawable/ic_arrow_selector_tool_fill"
-            app:singleLineTitle="false" />
-
-        <SeekBarPreference
-            app:key="@string/pref_key_cursor_speed"
-            app:title="@string/pref_title_cursor_speed"
-            android:max="100"
-            app:min="1"
-            app:defaultValue="@integer/pref_default_cursor_speed"
-            app:showSeekBarValue="true"
-            app:icon="@drawable/ic_arrow_selector_tool_fill"
-            app:singleLineTitle="false" />
 
     </x.PreferenceCategory>
 </PreferenceScreen>

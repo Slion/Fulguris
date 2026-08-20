@@ -34,6 +34,7 @@ KEY_ENTER = 66
 KEY_SEARCH = 84
 KEY_BUTTON_A = 96
 KEY_MEDIA_FAST_FORWARD = 90
+KEY_MEDIA_PLAY_PAUSE = 85
 
 
 def repo_root() -> str:
@@ -160,6 +161,13 @@ def is_leanback(serial: str) -> bool:
         out = _adb(serial, ["shell", "pm", "list", "features"])
         _leanback_cache[serial] = "android.software.leanback" in out
     return _leanback_cache[serial]
+
+
+def screen_size(serial: str) -> tuple[int, int]:
+    """Physical screen size in pixels, parsed from `wm size` (falls back to a sane default)."""
+    out = _adb(serial, ["shell", "wm", "size"])
+    m = re.search(r"(\d+)x(\d+)", out)
+    return (int(m.group(1)), int(m.group(2))) if m else (1920, 1080)
 
 
 def foreground_package(serial: str) -> str | None:

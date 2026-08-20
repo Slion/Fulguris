@@ -9,6 +9,9 @@
     <string name="pref_title_cursor_hotkey">Cursor mode hotkey</string>
     <string name="pref_summary_cursor_hotkey">Long-press the fast-forward button to toggle the on-screen cursor</string>
     <string name="pref_title_cursor_speed">Cursor speed</string>
+    <string name="pref_title_cursor_acceleration">Cursor acceleration</string>
+    <string name="pref_title_cursor_fade_timeout">Cursor fade timeout</string>
+    <string name="pref_summary_cursor_fade_timeout">Milliseconds of inactivity before the cursor fades out (0 to never fade)</string>
     <string name="action_launch_app">Launch</string>
     <string name="action_pip">Picture in picture</string>
     <string name="action_menu">Menu</string>

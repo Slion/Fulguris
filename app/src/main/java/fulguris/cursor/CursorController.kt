@@ -40,28 +40,44 @@ import timber.log.Timber
  * [MotionEvent]s into the target view.
  *
  * Web pages get real `:hover` / `mouseover` / `mouseout` from continuous SOURCE_MOUSE
- * `ACTION_HOVER_MOVE` events as the cursor moves; the click is a precise SOURCE_TOUCHSCREEN tap at
- * the cursor coordinate (synthetic mouse *button* events can't be turned into a page click through
- * the public API on Android WebView — see [dispatchClick]). Reaching a WebView edge scrolls the
- * page instead of pushing the cursor off-screen.
+ * `ACTION_HOVER_MOVE` events as the cursor moves; the click is a precise touch DOWN→MOVE→UP at the
+ * cursor coordinate (synthetic mouse *button* events can't be turned into a page click through the
+ * public API on Android WebView — see [dispatchClick]). Reaching a WebView edge dispatches a
+ * synthetic mouse **wheel** ([MotionEvent.ACTION_SCROLL]) at the cursor point so whichever DOM
+ * element is under the cursor (including nested scrollable panels) scrolls, like a real mouse wheel.
+ *
+ * ## Two independent ways to drive the cursor
+ *  - **Cursor mode** ([enabled]): toggled with the hotkey / menu. While on, the **D-pad** moves the
+ *    cursor and the select button clicks. This is the path for D-pad-only remotes and single-stick
+ *    joysticks, where the D-pad would otherwise do focus navigation.
+ *  - **Right analog stick** ([onGenericMotionEvent]): on a two-stick gamepad the right stick moves
+ *    the cursor at any time, *without* toggling cursor mode — the left stick still scrolls and the
+ *    D-pad still does focus navigation. The select button clicks whenever the cursor is [shown].
+ *
+ * The cursor fades out after [CursorSettings.fadeTimeoutMs] of no movement and fades back in on any
+ * movement.
+ *
+ * ## Movement is physical, not pixel-based
+ * Speed and acceleration are expressed in cm/s and cm/s² and converted to pixels using the display's
+ * DPI ([pxPerCm]), so a given setting feels comparable regardless of screen resolution / size.
  *
  * ## Boundary
  * The controller is deliberately decoupled from the browser activity. It only knows about:
  *  - [overlay]: the [CursorView] it renders into (and whose bounds it clamps to);
- *  - [targetProvider]: a way to fetch the view to dispatch into (the current `WebView`), re-queried
- *    on every dispatch so tab switches are transparent;
- *  - [settings]: [CursorSettings] for the hotkey toggle and speed;
- *  - [onModeChanged]: notified when the mode flips (the activity shows feedback and moves focus);
+ *  - [targetProvider]: a way to fetch the view to dispatch into (the current WebView, or the
+ *    fullscreen custom view while an HTML5 video is fullscreen), re-queried on every dispatch;
+ *  - [settings]: [CursorSettings] for the hotkey / speed / acceleration / fade timeout;
+ *  - [onModeChanged]: notified when cursor mode flips (the activity shows feedback and moves focus).
  *
- * The activity's only job is to forward [dispatchKeyEvent] and [onGenericMotionEvent] and to add the
- * overlay view. This is what keeps the component reusable / lib-extractable.
+ * The activity forwards [dispatchKeyEvent] / [onGenericMotionEvent], adds (and, for fullscreen,
+ * re-parents) the overlay view, and provides the target — nothing else. This keeps the component
+ * reusable / lib-extractable.
  *
  * ## Toggle hotkey
- * A short press of [KeyEvent.KEYCODE_MEDIA_FAST_FORWARD] is unused by the browser; a **long press**
- * (held for [HOTKEY_LONG_PRESS_MS]) toggles cursor mode. We detect the long press ourselves with a
- * posted runnable started on `ACTION_DOWN` and cancelled on `ACTION_UP`, because the framework does
- * not reliably deliver long-press key events for media keys. The activity forwards the key to us
- * *before* it can reach a page's `MediaSession`, so a playing `<video>` cannot steal the toggle.
+ * A **long press** of [KeyEvent.KEYCODE_MEDIA_FAST_FORWARD] (held for [HOTKEY_LONG_PRESS_MS]) toggles
+ * cursor mode; we detect it ourselves (media keys don't reliably deliver system long-press). A
+ * **short** press is yielded back to the activity (returns false) so it can seek the page's video.
+ * The activity forwards the key to us before it can reach a page's `MediaSession`.
  */
 class CursorController(
     private val overlay: CursorView,
@@ -70,21 +86,36 @@ class CursorController(
     private val onModeChanged: (enabled: Boolean) -> Unit,
 ) {
 
+    // Cursor mode: D-pad drives the cursor and select clicks. Independent of [shown].
     var enabled: Boolean = false
         private set
+
+    // Whether the cursor overlay is currently faded in (visible). Driven by cursor mode OR the
+    // right stick, and cleared by the fade-out timeout.
+    private var shown = false
+
+    // Whether the cursor has ever been placed (so re-enabling doesn't recenter a right-stick cursor).
+    private var positioned = false
 
     // Logical cursor position, in overlay-local pixels.
     private var posX = 0f
     private var posY = 0f
 
-    // Active key directions (each -1, 0 or +1) and how long each axis has been held, for acceleration.
+    // Active D-pad directions (each -1, 0 or +1). Only set while cursor mode is enabled.
     private var keyDx = 0
     private var keyDy = 0
-    private var keyHeldSinceMs = 0L
 
-    // Joystick displacement after deadzone, -1..1.
-    private var joyX = 0f
-    private var joyY = 0f
+    // Right-stick displacement after deadzone, -1..1. Drives the cursor regardless of cursor mode.
+    private var rsX = 0f
+    private var rsY = 0f
+
+    // When the current continuous-movement gesture started, for the acceleration ramp.
+    private var moveStartMs = 0L
+
+    // Last known overlay size. Cached so movement still works while the overlay is faded out (GONE),
+    // when its measured width/height read back as 0.
+    private var boundsX = 0f
+    private var boundsY = 0f
 
     private val handler = Handler(Looper.getMainLooper())
     private val choreographer = Choreographer.getInstance()
@@ -99,17 +130,31 @@ class CursorController(
         toggle()
     }
 
+    // --- Fade state ---------------------------------------------------------
+
+    private val fadeRunnable = Runnable { hideCursor() }
+
     // ------------------------------------------------------------------------
 
     /**
      * Forward the activity's key events here first. Returns true when consumed.
      */
     fun dispatchKeyEvent(event: KeyEvent): Boolean {
-        // The toggle hotkey is handled whether or not cursor mode is currently on.
+        // The toggle hotkey is handled whether or not cursor mode is currently on. A short press is
+        // yielded back (returns false) so the activity can seek the page's video.
         if (event.keyCode == KeyEvent.KEYCODE_MEDIA_FAST_FORWARD) {
             return handleHotkey(event)
         }
 
+        // The select button clicks whenever the cursor is on screen — whether it got there via
+        // cursor mode or the right stick.
+        if (isConfirmKey(event.keyCode) && (enabled || shown)) {
+            if (event.action == KeyEvent.ACTION_UP) dispatchClick()
+            return true
+        }
+
+        // The D-pad only drives the cursor while cursor mode is explicitly enabled; otherwise it
+        // must fall through to normal focus navigation.
         if (!enabled) return false
 
         return when (event.keyCode) {
@@ -120,34 +165,41 @@ class CursorController(
                 handleDirectionKey(event)
                 true
             }
-            KeyEvent.KEYCODE_DPAD_CENTER,
-            KeyEvent.KEYCODE_ENTER,
-            KeyEvent.KEYCODE_NUMPAD_ENTER,
-            KeyEvent.KEYCODE_BUTTON_A -> {
-                if (event.action == KeyEvent.ACTION_UP) {
-                    dispatchClick()
-                }
-                true
-            }
             else -> false
         }
     }
 
+    private fun isConfirmKey(keyCode: Int): Boolean = when (keyCode) {
+        KeyEvent.KEYCODE_DPAD_CENTER,
+        KeyEvent.KEYCODE_ENTER,
+        KeyEvent.KEYCODE_NUMPAD_ENTER,
+        KeyEvent.KEYCODE_BUTTON_A -> true
+        else -> false
+    }
+
     /**
-     * Forward the activity's generic motion events here. Handles the analog joystick while cursor
-     * mode is on; returns false otherwise so normal focus navigation / DPAD synthesis is unaffected.
+     * Forward the activity's generic motion events here. The **right analog stick** drives the
+     * cursor at any time (no cursor-mode toggle needed) on two-stick gamepads. Always returns false
+     * (non-consuming) so the left stick's scroll and D-pad focus navigation are left untouched — the
+     * right stick's Z/RZ axes aren't used by either of those.
      */
     fun onGenericMotionEvent(event: MotionEvent): Boolean {
-        if (!enabled) return false
         if (event.source and InputDevice.SOURCE_CLASS_JOYSTICK == 0) return false
         if (event.action != MotionEvent.ACTION_MOVE) return false
+        // Only if the device actually has a centered right stick (exclude devices that report
+        // triggers on Z/RZ, whose range is 0..1 rather than -1..1).
+        if (!hasRightStick(event.device)) return false
 
-        val rawX = readAxis(event, MotionEvent.AXIS_X, MotionEvent.AXIS_HAT_X)
-        val rawY = readAxis(event, MotionEvent.AXIS_Y, MotionEvent.AXIS_HAT_Y)
-        joyX = applyDeadzone(rawX)
-        joyY = applyDeadzone(rawY)
-        if (joyX != 0f || joyY != 0f) startLoop() else maybeStopLoop()
-        return true
+        rsX = applyDeadzone(event.getAxisValue(MotionEvent.AXIS_Z))
+        rsY = applyDeadzone(event.getAxisValue(MotionEvent.AXIS_RZ))
+        if (rsX != 0f || rsY != 0f) {
+            if (!hasMovementInput(exceptRightStick = true)) moveStartMs = SystemClock.uptimeMillis()
+            wakeCursor()
+            startLoop()
+        } else {
+            maybeStopLoop()
+        }
+        return false
     }
 
     /** Toggle cursor mode on/off. Safe to call from the menu or the hotkey. */
@@ -159,16 +211,21 @@ class CursorController(
         if (enabled) return
         enabled = true
         Timber.d("Cursor: enable")
-        // Start centered over the overlay.
+        // Make the overlay visible now so it gets laid out before we read its size to center.
         overlay.visibility = View.VISIBLE
         overlay.post {
-            posX = overlay.maxX / 2f
-            posY = overlay.maxY / 2f
-            overlay.setPosition(posX, posY)
-            Timber.d("Cursor: centered at ($posX, $posY) in overlay ${overlay.maxX}x${overlay.maxY}")
+            // Center the cursor the first time it appears; keep its place if the right stick already
+            // positioned it, so toggling cursor mode on doesn't make it jump.
+            if (!positioned && overlay.maxX > 0f && overlay.maxY > 0f) {
+                posX = overlay.maxX / 2f
+                posY = overlay.maxY / 2f
+                positioned = true
+                overlay.setPosition(posX, posY)
+                Timber.d("Cursor: centered at ($posX, $posY) in overlay ${overlay.maxX}x${overlay.maxY}")
+            }
+            wakeCursor()
             dispatchHover()
         }
-        overlay.animate().alpha(1f).setDuration(150).start()
         onModeChanged(true)
     }
 
@@ -176,17 +233,19 @@ class CursorController(
         if (!enabled) return
         enabled = false
         Timber.d("Cursor: disable")
-        keyDx = 0; keyDy = 0; joyX = 0f; joyY = 0f
-        stopLoop()
-        overlay.animate().alpha(0f).setDuration(150).withEndAction {
-            if (!enabled) overlay.visibility = View.GONE
-        }.start()
+        keyDx = 0; keyDy = 0
+        // Keep the right stick able to move it; if nothing is driving it, let it hide.
+        if (!hasMovementInput()) {
+            hideCursor()
+            stopLoop()
+        }
         onModeChanged(false)
     }
 
     /** Detach lifecycle hooks; call from the activity's onDestroy. */
     fun release() {
         handler.removeCallbacks(hotkeyLongPress)
+        handler.removeCallbacks(fadeRunnable)
         stopLoop()
     }
 
@@ -209,14 +268,18 @@ class CursorController(
                     hotkeyDownHandled = true
                     toggle()
                 }
+                // Consume DOWN so it never reaches a page MediaSession while we time the long press.
+                return true
             }
             KeyEvent.ACTION_UP -> {
                 handler.removeCallbacks(hotkeyLongPress)
+                val toggled = hotkeyDownHandled
                 hotkeyDownHandled = false
-                // Short press: no-op in the browser today (we simply swallow it).
+                // A completed long press (toggle) is consumed; a short press is yielded back to the
+                // activity (returns false) so it can seek the page's video.
+                return toggled
             }
         }
-        // Consume so the key never reaches a page MediaSession or anything else.
         return true
     }
 
@@ -231,30 +294,31 @@ class CursorController(
             else -> 0 to 0
         }
         if (event.action == KeyEvent.ACTION_DOWN) {
-            val wasIdle = keyDx == 0 && keyDy == 0
+            val wasIdle = !hasMovementInput()
             if (ax != 0) keyDx = ax
             if (ay != 0) keyDy = ay
-            if (wasIdle) keyHeldSinceMs = SystemClock.uptimeMillis()
-            // Move a fixed step on the initial press so a single tap (which releases almost
-            // instantly, e.g. a discrete remote press) always nudges the cursor; the frame loop
-            // then adds continuous, accelerating movement for as long as the key stays held.
-            // Only on repeatCount 0 so auto-repeat DOWNs don't double up with the loop.
+            if (wasIdle) moveStartMs = SystemClock.uptimeMillis()
+            // Move a fixed physical step on the initial press so a single tap (which releases almost
+            // instantly, e.g. a discrete remote press) always nudges the cursor; the frame loop then
+            // adds continuous, accelerating movement while the key stays held. Only on repeatCount 0
+            // so auto-repeat DOWNs don't double up with the loop.
             if (event.repeatCount == 0) {
-                val step = STEP_PX * (0.5f + settings.speed.coerceIn(1, 100) / 100f)
-                moveBy(ax * step, ay * step)
+                val (pxCmX, pxCmY) = pxPerCm()
+                val stepCm = STEP_MIN_CM + (settings.speed.coerceIn(1, 100) / 100f) * (STEP_MAX_CM - STEP_MIN_CM)
+                moveBy(ax * stepCm * pxCmX, ay * stepCm * pxCmY)
             }
             startLoop()
         } else if (event.action == KeyEvent.ACTION_UP) {
             if (ax != 0 && keyDx == ax) keyDx = 0
             if (ay != 0 && keyDy == ay) keyDy = 0
-            if (keyDx == 0 && keyDy == 0) maybeStopLoop()
+            if (!hasMovementInput()) maybeStopLoop()
         }
     }
 
     private val frameCallback = Choreographer.FrameCallback { frameTimeNs -> onFrame(frameTimeNs) }
 
     private fun startLoop() {
-        if (looping || !enabled) return
+        if (looping) return
         looping = true
         lastFrameNs = 0L
         choreographer.postFrameCallback(frameCallback)
@@ -266,68 +330,86 @@ class CursorController(
     }
 
     private fun maybeStopLoop() {
-        if (keyDx == 0 && keyDy == 0 && joyX == 0f && joyY == 0f) stopLoop()
+        if (!hasMovementInput()) stopLoop()
+    }
+
+    private fun hasMovementInput(exceptRightStick: Boolean = false): Boolean {
+        if (keyDx != 0 || keyDy != 0) return true
+        if (!exceptRightStick && (rsX != 0f || rsY != 0f)) return true
+        return false
     }
 
     private fun onFrame(frameTimeNs: Long) {
-        if (!looping || !enabled) return
+        if (!looping) return
         val dt = if (lastFrameNs == 0L) 0f else (frameTimeNs - lastFrameNs) / 1_000_000_000f
         lastFrameNs = frameTimeNs
 
-        // px/second base speed, scaled by the user's 1..100 speed setting.
-        val base = BASE_SPEED_PX_PER_SEC * (0.4f + 1.6f * (settings.speed.coerceIn(1, 100) / 100f))
+        if (hasMovementInput()) {
+            // Keep the cursor awake while it is actively moving (a held stick may not emit new
+            // motion events, so we reset the fade timer here rather than only on input events).
+            wakeCursor()
 
-        var vx = 0f
-        var vy = 0f
+            val (pxCmX, pxCmY) = pxPerCm()
+            val baseCmS = baseSpeedCmPerSec()
+            val accelCmS2 = accelCmPerSec2()
+            val held = (SystemClock.uptimeMillis() - moveStartMs) / 1000f
+            val speedCmS = (baseCmS + accelCmS2 * held).coerceAtMost(baseCmS * MAX_SPEED_MULT)
 
-        // Keyboard: constant direction with an acceleration ramp the longer it is held.
-        if (keyDx != 0 || keyDy != 0) {
-            val held = (SystemClock.uptimeMillis() - keyHeldSinceMs) / 1000f
-            val accel = (1f + held * KEY_ACCEL_PER_SEC).coerceAtMost(KEY_ACCEL_MAX)
-            vx += keyDx * base * accel
-            vy += keyDy * base * accel
-        }
-
-        // Joystick: continuous, scaled by displacement magnitude.
-        if (joyX != 0f || joyY != 0f) {
-            vx += joyX * base * JOYSTICK_SPEED_FACTOR
-            vy += joyY * base * JOYSTICK_SPEED_FACTOR
-        }
-
-        if (vx != 0f || vy != 0f) {
-            moveBy(vx * dt, vy * dt)
+            // D-pad contributes ±1 per axis; right stick contributes its analog displacement.
+            val dirX = (keyDx + rsX).coerceIn(-1.5f, 1.5f)
+            val dirY = (keyDy + rsY).coerceIn(-1.5f, 1.5f)
+            val dxPx = dirX * speedCmS * pxCmX * dt
+            val dyPx = dirY * speedCmS * pxCmY * dt
+            if (dxPx != 0f || dyPx != 0f) moveBy(dxPx, dyPx)
         }
 
         if (looping) choreographer.postFrameCallback(frameCallback)
     }
 
     private fun moveBy(dx: Float, dy: Float) {
-        val maxX = overlay.maxX
-        val maxY = overlay.maxY
+        // Keep the last real size so movement still works once the cursor has faded out (GONE),
+        // whose measured size reads back as 0.
+        if (overlay.maxX > 0f) boundsX = overlay.maxX
+        if (overlay.maxY > 0f) boundsY = overlay.maxY
+        val maxX = boundsX
+        val maxY = boundsY
         if (maxX <= 0f || maxY <= 0f) return
+
+        // First movement (e.g. from the right stick before cursor mode was ever enabled) starts
+        // from the center rather than the top-left corner.
+        if (!positioned) {
+            posX = maxX / 2f
+            posY = maxY / 2f
+            positioned = true
+        }
 
         var nx = posX + dx
         var ny = posY + dy
 
-        // At an edge, keep pushing translates into page scrolling; the cursor stays clamped.
-        var scrollX = 0
-        var scrollY = 0
-        if (nx < 0f) { scrollX += (nx).toInt(); nx = 0f }
-        else if (nx > maxX) { scrollX += (nx - maxX).toInt(); nx = maxX }
-        if (ny < 0f) { scrollY += (ny).toInt(); ny = 0f }
-        else if (ny > maxY) { scrollY += (ny - maxY).toInt(); ny = maxY }
+        // At an edge, keep pushing translates into a mouse-wheel scroll at the cursor point (so a
+        // nested scrollable region under the cursor scrolls); the cursor itself stays clamped.
+        var overflowX = 0f
+        var overflowY = 0f
+        if (nx < 0f) { overflowX = nx; nx = 0f }
+        else if (nx > maxX) { overflowX = nx - maxX; nx = maxX }
+        if (ny < 0f) { overflowY = ny; ny = 0f }
+        else if (ny > maxY) { overflowY = ny - maxY; ny = maxY }
 
         posX = nx
         posY = ny
+        positioned = true
         overlay.setPosition(posX, posY)
+        // Any movement makes the cursor visible and restarts its fade-out countdown.
+        wakeCursor()
         dispatchHover()
 
-        if (scrollX != 0 || scrollY != 0) {
-            targetProvider()?.scrollBy(scrollX, scrollY)
+        if (overflowX != 0f || overflowY != 0f) {
+            // Wheel "notches": pushing down/right scrolls the content the same way a real wheel does.
+            dispatchScroll(-overflowY / SCROLL_PX_PER_NOTCH, -overflowX / SCROLL_PX_PER_NOTCH)
         }
     }
 
-    // --- Synthetic mouse events --------------------------------------------
+    // --- Synthetic pointer events -------------------------------------------
 
     /** Map the overlay-local cursor position into the target view's coordinate space. */
     private fun targetCoords(target: View): Pair<Float, Float> {
@@ -350,24 +432,56 @@ class CursorController(
 
     private fun dispatchClick() {
         val target = targetProvider() ?: return
+        wakeCursor()
         val (x, y) = targetCoords(target)
         Timber.d("Cursor: click at target ($x, $y)")
         // Hover/:hover is driven by SOURCE_MOUSE ACTION_HOVER_MOVE events (see dispatchHover), but
-        // the click itself is a plain touch tap. Synthetic mouse *button* events don't turn into a
-        // page click on Android WebView (MotionEvent.obtain can't set actionButton, so Chromium
-        // never sees a primary-button press), and an explicit SOURCE_TOUCHSCREEN event with
-        // deviceId 0 is rejected by some WebView builds. The bare obtain(...x, y...) form — tool
-        // FINGER, source unspecified — is the portable pattern that activates the element under
-        // the cursor across Android versions. DOWN and UP share one downTime to form a tap gesture.
+        // the click itself is a plain touch gesture. Synthetic mouse *button* events don't turn into
+        // a page click on Android WebView (MotionEvent.obtain can't set actionButton, so Chromium
+        // never sees a primary-button press). We send DOWN → MOVE → UP (not a bare DOWN/UP): custom
+        // scrub bars / sliders (e.g. YouTube's timeline) are drag targets that need the MOVE to
+        // register a seek, and it's harmless for plain buttons. All share one downTime.
         val downTime = SystemClock.uptimeMillis()
         val down = MotionEvent.obtain(downTime, downTime, MotionEvent.ACTION_DOWN, x, y, 0)
-        val up = MotionEvent.obtain(downTime, downTime + 50, MotionEvent.ACTION_UP, x, y, 0)
+        // A small real move (not a zero-length one) so the page sees a pointermove — YouTube's
+        // scrub bar and similar drag targets only seek when a move happens between down and up.
+        val move = MotionEvent.obtain(downTime, downTime + 10, MotionEvent.ACTION_MOVE, x + 2f, y, 0)
+        val up = MotionEvent.obtain(downTime, downTime + 60, MotionEvent.ACTION_UP, x, y, 0)
         try {
             target.dispatchTouchEvent(down)
+            target.dispatchTouchEvent(move)
             target.dispatchTouchEvent(up)
         } finally {
             down.recycle()
+            move.recycle()
             up.recycle()
+        }
+    }
+
+    private fun dispatchScroll(vNotches: Float, hNotches: Float) {
+        val target = targetProvider() ?: return
+        val (x, y) = targetCoords(target)
+        val now = SystemClock.uptimeMillis()
+        val props = MotionEvent.PointerProperties().apply {
+            id = 0
+            toolType = MotionEvent.TOOL_TYPE_MOUSE
+        }
+        val coords = MotionEvent.PointerCoords().apply {
+            this.x = x
+            this.y = y
+            setAxisValue(MotionEvent.AXIS_VSCROLL, vNotches)
+            setAxisValue(MotionEvent.AXIS_HSCROLL, hNotches)
+        }
+        val event = MotionEvent.obtain(
+            now, now, MotionEvent.ACTION_SCROLL, 1,
+            arrayOf(props), arrayOf(coords),
+            0, 0, 1f, 1f, 0, 0,
+            InputDevice.SOURCE_MOUSE, 0
+        )
+        try {
+            target.dispatchGenericMotionEvent(event)
+        } finally {
+            event.recycle()
         }
     }
 
@@ -390,12 +504,59 @@ class CursorController(
         )
     }
 
+    // --- Visibility / fade --------------------------------------------------
+
+    /** Ensure the cursor is visible and (re)start its fade-out countdown. */
+    private fun wakeCursor() {
+        showCursor()
+        handler.removeCallbacks(fadeRunnable)
+        val timeout = settings.fadeTimeoutMs
+        if (timeout > 0) handler.postDelayed(fadeRunnable, timeout.toLong())
+    }
+
+    private fun showCursor() {
+        if (shown) return
+        shown = true
+        overlay.visibility = View.VISIBLE
+        overlay.animate().alpha(1f).setDuration(FADE_ANIM_MS).start()
+    }
+
+    private fun hideCursor() {
+        if (!shown) return
+        shown = false
+        overlay.animate().alpha(0f).setDuration(FADE_ANIM_MS).withEndAction {
+            if (!shown) overlay.visibility = View.GONE
+        }.start()
+    }
+
     // --- Helpers ------------------------------------------------------------
 
-    private fun readAxis(event: MotionEvent, primary: Int, hat: Int): Float {
-        val v = event.getAxisValue(primary)
-        return if (abs(v) > 0.01f) v else event.getAxisValue(hat)
+    private fun hasRightStick(device: InputDevice?): Boolean {
+        val dev = device ?: return false
+        return isCenteredAxis(dev, MotionEvent.AXIS_Z) && isCenteredAxis(dev, MotionEvent.AXIS_RZ)
     }
+
+    /** A stick axis rests centered (range crosses 0); a trigger axis rests at one end (min >= 0). */
+    private fun isCenteredAxis(device: InputDevice, axis: Int): Boolean {
+        val range = device.getMotionRange(axis, InputDevice.SOURCE_JOYSTICK) ?: return false
+        return range.min < 0f
+    }
+
+    /** Pixels per physical centimetre on each axis, robust against TVs reporting bogus xdpi/ydpi. */
+    private fun pxPerCm(): Pair<Float, Float> {
+        val dm = overlay.resources.displayMetrics
+        val dpiX = if (dm.xdpi in 40f..800f) dm.xdpi else dm.densityDpi.toFloat()
+        val dpiY = if (dm.ydpi in 40f..800f) dm.ydpi else dm.densityDpi.toFloat()
+        return (dpiX / CM_PER_INCH) to (dpiY / CM_PER_INCH)
+    }
+
+    private fun baseSpeedCmPerSec(): Float {
+        val s = settings.speed.coerceIn(1, 100) / 100f
+        return SPEED_MIN_CM_S + s * (SPEED_MAX_CM_S - SPEED_MIN_CM_S)
+    }
+
+    private fun accelCmPerSec2(): Float =
+        (settings.acceleration.coerceIn(0, 100) / 100f) * ACCEL_MAX_CM_S2
 
     private fun applyDeadzone(v: Float): Float {
         if (abs(v) < JOYSTICK_DEADZONE) return 0f
@@ -410,11 +571,18 @@ class CursorController(
     companion object {
         val HOTKEY_LONG_PRESS_MS: Long =
             ViewConfiguration.getLongPressTimeout().toLong().coerceAtLeast(500L)
-        private const val BASE_SPEED_PX_PER_SEC = 900f
-        private const val STEP_PX = 40f
-        private const val KEY_ACCEL_PER_SEC = 1.2f
-        private const val KEY_ACCEL_MAX = 3.5f
-        private const val JOYSTICK_SPEED_FACTOR = 1.3f
+        private const val CM_PER_INCH = 2.54f
+        // Physical travel speed / acceleration the 1..100 settings map onto.
+        private const val SPEED_MIN_CM_S = 1.5f
+        private const val SPEED_MAX_CM_S = 22f
+        private const val ACCEL_MAX_CM_S2 = 45f
+        private const val MAX_SPEED_MULT = 6f
+        // Physical nudge applied on a single discrete press.
+        private const val STEP_MIN_CM = 0.08f
+        private const val STEP_MAX_CM = 0.45f
         private const val JOYSTICK_DEADZONE = 0.15f
+        private const val FADE_ANIM_MS = 200L
+        // Pixels of edge overflow that map to one mouse-wheel notch.
+        private const val SCROLL_PX_PER_NOTCH = 40f
     }
 }

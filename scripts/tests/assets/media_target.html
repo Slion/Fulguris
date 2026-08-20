@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>media-init</title>
+</head>
+<body style="margin:0;background:#111">
+<!--
+  F (media keys) verification page for scripts/tests/cursor_tests.py. A canvas.captureStream feeds a
+  real, playable (muted) <video> so no network media file is needed. The title reports the video's
+  play state so the test can confirm hardware media keys reach the page:
+    media-init -> before playback | playing / paused -> current state
+-->
+<video id="v" loop muted playsinline style="width:100%;height:60vh;background:#000"></video>
+<script>
+  var c = document.createElement('canvas');
+  c.width = 320; c.height = 180;
+  var ctx = c.getContext('2d');
+  setInterval(function () {
+    ctx.fillStyle = 'hsl(' + ((Date.now() / 20) % 360) + ',70%,50%)';
+    ctx.fillRect(0, 0, c.width, c.height);
+  }, 100);
+  var v = document.getElementById('v');
+  function report() { document.title = v.paused ? 'paused' : 'playing'; }
+  v.addEventListener('play', report);
+  v.addEventListener('pause', report);
+  try {
+    v.srcObject = c.captureStream(10);
+    v.play().then(report).catch(report);
+  } catch (e) { document.title = 'nostream'; }
+</script>
+</body>
+</html>
