@@ -238,7 +238,7 @@ Key facts a future agent needs:
   `FAST_FORWARD` to the page's active `<video>` via `evaluateJavascript` (generic; cross-origin
   iframes are unreachable) — but **only when cursor mode is off**. Long-press `PLAY_PAUSE` is the
   cursor toggle; the controller yields the *short* press back (returns false) so the activity can
-  play/pause. **In cursor mode, `FAST_FORWARD` / `REWIND` become a mouse wheel scroll** (down / up,
+  play/pause. **In cursor mode, `FAST_FORWARD` / `REWIND` become a mouse wheel scroll** (up / down,
   `WHEEL_NOTCHES` = 3) dispatched at the cursor point via the same `ACTION_SCROLL` path as edge
   scroll, so you can scroll the page under the cursor with the remote's transport keys.
 - **Menu item visibility** (`isCursorModeAvailable()`): shown on leanback, or when a
@@ -266,12 +266,27 @@ Key facts a future agent needs:
    python scripts/tools/install.py --build --all
    python scripts/tools/launch.py --restart --all
    ```
-4. **Verify** — rerun the full suite, not just the fixed test:
+4. **Verify** — match verification to the scope of the change. **Do not run
+   the full suite for a small, localized change** (one key mapping, one
+   helper, one feature) — it takes ~30 min per device and can stall on RPi
+   infra flakes (below). Instead run just the relevant feature group or
+   single test on **both** devices:
+   ```powershell
+   python scripts/tests/run.py --device SERIAL --group cursor-wheel
+   python scripts/tests/run.py --device SERIAL --test suggestions
+   ```
+   For **broad** changes (framework, `adb.py`, activity input handling,
+   anything shared by many tests) or before declaring done, run the full
+   suite on both devices:
    ```powershell
    python scripts/tests/run.py --all
    ```
-   Both devices must pass. Capture screenshots for visual UI changes.
-5. **Iterate** until green. Do not declare a fix without a full-suite pass.
+   Capture screenshots for visual UI changes.
+   *Known RPi flake:* `uiautomator dump` (used for node lookups) occasionally
+   hangs and stalls the runner mid-suite; the device is fine — just rerun the
+   stalled test or group in isolation.
+5. **Iterate** until green. A localized fix needs its relevant group green on
+   both devices; a broad fix needs a full-suite pass.
 
 ## Workflow: adding a new feature
 

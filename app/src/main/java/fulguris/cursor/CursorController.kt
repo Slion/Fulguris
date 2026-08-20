@@ -82,7 +82,7 @@ import timber.log.Timber
  *
  * ## Media keys as a wheel
  * While the cursor is on screen, [KeyEvent.KEYCODE_MEDIA_FAST_FORWARD] / [KeyEvent.KEYCODE_MEDIA_REWIND]
- * dispatch a synthetic mouse wheel scroll down / up at the cursor point (see [dispatchScroll]); when
+ * dispatch a synthetic mouse wheel scroll up / down at the cursor point (see [dispatchScroll]); when
  * the cursor is off, they fall through to the activity's per-video seek.
  */
 class CursorController(
@@ -154,12 +154,12 @@ class CursorController(
         }
 
         // While the cursor is on screen, fast-forward / rewind become a mouse wheel scroll at the
-        // cursor (down / up respectively); off-cursor they fall through to the activity's video seek.
+        // cursor (up / down respectively); off-cursor they fall through to the activity's video seek.
         if ((enabled || shown) &&
             (event.keyCode == KeyEvent.KEYCODE_MEDIA_FAST_FORWARD || event.keyCode == KeyEvent.KEYCODE_MEDIA_REWIND)) {
             if (event.action == KeyEvent.ACTION_DOWN) {
                 wakeCursor()
-                val notches = if (event.keyCode == KeyEvent.KEYCODE_MEDIA_FAST_FORWARD) -WHEEL_NOTCHES else WHEEL_NOTCHES
+                val notches = if (event.keyCode == KeyEvent.KEYCODE_MEDIA_FAST_FORWARD) WHEEL_NOTCHES else -WHEEL_NOTCHES
                 dispatchScroll(notches, 0f)
             }
             return true

@@ -387,19 +387,19 @@ def test_cursor_media_play_pause(device, ctx: dict) -> None:
 def test_cursor_wheel_ff_rewind_scrolls(device, ctx: dict) -> None:
     # cursor_target.html is 220vh and reports window.scrollY as 'sy<n>' on scroll.
     _load_target(device)
-    _toggle(device)  # cursor on; centered
-    # In cursor mode fast-forward is a mouse wheel scroll DOWN at the cursor.
-    device.key(keys.MEDIA_FAST_FORWARD, wait=0.9)
+    _toggle(device)  # cursor on; centered, page at the top (sy=0)
+    # In cursor mode rewind is a mouse wheel scroll DOWN at the cursor.
+    device.key(keys.MEDIA_REWIND, wait=0.9)
     t1 = _title(device)
     m1 = re.fullmatch(r"sy(\d+)", t1.strip())
-    assert m1 and int(m1.group(1)) > 0, f"fast-forward in cursor mode should wheel-scroll down, title was '{t1}'"
+    assert m1 and int(m1.group(1)) > 0, f"rewind in cursor mode should wheel-scroll down, title was '{t1}'"
     down = int(m1.group(1))
-    # Rewind is a mouse wheel scroll UP.
-    device.key(keys.MEDIA_REWIND, wait=0.9)
-    device.key(keys.MEDIA_REWIND, wait=0.9)
+    # Fast-forward is a mouse wheel scroll UP.
+    device.key(keys.MEDIA_FAST_FORWARD, wait=0.9)
+    device.key(keys.MEDIA_FAST_FORWARD, wait=0.9)
     t2 = _title(device)
     m2 = re.fullmatch(r"sy(\d+)", t2.strip())
-    assert m2 and int(m2.group(1)) < down, f"rewind in cursor mode should wheel-scroll back up, was '{t1}' now '{t2}'"
+    assert m2 and int(m2.group(1)) < down, f"fast-forward in cursor mode should wheel-scroll back up, was '{t1}' now '{t2}'"
     _toggle(device)
 
 
@@ -510,7 +510,7 @@ TEST_DESCRIPTIONS = {
     "test_cursor_menu_item_toggles_mode": "Tapping the Cursor menu item turns cursor mode on",
     "test_cursor_fullscreen_click_reaches_custom_view": "In HTML5 fullscreen the cursor is visible and its click reaches the fullscreen view",
     "test_cursor_media_play_pause": "The media play/pause key pauses and resumes the page video",
-    "test_cursor_wheel_ff_rewind_scrolls": "In cursor mode fast-forward/rewind wheel-scroll the page down/up at the cursor",
+    "test_cursor_wheel_ff_rewind_scrolls": "In cursor mode fast-forward/rewind wheel-scroll the page up/down at the cursor",
     "test_cursor_youtube_scrubber_seek": "A cursor click seeks a YouTube-style auto-hiding scrubber (hover keeps controls alive, click seeks)",
     "test_cursor_youtube_scrubber_seek_after_idle": "Click seeks even after controls auto-hid (dispatchHover+delay re-shows them before BUTTON_PRESS lands) (leanback only)",
 }
