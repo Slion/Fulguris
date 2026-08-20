@@ -41,9 +41,33 @@ differs from touch/keyboard behavior on phones.
 | `python scripts/tools/ui.py focusfield` | Focus the URL field (KEYCODE_SEARCH). |
 | `python scripts/tools/add_md_icon.py <name> <style>` | Fetch a Material Symbols icon (style: `outline`, `rounded`, `sharp`, `fill`; default `outline`) from google/material-design-icons and write `app/src/main/res/drawable/ic_<name>` + `_outline`/`_rounded`/`_sharp`/`_fill` + `.xml` (e.g. `ic_encrypted_outline.xml`). Re-running overwrites. |
 
-`scripts/tools/adb.py` is the shared library behind the above (device resolution,
-`navigate`, `ime_shown`, `field_text`, `dropdown_present`, …). Import it when writing
-new tools or tests rather than shelling out to adb yourself.
+`scripts/tools/adb.py` is the low-level Android/adb driver behind the above (device
+resolution, `navigate`, `ime_shown`, `field_text`, `dropdown_present`, …). The command-line
+tools import it directly; the **test framework** wraps it (see below). Import one of these
+rather than shelling out to adb yourself.
+
+### `scripts/framework/` — platform-agnostic device framework
+
+The tests are written against a small, generic automation framework so they carry no
+assumption about *how* a device is reached — the goal is to grow this into a multi-platform /
+multi-transport harness (today only Android-over-adb is implemented). Layers:
+
+- **`framework.Device`** (`device.py`) — the platform-neutral contract a test drives:
+  `device.key(keys.DPAD_DOWN)`, `device.navigate(url)`, `device.field_text()`,
+  `device.tap()`, `device.reload_button_state()`, orientation, etc. `keys` (`keys.py`) holds
+  semantic key symbols (`DPAD_CENTER`, `MEDIA_PLAY_PAUSE`, …) instead of raw platform codes.
+- **`framework.AndroidDevice`** (`android.py`) — the only implementation today; binds the
+  contract to one adb serial + package and **delegates every call to `scripts/tools/adb.py`**
+  (so adb's proven timings/retries are unchanged — this is a re-layering, not a rewrite).
+  Android-only extras that have no cross-platform meaning live here: `reverse()` tunnels and
+  `read_prefs()`/`write_prefs()` (used by the cursor suite).
+- **`framework.Transport`** / **`AdbTransport`** (`transport.py`) — the pipe (shell/screencap/
+  reverse). Isolating it is what lets a future platform swap in its own backend.
+- **`framework.resolve_devices(spec, all, package)`** returns `Device` objects; the runner and
+  session config (`reset_between_tests`, `set_keep_tabs`, tab counters, `ORIENTATIONS`) are
+  exposed from the package too.
+
+Adding a platform is additive: implement a new `Device` + `Transport`; **no test changes**.
 
 ### `scripts/tests/` — automated device test suite
 
@@ -55,9 +79,10 @@ python scripts/tests/run.py --device SERIAL --orientation landscape  # force ori
 python scripts/tests/run.py --list             # list available tests
 ```
 
-Tests live in `scripts/tests/url_field_tests.py` as plain functions
-`test_<name>(serial: str, package: str, ctx: dict) -> None` that raise
-`AssertionError` on failure; new tests are appended to `ALL_TESTS`.
+Tests live in `scripts/tests/url_field_tests.py` (and `cursor_tests.py`, `rotation_tests.py`)
+as plain functions `test_<name>(device, ctx) -> None` that raise `AssertionError` on failure;
+`device` is a `framework.Device` (never touch adb directly from a test). New tests are
+appended to `ALL_TESTS` (or a `FEATURE_GROUPS` entry).
 The current suite covers the URL/address bar focus/edit model: label vs URL
 content, D-pad navigation vs edit mode, two-stage back (hide keyboard then
 cancel), suggestion navigation without touch, tap-to-edit, and focus pill
@@ -104,6 +129,8 @@ python scripts/tests/run.py --all --group cursor-fade       # fade-out after ina
 python scripts/tests/run.py --all --group cursor-menu       # the menu item visibility/toggle
 python scripts/tests/run.py --all --group cursor-fullscreen # cursor works over HTML5 fullscreen
 python scripts/tests/run.py --all --group cursor-media      # hardware media keys drive the page video
+python scripts/tests/run.py --all --group cursor-wheel      # cursor-mode fast-forward/rewind = mouse wheel scroll
+python scripts/tests/run.py --all --group cursor-youtube    # cursor click seeks a YouTube-style auto-hiding scrubber
 ```
 
 `run.py` merges `url_field_tests` and `cursor_tests` into one `ALL_TESTS`; `--group`
@@ -114,16 +141,19 @@ filters by name, and a plain `--all` runs everything. Add new groups to
 The cursor tests can't rely on screenshots (the RPi TV box's `screencap` returns black —
 it composites via a hardware plane; the phone's works). Instead they serve the pages under
 `scripts/tests/assets/` (`cursor_target.html`, `scrub_target.html`, `fullscreen_target.html`,
-`media_target.html`) from the host over an `adb reverse` tunnel (Fulguris blocks `file://`)
+`media_target.html`, `yt_scrub.html`) from the host over an `adb reverse` tunnel (Fulguris blocks `file://`)
 and read back what the cursor did from each page's `document.title`, which Fulguris mirrors
 into the toolbar label (`adb.field_text`): `hover` on mouseover, `<x>,<y>` on click, `sy<n>`
 on scroll, `seek@<x>` on a scrub-bar drag, `fs-on`/`fsclick@` in fullscreen, `playing`/`paused`
-for media keys. Cursor **speed/accel/fade are persisted user prefs**, so the suite resets them
+for media keys, and `ctrl-shown`/`ctrl-hidden`/`seek@<pct>`/`bar-miss` for the YouTube-scrubber
+replica. (`youtube_embed.html` embeds the real YouTube player in an iframe for *manual* vision
+checks — it hits the network so it isn't part of the automated suite.) Cursor **speed/accel/fade
+are persisted user prefs**, so the suite resets them
 to known values per device by rewriting the app's shared-prefs XML host-side
 (`_reset_cursor_prefs`: `run-as cat` to read, push to `/data/local/tmp` + `run-as cp` to write —
 `sed -i` and `cat >`-via-stdin both proved unreliable through the double shell). New adb helpers:
-`adb.key_longpress`, `adb.KEY_MEDIA_FAST_FORWARD`, `adb.KEY_MEDIA_PLAY_PAUSE`, `adb.is_leanback`,
-`adb.screen_size`.
+`adb.key_longpress`, `adb.KEY_MEDIA_FAST_FORWARD`, `adb.KEY_MEDIA_REWIND`, `adb.KEY_MEDIA_PLAY_PAUSE`,
+`adb.is_leanback`, `adb.screen_size`.
 
 ## Android TV cursor mode component
 
@@ -155,11 +185,12 @@ the target override on `onShowCustomView`/`onHideCustomView` (fullscreen), expos
 
 Key facts a future agent needs:
 
-- **Toggle = long-press `KEYCODE_MEDIA_FAST_FORWARD`.** A short press is unused. Long-press
+- **Toggle = long-press `KEYCODE_MEDIA_PLAY_PAUSE`.** A *short* play/pause press is yielded back
+  to the activity so it still plays/pauses the page video. Long-press
   is detected with our own timer started on `ACTION_DOWN` and cancelled on `ACTION_UP`
   (media keys don't reliably fire system long-press), *plus* we also honor a real
   `FLAG_LONG_PRESS` event as a secondary trigger (this is what `adb shell input keyevent
-  --longpress 90` uses to drive the tests). The key is intercepted in the activity's
+  --longpress 85` uses to drive the tests). The key is intercepted in the activity's
   `dispatchKeyEvent` **before** it can reach a page `MediaSession` (e.g. a playing video).
   The setting `pref_key_cursor_hotkey` (Settings → General → Cursor) gates the hotkey only;
   the menu item works regardless.
@@ -183,9 +214,17 @@ Key facts a future agent needs:
   `dispatchGenericMotionEvent` (so `:hover` / `mouseover` fire). The **click is a touch
   DOWN→MOVE→UP** (`MotionEvent.obtain(downTime, eventTime, action, x, y, 0)` — tool FINGER, source
   unspecified — sharing one `downTime`, with a 2px MOVE). Synthetic *mouse button* events don't
-  produce a page click on Android WebView (`obtain` can't set `actionButton`), and a
+  produce a page click on Android WebView (`obtain` can't set `actionButton`; re-confirmed via an
+  event-probe page — a mouse-source DOWN/UP yields only `pointermove`/`mousemove`, no click), and a
   `SOURCE_TOUCHSCREEN`/`deviceId 0` event is rejected by some builds (fails on the Android 13
-  phone). The MOVE is what makes drag-only targets (YouTube's scrub bar) seek on a click.
+  phone). The touch click *does* produce the full `pointerdown`/`pointerup` plus compat
+  `mousedown`/`mouseup`/`click`, and the MOVE is what makes drag-only targets (YouTube's scrub bar)
+  seek. `test_cursor_youtube_scrubber_seek` (`yt_scrub.html`) proves this against a faithful
+  replica of YouTube's player — auto-hiding controls that wake on hover, and a bar that seeks on
+  `pointerdown` at `clientX` only while controls are shown — so the cursor must keep controls alive
+  (hover) *and* land a seeking click. (Caveat: the cursor clamps its hotspot to the exact overlay
+  bottom, which maps just *below* the CSS viewport, so a click on content at the very bottom edge
+  can miss; land clicks a hair above the edge.)
 - **Edge scroll = mouse wheel.** At a WebView edge, `moveBy` dispatches a synthetic
   `ACTION_SCROLL` (`AXIS_VSCROLL`/`AXIS_HSCROLL`, `SOURCE_MOUSE`) at the cursor point via
   `dispatchGenericMotionEvent`, so the engine hit-tests whatever's under the cursor and a nested
@@ -197,8 +236,11 @@ Key facts a future agent needs:
   `onHideCustomView`.
 - **Media keys.** The activity's `handleMediaKey` bridges short-press `PLAY_PAUSE` / `REWIND` /
   `FAST_FORWARD` to the page's active `<video>` via `evaluateJavascript` (generic; cross-origin
-  iframes are unreachable). Long-press `FAST_FORWARD` stays the cursor toggle; the controller
-  yields the *short* press back (returns false) so the activity can seek.
+  iframes are unreachable) — but **only when cursor mode is off**. Long-press `PLAY_PAUSE` is the
+  cursor toggle; the controller yields the *short* press back (returns false) so the activity can
+  play/pause. **In cursor mode, `FAST_FORWARD` / `REWIND` become a mouse wheel scroll** (down / up,
+  `WHEEL_NOTCHES` = 3) dispatched at the cursor point via the same `ACTION_SCROLL` path as edge
+  scroll, so you can scroll the page under the cursor with the remote's transport keys.
 - **Menu item visibility** (`isCursorModeAvailable()`): shown on leanback, or when a
   `SOURCE_GAMEPAD` / `SOURCE_JOYSTICK` / `SOURCE_DPAD` non-virtual device is connected. The
   menu is recomputed each time it opens, and the `InputDeviceListener` keeps it live as

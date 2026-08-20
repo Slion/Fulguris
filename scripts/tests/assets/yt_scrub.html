@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>yt-init</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #000; overflow: hidden;
+               font-family: sans-serif; }
+  /* A faithful-ish replica of YouTube's HTML5 player chrome: a full-bleed "video"
+     region with a bottom control bar that AUTO-HIDES and only reappears on
+     pointer movement (desktop) or a tap (mobile). The progress bar seeks on
+     pointerdown at clientX -- exactly like YouTube's .ytp-progress-bar -- but
+     ONLY while the controls are shown. This models the real failure mode: on a TV
+     the cursor must (a) keep the controls alive via hover and (b) land a click on
+     the thin bar. */
+  #stage { position: absolute; inset: 0; }
+  #bar {
+    position: fixed; left: 0; right: 0; bottom: 0; height: 40%;
+    background: rgba(255,255,255,.15); cursor: pointer;
+  }
+  #bar.shown { background: rgba(255,255,255,.35); }
+  #played { position: absolute; left: 0; top: 0; bottom: 0; width: 0%;
+            background: #f00; opacity: .8; }
+  #label { position: fixed; left: 8px; bottom: calc(40% + 8px);
+           color: #fff; font-size: 14px; }
+</style>
+</head>
+<body>
+<!--
+  YouTube-scrubber repro for scripts/tests/cursor_tests.py.
+  Reports state via document.title:
+    yt-init                 initial
+    ctrl-shown              controls became visible (hover/tap woke them)
+    ctrl-hidden             controls auto-hid after inactivity
+    seek@<pct>              a seek landed on the bar at <pct>% while controls shown
+    bar-miss                a pointerdown hit the bar region but controls were hidden
+-->
+<div id="stage">
+  <div id="label">controls hidden</div>
+  <div id="bar"><div id="played"></div></div>
+</div>
+<script>
+  var bar = document.getElementById('bar');
+  var played = document.getElementById('played');
+  var label = document.getElementById('label');
+  var shown = false, hideTimer = null;
+  var HIDE_MS = 3000;
+
+  function showControls() {
+    if (!shown) {
+      shown = true;
+      bar.classList.add('shown');
+      label.textContent = 'controls shown';
+      document.title = 'ctrl-shown';
+    }
+    if (hideTimer) clearTimeout(hideTimer);
+    hideTimer = setTimeout(function () {
+      shown = false;
+      bar.classList.remove('shown');
+      label.textContent = 'controls hidden';
+      document.title = 'ctrl-hidden';
+    }, HIDE_MS);
+  }
+
+  // Desktop model: pointer movement wakes controls (a hovering cursor should do this).
+  document.addEventListener('pointermove', showControls, true);
+  document.addEventListener('mousemove', showControls, true);
+
+  // Seek on pointerdown at clientX -- like YouTube's progress bar -- but only while
+  // controls are shown; otherwise the gesture just wakes them (mobile behavior).
+  bar.addEventListener('pointerdown', function (e) {
+    var rect = bar.getBoundingClientRect();
+    var pct = Math.max(0, Math.min(100,
+              Math.round((e.clientX - rect.left) / rect.width * 100)));
+    if (shown) {
+      played.style.width = pct + '%';
+      document.title = 'seek@' + pct;
+    } else {
+      document.title = 'bar-miss';
+    }
+    showControls();
+  });
+</script>
+</body>
+</html>

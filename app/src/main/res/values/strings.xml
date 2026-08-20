@@ -7,7 +7,7 @@
     <string name="cursor_mode_on">Cursor mode on</string>
     <string name="cursor_mode_off">Cursor mode off</string>
     <string name="pref_title_cursor_hotkey">Cursor mode hotkey</string>
-    <string name="pref_summary_cursor_hotkey">Long-press the fast-forward button to toggle the on-screen cursor</string>
+    <string name="pref_summary_cursor_hotkey">Long-press the play/pause button to toggle the on-screen cursor</string>
     <string name="pref_title_cursor_speed">Cursor speed</string>
     <string name="pref_title_cursor_acceleration">Cursor acceleration</string>
     <string name="pref_title_cursor_fade_timeout">Cursor fade timeout</string>

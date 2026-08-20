@@ -49,7 +49,7 @@ class UserPreferences @Inject constructor(
     var webRtcEnabled by preferences.booleanPreference(R.string.pref_key_webrtc, R.bool.pref_default_webrtc)
 
     /**
-     * True if long-pressing the media fast-forward button toggles Android TV cursor mode.
+     * True if long-pressing the media play/pause button toggles Android TV cursor mode.
      * The cursor menu item works regardless of this; it only gates the hardware shortcut.
      */
     var cursorHotkeyEnabled by preferences.booleanPreference(R.string.pref_key_cursor_hotkey, R.bool.pref_default_cursor_hotkey)

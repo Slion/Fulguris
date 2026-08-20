@@ -1,4 +1,4 @@
-"""Android TV cursor-mode UI tests, driven over adb.
+"""Android TV cursor-mode UI tests, driven through the framework Device API.
 
 These verify the fulguris.cursor component end-to-end on a real device: the long-press hotkey
 toggle, D-pad movement, edge scrolling, mouse hover + click dispatch into the WebView, and the
@@ -10,6 +10,9 @@ click coordinates and scrolling over adb without a screenshot (screencap is blac
 box). The page is served from the host over an `adb reverse` tunnel, because Fulguris blocks
 file:// URLs.
 
+Tests take a :class:`framework.Device`; the cursor suite is Android-only, so it uses the
+Android-specific extras (`device.reverse`, `device.read_prefs`/`write_prefs`) where needed.
+
 ## Feature groups
 
 Tests are grouped so a subset relevant to one feature can be run on its own:
@@ -18,6 +21,7 @@ Tests are grouped so a subset relevant to one feature can be run on its own:
     python scripts/tests/run.py --all --group cursor-movement   # D-pad movement, edge scroll
     python scripts/tests/run.py --all --group cursor-click      # hover + click dispatch
     python scripts/tests/run.py --all --group cursor-menu       # menu item visibility/toggle
+    python scripts/tests/run.py --all --group cursor-youtube    # YouTube-style scrubber seek
 
     python scripts/tests/run.py --all --test cursor             # every cursor test (name match)
     python scripts/tests/run.py --all --group cursor            # every cursor test (all groups)
@@ -27,20 +31,19 @@ from __future__ import annotations
 import atexit
 import os
 import re
-import subprocess
 import sys
 import threading
 import time
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "tools"))
-import adb
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
+from framework import keys
 
 ASSETS_DIR = os.path.join(os.path.dirname(__file__), "assets")
 PORT = 8899
 
 _server: ThreadingHTTPServer | None = None
-_reversed: set[str] = set()
+_reversed: dict = {}  # device.id -> device, for reverse-tunnel teardown at exit
 
 
 class _NoCacheHandler(SimpleHTTPRequestHandler):
@@ -78,27 +81,27 @@ def _ensure_server() -> None:
 
 
 def _teardown() -> None:
-    for serial in list(_reversed):
+    for device in list(_reversed.values()):
         try:
-            adb._adb(serial, ["reverse", "--remove", f"tcp:{PORT}"])
+            device.reverse_remove(PORT)
         except Exception:  # noqa: BLE001
             pass
     if _server is not None:
         _server.shutdown()
 
 
-def _ensure_reverse(serial: str) -> None:
+def _ensure_reverse(device) -> None:
     """Point the device's localhost:PORT at the host server via an adb reverse tunnel."""
-    if serial in _reversed:
+    if device.id in _reversed:
         return
-    adb._adb(serial, ["reverse", f"tcp:{PORT}", f"tcp:{PORT}"])
-    _reversed.add(serial)
+    device.reverse(PORT)
+    _reversed[device.id] = device
 
 
 # Cursor speed/acceleration/fade are user settings that persist on the device. Reset them to known
 # values once per device so movement/fade tests are deterministic regardless of what the user (or a
 # previous run) left them at.
-_prefs_reset: set[str] = set()
+_prefs_reset: set = set()  # device ids already reset
 _CURSOR_TEST_PREFS = {
     "pref_key_cursor_speed": 40,
     "pref_key_cursor_acceleration": 20,
@@ -110,119 +113,95 @@ def _prefs_path(package: str) -> str:
     return f"shared_prefs/{package}_preferences.xml"
 
 
-def _read_prefs(serial: str, package: str) -> str:
-    r = subprocess.run(
-        ["adb", "-s", serial, "shell", "run-as", package, "cat", _prefs_path(package)],
-        capture_output=True, encoding="utf-8", errors="replace",
-    )
-    return r.stdout or ""
-
-
-def _write_prefs(serial: str, package: str, content: str) -> None:
-    # Write via a temp file pushed to /data/local/tmp (world-readable) then `run-as cp` into the
-    # app's shared_prefs — more reliable than piping stdin through `adb shell run-as sh -c`.
-    import tempfile
-    fd, local = tempfile.mkstemp(suffix=".xml")
-    try:
-        with os.fdopen(fd, "w", encoding="utf-8", newline="\n") as f:
-            f.write(content)
-        dev_tmp = "/data/local/tmp/cursor_prefs.xml"
-        subprocess.run(["adb", "-s", serial, "push", local, dev_tmp], capture_output=True)
-        subprocess.run(["adb", "-s", serial, "shell", "run-as", package, "cp", dev_tmp, _prefs_path(package)],
-                       capture_output=True)
-    finally:
-        os.remove(local)
-
-
-def _reset_cursor_prefs(serial: str, package: str) -> None:
+def _reset_cursor_prefs(device) -> None:
     """Force the cursor speed/accel/fade prefs to known test values (host-side rewrite of the XML)."""
-    if serial in _prefs_reset:
+    if device.id in _prefs_reset:
         return
-    _prefs_reset.add(serial)
+    _prefs_reset.add(device.id)
     # App must be stopped so it doesn't overwrite the file on exit and reloads our values next launch.
-    adb.force_stop(serial, package)
-    xml = _read_prefs(serial, package)
+    device.force_stop()
+    xml = device.read_prefs(_prefs_path(device.package))
     if "<map" not in xml:
         return  # prefs not initialized yet; the code defaults will apply
     for key, val in _CURSOR_TEST_PREFS.items():
         entry = f'<int name="{key}" value="{val}" />'
         pat = re.compile(rf'<int name="{re.escape(key)}" value="-?\d+" />')
         xml = pat.sub(entry, xml) if pat.search(xml) else xml.replace("</map>", f"    {entry}\n</map>")
-    _write_prefs(serial, package, xml)
+    device.write_prefs(_prefs_path(device.package), xml)
 
 
-def _load_page(serial: str, package: str, page: str) -> None:
+def _load_page(device, page: str) -> None:
     """Serve and open one of the assets pages, leaving cursor mode OFF."""
     _ensure_server()
-    _ensure_reverse(serial)
-    _reset_cursor_prefs(serial, package)
+    _ensure_reverse(device)
+    _reset_cursor_prefs(device)
     # Make sure we start from a clean, cursor-off state.
-    if _overlay_present(serial):
-        _toggle(serial)
+    if _overlay_present(device):
+        _toggle(device)
     # Cache-bust so a stale copy is never used even if no-store were ignored.
     url = f"http://localhost:{PORT}/{page}?cb={int(time.time() * 1000)}"
-    adb.navigate(serial, package, url, reset=True)
+    device.navigate(url, reset=True)
 
 
-def _load_target(serial: str, package: str) -> None:
+def _load_target(device) -> None:
     """Serve and open the cursor target page (hover/click/scroll reporting)."""
-    _load_page(serial, package, "cursor_target.html")
+    _load_page(device, "cursor_target.html")
 
 
 # --- Cursor helpers --------------------------------------------------------
 
 
-def _overlay_present(serial: str) -> bool:
+def _overlay_present(device) -> bool:
     """The cursor overlay view is only laid out (present in the hierarchy) while cursor mode is on."""
-    return adb.find_node(serial, ":id/cursorOverlay") is not None
+    return device.find_node(":id/cursorOverlay") is not None
 
 
-def _toggle(serial: str) -> None:
-    """Toggle cursor mode via the long-press hotkey and let the fade settle."""
-    adb.key_longpress(serial, adb.KEY_MEDIA_FAST_FORWARD, wait=1.0)
+def _toggle(device) -> None:
+    """Toggle cursor mode via the long-press hotkey (play/pause) and let the fade settle."""
+    device.key_longpress(keys.MEDIA_PLAY_PAUSE, wait=1.0)
 
 
-def _title(serial: str) -> str:
-    return adb.field_text(serial)
+def _title(device) -> str:
+    return device.field_text()
 
 
-def _click_coords(serial: str) -> tuple[int, int] | None:
+def _click_coords(device) -> tuple[int, int] | None:
     """Press select and read back the click coordinates the page reports, or None if no click."""
-    adb.key(serial, adb.KEY_DPAD_CENTER, wait=0.8)
-    m = re.fullmatch(r"(\d+),(\d+)", _title(serial).strip())
+    device.key(keys.DPAD_CENTER, wait=0.8)
+    m = re.fullmatch(r"(\d+),(\d+)", _title(device).strip())
     return (int(m.group(1)), int(m.group(2))) if m else None
 
 
-def _focused_resource_id(serial: str) -> str:
-    for n in adb.nodes(serial):
+def _focused_resource_id(device) -> str:
+    for n in device.nodes():
         if n.focused:
             return n.resource_id
     return ""
 
 
 # ===========================================================================
-# Feature: cursor toggle / hotkey
+# Feature: cursor toggle hotkey
 # ===========================================================================
 
 
-def test_cursor_toggle_hotkey_shows_and_hides_overlay(serial: str, package: str, ctx: dict) -> None:
-    _load_target(serial, package)
-    assert not _overlay_present(serial), "cursor overlay should be hidden before enabling"
-    _toggle(serial)
-    assert _overlay_present(serial), "long-press hotkey should turn cursor mode on (overlay shown)"
-    _toggle(serial)
-    assert not _overlay_present(serial), "long-press hotkey should turn cursor mode off (overlay hidden)"
+def test_cursor_toggle_hotkey_shows_and_hides_overlay(device, ctx: dict) -> None:
+    _load_target(device)
+    assert not _overlay_present(device), "cursor overlay should be hidden before enabling"
+    _toggle(device)
+    assert _overlay_present(device), "long-press hotkey should turn cursor mode on (overlay shown)"
+    _toggle(device)
+    assert not _overlay_present(device), "long-press hotkey should turn cursor mode off (overlay hidden)"
 
 
-def test_cursor_toggle_exit_focuses_menu_button(serial: str, package: str, ctx: dict) -> None:
-    _load_target(serial, package)
-    _toggle(serial)
-    assert _overlay_present(serial), "cursor mode should be on"
-    _toggle(serial)
-    assert not _overlay_present(serial), "cursor mode should be off"
+def test_cursor_toggle_exit_focuses_menu_button(device, ctx: dict) -> None:
+    _load_target(device)
+    _toggle(device)
+    assert _overlay_present(device), "cursor mode should be on"
+    _toggle(device)
+    assert not _overlay_present(device), "cursor mode should be off"
     # Exiting cursor mode moves focus to the toolbar more/menu button for predictable D-pad nav.
-    assert _focused_resource_id(serial).endswith(":id/button_more"), \
-        f"exiting cursor mode should focus the menu button, focus was '{_focused_resource_id(serial)}'"
+    assert _focused_resource_id(device).endswith(":id/button_more"), \
+        f"exiting cursor mode should focus the menu button, focus was '{_focused_resource_id(device)}'"
 
 
 # ===========================================================================
@@ -230,45 +209,45 @@ def test_cursor_toggle_exit_focuses_menu_button(serial: str, package: str, ctx: 
 # ===========================================================================
 
 
-def test_cursor_movement_dpad_right_moves_right(serial: str, package: str, ctx: dict) -> None:
-    _load_target(serial, package)
-    _toggle(serial)
-    center = _click_coords(serial)
+def test_cursor_movement_dpad_right_moves_right(device, ctx: dict) -> None:
+    _load_target(device)
+    _toggle(device)
+    center = _click_coords(device)
     assert center is not None, "click at center should report coordinates"
     for _ in range(8):
-        adb.key(serial, adb.KEY_DPAD_RIGHT, wait=0.15)
-    moved = _click_coords(serial)
+        device.key(keys.DPAD_RIGHT, wait=0.15)
+    moved = _click_coords(device)
     assert moved is not None, "click after moving should report coordinates"
     assert moved[0] > center[0] + 10, f"D-pad right should increase X: {center} -> {moved}"
     assert abs(moved[1] - center[1]) <= 10, f"D-pad right should not change Y much: {center} -> {moved}"
-    _toggle(serial)
+    _toggle(device)
 
 
-def test_cursor_movement_dpad_down_moves_down(serial: str, package: str, ctx: dict) -> None:
-    _load_target(serial, package)
-    _toggle(serial)
-    center = _click_coords(serial)
+def test_cursor_movement_dpad_down_moves_down(device, ctx: dict) -> None:
+    _load_target(device)
+    _toggle(device)
+    center = _click_coords(device)
     assert center is not None, "click at center should report coordinates"
     for _ in range(4):
-        adb.key(serial, adb.KEY_DPAD_DOWN, wait=0.15)
-    moved = _click_coords(serial)
+        device.key(keys.DPAD_DOWN, wait=0.15)
+    moved = _click_coords(device)
     assert moved is not None, "click after moving should report coordinates"
     assert moved[1] > center[1] + 10, f"D-pad down should increase Y: {center} -> {moved}"
-    _toggle(serial)
+    _toggle(device)
 
 
-def test_cursor_movement_edge_scrolls_page(serial: str, package: str, ctx: dict) -> None:
-    _load_target(serial, package)
-    _toggle(serial)
+def test_cursor_movement_edge_scrolls_page(device, ctx: dict) -> None:
+    _load_target(device)
+    _toggle(device)
     # Drive to the bottom edge and keep pushing; once clamped, further pushes scroll the page via a
     # synthetic mouse wheel at the cursor point. Enough presses to traverse from center to the edge
     # even at a modest speed and with the odd dropped key event on a slow network device.
     for _ in range(140):
-        adb.key(serial, adb.KEY_DPAD_DOWN, wait=0.03)
-    title = _title(serial)
+        device.key(keys.DPAD_DOWN, wait=0.03)
+    title = _title(device)
     m = re.fullmatch(r"sy(\d+)", title.strip())
     assert m and int(m.group(1)) > 0, f"pushing past the bottom edge should scroll the page, title was '{title}'"
-    _toggle(serial)
+    _toggle(device)
 
 
 # ===========================================================================
@@ -276,15 +255,15 @@ def test_cursor_movement_edge_scrolls_page(serial: str, package: str, ctx: dict)
 # ===========================================================================
 
 
-def test_cursor_fade_hides_then_wakes(serial: str, package: str, ctx: dict) -> None:
-    _load_target(serial, package)
-    _toggle(serial)  # cursor mode on; fade timeout was reset to 3000ms
-    assert _overlay_present(serial), "cursor should be visible right after enabling"
+def test_cursor_fade_hides_then_wakes(device, ctx: dict) -> None:
+    _load_target(device)
+    _toggle(device)  # cursor mode on; fade timeout was reset to 3000ms
+    assert _overlay_present(device), "cursor should be visible right after enabling"
     time.sleep(4.5)  # longer than the fade timeout + fade animation
-    assert not _overlay_present(serial), "cursor should fade out after the inactivity timeout"
-    adb.key(serial, adb.KEY_DPAD_RIGHT, wait=0.6)  # any movement wakes it
-    assert _overlay_present(serial), "moving the cursor should fade it back in"
-    _toggle(serial)
+    assert not _overlay_present(device), "cursor should fade out after the inactivity timeout"
+    device.key(keys.DPAD_RIGHT, wait=0.6)  # any movement wakes it
+    assert _overlay_present(device), "moving the cursor should fade it back in"
+    _toggle(device)
 
 
 # ===========================================================================
@@ -292,34 +271,34 @@ def test_cursor_fade_hides_then_wakes(serial: str, package: str, ctx: dict) -> N
 # ===========================================================================
 
 
-def test_cursor_click_hover_fires_mouseover(serial: str, package: str, ctx: dict) -> None:
-    _load_target(serial, package)
-    assert _title(serial) == "start", f"page should start with title 'start', was '{_title(serial)}'"
-    _toggle(serial)  # enabling centers the cursor and dispatches an initial mouse hover
-    assert _title(serial) == "hover", \
-        f"enabling cursor should fire a mouse hover on the page, title was '{_title(serial)}'"
-    _toggle(serial)
+def test_cursor_click_hover_fires_mouseover(device, ctx: dict) -> None:
+    _load_target(device)
+    assert _title(device) == "start", f"page should start with title 'start', was '{_title(device)}'"
+    _toggle(device)  # enabling centers the cursor and dispatches an initial mouse hover
+    assert _title(device) == "hover", \
+        f"enabling cursor should fire a mouse hover on the page, title was '{_title(device)}'"
+    _toggle(device)
 
 
-def test_cursor_click_activates_under_cursor(serial: str, package: str, ctx: dict) -> None:
-    _load_target(serial, package)
-    _toggle(serial)
-    coords = _click_coords(serial)
+def test_cursor_click_activates_under_cursor(device, ctx: dict) -> None:
+    _load_target(device)
+    _toggle(device)
+    coords = _click_coords(device)
     assert coords is not None, \
-        f"select press should dispatch a click the page receives, title was '{_title(serial)}'"
-    _toggle(serial)
+        f"select press should dispatch a click the page receives, title was '{_title(device)}'"
+    _toggle(device)
 
 
-def test_cursor_click_drag_target_seeks(serial: str, package: str, ctx: dict) -> None:
+def test_cursor_click_drag_target_seeks(device, ctx: dict) -> None:
     # A cursor click must register on drag-only targets like YouTube's scrub bar (which need a real
     # pointerdown -> pointermove -> pointerup, not a bare tap). The bar spans the vertical middle, so
     # the freshly-centered cursor lands on it.
-    _load_page(serial, package, "scrub_target.html")
-    _toggle(serial)
-    adb.key(serial, adb.KEY_DPAD_CENTER, wait=0.8)
-    assert _title(serial).startswith("seek@"), \
-        f"a cursor click on a drag-only scrub bar should seek, title was '{_title(serial)}'"
-    _toggle(serial)
+    _load_page(device, "scrub_target.html")
+    _toggle(device)
+    device.key(keys.DPAD_CENTER, wait=0.8)
+    assert _title(device).startswith("seek@"), \
+        f"a cursor click on a drag-only scrub bar should seek, title was '{_title(device)}'"
+    _toggle(device)
 
 
 # ===========================================================================
@@ -327,37 +306,37 @@ def test_cursor_click_drag_target_seeks(serial: str, package: str, ctx: dict) ->
 # ===========================================================================
 
 
-def _open_main_menu(serial: str) -> None:
-    n = adb.find_node(serial, ":id/button_more")
+def _open_main_menu(device) -> None:
+    n = device.find_node(":id/button_more")
     assert n and n.bounds, "toolbar more button not found"
     x1, y1, x2, y2 = n.bounds
-    adb.tap(serial, (x1 + x2) // 2, (y1 + y2) // 2, wait=1.0)
+    device.tap((x1 + x2) // 2, (y1 + y2) // 2, wait=1.0)
 
 
-def test_cursor_menu_item_visible_on_leanback(serial: str, package: str, ctx: dict) -> None:
-    _load_target(serial, package)
-    if not adb.is_leanback(serial):
+def test_cursor_menu_item_visible_on_leanback(device, ctx: dict) -> None:
+    _load_target(device)
+    if not device.is_leanback():
         ctx["notes"].append("cursor menu visibility test skipped (device is not leanback)")
         return
-    _open_main_menu(serial)
-    present = adb.find_node(serial, ":id/menuItemCursor") is not None
-    adb.key(serial, adb.KEY_BACK, wait=0.6)  # close menu
+    _open_main_menu(device)
+    present = device.find_node(":id/menuItemCursor") is not None
+    device.key(keys.BACK, wait=0.6)  # close menu
     assert present, "the Cursor menu item should be visible in the main menu on Android TV"
 
 
-def test_cursor_menu_item_toggles_mode(serial: str, package: str, ctx: dict) -> None:
-    _load_target(serial, package)
-    if not adb.is_leanback(serial):
+def test_cursor_menu_item_toggles_mode(device, ctx: dict) -> None:
+    _load_target(device)
+    if not device.is_leanback():
         ctx["notes"].append("cursor menu toggle test skipped (device is not leanback)")
         return
-    assert not _overlay_present(serial), "cursor mode should start off"
-    _open_main_menu(serial)
-    item = adb.find_node(serial, ":id/menuItemCursor")
+    assert not _overlay_present(device), "cursor mode should start off"
+    _open_main_menu(device)
+    item = device.find_node(":id/menuItemCursor")
     assert item and item.bounds, "Cursor menu item not found in the main menu"
     x1, y1, x2, y2 = item.bounds
-    adb.tap(serial, (x1 + x2) // 2, (y1 + y2) // 2, wait=1.0)
-    assert _overlay_present(serial), "tapping the Cursor menu item should turn cursor mode on"
-    _toggle(serial)  # leave it off
+    device.tap((x1 + x2) // 2, (y1 + y2) // 2, wait=1.0)
+    assert _overlay_present(device), "tapping the Cursor menu item should turn cursor mode on"
+    _toggle(device)  # leave it off
 
 
 # ===========================================================================
@@ -365,21 +344,21 @@ def test_cursor_menu_item_toggles_mode(serial: str, package: str, ctx: dict) -> 
 # ===========================================================================
 
 
-def test_cursor_fullscreen_click_reaches_custom_view(serial: str, package: str, ctx: dict) -> None:
-    _load_page(serial, package, "fullscreen_target.html")
+def test_cursor_fullscreen_click_reaches_custom_view(device, ctx: dict) -> None:
+    _load_page(device, "fullscreen_target.html")
     # A tap provides the user gesture HTML5 requestFullscreen needs; this fires onShowCustomView.
-    w, h = adb.screen_size(serial)
-    adb.tap(serial, w // 2, h // 2, wait=1.5)
-    assert _title(serial) == "fs-on", f"tapping should enter fullscreen, title was '{_title(serial)}'"
-    _toggle(serial)  # turn the cursor on while fullscreen
-    assert _overlay_present(serial), "the cursor overlay should be visible over the fullscreen view"
+    w, h = device.screen_size()
+    device.tap(w // 2, h // 2, wait=1.5)
+    assert _title(device) == "fs-on", f"tapping should enter fullscreen, title was '{_title(device)}'"
+    _toggle(device)  # turn the cursor on while fullscreen
+    assert _overlay_present(device), "the cursor overlay should be visible over the fullscreen view"
     for _ in range(3):
-        adb.key(serial, adb.KEY_DPAD_RIGHT, wait=0.15)
-    adb.key(serial, adb.KEY_DPAD_CENTER, wait=0.8)
-    assert _title(serial).startswith("fsclick@"), \
-        f"a click in fullscreen must reach the fullscreen view, title was '{_title(serial)}'"
-    _toggle(serial)
-    adb.key(serial, adb.KEY_BACK, wait=1.0)  # leave fullscreen
+        device.key(keys.DPAD_RIGHT, wait=0.15)
+    device.key(keys.DPAD_CENTER, wait=0.8)
+    assert _title(device).startswith("fsclick@"), \
+        f"a click in fullscreen must reach the fullscreen view, title was '{_title(device)}'"
+    _toggle(device)
+    device.key(keys.BACK, wait=1.0)  # leave fullscreen
 
 
 # ===========================================================================
@@ -387,17 +366,69 @@ def test_cursor_fullscreen_click_reaches_custom_view(serial: str, package: str, 
 # ===========================================================================
 
 
-def test_cursor_media_play_pause(serial: str, package: str, ctx: dict) -> None:
-    _load_page(serial, package, "media_target.html")
+def test_cursor_media_play_pause(device, ctx: dict) -> None:
+    _load_page(device, "media_target.html")
     for _ in range(12):
-        if _title(serial) == "playing":
+        if _title(device) == "playing":
             break
         time.sleep(0.5)
-    assert _title(serial) == "playing", f"the test video should autoplay, title was '{_title(serial)}'"
-    adb.key(serial, adb.KEY_MEDIA_PLAY_PAUSE, wait=1.2)
-    assert _title(serial) == "paused", f"media play/pause should pause the video, title was '{_title(serial)}'"
-    adb.key(serial, adb.KEY_MEDIA_PLAY_PAUSE, wait=1.2)
-    assert _title(serial) == "playing", f"media play/pause should resume the video, title was '{_title(serial)}'"
+    assert _title(device) == "playing", f"the test video should autoplay, title was '{_title(device)}'"
+    device.key(keys.MEDIA_PLAY_PAUSE, wait=1.2)
+    assert _title(device) == "paused", f"media play/pause should pause the video, title was '{_title(device)}'"
+    device.key(keys.MEDIA_PLAY_PAUSE, wait=1.2)
+    assert _title(device) == "playing", f"media play/pause should resume the video, title was '{_title(device)}'"
+
+
+# ===========================================================================
+# Feature: media keys act as a mouse wheel while the cursor is on screen
+# ===========================================================================
+
+
+def test_cursor_wheel_ff_rewind_scrolls(device, ctx: dict) -> None:
+    # cursor_target.html is 220vh and reports window.scrollY as 'sy<n>' on scroll.
+    _load_target(device)
+    _toggle(device)  # cursor on; centered
+    # In cursor mode fast-forward is a mouse wheel scroll DOWN at the cursor.
+    device.key(keys.MEDIA_FAST_FORWARD, wait=0.9)
+    t1 = _title(device)
+    m1 = re.fullmatch(r"sy(\d+)", t1.strip())
+    assert m1 and int(m1.group(1)) > 0, f"fast-forward in cursor mode should wheel-scroll down, title was '{t1}'"
+    down = int(m1.group(1))
+    # Rewind is a mouse wheel scroll UP.
+    device.key(keys.MEDIA_REWIND, wait=0.9)
+    device.key(keys.MEDIA_REWIND, wait=0.9)
+    t2 = _title(device)
+    m2 = re.fullmatch(r"sy(\d+)", t2.strip())
+    assert m2 and int(m2.group(1)) < down, f"rewind in cursor mode should wheel-scroll back up, was '{t1}' now '{t2}'"
+    _toggle(device)
+
+
+def test_cursor_youtube_scrubber_seek(device, ctx: dict) -> None:
+    # yt_scrub.html faithfully models YouTube's player chrome: controls that
+    # auto-hide and wake on hover (pointermove/mousemove), plus a progress bar
+    # that seeks on pointerdown at clientX -- but only while controls are shown.
+    # This exercises the real-world path: the cursor's hover must keep the
+    # controls alive AND its click must land a seeking pointerdown on the bar.
+    _load_page(device, "yt_scrub.html")
+    _toggle(device)  # cursor on; the centred hover should wake the controls
+    assert _title(device).strip() == "ctrl-shown", \
+        f"cursor hover should wake the auto-hiding player controls, title was '{_title(device)}'"
+    # Drive the cursor down into the bottom progress bar, clicking as we descend.
+    # The first click that lands on the bar (controls still shown thanks to the
+    # hover from each move) reports seek@<pct>. Clicking on the way in lands near
+    # the top of the bar, so this is DPI-independent and avoids the very-bottom
+    # edge. bar-miss would mean the controls had hidden (hover not keeping alive).
+    title = ""
+    for _ in range(12):
+        for _ in range(5):
+            device.key(keys.DPAD_DOWN, wait=0.03)
+        device.key(keys.DPAD_CENTER, wait=0.6)
+        title = _title(device).strip()
+        if title.startswith("seek@") or title == "bar-miss":
+            break
+    assert title.startswith("seek@"), \
+        f"cursor click on the YouTube-style scrubber should seek, last title was '{title}'"
+    _toggle(device)
 
 
 # ===========================================================================
@@ -432,12 +463,18 @@ FEATURE_GROUPS = {
     "cursor-media": [
         test_cursor_media_play_pause,
     ],
+    "cursor-wheel": [
+        test_cursor_wheel_ff_rewind_scrolls,
+    ],
+    "cursor-youtube": [
+        test_cursor_youtube_scrubber_seek,
+    ],
 }
 
 ALL_TESTS = [t for group in FEATURE_GROUPS.values() for t in group]
 
 TEST_DESCRIPTIONS = {
-    "test_cursor_toggle_hotkey_shows_and_hides_overlay": "Long-press fast-forward toggles the cursor overlay on and off",
+    "test_cursor_toggle_hotkey_shows_and_hides_overlay": "Long-press play/pause toggles the cursor overlay on and off",
     "test_cursor_toggle_exit_focuses_menu_button": "Exiting cursor mode moves focus to the toolbar menu button",
     "test_cursor_movement_dpad_right_moves_right": "D-pad right moves the cursor right (click X increases)",
     "test_cursor_movement_dpad_down_moves_down": "D-pad down moves the cursor down (click Y increases)",
@@ -450,4 +487,6 @@ TEST_DESCRIPTIONS = {
     "test_cursor_menu_item_toggles_mode": "Tapping the Cursor menu item turns cursor mode on",
     "test_cursor_fullscreen_click_reaches_custom_view": "In HTML5 fullscreen the cursor is visible and its click reaches the fullscreen view",
     "test_cursor_media_play_pause": "The media play/pause key pauses and resumes the page video",
+    "test_cursor_wheel_ff_rewind_scrolls": "In cursor mode fast-forward/rewind wheel-scroll the page down/up at the cursor",
+    "test_cursor_youtube_scrubber_seek": "A cursor click seeks a YouTube-style auto-hiding scrubber (hover keeps controls alive, click seeks)",
 }

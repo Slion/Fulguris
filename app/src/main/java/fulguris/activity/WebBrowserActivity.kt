@@ -833,8 +833,9 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
      * Bridge hardware media keys to the current page's `<video>`. Short-press play/pause toggles,
      * rewind/fast-forward seek ±10s. Works generically wherever a page has an HTML5 video in its
      * top document (cross-origin iframes, e.g. some embeds, are not reachable — a known limitation).
-     * Returns true when the key was handled (and consumed). Long-press fast-forward is the cursor
-     * toggle and is handled earlier, so only its short press reaches here.
+     * Returns true when the key was handled (and consumed). Long-press play/pause is the cursor
+     * toggle, and in cursor mode fast-forward/rewind become a wheel scroll — both handled earlier by
+     * the cursor controller, so only the remaining short presses reach here.
      */
     private fun handleMediaKey(event: KeyEvent): Boolean {
         when (event.keyCode) {
@@ -2214,14 +2215,15 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         //Timber.d("dispatchKeyEvent $event")
 
         // Android TV cursor mode gets first dibs on key events. In particular the media
-        // fast-forward toggle must be intercepted here, before it can reach a page's MediaSession
+        // play/pause toggle must be intercepted here, before it can reach a page's MediaSession
         // (e.g. a playing video), and D-pad presses drive the cursor rather than focus navigation.
         if (::iCursorController.isInitialized && iCursorController.dispatchKeyEvent(event)) {
             return true
         }
 
-        // Hardware media keys drive the current page's video (short-press). Long-press fast-forward
-        // was already claimed above for the cursor toggle; a short press falls through to here.
+        // Hardware media keys drive the current page's video (short-press). Long-press play/pause
+        // was already claimed above for the cursor toggle, and in cursor mode fast-forward/rewind
+        // are claimed for wheel scroll; whatever falls through here seeks/plays the video.
         if (handleMediaKey(event)) {
             return true
         }

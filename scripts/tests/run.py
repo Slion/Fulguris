@@ -37,8 +37,9 @@ import sys
 import time
 import traceback
 
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "tools"))
-import adb
+import framework
 import results as results_store
 import url_field_tests as suite
 import cursor_tests
@@ -73,16 +74,16 @@ def select_tests(name: str | None, group: str | None):
     return tests
 
 
-def run_one(t, serial: str, package: str, ctx: dict) -> tuple[float, str | None]:
+def run_one(t, device, ctx: dict) -> tuple[float, str | None]:
     """Run a single test with timing. Returns (elapsed seconds, error line or None).
 
     The tabs the test created are closed again afterwards (hygiene) unless
-    --keep-tabs was passed; see adb.TABS_OPENED / adb.KEEP_TABS.
+    --keep-tabs was passed; see framework.tabs_opened() / framework.keep_tabs().
     """
-    adb.reset_tab_counter()
+    framework.reset_tab_counter()
     t0 = time.monotonic()
     try:
-        t(serial, package, ctx)
+        t(device, ctx)
         result: str | None = None
     except AssertionError as e:
         result = f"FAIL  {t.__name__}: {e}"
@@ -90,8 +91,8 @@ def run_one(t, serial: str, package: str, ctx: dict) -> tuple[float, str | None]
         traceback.print_exc()
         result = f"ERROR {t.__name__}: {e}"
     elapsed = time.monotonic() - t0
-    if not adb.KEEP_TABS and adb.TABS_OPENED > 0:
-        adb.close_tabs(serial, adb.TABS_OPENED)
+    if not framework.keep_tabs() and framework.tabs_opened() > 0:
+        device.close_tabs(framework.tabs_opened())
     return elapsed, result
 
 
@@ -112,34 +113,34 @@ def main() -> int:
                         help="Restart the app between tests (default: keep it running, faster)")
     parser.add_argument("--keep-tabs", action="store_true",
                         help="Do not close the tabs tests create (default: close them after each test; hygiene, no perf impact)")
-    parser.add_argument("--orientation", choices=adb.ORIENTATIONS,
+    parser.add_argument("--orientation", choices=framework.ORIENTATIONS,
                         help="Force device orientation before running (portrait/landscape/sensor); recorded in the results")
     parser.add_argument("--no-save", action="store_true",
                         help="Do not append the run to scripts/tests/results/")
     parser.add_argument("--list", action="store_true", help="List available tests and exit")
     args = parser.parse_args()
 
-    adb.reset_between_tests(args.restart)
-    adb.set_keep_tabs(args.keep_tabs)
+    framework.reset_between_tests(args.restart)
+    framework.set_keep_tabs(args.keep_tabs)
 
     if args.list:
         for t in ALL_TESTS:
             print(t.__name__)
         return 0
 
-    devices = adb.resolve_devices(args.device, args.all)
+    devices = framework.resolve_devices(args.device, args.all, args.package)
     tests = select_tests(args.test, args.group)
 
     overall_ok = True
     total_start = time.monotonic()
-    for serial in devices:
-        package = args.package or adb.detect_package(serial)
+    for device in devices:
+        package = device.package
         saved_state = None
         if args.orientation:
-            saved_state = adb.orientation_state(serial)
-            adb.set_orientation(serial, args.orientation)
-        config = adb.device_config(serial)
-        print(f"\n=== {adb.device_label(serial)}  [{package}] ===")
+            saved_state = device.orientation_state()
+            device.set_orientation(args.orientation)
+        config = device.config()
+        print(f"\n=== {device.label()}  [{package}] ===")
         print(f"  config: {config['config_id']}  "
               f"({config['orientation']}, rot {config['rotation']}°, sw{config['smallest_width_dp']}dp, "
               f"Android {config['android']})")
@@ -149,7 +150,7 @@ def main() -> int:
         test_records: list[dict] = []
         device_start = time.monotonic()
         for t in tests:
-            elapsed, error = run_one(t, serial, package, ctx)
+            elapsed, error = run_one(t, device, ctx)
             timings.append((t.__name__, elapsed))
             record = {"name": t.__name__, "status": _status(error), "duration_s": round(elapsed, 1)}
             if error:
@@ -169,7 +170,7 @@ def main() -> int:
             print(f"  note: {note}")
 
         if not args.no_save:
-            previous = results_store.load_last_run(config["model"], config["config_id"], serial)
+            previous = results_store.load_last_run(config["model"], config["config_id"], device.id)
             record = results_store.build_record(
                 config, package,
                 {"restart": args.restart, "keep_tabs": args.keep_tabs,
@@ -189,7 +190,7 @@ def main() -> int:
             print(first + f"  [+ {os.path.basename(md_path)}]")
 
         if saved_state is not None:
-            adb.restore_orientation(serial, *saved_state)
+            device.restore_orientation(*saved_state)
     print(f"\nTotal: {time.monotonic() - total_start:.1f}s across {len(devices)} device(s)")
 
     return 0 if overall_ok else 1

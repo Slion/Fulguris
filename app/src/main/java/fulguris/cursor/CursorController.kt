@@ -74,10 +74,15 @@ import timber.log.Timber
  * reusable / lib-extractable.
  *
  * ## Toggle hotkey
- * A **long press** of [KeyEvent.KEYCODE_MEDIA_FAST_FORWARD] (held for [HOTKEY_LONG_PRESS_MS]) toggles
+ * A **long press** of [KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE] (held for [HOTKEY_LONG_PRESS_MS]) toggles
  * cursor mode; we detect it ourselves (media keys don't reliably deliver system long-press). A
- * **short** press is yielded back to the activity (returns false) so it can seek the page's video.
- * The activity forwards the key to us before it can reach a page's `MediaSession`.
+ * **short** press is yielded back to the activity (returns false) so it can play/pause the page's
+ * video. The activity forwards the key to us before it can reach a page's `MediaSession`.
+ *
+ * ## Media keys as a wheel
+ * While the cursor is on screen, [KeyEvent.KEYCODE_MEDIA_FAST_FORWARD] / [KeyEvent.KEYCODE_MEDIA_REWIND]
+ * dispatch a synthetic mouse wheel scroll down / up at the cursor point (see [dispatchScroll]); when
+ * the cursor is off, they fall through to the activity's per-video seek.
  */
 class CursorController(
     private val overlay: CursorView,
@@ -140,10 +145,23 @@ class CursorController(
      * Forward the activity's key events here first. Returns true when consumed.
      */
     fun dispatchKeyEvent(event: KeyEvent): Boolean {
-        // The toggle hotkey is handled whether or not cursor mode is currently on. A short press is
-        // yielded back (returns false) so the activity can seek the page's video.
-        if (event.keyCode == KeyEvent.KEYCODE_MEDIA_FAST_FORWARD) {
+        // The toggle hotkey is a long press of play/pause, handled whether or not cursor mode is
+        // currently on. A short press is yielded back (returns false) so the activity can play/pause
+        // the page's video.
+        if (event.keyCode == KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE) {
             return handleHotkey(event)
+        }
+
+        // While the cursor is on screen, fast-forward / rewind become a mouse wheel scroll at the
+        // cursor (down / up respectively); off-cursor they fall through to the activity's video seek.
+        if ((enabled || shown) &&
+            (event.keyCode == KeyEvent.KEYCODE_MEDIA_FAST_FORWARD || event.keyCode == KeyEvent.KEYCODE_MEDIA_REWIND)) {
+            if (event.action == KeyEvent.ACTION_DOWN) {
+                wakeCursor()
+                val notches = if (event.keyCode == KeyEvent.KEYCODE_MEDIA_FAST_FORWARD) -WHEEL_NOTCHES else WHEEL_NOTCHES
+                dispatchScroll(notches, 0f)
+            }
+            return true
         }
 
         // The select button clicks whenever the cursor is on screen — whether it got there via
@@ -435,16 +453,12 @@ class CursorController(
         wakeCursor()
         val (x, y) = targetCoords(target)
         Timber.d("Cursor: click at target ($x, $y)")
-        // Hover/:hover is driven by SOURCE_MOUSE ACTION_HOVER_MOVE events (see dispatchHover), but
-        // the click itself is a plain touch gesture. Synthetic mouse *button* events don't turn into
-        // a page click on Android WebView (MotionEvent.obtain can't set actionButton, so Chromium
-        // never sees a primary-button press). We send DOWN → MOVE → UP (not a bare DOWN/UP): custom
-        // scrub bars / sliders (e.g. YouTube's timeline) are drag targets that need the MOVE to
-        // register a seek, and it's harmless for plain buttons. All share one downTime.
+        // Synthetic mouse *button* events don't produce a page click on Android WebView
+        // (MotionEvent.obtain can't set actionButton, so Chromium never sees a button press). A
+        // touch DOWN → MOVE → UP does: it yields pointerdown/up plus compat mousedown/mouseup/click.
+        // The small MOVE makes drag-style targets (scrub bars) register, and is harmless for buttons.
         val downTime = SystemClock.uptimeMillis()
         val down = MotionEvent.obtain(downTime, downTime, MotionEvent.ACTION_DOWN, x, y, 0)
-        // A small real move (not a zero-length one) so the page sees a pointermove — YouTube's
-        // scrub bar and similar drag targets only seek when a move happens between down and up.
         val move = MotionEvent.obtain(downTime, downTime + 10, MotionEvent.ACTION_MOVE, x + 2f, y, 0)
         val up = MotionEvent.obtain(downTime, downTime + 60, MotionEvent.ACTION_UP, x, y, 0)
         try {
@@ -584,5 +598,7 @@ class CursorController(
         private const val FADE_ANIM_MS = 200L
         // Pixels of edge overflow that map to one mouse-wheel notch.
         private const val SCROLL_PX_PER_NOTCH = 40f
+        // Wheel notches per fast-forward / rewind press.
+        private const val WHEEL_NOTCHES = 3f
     }
 }
