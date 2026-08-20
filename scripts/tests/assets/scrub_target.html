@@ -13,14 +13,22 @@
 </head>
 <body>
 <!--
-  E (drag-style click) verification page for scripts/tests/cursor_tests.py.
-  Title: scrub-init -> initial | seek@<x> -> a real down/move/up drag landed on the bar.
+  Scrub bar verification for scripts/tests/cursor_tests.py.
+  Title: scrub-init -> initial | seek@<x> -> a seek landed on the bar.
+  Accepts both real mouse click (mousedown, like YouTube desktop) and touch drag (pointerdown+move+up).
 -->
 <div id="bar"></div>
 <script>
   var bar = document.getElementById('bar');
   var down = false, moved = false;
-  bar.addEventListener('pointerdown', function () { down = true; moved = false; });
+  // Mouse click (pointerType=mouse): seek immediately on mousedown, like YouTube's scrubber.
+  bar.addEventListener('mousedown', function (e) {
+    document.title = 'seek@' + Math.round(e.clientX);
+  });
+  // Touch drag: require an actual move between pointerdown and pointerup before seeking.
+  bar.addEventListener('pointerdown', function (e) {
+    if (e.pointerType !== 'mouse') { down = true; moved = false; }
+  });
   bar.addEventListener('pointermove', function () { if (down) moved = true; });
   bar.addEventListener('pointerup', function (e) {
     if (down && moved) document.title = 'seek@' + Math.round(e.clientX);

@@ -24,11 +24,15 @@
     - scroll    -> "sy<scrollY>"            (pushing past an edge scrolls the page)
 -->
 <a id="target" href="javascript:void 0"
-   onmouseover="document.title='hover'"
    onclick="document.title=Math.round(event.clientX)+','+Math.round(event.clientY); return false;">
    Cursor test target
 </a>
 <script>
+  // Hover events only set the title when we're in the initial or hover state so that
+  // periodic hover dispatches don't overwrite a click/scroll result the test is about to read.
+  document.getElementById('target').addEventListener('mouseover', function () {
+    if (document.title === 'start' || document.title === 'hover') document.title = 'hover';
+  });
   window.addEventListener('scroll', function () {
     document.title = 'sy' + Math.round(window.scrollY);
   });

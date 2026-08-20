@@ -431,6 +431,28 @@ def test_cursor_youtube_scrubber_seek(device, ctx: dict) -> None:
     _toggle(device)
 
 
+def test_cursor_youtube_scrubber_seek_after_idle(device, ctx: dict) -> None:
+    # Tests the real-world case: controls auto-hide after the cursor stops moving, then
+    # the next click should still seek. dispatchHover() before the click (+ 80 ms delay)
+    # re-shows controls before the BUTTON_PRESS event lands on the scrubber.
+    if not device.is_leanback():
+        ctx["notes"].append("YouTube idle-hover test skipped (leanback/TV only — cursor is a D-pad/remote feature)")
+        return
+    _load_page(device, "yt_scrub.html")
+    _toggle(device)
+    assert _title(device).strip() == "ctrl-shown", "cursor enable should show player controls"
+    for _ in range(50):
+        device.key(keys.DPAD_DOWN, wait=0.03)
+    time.sleep(4.0)  # longer than yt_scrub.html's 3 s auto-hide
+    # Controls auto-hid. The pre-click hover (dispatchHover) + 80 ms delay gives YouTube
+    # time to re-show controls before BUTTON_PRESS fires, so the click still seeks.
+    device.key(keys.DPAD_CENTER, wait=1.0)  # extra wait for the 80 ms delay + DOM update
+    title = _title(device).strip()
+    assert title.startswith("seek@"), \
+        f"click should seek even after controls auto-hid (hover+delay re-shows them), title was '{title}'"
+    _toggle(device)
+
+
 # ===========================================================================
 # Registration
 # ===========================================================================
@@ -468,6 +490,7 @@ FEATURE_GROUPS = {
     ],
     "cursor-youtube": [
         test_cursor_youtube_scrubber_seek,
+        test_cursor_youtube_scrubber_seek_after_idle,
     ],
 }
 
@@ -482,11 +505,12 @@ TEST_DESCRIPTIONS = {
     "test_cursor_fade_hides_then_wakes": "The cursor fades out after the inactivity timeout and wakes on movement",
     "test_cursor_click_hover_fires_mouseover": "Enabling the cursor fires a mouse hover on the page",
     "test_cursor_click_activates_under_cursor": "Select press dispatches a click the page receives at the cursor",
-    "test_cursor_click_drag_target_seeks": "A cursor click seeks a drag-only scrub bar (down/move/up), like YouTube's timeline",
+    "test_cursor_click_drag_target_seeks": "A cursor click seeks a scrub bar via mousedown(mouse) or touch drag, like YouTube's timeline",
     "test_cursor_menu_item_visible_on_leanback": "The Cursor main-menu item is shown on Android TV",
     "test_cursor_menu_item_toggles_mode": "Tapping the Cursor menu item turns cursor mode on",
     "test_cursor_fullscreen_click_reaches_custom_view": "In HTML5 fullscreen the cursor is visible and its click reaches the fullscreen view",
     "test_cursor_media_play_pause": "The media play/pause key pauses and resumes the page video",
     "test_cursor_wheel_ff_rewind_scrolls": "In cursor mode fast-forward/rewind wheel-scroll the page down/up at the cursor",
     "test_cursor_youtube_scrubber_seek": "A cursor click seeks a YouTube-style auto-hiding scrubber (hover keeps controls alive, click seeks)",
+    "test_cursor_youtube_scrubber_seek_after_idle": "Click seeks even after controls auto-hid (dispatchHover+delay re-shows them before BUTTON_PRESS lands) (leanback only)",
 }

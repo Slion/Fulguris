@@ -31,6 +31,7 @@ import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
+import java.lang.reflect.Method
 import kotlin.math.abs
 import timber.log.Timber
 
@@ -436,11 +437,11 @@ class CursorController(
         return (posX + o[0] - t[0]) to (posY + o[1] - t[1])
     }
 
-    private fun dispatchHover() {
+    private fun dispatchHover(xOffset: Float = 0f) {
         val target = targetProvider() ?: return
         val (x, y) = targetCoords(target)
         val now = SystemClock.uptimeMillis()
-        val event = obtainMouseEvent(now, now, MotionEvent.ACTION_HOVER_MOVE, x, y, 0)
+        val event = obtainMouseEvent(now, now, MotionEvent.ACTION_HOVER_MOVE, x + xOffset, y, 0)
         try {
             target.dispatchGenericMotionEvent(event)
         } finally {
@@ -453,10 +454,52 @@ class CursorController(
         wakeCursor()
         val (x, y) = targetCoords(target)
         Timber.d("Cursor: click at target ($x, $y)")
-        // Synthetic mouse *button* events don't produce a page click on Android WebView
-        // (MotionEvent.obtain can't set actionButton, so Chromium never sees a button press). A
-        // touch DOWN → MOVE → UP does: it yields pointerdown/up plus compat mousedown/mouseup/click.
-        // The small MOVE makes drag-style targets (scrub bars) register, and is harmless for buttons.
+        dispatchHover()
+        handler.postDelayed({
+            val t = targetProvider() ?: return@postDelayed
+            if (!dispatchMouseClick(t, x, y)) dispatchTouchClick(t, x, y)
+        }, CLICK_DELAY_MS)
+    }
+
+    // setActionButton is @hide but needed for ACTION_BUTTON_PRESS/RELEASE (api=unsupported,test-api → allowed).
+    private val setActionButtonMethod: Method? by lazy {
+        try {
+            MotionEvent::class.java.getDeclaredMethod("setActionButton", Int::class.java)
+                .apply { isAccessible = true }
+        } catch (_: Exception) { null }
+    }
+
+    private fun dispatchMouseClick(target: View, x: Float, y: Float): Boolean {
+        val setter = setActionButtonMethod ?: return false
+        val dt = SystemClock.uptimeMillis()
+        val pp = arrayOf(MotionEvent.PointerProperties().also { it.id = 0; it.toolType = MotionEvent.TOOL_TYPE_MOUSE })
+        fun at(px: Float) = arrayOf(MotionEvent.PointerCoords().also { it.x = px; it.y = y; it.pressure = 1f; it.size = 1f })
+        fun ev(t: Long, action: Int, btns: Int, px: Float) =
+            MotionEvent.obtain(dt, t, action, 1, pp, at(px), 0, btns, 1f, 1f, -1, 0, InputDevice.SOURCE_MOUSE, 0)
+        // Exact event sequence from a real Bluetooth mouse (all via dispatchGenericMotionEvent):
+        // ACTION_HOVER_EXIT → ACTION_DOWN → ACTION_BUTTON_PRESS → [MOVE] → ACTION_BUTTON_RELEASE → ACTION_UP
+        // It is ACTION_BUTTON_PRESS with actionButton=BUTTON_PRIMARY that Chromium translates to mousedown(button=0).
+        val hoverExit = ev(dt,    MotionEvent.ACTION_HOVER_EXIT,     MotionEvent.BUTTON_PRIMARY, x)
+        val down      = ev(dt+10, MotionEvent.ACTION_DOWN,           MotionEvent.BUTTON_PRIMARY, x)
+        val btnPress  = ev(dt+20, MotionEvent.ACTION_BUTTON_PRESS,   MotionEvent.BUTTON_PRIMARY, x)
+        val move      = ev(dt+30, MotionEvent.ACTION_MOVE,           MotionEvent.BUTTON_PRIMARY, x + 2f)
+        val btnRel    = ev(dt+50, MotionEvent.ACTION_BUTTON_RELEASE, 0,                          x)
+        val up        = ev(dt+60, MotionEvent.ACTION_UP,             0,                          x)
+        return try {
+            setter.invoke(btnPress, MotionEvent.BUTTON_PRIMARY)
+            setter.invoke(btnRel,   MotionEvent.BUTTON_PRIMARY)
+            target.dispatchGenericMotionEvent(hoverExit)
+            target.dispatchGenericMotionEvent(down)
+            target.dispatchGenericMotionEvent(btnPress)
+            target.dispatchGenericMotionEvent(move)
+            target.dispatchGenericMotionEvent(btnRel)
+            target.dispatchGenericMotionEvent(up)
+            true
+        } catch (_: Exception) { false }
+        finally { listOf(hoverExit, down, btnPress, move, btnRel, up).forEach { it.recycle() } }
+    }
+
+    private fun dispatchTouchClick(target: View, x: Float, y: Float) {
         val downTime = SystemClock.uptimeMillis()
         val down = MotionEvent.obtain(downTime, downTime, MotionEvent.ACTION_DOWN, x, y, 0)
         val move = MotionEvent.obtain(downTime, downTime + 10, MotionEvent.ACTION_MOVE, x + 2f, y, 0)
@@ -465,11 +508,7 @@ class CursorController(
             target.dispatchTouchEvent(down)
             target.dispatchTouchEvent(move)
             target.dispatchTouchEvent(up)
-        } finally {
-            down.recycle()
-            move.recycle()
-            up.recycle()
-        }
+        } finally { down.recycle(); move.recycle(); up.recycle() }
     }
 
     private fun dispatchScroll(vNotches: Float, hNotches: Float) {
@@ -596,6 +635,8 @@ class CursorController(
         private const val STEP_MAX_CM = 0.45f
         private const val JOYSTICK_DEADZONE = 0.15f
         private const val FADE_ANIM_MS = 200L
+        // Delay between the pre-click hover (to show controls) and the actual click events (ms).
+        private const val CLICK_DELAY_MS = 80L
         // Pixels of edge overflow that map to one mouse-wheel notch.
         private const val SCROLL_PX_PER_NOTCH = 40f
         // Wheel notches per fast-forward / rewind press.

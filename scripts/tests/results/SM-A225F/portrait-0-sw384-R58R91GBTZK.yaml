@@ -1,5 +1,5 @@
 # Fulguris UI test run — SM-A225F · portrait-0-sw384
-timestamp: '2026-08-20T14:30:40+00:00'
+timestamp: '2026-08-20T18:27:08+00:00'
 device:
   serial: R58R91GBTZK
   model: SM-A225F
@@ -18,134 +18,137 @@ options:
   orientation: null
   test_filter: null
 summary:
-  passed: 42
+  passed: 43
   failed: 0
-  total: 42
-  duration_s: 956.3
+  total: 43
+  duration_s: 954.3
 tests:
 - name: test_launch_focus_is_webview
   status: pass
-  duration_s: 7.4
+  duration_s: 8.2
 - name: test_unfocused_shows_label
   status: pass
-  duration_s: 14.1
+  duration_s: 12.8
 - name: test_directional_focus_is_navigation_not_edit
   status: pass
-  duration_s: 14.0
+  duration_s: 13.7
 - name: test_navigation_shows_label_not_url
   status: pass
-  duration_s: 18.9
+  duration_s: 18.6
 - name: test_center_enters_edit_mode
   status: pass
-  duration_s: 12.2
+  duration_s: 11.9
 - name: test_edit_shows_url
   status: pass
-  duration_s: 14.7
+  duration_s: 14.2
 - name: test_dpad_edit_selects_all
   status: pass
-  duration_s: 18.7
+  duration_s: 18.3
 - name: test_type_and_validate_navigates
   status: pass
-  duration_s: 19.0
+  duration_s: 18.8
 - name: test_back_two_stage_keyboard_then_cancel
   status: pass
-  duration_s: 25.6
+  duration_s: 25.1
 - name: test_back_from_navigation_returns_to_web
   status: pass
-  duration_s: 16.8
+  duration_s: 16.5
 - name: test_down_from_navigation_returns_to_web
   status: pass
-  duration_s: 16.8
+  duration_s: 16.6
 - name: test_suggestions_navigable_without_touch
   status: pass
-  duration_s: 21.3
+  duration_s: 21.0
 - name: test_touch_tap_enters_edit
   status: pass
-  duration_s: 13.0
+  duration_s: 12.9
 - name: test_retap_after_cancel_reenters_edit
   status: pass
-  duration_s: 16.5
+  duration_s: 16.2
 - name: test_pill_only_when_focused
   status: pass
-  duration_s: 14.7
+  duration_s: 14.6
 - name: test_https_shows_ssl_icon
   status: pass
-  duration_s: 15.2
+  duration_s: 15.0
 - name: test_http_shows_off_icon
   status: pass
-  duration_s: 14.9
+  duration_s: 15.0
 - name: test_invalid_https_shows_ssl_icon
   status: pass
-  duration_s: 20.5
+  duration_s: 20.4
 - name: test_unfocused_pill_outline_visible
   status: pass
-  duration_s: 13.0
+  duration_s: 12.9
 - name: test_reload_button_hidden_after_load
   status: pass
-  duration_s: 21.1
+  duration_s: 21.0
 - name: test_stop_button_visible_during_load
   status: pass
-  duration_s: 11.4
+  duration_s: 12.4
 - name: test_reload_button_hidden_after_reload
   status: pass
-  duration_s: 23.9
+  duration_s: 24.5
 - name: test_stop_button_click_stops_load
   status: pass
-  duration_s: 18.6
+  duration_s: 18.9
 - name: test_short_page_shows_reload_button
   status: pass
-  duration_s: 18.7
+  duration_s: 18.9
 - name: test_reload_button_tracks_tab_on_ctrl_tab
   status: pass
-  duration_s: 36.1
+  duration_s: 36.0
 - name: test_reload_button_tracks_tab_via_tab_menu
   status: pass
-  duration_s: 36.4
+  duration_s: 36.6
 - name: test_cursor_toggle_hotkey_shows_and_hides_overlay
   status: pass
-  duration_s: 28.2
+  duration_s: 28.1
 - name: test_cursor_toggle_exit_focuses_menu_button
   status: pass
-  duration_s: 27.8
+  duration_s: 27.6
 - name: test_cursor_movement_dpad_right_moves_right
   status: pass
-  duration_s: 29.1
+  duration_s: 28.9
 - name: test_cursor_movement_dpad_down_moves_down
   status: pass
   duration_s: 28.1
 - name: test_cursor_movement_edge_scrolls_page
   status: pass
-  duration_s: 40.4
+  duration_s: 40.0
 - name: test_cursor_fade_hides_then_wakes
   status: pass
-  duration_s: 32.9
+  duration_s: 32.8
 - name: test_cursor_click_hover_fires_mouseover
   status: pass
-  duration_s: 25.8
+  duration_s: 25.2
 - name: test_cursor_click_activates_under_cursor
   status: pass
-  duration_s: 23.7
+  duration_s: 23.5
 - name: test_cursor_click_drag_target_seeks
   status: pass
-  duration_s: 23.2
+  duration_s: 23.4
 - name: test_cursor_menu_item_visible_on_leanback
   status: pass
-  duration_s: 17.1
+  duration_s: 17.3
 - name: test_cursor_menu_item_toggles_mode
   status: pass
-  duration_s: 16.8
+  duration_s: 17.1
 - name: test_cursor_fullscreen_click_reaches_custom_view
   status: pass
-  duration_s: 32.3
+  duration_s: 32.4
 - name: test_cursor_media_play_pause
   status: pass
-  duration_s: 29.2
+  duration_s: 29.3
 - name: test_cursor_wheel_ff_rewind_scrolls
   status: pass
-  duration_s: 28.3
+  duration_s: 28.7
 - name: test_cursor_youtube_scrubber_seek
   status: pass
-  duration_s: 29.4
+  duration_s: 30.1
+- name: test_cursor_youtube_scrubber_seek_after_idle
+  status: pass
+  duration_s: 0.0
 - name: test_repeated_rotations_keep_page
   status: pass
-  duration_s: 28.5
+  duration_s: 28.4
