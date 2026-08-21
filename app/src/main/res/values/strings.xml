@@ -390,6 +390,8 @@
     <string name="pref_title_hide_tool_bar">Hide tool bar when scrolling down</string>
     <string name="pref_title_show_tool_bar_when_scroll_up">Show tool bar when scrolling up</string>
     <string name="pref_title_show_tool_bar_on_page_top">Show tool bar at the top of the page</string>
+    <string name="pref_title_hide_tool_bar_after">Hide tool bar after</string>
+    <string name="pref_summary_hide_tool_bar_after">Automatically hide the tool bar a few seconds after the page has finished loading, or after the web page has regained focus (e.g. after editing the address field). The timer only runs while a page is not loading and while the web page has focus; other user interaction does not reset it. 0 seconds disables the timeout.</string>
     <string name="pref_title_use_cutout_area">Use notch areas</string>
     <string name="pref_summary_on_use_cutout_area">Allow content to extend into notch regions for full-screen display</string>
     <string name="pref_summary_off_use_cutout_area">Prevent content from overlapping notch regions</string>

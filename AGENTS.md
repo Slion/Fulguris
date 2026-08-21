@@ -79,14 +79,18 @@ python scripts/tests/run.py --device SERIAL --orientation landscape  # force ori
 python scripts/tests/run.py --list             # list available tests
 ```
 
-Tests live in `scripts/tests/url_field_tests.py` (and `cursor_tests.py`, `rotation_tests.py`)
-as plain functions `test_<name>(device, ctx) -> None` that raise `AssertionError` on failure;
-`device` is a `framework.Device` (never touch adb directly from a test). New tests are
-appended to `ALL_TESTS` (or a `FEATURE_GROUPS` entry).
+Tests live in `scripts/tests/url_field_tests.py` (and `cursor_tests.py`,
+`rotation_tests.py`, `toolbar_hide_tests.py`) as plain functions
+`test_<name>(device, ctx) -> None` that raise `AssertionError` on failure;
+`device` is a `framework.Device` (never touch adb directly from a test). New
+tests are appended to `ALL_TESTS` (or a `FEATURE_GROUPS` entry).
 The current suite covers the URL/address bar focus/edit model: label vs URL
 content, D-pad navigation vs edit mode, two-stage back (hide keyboard then
 cancel), suggestion navigation without touch, tap-to-edit, and focus pill
-visibility.
+visibility, plus the **"Hide tool bar after" auto-hide timeout** (the
+`toolbar-hide` group in `toolbar_hide_tests.py` — timeout arm at load / web-view
+focus-gain / foreground return / tool-bar re-show, no starvation by busy pages,
+no reset by interaction, 0 disables; see `docs/features/toolbar-hide-timeout.md`).
 
 **Orientation & configuration.** `--orientation portrait|landscape|sensor`
 forces the device orientation before the run (and restores it after). Fulguris
@@ -104,8 +108,8 @@ device **model** (see `scripts/tests/results.py`):
 
 There is one file pair per configuration + device serial, overwritten on each
 run — the **git history of each file is the time dimension**. The Markdown
-table lists every test with a short description (from `TEST_DESCRIPTIONS` in
-`url_field_tests.py` — add an entry for every new test), its result (✅/❌/⚠️)
+table lists every test with a short description (from each module's
+`TEST_DESCRIPTIONS` — add an entry for every new test), its result (✅/❌/⚠️)
 and duration. History is thus tracked **per device model and per
 configuration**. The runner compares each run against the previous one for the
 same model+config+serial and prints `REGRESSIONS`/`fixed` lines (pass↔fail
@@ -131,12 +135,14 @@ python scripts/tests/run.py --all --group cursor-fullscreen # cursor works over 
 python scripts/tests/run.py --all --group cursor-media      # hardware media keys drive the page video
 python scripts/tests/run.py --all --group cursor-wheel      # cursor-mode fast-forward/rewind = mouse wheel scroll
 python scripts/tests/run.py --all --group cursor-youtube    # cursor click seeks a YouTube-style auto-hiding scrubber
+python scripts/tests/run.py --all --group toolbar-hide     # the "Hide tool bar after" auto-hide timeout
 ```
 
-`run.py` merges `url_field_tests` and `cursor_tests` into one `ALL_TESTS`; `--group`
-selects a group (defined in `cursor_tests.FEATURE_GROUPS`), `--test <substr>` still
-filters by name, and a plain `--all` runs everything. Add new groups to
-`FEATURE_GROUPS` and give every test a `TEST_DESCRIPTIONS` entry.
+`run.py` merges `url_field_tests`, `cursor_tests` and `toolbar_hide_tests` into
+one `ALL_TESTS`; `--group` selects a group (defined in each module's
+`FEATURE_GROUPS`), `--test <substr>` still filters by name, and a plain `--all`
+runs everything. Add new groups to `FEATURE_GROUPS` and give every test a
+`TEST_DESCRIPTIONS` entry.
 
 The cursor tests can't rely on screenshots (the RPi TV box's `screencap` returns black —
 it composites via a hardware plane; the phone's works). Instead they serve the pages under

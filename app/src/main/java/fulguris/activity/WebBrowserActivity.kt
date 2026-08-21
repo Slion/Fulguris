@@ -59,6 +59,7 @@ import androidx.core.view.isVisible
 import androidx.customview.widget.ViewDragHelper
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.LifecycleOwner
 import androidx.fragment.app.FragmentManager
 import androidx.palette.graphics.Palette
 import androidx.preference.Preference
@@ -107,11 +108,14 @@ import fulguris.notifications.IncognitoNotification
 import fulguris.permissions.PermissionsManager
 import fulguris.search.SearchEngineProvider
 import fulguris.search.SuggestionsAdapter
+import fulguris.settings.Config
 import fulguris.settings.NewTabPosition
 import fulguris.settings.fragment.BottomSheetDialogFragment
 import fulguris.settings.fragment.DisplaySettingsFragment.Companion.MAX_BROWSER_TEXT_SIZE
 import fulguris.settings.fragment.DisplaySettingsFragment.Companion.MIN_BROWSER_TEXT_SIZE
+import fulguris.settings.fragment.OptionsSettingsFragment
 import fulguris.settings.fragment.SponsorshipSettingsFragment
+import fulguris.settings.preferences.ConfigurationCustomPreferences
 import fulguris.ssl.SslState
 import fulguris.ssl.createSslDrawableForState
 import fulguris.ssl.showSslDialog
@@ -278,6 +282,14 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     // Toolbar Views
     private lateinit var searchView: SearchView
     private lateinit var buttonSessions: ImageButton
+
+    // State for the "Hide tool bar after" timeout (0 = disabled). The countdown starts when the
+    // current page is fully loaded, and again whenever the web view regains input focus (e.g. after
+    // editing the search field). It is never reset by other user interaction; it is cancelled by a
+    // new page load, HTML5 video fullscreen and app stop. The tool bar only ever hides while the
+    // web view has input focus, so it is never yanked out while the user is editing the address
+    // field.
+    private var iHideToolBarTimeoutRunnable: Runnable? = null
 
     // Settings
     private var crashReport = true
@@ -879,6 +891,30 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     }
 
     /**
+     * Open the options bottom sheet and navigate straight to the configuration settings for
+     * the current configuration (portrait / landscape / custom).
+     * Used notably by the [INTENT_OPEN_CONFIGURATION] intent so the sheet can be driven from
+     * the command line (tests, debugging).
+     */
+    fun openConfigurationBottomSheet() {
+        app.domain = currentHost()
+        iBottomSheet.setLayout(R.layout.fragment_settings_options).show()
+        // Let the sheet inflate its fragment, then click the configuration entry for the
+        // current configuration (only one of the three is visible, see
+        // OptionsSettingsFragment.setupConfiguration()).
+        mainHandler.postDelayed({
+            val options = iBottomSheet.childFragmentManager.fragments
+                .find { it is OptionsSettingsFragment } as? OptionsSettingsFragment ?: return@postDelayed
+            val key = when {
+                configPrefs is ConfigurationCustomPreferences -> R.string.pref_key_configuration_custom
+                isPortrait -> R.string.pref_key_portrait
+                else -> R.string.pref_key_landscape
+            }
+            options.findPreference<Preference>(getString(key))?.performClick()
+        }, 500)
+    }
+
+    /**
      * Show all page requests and their blocked status in a bottom sheet
      */
     private fun showPageRequests() {
@@ -1080,6 +1116,13 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     private fun createToolbar() {
         // Create our toolbar and hook it to its parent
         iBindingToolbarContent = ToolbarContentBinding.inflate(layoutInflater, iBinding.toolbarInclude.toolbar, true)
+
+        // Stop the "Hide tool bar after" timer once the app is stopped / backgrounded.
+        (this as LifecycleOwner).lifecycle.addObserver(object : androidx.lifecycle.DefaultLifecycleObserver {
+            override fun onStop(owner: LifecycleOwner) {
+                cancelHideToolBarTimeout()
+            }
+        })
 
         // Create a gesture detector to catch horizontal swipes our on toolbar
         val toolbarSwipeDetector = GestureDetectorCompat(this, object : GestureDetector.SimpleOnGestureListener() {
@@ -2988,6 +3031,9 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     override fun onPageStarted(aTab: WebPageTab) {
         if (tabsManager.currentTab==aTab) {
             setTaskDescription()
+            // A fresh page load is starting: cancel any pending auto-hide so the countdown
+            // only runs once this new page is fully loaded.
+            cancelHideToolBarTimeout()
         }
 
         // SL: Is this being called way too many times?
@@ -3022,6 +3068,15 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
 
         if (tabsManager.currentTab==aTab) {
             setTaskDescription()
+            if (aTab.isLoading) {
+                // Switched to a page that is still loading: wait for it to finish before counting.
+                cancelHideToolBarTimeout()
+            }
+            // Deliberately no re-arm here: this callback also fires on plain tab-state changes
+            // (onPageFinished, which can happen several times for one load, and theme-color
+            // reports), and re-arming from it kept restarting the countdown on busy pages until
+            // it never completed. Switching to an already-loaded tab is covered by the web view
+            // gaining focus in setTabView, which re-arms the countdown.
         }
 
         // SL: Is this being called way too many times?
@@ -3211,8 +3266,17 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         lastTabView?.onFocusChangeListener = null
         // Change our tab
         lastTabView = aView
-        // Close virtual keyboard if we loose focus
-        currentTabView.onFocusLost { inputMethodManager.hideSoftInputFromWindow(iBinding.uiLayout.windowToken, 0) }
+        // Close virtual keyboard if the web view looses focus (e.g. the search field is being
+        // edited) and rearm the "Hide tool bar after" countdown when it gains it back.
+        currentTabView?.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                if (tabsManager.currentTab?.isLoading != true) {
+                    scheduleHideToolBarTimeout()
+                }
+            } else {
+                inputMethodManager.hideSoftInputFromWindow(iBinding.uiLayout.windowToken, 0)
+            }
+        }
         // Now everything is ready below our image snapshot of current view
         // Last perform our transitions
         if (!skipAnimation) {
@@ -3941,6 +4005,13 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         tabsManager.resumeAll()
         initializePreferences()
 
+        // The hide countdown is cancelled when the app stops; start it again on return so a
+        // visible tool bar auto-hides once more. (The web view keeps its focus through the
+        // stop/start cycle, so its focus listener does not fire again.)
+        if (tabsManager.currentTab?.isLoading != true && currentTabView?.hasFocus() == true) {
+            scheduleHideToolBarTimeout()
+        }
+
         updateConfiguration()
 
         // We think that's needed in case there was a rotation while in the background
@@ -4338,7 +4409,16 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         // after completion cannot bring the stop button back, and a page whose
         // onPageFinished is skipped or missed still clears here rather than sticking.
         if (aProgress >= 100) {
+            // Only arm on the loading -> loaded edge: progress>=100 events keep arriving for
+            // subframes and other reasons long after the page is loaded (busy pages emit them
+            // more often than the timeout itself), and re-arming on each one would keep
+            // restarting the countdown until it never completed.
+            val wasLoading = aTab.isLoading
             aTab.isLoading = false
+            if (wasLoading && iHideToolBarTimeoutRunnable == null) {
+                // The current page is fully loaded: start the "Hide tool bar after" countdown.
+                scheduleHideToolBarTimeout()
+            }
         }
         setIsLoading(aProgress < 100)
 
@@ -4737,6 +4817,8 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         fullscreenContainerView?.addView(customView, COVER_SCREEN_PARAMS)
         attachCursorOverlayToFullscreen(view)
         decorView.requestLayout()
+        // A video is going fullscreen: the tool bar must not auto-hide underneath it.
+        cancelHideToolBarTimeout()
         setFullscreen(enabled = true, immersive = true)
         currentTab?.setVisibility(INVISIBLE)
 
@@ -4782,6 +4864,8 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         }
 
         setFullscreenIfNeeded()
+        // Back to a regular page: resume the "Hide tool bar after" countdown.
+        scheduleHideToolBarTimeout()
         if (fullscreenContainerView != null) {
             val parent = fullscreenContainerView?.parent as ViewGroup
             parent.removeView(fullscreenContainerView)
@@ -4964,15 +5048,94 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     }
 
     /**
-     * Display the ActionBar if it was hidden
+     * Display the ActionBar if it was hidden. Also re-arms the "Hide tool bar after"
+     * countdown: the previous countdown was consumed by the last auto-hide, and when the
+     * tool bar comes back while the web view already holds input focus (back re-show,
+     * scroll-up re-show, switching to an already-loaded tab) no focus-gain edge will ever
+     * arm it again, so the tool bar would stay stuck visible. Guarded on !isLoading (the
+     * WebPageClient re-show during load must not arm - the load->loaded edge will) and on
+     * webview focus (a tool bar shown for search/menu focus is dismissed by focus loss,
+     * not by the timeout).
      */
     override fun showActionBar() {
         Timber.d("showActionBar")
         iBinding.toolbarInclude.toolbarLayout.visibility = View.VISIBLE
+        if (tabsManager.currentTab?.isLoading != true && currentTabView?.hasFocus() == true)
+            scheduleHideToolBarTimeout()
     }
 
     private fun doHideToolBar() { iBinding.toolbarInclude.toolbarLayout.visibility = View.GONE }
     private fun isToolBarVisible() = iBinding.toolbarInclude.toolbarLayout.visibility == View.VISIBLE
+
+    /**
+     * Start the "Hide tool bar after" countdown: after
+     * [fulguris.settings.preferences.ConfigurationPreferences.hideToolBarTimeout] seconds the
+     * tool bar hides (if it is visible, the web view has focus and nothing blocks auto-hide).
+     *
+     * The countdown is only armed at four deliberate points: (a) when the current page
+     * transitions from loading to loaded, (b) whenever the web view gains input focus (e.g.
+     * after the search field is edited, a menu is dismissed, or switching to an
+     * already-loaded tab), (c) when the app returns to the foreground, and (d) whenever the
+     * tool bar is re-shown via [showActionBar] while the web view already holds focus (back,
+     * scroll-up or tab switch) - without that last one the re-shown tool bar stays stuck,
+     * because the countdown was consumed by the previous auto-hide. It is deliberately
+     * NOT re-armed by other tab-state callbacks ([onTabChanged] also fires on onPageFinished,
+     * which can happen several times for one load, and on theme-color reports), because on
+     * busy pages those arrive more often than the timeout itself and kept restarting the
+     * countdown until it never completed. The countdown is cancelled by a new page load,
+     * HTML5 video fullscreen and app stop. A timeout of 0 disables the feature.
+     */
+    private fun scheduleHideToolBarTimeout() {
+        val timeoutSeconds = if (::searchView.isInitialized) configPrefs.hideToolBarTimeout.toInt() else 0
+        cancelHideToolBarTimeout()
+        if (timeoutSeconds <= 0) {
+            return
+        }
+        val timeoutMs = timeoutSeconds * 1000L
+        iHideToolBarTimeoutRunnable = Runnable {
+            hideToolBarOnTimeout()
+        }.also { mainHandler.postDelayed(it, timeoutMs) }
+    }
+
+    /**
+     * Cancel a pending "Hide tool bar after" countdown, if any.
+     */
+    private fun cancelHideToolBarTimeout() {
+        iHideToolBarTimeoutRunnable?.let {
+            mainHandler.removeCallbacks(it)
+        }
+        iHideToolBarTimeoutRunnable = null
+    }
+
+    /**
+     * Hide the tool bar because the "Hide tool bar after" timeout elapsed. No-ops when the tool
+     * bar is not visible or when something (an open menu / panel, a fullscreen video, a lost
+     * window focus) should keep it shown. The tool bar is only hidden when the web view has
+     * input focus, so it is never yanked out while the user is editing the search field (which
+     * holds focus); when a guard keeps it shown the countdown is simply consumed and starts
+     * again the next time the web view gains focus.
+     */
+    private fun hideToolBarOnTimeout() {
+        // The countdown has been consumed: mark it as not pending. If any of the guards below
+        // keeps the tool bar shown, nothing re-arms the countdown until the web view regains
+        // input focus (see the focus change listener set up in setTabView). That is the intended
+        // behavior: the tool bar only hides on its own while the page has focus.
+        iHideToolBarTimeoutRunnable = null
+        if (!isToolBarVisible()) return
+        if (!hasWindowFocus() || isInPictureInPictureMode) return
+        // Never hide while the search field (or anything else) is focused.
+        if (currentTabView?.hasFocus() != true) return
+        // Keep the tool bar up while a menu / panel is open so we don't yank it out from under the user
+        if (iMenuCustom.isShowing || iMenuSessions.isShowing) return
+        if (iBinding.drawerLayout.isDrawerOpen(Gravity.START) ||
+            iBinding.drawerLayout.isDrawerOpen(Gravity.END) ||
+            iBinding.drawerLayout.isDrawerOpen(Gravity.LEFT) ||
+            iBinding.drawerLayout.isDrawerOpen(Gravity.RIGHT)) return
+        // Never hide while a video is in HTML5 fullscreen
+        if (customView != null) return
+        doHideToolBar()
+        currentTabView?.requestFocus()
+    }
 
     private fun toggleToolBar() : Boolean
     {
@@ -5475,6 +5638,11 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         private const val TAG = "BrowserActivity"
 
         const val INTENT_PANIC_TRIGGER = "info.guardianproject.panic.action.TRIGGER"
+
+        /**
+         * Custom action to open the configuration settings bottom sheet (see [openConfigurationBottomSheet]).
+         */
+        const val INTENT_OPEN_CONFIGURATION = "fulguris.action.OPEN_CONFIGURATION"
 
         private const val FILE_CHOOSER_REQUEST_CODE = 1111
 

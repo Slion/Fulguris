@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>loading</title>
+<script>
+// Report "fully loaded" through the document title, which Fulguris mirrors into
+// the toolbar label (readable over adb as the address field text).
+window.addEventListener('load', function () {
+    document.title = 'loaded';
+});
+</script>
+</head>
+<body>
+<p>Timeout target page. Nothing to do here.</p>
+</body>
+</html>

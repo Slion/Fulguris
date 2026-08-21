@@ -61,6 +61,17 @@ abstract class ConfigurationPreferences constructor(
     var showToolBarOnPageTop by preferences.booleanPreference(R.string.pref_key_show_tool_bar_on_page_top, getDefaultBoolean(PrefKeys.ShowToolBarOnPageTop))
 
     /**
+     * Seconds after which the tool bar is automatically hidden, counted from when the
+     * current page has finished loading and every time the web view regains input focus
+     * (e.g. after the search field has been edited). The countdown only ever runs while a
+     * page is not loading and while the web view has input focus; other user interaction
+     * does not reset it. 0 disables the timeout (the tool bar then only hides when
+     * scrolling down).
+     * Stored as a float to match the [x.SliderPreference] which persists floats.
+     */
+    var hideToolBarTimeout by preferences.floatPreference(R.string.pref_key_hide_tool_bar_timeout, getDefaultFloat(PrefKeys.HideToolBarTimeout))
+
+    /**
      *
      */
     var pullToRefresh by preferences.booleanPreference(R.string.pref_key_pull_to_refresh, getDefaultBoolean(PrefKeys.PullToRefresh))

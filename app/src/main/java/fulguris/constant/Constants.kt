@@ -59,6 +59,7 @@ object PrefKeys {
     const val HideToolBar = "pref_key_hide_tool_bar"
     const val ShowToolBarWhenScrollUp = "pref_key_show_tool_bar_on_scroll_up"
     const val ShowToolBarOnPageTop = "pref_key_show_tool_bar_on_page_top"
+    const val HideToolBarTimeout = "pref_key_hide_tool_bar_timeout"
     const val DesktopWidth = "pref_key_desktop_width_float"
     const val PullToRefresh = "pref_key_pull_to_refresh"
     const val TabBarVertical = "pref_key_tab_bar_vertical"

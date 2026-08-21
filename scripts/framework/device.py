@@ -117,6 +117,10 @@ class Device(abc.ABC):
         ...
 
     @abc.abstractmethod
+    def launch_action(self, action: str, wait: float = 2.0) -> None:
+        """Start the app's main activity with a custom intent action (app must be running)."""
+
+    @abc.abstractmethod
     def force_stop(self) -> None:
         ...
 

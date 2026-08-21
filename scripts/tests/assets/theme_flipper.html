@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#123456">
+<title>flipper</title>
+<script>
+// Busy-page stand-in for the "tool bar never hides" repro.
+//
+// Fulguris injects ThemeColor.js, which reports every <meta name="theme-color">
+// change through the console; the app treats that report as "tab changed"
+// (WebPageChromeClient -> WebBrowser.onTabChanged). On busy real pages (bbc.com)
+// that happens constantly, and the "Hide tool bar after" countdown kept getting
+// re-armed until it never completed.
+//
+// This page reproduces that deterministically: it flips the theme-color every 2s
+// forever, so a build with the bug never reaches the end of its countdown, while
+// a fixed build hides the tool bar ~timeout seconds after load regardless.
+//
+// The document.title stays "flipper" (mirrored into the toolbar label, readable
+// over adb as the address field text while the tool bar is visible; the field is
+// empty once the tool bar has hidden).
+var meta = document.querySelector('meta[name="theme-color"]');
+var colors = ['#123456', '#234561', '#345612', '#456123'];
+var i = 1;
+setInterval(function () {
+    meta.content = colors[i % colors.length];
+    i += 1;
+}, 2000);
+</script>
+</head>
+<body>
+<p>Theme flipper page. The theme-color meta tag changes every 2 seconds.</p>
+</body>
+</html>

@@ -33,6 +33,7 @@ import androidx.preference.SeekBarPreference
 import androidx.preference.TwoStatePreference
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
+import x.SliderPreference
 import javax.inject.Inject
 
 /**
@@ -89,6 +90,9 @@ abstract class ConfigurationSettingsFragment : AbstractSettingsFragment() {
                 findPreference<TwoStatePreference>(aKey)?.isChecked = preferenceManager!!.sharedPreferences!!.getBoolean(aKey,aValue)
             } else if (aValue is Int) {
                 findPreference<SeekBarPreference>(aKey)?.value = preferenceManager!!.sharedPreferences!!.getInt(aKey,aValue)
+            } else if (aValue is Float) {
+                // x.SliderPreference persists floats (unlike SeekBarPreference which uses ints)
+                findPreference<SliderPreference>(aKey)?.value = preferenceManager!!.sharedPreferences!!.getFloat(aKey,aValue)
             }
             // That is useless at this stage probably only used during construction
             //findPreference<Preference>(it.key)?.setDefaultValue(aValue)

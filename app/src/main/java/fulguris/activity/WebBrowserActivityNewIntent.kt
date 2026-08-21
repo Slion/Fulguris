@@ -47,6 +47,14 @@ fun WebBrowserActivity.doOnNewIntent(aIntent: Intent?, aIncognitoStartup: Boolea
     // Log intent details for debugging
     aIntent?.log("doOnNewIntent")
 
+    // Custom action that does not carry a URL: open the configuration settings bottom sheet
+    // (works on cold start through onTabChanged's intent consumption and on hot start through
+    // handleNewIntent).
+    if (aIntent?.action == WebBrowserActivity.INTENT_OPEN_CONFIGURATION) {
+        openConfigurationBottomSheet()
+        return
+    }
+
     var subject: String = app.getString(R.string.unknown)
 
     // Obtain a URL from the intent

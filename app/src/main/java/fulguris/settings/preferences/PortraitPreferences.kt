@@ -65,6 +65,7 @@ import javax.inject.Singleton
             PrefKeys.HideToolBar to false,
             PrefKeys.ShowToolBarWhenScrollUp to false,
             PrefKeys.ShowToolBarOnPageTop to true,
+            PrefKeys.HideToolBarTimeout to 0F,
             PrefKeys.PullToRefresh to true,
             PrefKeys.ToolbarsBottom to false,
             PrefKeys.DesktopWidth to 200F,

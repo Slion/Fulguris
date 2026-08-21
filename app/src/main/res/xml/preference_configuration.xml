@@ -102,6 +102,23 @@
         a:iconSpaceReserved="false"
         a:singleLineTitle="false" />
 
+    <x.SliderPreference
+        a:key="@string/pref_key_hide_tool_bar_timeout"
+        a:title="@string/pref_title_hide_tool_bar_after"
+        a:summary="@string/pref_summary_hide_tool_bar_after"
+        a:icon="@drawable/ic_timer"
+        a:seekBarIncrement="1"
+        a:showSeekBarValue="true"
+        a:iconSpaceReserved="false"
+        a:updatesContinuously="true"
+        android:valueFrom="0"
+        android:valueTo="10"
+        android:stepSize="1"
+        android:value="0"
+        a:labelBehavior="gone"
+        a:format="%.0f"
+        a:singleLineTitle="false" />
+
     <x.SwitchPreference
         a:key="@string/pref_key_use_cutout_area"
         a:title="@string/pref_title_use_cutout_area"

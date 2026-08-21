@@ -1,5 +1,5 @@
 # Fulguris UI test run — Pi Compute Module 5 Rev 1.0 · landscape-0-sw584
-timestamp: '2026-08-20T18:11:02+00:00'
+timestamp: '2026-08-21T20:07:11+00:00'
 device:
   serial: 192.168.178.67:5555
   model: Pi Compute Module 5 Rev 1.0
@@ -18,137 +18,56 @@ options:
   orientation: null
   test_filter: null
 summary:
-  passed: 43
+  passed: 16
   failed: 0
-  total: 43
-  duration_s: 865.4
+  total: 16
+  duration_s: 378.8
 tests:
-- name: test_launch_focus_is_webview
-  status: pass
-  duration_s: 5.4
-- name: test_unfocused_shows_label
-  status: pass
-  duration_s: 10.1
-- name: test_directional_focus_is_navigation_not_edit
-  status: pass
-  duration_s: 11.4
-- name: test_navigation_shows_label_not_url
-  status: pass
-  duration_s: 15.6
-- name: test_center_enters_edit_mode
-  status: pass
-  duration_s: 10.0
-- name: test_edit_shows_url
-  status: pass
-  duration_s: 11.8
-- name: test_dpad_edit_selects_all
-  status: pass
-  duration_s: 15.7
-- name: test_type_and_validate_navigates
-  status: pass
-  duration_s: 16.9
-- name: test_back_two_stage_keyboard_then_cancel
-  status: pass
-  duration_s: 21.1
-- name: test_back_from_navigation_returns_to_web
-  status: pass
-  duration_s: 13.9
-- name: test_down_from_navigation_returns_to_web
-  status: pass
-  duration_s: 14.4
-- name: test_suggestions_navigable_without_touch
-  status: pass
-  duration_s: 22.1
-- name: test_touch_tap_enters_edit
-  status: pass
-  duration_s: 11.7
-- name: test_retap_after_cancel_reenters_edit
-  status: pass
-  duration_s: 13.9
-- name: test_pill_only_when_focused
-  status: pass
-  duration_s: 12.5
-- name: test_https_shows_ssl_icon
-  status: pass
-  duration_s: 12.3
-- name: test_http_shows_off_icon
-  status: pass
-  duration_s: 12.5
-- name: test_invalid_https_shows_ssl_icon
-  status: pass
-  duration_s: 17.3
-- name: test_unfocused_pill_outline_visible
-  status: pass
-  duration_s: 11.6
-- name: test_reload_button_hidden_after_load
-  status: pass
-  duration_s: 20.3
-- name: test_stop_button_visible_during_load
-  status: pass
-  duration_s: 7.5
-- name: test_reload_button_hidden_after_reload
-  status: pass
-  duration_s: 21.6
-- name: test_stop_button_click_stops_load
-  status: pass
-  duration_s: 15.8
-- name: test_short_page_shows_reload_button
-  status: pass
-  duration_s: 10.8
-- name: test_reload_button_tracks_tab_on_ctrl_tab
-  status: pass
-  duration_s: 37.2
-- name: test_reload_button_tracks_tab_via_tab_menu
-  status: pass
-  duration_s: 37.7
 - name: test_cursor_toggle_hotkey_shows_and_hides_overlay
   status: pass
-  duration_s: 22.4
+  duration_s: 21.3
 - name: test_cursor_toggle_exit_focuses_menu_button
   status: pass
-  duration_s: 21.4
+  duration_s: 20.8
 - name: test_cursor_movement_dpad_right_moves_right
   status: pass
-  duration_s: 27.6
+  duration_s: 22.1
 - name: test_cursor_movement_dpad_down_moves_down
   status: pass
-  duration_s: 21.6
+  duration_s: 21.2
 - name: test_cursor_movement_edge_scrolls_page
   status: pass
-  duration_s: 29.9
+  duration_s: 30.6
 - name: test_cursor_fade_hides_then_wakes
   status: pass
-  duration_s: 26.2
+  duration_s: 25.9
 - name: test_cursor_click_hover_fires_mouseover
   status: pass
-  duration_s: 23.7
+  duration_s: 17.8
 - name: test_cursor_click_activates_under_cursor
   status: pass
-  duration_s: 23.0
+  duration_s: 17.3
 - name: test_cursor_click_drag_target_seeks
   status: pass
-  duration_s: 22.4
+  duration_s: 17.2
 - name: test_cursor_menu_item_visible_on_leanback
   status: pass
-  duration_s: 17.6
+  duration_s: 17.4
 - name: test_cursor_menu_item_toggles_mode
   status: pass
-  duration_s: 23.7
+  duration_s: 23.8
 - name: test_cursor_fullscreen_click_reaches_custom_view
   status: pass
-  duration_s: 25.0
+  duration_s: 24.9
 - name: test_cursor_media_play_pause
   status: pass
-  duration_s: 22.4
+  duration_s: 21.6
 - name: test_cursor_wheel_ff_rewind_scrolls
   status: pass
-  duration_s: 21.7
+  duration_s: 21.9
 - name: test_cursor_youtube_scrubber_seek
   status: pass
-  duration_s: 26.9
+  duration_s: 26.1
 - name: test_cursor_youtube_scrubber_seek_after_idle
   status: pass
-  duration_s: 30.6
-- name: test_repeated_rotations_keep_page
-  status: pass
-  duration_s: 25.3
+  duration_s: 33.4

@@ -18,6 +18,7 @@ from dataclasses import dataclass
 # Default debug package / launcher activity for the slionsFullDownload debug flavor.
 DEFAULT_PACKAGE = "net.slions.fulguris.full.download.debug"
 LAUNCH_ACTIVITY = "fulguris.activity.SplashActivity"
+MAIN_ACTIVITY = "fulguris.activity.MainActivity"
 
 # Gradle assemble task and where its APK lands.
 GRADLE_TASK = ":app:assembleSlionsFullDownloadDebug"
@@ -191,6 +192,16 @@ def wait_until(predicate: Callable[[], bool], timeout: float = 10.0, interval: f
 def _start_app(serial: str, package: str) -> None:
     _adb(serial, ["shell", "am", "start", "-n", f"{package}/{LAUNCH_ACTIVITY}"])
     time.sleep(2.0)
+
+
+def start_action(serial: str, package: str, action: str, wait: float = 2.0) -> None:
+    """Start the main activity with a custom intent action (e.g. ``fulguris.action.OPEN_CONFIGURATION``).
+
+    The app must already be running (see :func:`launch` / :func:`settle`); the main
+    activity is ``singleTask`` so this goes through its ``onNewIntent``.
+    """
+    _adb(serial, ["shell", "am", "start", "-n", f"{package}/{MAIN_ACTIVITY}", "-a", action])
+    time.sleep(wait)
 
 
 def view_present(serial: str, view_id: str) -> bool:
@@ -526,6 +537,14 @@ def screenshot(serial: str, path: str) -> None:
     with open(path, "wb") as f:
         cmd = ["adb", "-s", serial, "exec-out", "screencap", "-p"]
         f.write(subprocess.run(cmd, capture_output=True).stdout)
+
+
+def logcat(serial: str, grep: str, clear: bool = False) -> str:
+    """Dump the (optionally pre-cleared) device log, keeping only lines matching ``grep``."""
+    if clear:
+        _adb(serial, ["logcat", "-c"], timeout=15)
+    out = _adb(serial, ["logcat", "-d"], timeout=60)
+    return "\n".join(l for l in out.splitlines() if grep in l)
 
 
 def ssl_icon_visible(serial: str) -> bool:

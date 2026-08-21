@@ -89,6 +89,9 @@ class AndroidDevice(Device):
     def restart(self, wait: float = 5.0) -> None:
         adb.restart(self.serial, self._package, wait)
 
+    def launch_action(self, action: str, wait: float = 2.0) -> None:
+        adb.start_action(self.serial, self._package, action, wait)
+
     def force_stop(self) -> None:
         adb.force_stop(self.serial, self._package)
 

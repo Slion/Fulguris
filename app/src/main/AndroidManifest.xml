@@ -182,7 +182,12 @@
                 <data android:mimeType="text/plain" />
                 <data android:mimeType="text/x-uri" />
             </intent-filter>
+            <!-- Custom action to open the configuration settings bottom sheet (tests / debugging) -->
+            <intent-filter>
+                <action android:name="fulguris.action.OPEN_CONFIGURATION" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
 
         <!--
