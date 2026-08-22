@@ -218,6 +218,43 @@ def start_component(serial: str, component: str, action: str | None = None, wait
     time.sleep(wait)
 
 
+# --- Device notification (optional test progress indicator) ----------------
+
+# ``cmd notification post`` posts as the shell uid on channel ``shell_cmd``;
+# re-posting the same tag updates the notification in place, so a run always
+# owns exactly one notification.
+NOTIFY_PKG = "com.android.shell"
+NOTIFY_TAG = "fulguris-test-run"
+NOTIFY_ID = 2020
+NOTIFY_TITLE = "Fulguris tests"
+
+
+def post_test_notification(serial: str, text: str) -> None:
+    """Post/replace the single device notification that shows test progress.
+
+    Called once per test (and for start/finish) by the runner with ``--notify``;
+    the same tag is re-posted so the notification text updates in place rather
+    than stacking one notification per test.
+    """
+    text = text.replace("'", "")
+    _adb(serial, ["shell", f"cmd notification post -t '{NOTIFY_TITLE}' {NOTIFY_TAG} '{text}'"])
+
+
+def dismiss_test_notification(serial: str) -> None:
+    """Cancel the test-progress notification posted by :func:`post_test_notification`.
+
+    ``cmd notification`` has no cancel subcommand, so this calls
+    ``INotificationManager.cancelNotificationWithTag(pkg, opPkg, tag, id, userId)``
+    directly via ``service call``. That is binder transaction 8 — the position of
+    the method in the AIDL, verified identical on Android 13 and 16. Best effort:
+    a notification left over from a crashed run is harmless and the next run
+    dismisses it before posting its own.
+    """
+    _adb(serial, ["shell",
+                  f"service call notification 8 s16 {NOTIFY_PKG} s16 {NOTIFY_PKG} "
+                  f"s16 {NOTIFY_TAG} i32 {NOTIFY_ID} i32 0"])
+
+
 def view_present(serial: str, view_id: str) -> bool:
     """Fast check whether a view with the given resource id is in the top activity.
 

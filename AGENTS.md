@@ -100,6 +100,7 @@ python scripts/tests/run.py --all --group all  # every test on every connected d
 python scripts/tests/run.py --device SERIAL --group cursor   # one feature group (see below)
 python scripts/tests/run.py --device SERIAL --test suggestions   # only tests whose name matches
 python scripts/tests/run.py --device SERIAL --orientation landscape  # force orientation
+python scripts/tests/run.py --device SERIAL --notify   # show the running test in a device notification
 python scripts/tests/run.py --list             # list available tests
 ```
 
@@ -109,6 +110,15 @@ Selection has two independent axes: **which tests** (`--group <name>` / `--test
 pass one of the device flags. The full suite (`--group all`) is slow
 (~30 min per device) and only needed for broad changes or a final sign-off;
 the `smoke` group is the cheap default sanity layer.
+
+`--notify` shows the currently running test in a **device notification** (useful
+on a TV across the room). It posts one notification (`cmd notification post`,
+tag `fulguris-test-run`) that is re-posted in place per test, then a final
+"Done: N/M" and a dismiss. `cmd notification` has no cancel, so the dismiss is
+a direct `service call notification 8 …` — `INotificationManager.cancel-
+NotificationWithTag` (AIDL transaction 8, verified identical on Android 13 and
+16). It's best effort: notification problems never fail a run, and a leftover
+from a crashed run is cleared before the next one posts.
 
 Tests live in `scripts/tests/url_field_tests.py` (and `cursor_tests.py`,
 `rotation_tests.py`, `toolbar_hide_tests.py`) as plain functions

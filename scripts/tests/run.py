@@ -25,6 +25,9 @@ Examples:
     # Force an orientation and record the configuration it ran in
     python scripts/tests/run.py --device R58R91GBTZK --orientation landscape
 
+    # Show a device notification with the test currently running
+    python scripts/tests/run.py --device 192.168.178.67:5555 --notify
+
     # List available tests
     python scripts/tests/run.py --list
 
@@ -43,6 +46,7 @@ import traceback
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "tools"))
+import adb
 import framework
 import results as results_store
 import url_field_tests as suite
@@ -138,6 +142,8 @@ def main() -> int:
                         help="Force device orientation before running (portrait/landscape/sensor); recorded in the results")
     parser.add_argument("--no-save", action="store_true",
                         help="Do not append the run to scripts/tests/results/")
+    parser.add_argument("--notify", action="store_true",
+                        help="Show a device notification with the test currently running (dismissed at the end)")
     parser.add_argument("--list", action="store_true", help="List available tests and exit")
     args = parser.parse_args()
 
@@ -173,7 +179,19 @@ def main() -> int:
         timings: list[tuple[str, float]] = []
         test_records: list[dict] = []
         device_start = time.monotonic()
-        for t in tests:
+        if args.notify:
+            # Clear any leftover from a previously crashed run, then show the run banner.
+            try:
+                adb.dismiss_test_notification(device.id)
+                adb.post_test_notification(device.id, f"Running {len(tests)} test(s) on {device.label()}")
+            except Exception as e:  # noqa: BLE001 - never let a notification fail a run
+                print(f"  note: --notify unavailable on this device ({e}); continuing without it")
+        for i, t in enumerate(tests, 1):
+            if args.notify:
+                try:
+                    adb.post_test_notification(device.id, f"({i}/{len(tests)}) {t.__name__}")
+                except Exception:  # noqa: BLE001 - notification is cosmetic; never fail a run
+                    pass
             elapsed, error = run_one(t, device, ctx)
             timings.append((t.__name__, elapsed))
             record = {"name": t.__name__, "status": _status(error), "duration_s": round(elapsed, 1)}
@@ -192,6 +210,14 @@ def main() -> int:
             print(f"  slowest: {slowest[0]} ({slowest[1]:.1f}s)")
         for note in ctx["notes"]:
             print(f"  note: {note}")
+        if args.notify:
+            try:
+                summary = f"Done: {passed}/{len(tests)} passed" + (
+                    f" on {device.label()}" if len(devices) > 1 else "")
+                adb.post_test_notification(device.id, summary)
+                adb.dismiss_test_notification(device.id)
+            except Exception:  # noqa: BLE001 - best effort
+                pass
 
         if not args.no_save:
             previous = results_store.load_last_run(config["model"], config["config_id"], device.id)

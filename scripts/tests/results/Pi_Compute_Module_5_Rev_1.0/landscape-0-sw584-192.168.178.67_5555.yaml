@@ -1,5 +1,5 @@
 # Fulguris UI test run — Pi Compute Module 5 Rev 1.0 · landscape-0-sw584
-timestamp: '2026-08-22T10:38:01+00:00'
+timestamp: '2026-08-22T11:06:10+00:00'
 device:
   serial: 192.168.178.67:5555
   model: Pi Compute Module 5 Rev 1.0
@@ -22,20 +22,20 @@ summary:
   passed: 5
   failed: 0
   total: 5
-  duration_s: 31.9
+  duration_s: 32.6
 tests:
 - name: test_smoke_launch
   status: pass
-  duration_s: 2.3
+  duration_s: 2.4
 - name: test_smoke_open_website
   status: pass
-  duration_s: 10.0
+  duration_s: 10.1
 - name: test_smoke_open_settings
   status: pass
-  duration_s: 7.2
+  duration_s: 7.1
 - name: test_smoke_background_app_switch
   status: pass
   duration_s: 5.8
 - name: test_smoke_background_home
   status: pass
-  duration_s: 5.7
+  duration_s: 5.8
