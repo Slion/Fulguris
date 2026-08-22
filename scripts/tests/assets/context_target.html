@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>start</title>
+<style>
+  html, body { margin: 0; height: 100%; }
+  body { display: flex; align-items: center; justify-content: center;
+         background: #123456; font: 32px sans-serif; }
+  /* A single big link filling the screen, so a centered cursor always sits on it and a
+     long-press yields the link context menu (deterministic, DPI-independent). */
+  a { display: flex; align-items: center; justify-content: center;
+      width: 100%; height: 100%; color: #fff; text-decoration: underline; }
+</style>
+</head>
+<body>
+<a id="target" href="https://example.com/">Context menu link target</a>
+<script>
+  // Report the WebView context menu by title (mirrored into the toolbar label, readable over
+  // adb without a screenshot). A native long-press fires a DOM `contextmenu` event on the
+  // element (the page does not preventDefault, so the native menu is also shown).
+  document.getElementById('target').addEventListener('contextmenu', function (e) {
+    document.title = 'ctx';
+  });
+</script>
+</body>
+</html>

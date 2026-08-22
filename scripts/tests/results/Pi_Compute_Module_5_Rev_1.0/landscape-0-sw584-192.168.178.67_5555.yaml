@@ -1,5 +1,5 @@
 # Fulguris UI test run — Pi Compute Module 5 Rev 1.0 · landscape-0-sw584
-timestamp: '2026-08-22T11:06:10+00:00'
+timestamp: '2026-08-22T20:11:31+00:00'
 device:
   serial: 192.168.178.67:5555
   model: Pi Compute Module 5 Rev 1.0
@@ -16,26 +16,15 @@ options:
   restart: false
   keep_tabs: false
   orientation: null
-  test_filter: null
-  group: smoke
+  test_filter: hover_fires_mouseover
+  group: null
 summary:
-  passed: 5
-  failed: 0
-  total: 5
-  duration_s: 32.6
+  passed: 0
+  failed: 1
+  total: 1
+  duration_s: 27.4
 tests:
-- name: test_smoke_launch
-  status: pass
-  duration_s: 2.4
-- name: test_smoke_open_website
-  status: pass
-  duration_s: 10.1
-- name: test_smoke_open_settings
-  status: pass
-  duration_s: 7.1
-- name: test_smoke_background_app_switch
-  status: pass
-  duration_s: 5.8
-- name: test_smoke_background_home
-  status: pass
-  duration_s: 5.8
+- name: test_cursor_click_hover_fires_mouseover
+  status: fail
+  duration_s: 26.4
+  message: enabling cursor should fire a mouse hover on the page, title was ''

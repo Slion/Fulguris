@@ -63,6 +63,9 @@ class AndroidDevice(Device):
     def key_longpress(self, code: int, wait: float = 0.8) -> None:
         adb.key_longpress(self.serial, code, wait)
 
+    def key_hold(self, code: int, ms: int, wait: float = 0.3) -> None:
+        adb.key_hold(self.serial, code, ms, wait)
+
     def key_combination(self, *codes: int, wait: float = 0.6) -> None:
         adb.key_combination(self.serial, *codes, wait=wait)
 

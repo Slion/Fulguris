@@ -170,7 +170,7 @@ python scripts/tests/run.py --all --group smoke             # fast sanity: launc
 python scripts/tests/run.py --all --group all               # the ENTIRE suite (all groups) — slow, ask first
 python scripts/tests/run.py --all --group cursor            # every cursor test
 python scripts/tests/run.py --all --group cursor-movement   # D-pad movement + edge (wheel) scroll
-python scripts/tests/run.py --all --group cursor-click      # hover + click + drag-target (scrub bar)
+python scripts/tests/run.py --all --group cursor-click      # hover + click + drag-target (scrub bar) + hesitant-hold still clicks
 python scripts/tests/run.py --all --group cursor-toggle     # the hotkey toggle + exit focus
 python scripts/tests/run.py --all --group cursor-fade       # fade-out after inactivity + wake on move
 python scripts/tests/run.py --all --group cursor-menu       # the menu item visibility/toggle
@@ -178,6 +178,7 @@ python scripts/tests/run.py --all --group cursor-fullscreen # cursor works over 
 python scripts/tests/run.py --all --group cursor-media      # hardware media keys drive the page video
 python scripts/tests/run.py --all --group cursor-wheel      # cursor-mode fast-forward/rewind = mouse wheel scroll
 python scripts/tests/run.py --all --group cursor-youtube    # cursor click seeks a YouTube-style auto-hiding scrubber
+python scripts/tests/run.py --all --group cursor-context    # deliberate action-key hold opens the WebView context menu
 python scripts/tests/run.py --all --group toolbar-hide     # the "Hide tool bar after" auto-hide timeout
 ```
 
@@ -187,21 +188,28 @@ one `ALL_TESTS`; `--group` selects a group (defined in each module's
 runs everything. Add new groups to `FEATURE_GROUPS` and give every test a
 `TEST_DESCRIPTIONS` entry.
 
-The cursor tests can't rely on screenshots (the RPi TV box's `screencap` returns black —
-it composites via a hardware plane; the phone's works). Instead they serve the pages under
+The cursor tests read back what happened via the toolbar label rather than screenshots
+(the RPi TV box's `screencap` was unreliable in the past — it composites via a hardware
+plane — so the tests were designed not to depend on it; on current builds it does work and
+`capture.py` is fine for manual visual checks). Instead they serve the pages under
 `scripts/tests/assets/` (`cursor_target.html`, `scrub_target.html`, `fullscreen_target.html`,
-`media_target.html`, `yt_scrub.html`) from the host over an `adb reverse` tunnel (Fulguris blocks `file://`)
-and read back what the cursor did from each page's `document.title`, which Fulguris mirrors
-into the toolbar label (`adb.field_text`): `hover` on mouseover, `<x>,<y>` on click, `sy<n>`
-on scroll, `seek@<x>` on a scrub-bar drag, `fs-on`/`fsclick@` in fullscreen, `playing`/`paused`
-for media keys, and `ctrl-shown`/`ctrl-hidden`/`seek@<pct>`/`bar-miss` for the YouTube-scrubber
-replica. (`youtube_embed.html` embeds the real YouTube player in an iframe for *manual* vision
-checks — it hits the network so it isn't part of the automated suite.) Cursor **speed/accel/fade
+`media_target.html`, `yt_scrub.html`, `context_target.html`) from the host over an `adb reverse`
+tunnel (Fulguris blocks `file://`) and read back what the cursor did from each page's
+`document.title`, which Fulguris mirrors into the toolbar label (`adb.field_text`): `hover` on
+mouseover, `<x>,<y>` on click, `sy<n>` on scroll, `seek@<x>` on a scrub-bar drag, `fs-on`/
+`fsclick@` in fullscreen, `playing`/`paused` for media keys, and `ctrl-shown`/`ctrl-hidden`/
+`seek@<pct>`/`bar-miss` for the YouTube-scrubber replica. The action-key context-menu test
+(`context_target.html`) is the one exception: the dialog's title is unreadable via the label, so
+it asserts on the context menu's own nodes (the "Copy link" row carries the link URL as
+`secondary_text`). (`youtube_embed.html` embeds the real YouTube player in an iframe for *manual*
+vision checks — it hits the network so it isn't part of the automated suite.) Cursor **speed/accel/fade
 are persisted user prefs**, so the suite resets them
 to known values per device by rewriting the app's shared-prefs XML host-side
 (`_reset_cursor_prefs`: `run-as cat` to read, push to `/data/local/tmp` + `run-as cp` to write —
 `sed -i` and `cat >`-via-stdin both proved unreliable through the double shell). New adb helpers:
-`adb.key_longpress`, `adb.KEY_MEDIA_FAST_FORWARD`, `adb.KEY_MEDIA_REWIND`, `adb.KEY_MEDIA_PLAY_PAUSE`,
+`adb.key_hold` (precise <ms> hold: `input keyevent --duration` on API 34+,
+`input keycombination -t` with an inert CTRL_LEFT partner before), `adb.key_longpress`,
+`adb.KEY_MEDIA_FAST_FORWARD`, `adb.KEY_MEDIA_REWIND`, `adb.KEY_MEDIA_PLAY_PAUSE`,
 `adb.is_leanback`, `adb.screen_size`.
 
 ## Android TV cursor mode component
@@ -243,6 +251,28 @@ Key facts a future agent needs:
   `dispatchKeyEvent` **before** it can reach a page `MediaSession` (e.g. a playing video).
   The setting `pref_key_cursor_hotkey` (Settings → General → Cursor) gates the hotkey only;
   the menu item works regardless.
+- **Context menu = a *deliberate* (~1 s) hold of the action key.** While the cursor is on
+  screen (`enabled || shown` — so it works even while the overlay is faded out), holding the
+  action key (`KEYCODE_DPAD_CENTER` / `KEYCODE_ENTER` / `KEYCODE_BUTTON_A` — see
+  `isConfirmKey`; BUTTON_A resolves to DPAD_CENTER on most remotes) for `ACTION_LONG_PRESS_MS`
+  (1000 ms) performs a synthetic touch long press at the cursor point (`dispatchLongPress`:
+  hover, touch DOWN, touch UP after `getLongPressTimeout() + 150 ms`, shared `downTime`), which
+  opens the WebView's context menu for the element under the cursor — Fulguris's own long-press
+  dialog (`WebPageTab.longClickPage` → `showLongPressLinkImageDialog`). A **short** press is
+  still the normal click at the cursor: the click fires on the key `ACTION_UP`, so the
+  `ACTION_DOWN` arms the hold timer and the UP resolves the press — if the timer already fired
+  for this press, the UP is consumed and no click follows. With the cursor off the action key
+  falls through to its normal meaning.
+  **Why 1 s, and why the OS long-press flag is ignored here:** a human "short click" on a
+  remote is routinely held 400–700 ms — past the ~400 ms at which the OS starts raising
+  `FLAG_LONG_PRESS` on the key's repeat events. The action-key path therefore deliberately
+  does **not** react to `event.isLongPress` (unlike the toggle hotkey, which is a separate
+  key where a short press is yielded back). Honoring the flag at ~400 ms was a real bug: it
+  reclassified hesitant clicks as long presses and opened the menu instead of clicking. Tests
+  inject precise holds via `device.key_hold(code, ms)` (`input keyevent --duration <ms>` on
+  Android 14+; `input keycombination -t <ms> CTRL_LEFT <key>` before — CTRL_LEFT is an inert
+  partner there), so a 600 ms "hesitant click" and a 1500 ms deliberate hold are both
+  reproducible across devices.
 - **Two ways to drive it.** *Cursor mode* (`enabled`, toggled by the hotkey/menu) lets the
   **D-pad** move the cursor and the select button click. Independently, on a two-stick gamepad the
   **right stick** (`AXIS_Z`/`AXIS_RZ`, validated as a *centered* axis via motion-range `min < 0` so

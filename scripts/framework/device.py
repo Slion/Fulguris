@@ -83,6 +83,10 @@ class Device(abc.ABC):
         """Send a long-press key (sets the platform long-press flag)."""
 
     @abc.abstractmethod
+    def key_hold(self, code: int, ms: int, wait: float = 0.3) -> None:
+        """Press and hold a key for ``ms`` milliseconds, then release it."""
+
+    @abc.abstractmethod
     def key_combination(self, *codes: int, wait: float = 0.6) -> None:
         """Send a chord of keys pressed together (e.g. CTRL+TAB)."""
 

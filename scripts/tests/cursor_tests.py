@@ -22,6 +22,7 @@ Tests are grouped so a subset relevant to one feature can be run on its own:
     python scripts/tests/run.py --all --group cursor-click      # hover + click dispatch
     python scripts/tests/run.py --all --group cursor-menu       # menu item visibility/toggle
     python scripts/tests/run.py --all --group cursor-youtube    # YouTube-style scrubber seek
+    python scripts/tests/run.py --all --group cursor-context    # action-key long press opens the context menu
 
     python scripts/tests/run.py --all --test cursor             # every cursor test (name match)
     python scripts/tests/run.py --all --group cursor            # every cursor test (all groups)
@@ -301,6 +302,20 @@ def test_cursor_click_drag_target_seeks(device, ctx: dict) -> None:
     _toggle(device)
 
 
+def test_cursor_click_hesitant_press_still_clicks(device, ctx: dict) -> None:
+    # A human "short click" on a remote is routinely held 400-700 ms — long enough for the OS to
+    # start flagging the key as a long press, but the user still means a click. The action key must
+    # therefore NOT reclassify a <~1 s hold as the context-menu long press (regression: it used to
+    # fire at the system ~400 ms threshold and opened the menu instead of clicking).
+    _load_target(device)
+    _toggle(device)
+    device.key_hold(keys.DPAD_CENTER, 600)  # a clearly short, but realistically held, press
+    title = _title(device).strip()
+    assert re.fullmatch(r"\d+,\d+", title), \
+        f"a 600 ms held select press is still a click and must land on the page, title was '{title}'"
+    _toggle(device)
+
+
 # ===========================================================================
 # Feature: cursor menu integration / visibility
 # ===========================================================================
@@ -453,8 +468,35 @@ def test_cursor_youtube_scrubber_seek_after_idle(device, ctx: dict) -> None:
     _toggle(device)
 
 
+# ===========================================================================# Feature: context menu (action-key long press)
 # ===========================================================================
-# Registration
+
+
+def test_cursor_context_menu_action_long_press(device, ctx: dict) -> None:
+    """Long-pressing the action key (select / DPAD center) performs a long press at the cursor
+    and opens the WebView's context menu for the element under it. Verified by the presence of
+    the link context dialog: its "Copy link" row shows the link URL as secondary text
+    (locale-independent, so it's a robust assertion target regardless of device language)."""
+    link_url = "https://example.com/"
+    _load_page(device, "context_target.html")
+    _toggle(device)
+    # Do NOT assert _overlay_present() here: the cursor fades out after the 3 s inactivity
+    # timeout (overlay becomes GONE and drops out of the uiautomator dump), and each dump
+    # itself takes ~2-3 s — so the check races the fade and flakes. The action-key branch is
+    # guarded by `enabled || shown` and dispatchLongPress() wakes the cursor, so cursor mode
+    # is on even while the overlay is faded; the context menu below is the real signal.
+    device.key_hold(keys.DPAD_CENTER, 1500)  # a deliberate hold (past the 1 s action-key threshold)
+    nodes = device.nodes()
+    assert any(n.text == link_url for n in nodes), \
+        "action-key long press should open the link context menu (a node should carry the link URL), " \
+        f"node texts were {[n.text for n in nodes if n.text]}"
+    device.key(keys.BACK, wait=0.8)  # dismiss the context dialog
+    assert not any(n.text == link_url for n in device.nodes()), \
+        "BACK should dismiss the link context menu"
+    _toggle(device)
+
+
+# ===========================================================================# Registration
 # ===========================================================================
 
 FEATURE_GROUPS = {
@@ -474,6 +516,7 @@ FEATURE_GROUPS = {
         test_cursor_click_hover_fires_mouseover,
         test_cursor_click_activates_under_cursor,
         test_cursor_click_drag_target_seeks,
+        test_cursor_click_hesitant_press_still_clicks,
     ],
     "cursor-menu": [
         test_cursor_menu_item_visible_on_leanback,
@@ -492,6 +535,9 @@ FEATURE_GROUPS = {
         test_cursor_youtube_scrubber_seek,
         test_cursor_youtube_scrubber_seek_after_idle,
     ],
+    "cursor-context": [
+        test_cursor_context_menu_action_long_press,
+    ],
 }
 
 ALL_TESTS = [t for group in FEATURE_GROUPS.values() for t in group]
@@ -506,6 +552,7 @@ TEST_DESCRIPTIONS = {
     "test_cursor_click_hover_fires_mouseover": "Enabling the cursor fires a mouse hover on the page",
     "test_cursor_click_activates_under_cursor": "Select press dispatches a click the page receives at the cursor",
     "test_cursor_click_drag_target_seeks": "A cursor click seeks a scrub bar via mousedown(mouse) or touch drag, like YouTube's timeline",
+    "test_cursor_click_hesitant_press_still_clicks": "A realistically held (~600 ms) select press still clicks — only a deliberate ~1 s hold opens the context menu",
     "test_cursor_menu_item_visible_on_leanback": "The Cursor main-menu item is shown on Android TV",
     "test_cursor_menu_item_toggles_mode": "Tapping the Cursor menu item turns cursor mode on",
     "test_cursor_fullscreen_click_reaches_custom_view": "In HTML5 fullscreen the cursor is visible and its click reaches the fullscreen view",
@@ -513,4 +560,5 @@ TEST_DESCRIPTIONS = {
     "test_cursor_wheel_ff_rewind_scrolls": "In cursor mode fast-forward/rewind wheel-scroll the page up/down at the cursor",
     "test_cursor_youtube_scrubber_seek": "A cursor click seeks a YouTube-style auto-hiding scrubber (hover keeps controls alive, click seeks)",
     "test_cursor_youtube_scrubber_seek_after_idle": "Click seeks even after controls auto-hid (dispatchHover+delay re-shows them before BUTTON_PRESS lands) (leanback only)",
+    "test_cursor_context_menu_action_long_press": "Long-press the action key (select / DPAD center) opens the WebView context menu for the element under the cursor",
 }

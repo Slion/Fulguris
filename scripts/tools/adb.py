@@ -419,8 +419,43 @@ def key_longpress(serial: str, keycode: int, wait: float = 0.8) -> None:
     Used to drive the cursor-mode toggle hotkey (KEYCODE_MEDIA_FAST_FORWARD) over adb.
     The cursor controller honors FLAG_LONG_PRESS as a secondary trigger alongside its own
     hold timer, so this reliably flips cursor mode.
+
+    Note: the key is held for the *system* long-press timeout only (~400-500 ms), which is
+    inside the "hesitant click" territory — use :func:`key_hold` for a deliberate, arbitrary
+    hold.
     """
     _adb(serial, ["shell", "input", "keyevent", "--longpress", str(keycode)])
+    time.sleep(wait)
+
+
+_api_levels: dict = {}
+
+
+def _api_level(serial: str) -> int:
+    """The device's API level, cached per serial (one extra shell round trip per run)."""
+    if serial not in _api_levels:
+        _api_levels[serial] = int(_adb(serial, ["shell", "getprop", "ro.build.version.sdk"]).strip() or 0)
+    return _api_levels[serial]
+
+
+def key_hold(serial: str, keycode: int, ms: int, wait: float = 0.3) -> None:
+    """Press and hold a key for ``ms`` milliseconds, then release it.
+
+    Unlike :func:`key_longpress` (which is capped at the system long-press timeout), this
+    holds for an *arbitrary* duration, so a test can produce either a deliberately
+    hesitant-but-short press or a deliberate long hold.
+
+    The call blocks for the hold duration (both paths do):
+
+    - Android 14+ (API 34): ``input keyevent --duration <ms>``.
+    - Older: ``input keycombination -t <ms> <CTRL_LEFT> <key>`` — a single-key chord held
+      for ``ms``; CTRL_LEFT is an inert partner (the app tracks it only for the CTRL+TAB
+      shortcut, which needs a TAB key event that never happens here).
+    """
+    if _api_level(serial) >= 34:
+        _adb(serial, ["shell", "input", "keyevent", "--duration", str(ms), str(keycode)], timeout=max(30, ms // 1000 + 5))
+    else:
+        _adb(serial, ["shell", "input", "keycombination", "-t", str(ms), str(KEY_CTRL_LEFT), str(keycode)], timeout=max(30, ms // 1000 + 5))
     time.sleep(wait)
 
 

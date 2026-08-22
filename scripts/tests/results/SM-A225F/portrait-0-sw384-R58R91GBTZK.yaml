@@ -1,5 +1,5 @@
 # Fulguris UI test run — SM-A225F · portrait-0-sw384
-timestamp: '2026-08-22T11:07:22+00:00'
+timestamp: '2026-08-22T19:55:54+00:00'
 device:
   serial: R58R91GBTZK
   model: SM-A225F
@@ -17,25 +17,13 @@ options:
   keep_tabs: false
   orientation: null
   test_filter: null
-  group: smoke
+  group: cursor-context
 summary:
-  passed: 5
+  passed: 1
   failed: 0
-  total: 5
-  duration_s: 39.4
+  total: 1
+  duration_s: 29.1
 tests:
-- name: test_smoke_launch
+- name: test_cursor_context_menu_action_long_press
   status: pass
-  duration_s: 2.5
-- name: test_smoke_open_website
-  status: pass
-  duration_s: 15.6
-- name: test_smoke_open_settings
-  status: pass
-  duration_s: 7.7
-- name: test_smoke_background_app_switch
-  status: pass
-  duration_s: 6.0
-- name: test_smoke_background_home
-  status: pass
-  duration_s: 6.0
+  duration_s: 28.1
