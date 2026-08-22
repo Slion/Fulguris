@@ -92,6 +92,9 @@ class AndroidDevice(Device):
     def launch_action(self, action: str, wait: float = 2.0) -> None:
         adb.start_action(self.serial, self._package, action, wait)
 
+    def start_component(self, component: str, action: str | None = None, wait: float = 2.0) -> None:
+        adb.start_component(self.serial, component, action, wait)
+
     def force_stop(self) -> None:
         adb.force_stop(self.serial, self._package)
 

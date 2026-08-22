@@ -204,6 +204,20 @@ def start_action(serial: str, package: str, action: str, wait: float = 2.0) -> N
     time.sleep(wait)
 
 
+def start_component(serial: str, component: str, action: str | None = None, wait: float = 2.0) -> None:
+    """Start an activity by its fully-qualified ``component`` (``package/.Activity`` or ``package/package.Activity``).
+
+    Unlike :func:`start_action` (which always targets the main activity) this can open a
+    specific secondary activity such as the settings screen. An optional custom intent
+    ``action`` is added. Waits ``wait`` seconds before returning.
+    """
+    cmd = ["shell", "am", "start", "-n", component]
+    if action:
+        cmd += ["-a", action]
+    _adb(serial, cmd)
+    time.sleep(wait)
+
+
 def view_present(serial: str, view_id: str) -> bool:
     """Fast check whether a view with the given resource id is in the top activity.
 

@@ -8,6 +8,29 @@ which is fully scriptable. **Always use the `scripts/` tooling instead of callin
 `adb` or `gradlew` directly** — the scripts handle device selection, the debug flavor,
 APK path, and UTF-8 quirks of the Windows terminal.
 
+## Never get blocked — keep the agent moving
+
+A wedged command or an unanswered prompt **freezes the whole session**. Defuse
+road blocks actively instead of waiting:
+
+- **Never leave a command waiting for input.** If a command prompts (Y/N, a file
+  name, a password), answer it or abort it. For anything that needs a secret,
+  stop and tell the user to type it directly — never route secrets through the
+  tools.
+- **Defuse, don't wait.** When a prompt is stuck, either send the input it wants
+  (e.g. `N` / `y` / Enter) or **kill the terminal and start fresh**. Do not idle
+  on a hung prompt — that looks like a frozen agent.
+- **Prefer file-based helper scripts over inline one-liners / heredocs.**
+  PowerShell heredocs (`<<'EOF'`) mangle into per-line commands and can wedge the
+  shell into interactive compare / `fc` prompts. Write a small `scripts/tests/*.py`
+  (or `.ps1`) file and run that instead.
+- **Always pass a timeout to sync terminal commands** as a safety net so nothing
+  can hang indefinitely; a timed-out command drops to the background where it can
+  be inspected or killed.
+- **Don't poll.** When an async/background command finishes, or a sync command
+  times out, you are notified automatically — end the turn and wait rather than
+  re-reading output in a loop.
+
 ## Prerequisites
 
 - Python 3 (stdlib only — no pip packages needed for `scripts/`)
@@ -72,12 +95,20 @@ Adding a platform is additive: implement a new `Device` + `Transport`; **no test
 ### `scripts/tests/` — automated device test suite
 
 ```powershell
-python scripts/tests/run.py --all              # every test on every connected device
-python scripts/tests/run.py --device SERIAL    # one device
-python scripts/tests/run.py --all --test suggestions   # only tests whose name matches
+python scripts/tests/run.py --device SERIAL    # one device (default: the fast 'smoke' group)
+python scripts/tests/run.py --all --group all  # every test on every connected device
+python scripts/tests/run.py --device SERIAL --group cursor   # one feature group (see below)
+python scripts/tests/run.py --device SERIAL --test suggestions   # only tests whose name matches
 python scripts/tests/run.py --device SERIAL --orientation landscape  # force orientation
 python scripts/tests/run.py --list             # list available tests
 ```
+
+Selection has two independent axes: **which tests** (`--group <name>` / `--test
+<substr>`; default `smoke`) and **which devices** (`--device SERIAL` / `--all`).
+`--group` does not pick a device — with several devices connected you must also
+pass one of the device flags. The full suite (`--group all`) is slow
+(~30 min per device) and only needed for broad changes or a final sign-off;
+the `smoke` group is the cheap default sanity layer.
 
 Tests live in `scripts/tests/url_field_tests.py` (and `cursor_tests.py`,
 `rotation_tests.py`, `toolbar_hide_tests.py`) as plain functions
@@ -125,6 +156,8 @@ cursor component section below). They are organized into named **feature groups*
 subset relevant to one feature can be run on its own, rather than the whole suite:
 
 ```powershell
+python scripts/tests/run.py --all --group smoke             # fast sanity: launch, open site, settings, background/foreground (the default)
+python scripts/tests/run.py --all --group all               # the ENTIRE suite (all groups) — slow, ask first
 python scripts/tests/run.py --all --group cursor            # every cursor test
 python scripts/tests/run.py --all --group cursor-movement   # D-pad movement + edge (wheel) scroll
 python scripts/tests/run.py --all --group cursor-click      # hover + click + drag-target (scrub bar)
@@ -254,45 +287,53 @@ Key facts a future agent needs:
 
 ## Workflow: fixing a bug
 
-1. **Reproduce** — get the app to the broken state on a device:
+**Repro first, always.** A bug is not "in progress" until a test captures it and
+reports **FAIL**. Get it red *before* you fix it — that red test is what later
+proves the fix. A bug without a failing test is not reproducible and not done.
+
+1. **Reproduce with a failing test.**
+   - *Known regression* — find the existing test that should cover it and confirm
+     it fails:
+     `python scripts/tests/run.py --device SERIAL --group <group>` (or `--test <name>`).
+   - *New bug* — reproduce it manually with the tools until you can see it, then
+     write the repro test (step 2) and confirm it **FAILs** on the unfixed build.
    ```powershell
    python scripts/tools/launch.py --restart --all
    python scripts/tools/ui.py state
    python scripts/tools/ui.py key 23        # or tap/type as needed
    python scripts/tools/capture.py --all    # visual evidence
    ```
-   For a known regression, first find the failing test:
-   `python scripts/tests/run.py --all` (or `--test <name>`).
-2. **Add/adjust a test that reproduces it** in `scripts/tests/url_field_tests.py`
-   (or a new `*_tests.py` module registered from `run.py`). A bug without a
-   failing test is not done.
-3. **Fix the code** (usually `app/src/main/java/fulguris/...`), check for
-   compile/lint errors, then:
+2. **Add/adjust the repro test** in `scripts/tests/url_field_tests.py` (or a new
+   `*_tests.py` module registered from `run.py`) — a `test_<name>(device, ctx)`
+   that drives the broken sequence and asserts the *correct* behavior, so it is
+   red now and green once fixed. Add a `TEST_DESCRIPTIONS` entry.
+3. **Fix the code** (usually `app/src/main/java/fulguris/...`), check compile/lint
+   errors, rebuild and redeploy:
    ```powershell
    python scripts/tools/install.py --build --all
    python scripts/tools/launch.py --restart --all
    ```
-4. **Verify** — match verification to the scope of the change. **Do not run
-   the full suite for a small, localized change** (one key mapping, one
-   helper, one feature) — it takes ~30 min per device and can stall on RPi
-   infra flakes (below). Instead run just the relevant feature group or
-   single test on **both** devices:
+4. **Confirm the repro test is green**, then **check the affected area for
+   regressions** — run just the relevant feature group (or single tests) on
+   **both** devices:
    ```powershell
+   python scripts/tests/run.py --device SERIAL --test <repro_test_name>
    python scripts/tests/run.py --device SERIAL --group cursor-wheel
    python scripts/tests/run.py --device SERIAL --test suggestions
    ```
-   For **broad** changes (framework, `adb.py`, activity input handling,
-   anything shared by many tests) or before declaring done, run the full
-   suite on both devices:
+   **Do not greedily run the whole suite** — it takes ~30 min per device and can
+   stall on RPi infra flakes (below). **Ask first before running the full suite.**
+   Only run it for **broad** changes (framework, `adb.py`, activity input handling,
+   anything shared by many tests) or before declaring a broad fix done:
    ```powershell
-   python scripts/tests/run.py --all
+   python scripts/tests/run.py --all --group all
    ```
    Capture screenshots for visual UI changes.
    *Known RPi flake:* `uiautomator dump` (used for node lookups) occasionally
    hangs and stalls the runner mid-suite; the device is fine — just rerun the
    stalled test or group in isolation.
-5. **Iterate** until green. A localized fix needs its relevant group green on
-   both devices; a broad fix needs a full-suite pass.
+5. **Iterate** until the repro test and its affected group are green on both
+   devices; run the full suite (after asking) only for broad changes.
 
 ## Workflow: adding a new feature
 
@@ -310,9 +351,10 @@ Key facts a future agent needs:
 3. **Explore manually with the tools** (`ui.py state/key/text/tap`, `capture.py`)
    on every device type to confirm the feature works and existing behavior is
    intact (especially the URL field focus/edit states and the WebView).
-4. **Add tests** covering the new behavior to `scripts/tests/` and rerun
-   `python scripts/tests/run.py --all` — the new tests **and** the whole
-   existing suite must pass on all devices.
+4. **Add tests** covering the new behavior to `scripts/tests/` and rerun the
+   relevant group plus the smoke default, then (after asking) the whole suite:
+   `python scripts/tests/run.py --all --group all` — the new tests **and** the
+   whole existing suite must pass on all devices.
 5. Update this file's test list if a new test module is introduced.
 
 ## Conventions

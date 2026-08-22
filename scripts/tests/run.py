@@ -1,15 +1,19 @@
 #!/usr/bin/env python3
-"""Run the URL address bar UI tests over adb.
+"""Run the device UI tests over adb.
+
+Without ``--test`` or ``--group`` the fast **smoke** group is the default
+(launch, open a site, open settings, background/foreground) — pass ``--group all``
+or ``--test <substr>`` to select something else.
 
 Examples:
-    # Run all tests on every connected device
-    python scripts/tests/run.py --all
-
-    # Run on a specific device
+    # Run the smoke group on a specific device (the default selection)
     python scripts/tests/run.py --device 192.168.178.67:5555
 
+    # Run every test on every connected device
+    python scripts/tests/run.py --all --group all
+
     # Run a single test (by name or unique prefix)
-    python scripts/tests/run.py --all --test suggestions
+    python scripts/tests/run.py --device SERIAL --test suggestions
 
     # Restart the app between tests (default keeps it running, which is faster)
     python scripts/tests/run.py --all --restart
@@ -42,42 +46,53 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "tools"))
 import framework
 import results as results_store
 import url_field_tests as suite
+import smoke_tests
 import cursor_tests
 import rotation_tests
 import settings_tests
 import toolbar_hide_tests
 
 # All tests across every suite, plus a merged description map for the reports.
-ALL_TESTS = (suite.ALL_TESTS + cursor_tests.ALL_TESTS + rotation_tests.ALL_TESTS
-             + settings_tests.ALL_TESTS + toolbar_hide_tests.ALL_TESTS)
-TEST_DESCRIPTIONS = {**suite.TEST_DESCRIPTIONS, **cursor_tests.TEST_DESCRIPTIONS,
-                     **rotation_tests.TEST_DESCRIPTIONS, **settings_tests.TEST_DESCRIPTIONS,
+ALL_TESTS = (suite.ALL_TESTS + smoke_tests.ALL_TESTS + cursor_tests.ALL_TESTS
+             + rotation_tests.ALL_TESTS + settings_tests.ALL_TESTS
+             + toolbar_hide_tests.ALL_TESTS)
+TEST_DESCRIPTIONS = {**suite.TEST_DESCRIPTIONS, **smoke_tests.TEST_DESCRIPTIONS,
+                     **cursor_tests.TEST_DESCRIPTIONS, **rotation_tests.TEST_DESCRIPTIONS,
+                     **settings_tests.TEST_DESCRIPTIONS,
                      **toolbar_hide_tests.TEST_DESCRIPTIONS}
 
 # Named feature groups that can be run as a subset via --group. url_field_tests has no groups of
 # its own; cursor_tests defines the cursor feature groups. "cursor" is a convenience alias for all
-# of them.
-FEATURE_GROUPS = dict(cursor_tests.FEATURE_GROUPS)
+# of them, and "all" runs every test.
+FEATURE_GROUPS = dict(smoke_tests.FEATURE_GROUPS)
+FEATURE_GROUPS.update(cursor_tests.FEATURE_GROUPS)
 FEATURE_GROUPS["cursor"] = cursor_tests.ALL_TESTS
 FEATURE_GROUPS.update(rotation_tests.FEATURE_GROUPS)
 FEATURE_GROUPS.update(settings_tests.FEATURE_GROUPS)
 FEATURE_GROUPS.update(toolbar_hide_tests.FEATURE_GROUPS)
+FEATURE_GROUPS["all"] = ALL_TESTS
 
 
-def select_tests(name: str | None, group: str | None):
-    if group:
-        if group not in FEATURE_GROUPS:
-            print(f"Unknown group '{group}'. Available: {', '.join(sorted(FEATURE_GROUPS))}")
-            sys.exit(2)
-        tests = FEATURE_GROUPS[group]
-    else:
-        tests = ALL_TESTS
+def select_tests(name: str | None, group: str | None) -> tuple[list, str | None]:
+    """Resolve the tests to run.
+
+    Returns ``(tests, group_or_None)``. When neither ``--test`` nor ``--group``
+    is given, the fast **smoke** group is the default — a full-suite run is an
+    explicit choice (``--group all``) because it is slow on real devices.
+    """
     if name:
-        tests = [t for t in tests if name in t.__name__]
+        base = ALL_TESTS  # --test searches every suite, not just the default group
+        tests = [t for t in base if name in t.__name__]
         if not tests:
             print(f"No test matches '{name}'.")
             sys.exit(2)
-    return tests
+        return tests, None
+    if group is None:
+        group = "smoke"
+    if group not in FEATURE_GROUPS:
+        print(f"Unknown group '{group}'. Available: {', '.join(sorted(FEATURE_GROUPS))}")
+        sys.exit(2)
+    return FEATURE_GROUPS[group], group
 
 
 def run_one(t, device, ctx: dict) -> tuple[float, str | None]:
@@ -112,8 +127,8 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--device", help="Target a specific adb device serial")
     parser.add_argument("--all", action="store_true", help="Run on all connected devices")
-    parser.add_argument("--test", help="Run only tests whose name contains this substring")
-    parser.add_argument("--group", help="Run only a named feature group (e.g. cursor, cursor-movement)")
+    parser.add_argument("--test", help="Run only tests whose name contains this substring (searches all suites)")
+    parser.add_argument("--group", help="Run only a named feature group (e.g. smoke, cursor, cursor-movement, all); default: smoke")
     parser.add_argument("--package", help="Override the app package to test")
     parser.add_argument("--restart", action="store_true",
                         help="Restart the app between tests (default: keep it running, faster)")
@@ -135,7 +150,10 @@ def main() -> int:
         return 0
 
     devices = framework.resolve_devices(args.device, args.all, args.package)
-    tests = select_tests(args.test, args.group)
+    tests, selected_group = select_tests(args.test, args.group)
+    if not args.test and not args.group:
+        print("No --test/--group given; running the default 'smoke' group "
+              f"({len(tests)} tests). Use --group <name> or --group all to select otherwise.")
 
     overall_ok = True
     total_start = time.monotonic()
@@ -180,7 +198,8 @@ def main() -> int:
             record = results_store.build_record(
                 config, package,
                 {"restart": args.restart, "keep_tabs": args.keep_tabs,
-                 "orientation": args.orientation, "test_filter": args.test},
+                 "orientation": args.orientation, "test_filter": args.test,
+                 "group": selected_group},
                 test_records, device_elapsed,
             )
             diff = results_store.compare(previous, record)

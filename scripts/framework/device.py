@@ -121,6 +121,10 @@ class Device(abc.ABC):
         """Start the app's main activity with a custom intent action (app must be running)."""
 
     @abc.abstractmethod
+    def start_component(self, component: str, action: str | None = None, wait: float = 2.0) -> None:
+        """Start an activity by fully-qualified component (``package/.Activity``)."""
+
+    @abc.abstractmethod
     def force_stop(self) -> None:
         ...
 

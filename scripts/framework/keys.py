@@ -9,6 +9,7 @@ symbols onto its own input system.
 from __future__ import annotations
 
 BACK = 4
+HOME = 3
 DPAD_UP = 19
 DPAD_DOWN = 20
 DPAD_LEFT = 21
@@ -17,6 +18,7 @@ DPAD_CENTER = 23
 ENTER = 66
 SEARCH = 84
 BUTTON_A = 96
+APP_SWITCH = 187
 MEDIA_FAST_FORWARD = 90
 MEDIA_PLAY_PAUSE = 85
 MEDIA_REWIND = 89
