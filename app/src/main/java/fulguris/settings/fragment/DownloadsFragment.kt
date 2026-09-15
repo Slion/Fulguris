@@ -22,6 +22,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import fulguris.R
 import fulguris.extensions.copyToClipboard
+import fulguris.extensions.firstOrNullMap
 import fulguris.extensions.toast
 import fulguris.utils.Utils
 import timber.log.Timber
@@ -340,12 +341,11 @@ class DownloadsFragment : PreferenceFragmentCompat() {
                     try {
                         processedCount++
 
-                        val id = cursor.getLong(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_ID))
-                        seenDownloadIds.add(id)
-
-                        // Use the shared updateDownload logic (doesn't update actions/count)
-                        updateDownloadFromCursor(cursor)
-                        //
+                        val downloadData = decodeDownloadData(cursor)
+                        if (downloadData != null) {
+                            seenDownloadIds.add(downloadData.id)
+                            updateDownload(downloadData)
+                        }
                         updateDownloadCount()
 
                         // Schedule next download
@@ -403,36 +403,12 @@ class DownloadsFragment : PreferenceFragmentCompat() {
         }
     }
 
-    /**
-     * Data class to hold download information extracted from cursor
-     */
-    private data class DownloadData(
-        val id: Long,
-        val title: String?,
-        val status: Int,
-        val localUri: String?,
-        val uri: String?,
-        val bytesDownloaded: Long,
-        val totalSize: Long,
-        val lastModified: Long,
-        val mimeType: String?
-    )
-
-    /**
-     * Create DownloadData from cursor position
-     */
-    private fun createDownloadData(cursor: Cursor): DownloadData {
-        return DownloadData(
-            id = cursor.getLong(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_ID)),
-            title = cursor.getString(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_TITLE)),
-            status = cursor.getInt(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_STATUS)),
-            localUri = cursor.getString(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_LOCAL_URI)),
-            uri = cursor.getString(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_URI)),
-            bytesDownloaded = cursor.getLong(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR)),
-            totalSize = cursor.getLong(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_TOTAL_SIZE_BYTES)),
-            lastModified = cursor.getLong(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_LAST_MODIFIED_TIMESTAMP)),
-            mimeType = cursor.getString(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_MEDIA_TYPE))
-        )
+    private fun decodeDownloadData(cursor: Cursor): DownloadData? {
+        return DownloadData.fromCursor(cursor).also { data ->
+            if (data == null) {
+                Timber.w("Skipping download row without a valid ID or status")
+            }
+        }
     }
 
     /**
@@ -444,11 +420,7 @@ class DownloadsFragment : PreferenceFragmentCompat() {
         val cursor = downloadManager.query(query)
 
         return cursor?.use {
-            if (it.moveToFirst()) {
-                createDownloadData(it)
-            } else {
-                null
-            }
+            it.firstOrNullMap(::decodeDownloadData)
         }
     }
 
@@ -467,7 +439,7 @@ class DownloadsFragment : PreferenceFragmentCompat() {
 
         if (cursor != null && cursor.moveToFirst()) {
             try {
-                updateDownloadFromCursor(cursor)
+                decodeDownloadData(cursor)?.let(::updateDownload)
                 // Update action states and download count after updating the preference
                 updateDownloadCount()
             } finally {
@@ -479,15 +451,10 @@ class DownloadsFragment : PreferenceFragmentCompat() {
         }
     }
 
-    /**
-     * Update a download from cursor data. This is the core implementation used by both
-     * list population and individual updates. Does not call updateActionStates/updateDownloadCount
-     * so caller can batch those calls.
-     */
-    private fun updateDownloadFromCursor(cursor: Cursor) {
-        val id = cursor.getLong(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_ID))
-        val status = cursor.getInt(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_STATUS))
-        val localUri = cursor.getString(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_LOCAL_URI))
+    private fun updateDownload(downloadData: DownloadData) {
+        val id = downloadData.id
+        val status = downloadData.status
+        val localUri = downloadData.localUri
 
         // Update flags based on this download's status
         hasAnyDownloads = true
@@ -516,14 +483,12 @@ class DownloadsFragment : PreferenceFragmentCompat() {
 
         if (downloadPref != null) {
             // Update existing preference
-            val downloadData = createDownloadData(cursor)
             downloadPref.updateFromDownloadData(downloadData)
             // Update icon in case status or file type changed
             setDownloadIcon(downloadPref, downloadData.status, downloadData.mimeType, downloadData.localUri)
             Timber.d("updateDownloadFromCursor: Updated existing preference for download $id")
         } else {
             // Create new preference
-            val downloadData = createDownloadData(cursor)
             downloadPref = createDownloadPreference(downloadData)
             downloadsListCategory.addPreference(downloadPref)
             Timber.d("updateDownloadFromCursor: Created new preference for download $id")
@@ -1747,16 +1712,18 @@ class DownloadsFragment : PreferenceFragmentCompat() {
 
             var isActive = false
             if (cursor.moveToFirst()) {
-                val status = cursor.getInt(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_STATUS))
+                val downloadData = DownloadData.fromCursor(cursor)
+                if (downloadData == null) {
+                    Timber.w("updateProgress($downloadId): Invalid cursor data")
+                } else {
+                    isActive = downloadData.status == DownloadManager.STATUS_RUNNING ||
+                              downloadData.status == DownloadManager.STATUS_PENDING ||
+                              downloadData.status == DownloadManager.STATUS_PAUSED
 
-                isActive = status == DownloadManager.STATUS_RUNNING ||
-                          status == DownloadManager.STATUS_PENDING ||
-                          status == DownloadManager.STATUS_PAUSED
-
-
-                // Only update if this download is active or needs a summary refresh
-                if (isActive || summary == null) {
-                    updateFromCursor(cursor)
+                    // Only update if this download is active or needs a summary refresh
+                    if (isActive || summary == null) {
+                        updateSummary(downloadData)
+                    }
                 }
             } else {
                 Timber.w("updateProgress($downloadId): No cursor data found")
@@ -1767,25 +1734,11 @@ class DownloadsFragment : PreferenceFragmentCompat() {
         }
 
         /**
-         * Update the preference summary from cursor data.
-         * This only updates the text, not the entire preference UI.
-         */
-        fun updateFromCursor(cursor: Cursor) {
-            val status = cursor.getInt(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_STATUS))
-            val bytesDownloaded = cursor.getLong(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR))
-            val bytesTotal = cursor.getLong(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_TOTAL_SIZE_BYTES))
-            val lastModified = cursor.getLong(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_LAST_MODIFIED_TIMESTAMP))
-            val localUri = cursor.getString(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_LOCAL_URI))
-
-            summary = formatSummary(status, bytesDownloaded, bytesTotal, lastModified, localUri)
-        }
-
-        /**
          * Initialize the preference summary from DownloadData.
          * Called once during preference creation.
          */
         fun initializeFromDownloadData(data: DownloadData) {
-            summary = formatSummary(data.status, data.bytesDownloaded, data.totalSize, data.lastModified, data.localUri)
+            updateSummary(data)
         }
 
         /**
@@ -1799,7 +1752,17 @@ class DownloadsFragment : PreferenceFragmentCompat() {
             }
 
             // Update summary
-            summary = formatSummary(data.status, data.bytesDownloaded, data.totalSize, data.lastModified, data.localUri)
+            updateSummary(data)
+        }
+
+        private fun updateSummary(data: DownloadData) {
+            summary = formatSummary(
+                data.status,
+                data.bytesDownloaded,
+                data.totalSize,
+                data.lastModified,
+                data.localUri
+            )
         }
 
         /**
@@ -1863,10 +1826,6 @@ class DownloadsFragment : PreferenceFragmentCompat() {
         }
     }
 }
-
-
-
-
 
 
 
