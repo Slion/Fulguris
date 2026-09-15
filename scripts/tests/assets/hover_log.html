@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>start</title>
+<style>html, body { margin: 0; background: #eee; font: 20px sans-serif; }</style>
+</head>
+<body>
+<!--
+  Records every pointer/mouse event the page receives into document.title (capped at the 12 most
+  recent, e.g. "po,pm@360,633,mm@361,633") so a probe can tell whether synthetic SOURCE_MOUSE
+  hovers reach the page at all, and in what shape. Used by scripts/tests/probe_phone_hover.py.
+    po = pointerover, pi = pointerenter, pm = pointermove, mo = mouseover, mm = mousemove
+-->
+<div id="t" style="position:absolute; top:0; left:0; width:100%; height:220vh;">Hover log target</div>
+<script>
+  var log = [];
+  function cap() {
+    if (log.length > 12) log = log.slice(-12);
+    document.title = log.join(',');
+  }
+  ['pointerover','pointerenter','pointermove','mouseover','mousemove'].forEach(function (name) {
+    document.getElementById('t').addEventListener(name, function (e) {
+      var code = {pointerover:'po', pointerenter:'pi', pointermove:'pm', mouseover:'mo', mousemove:'mm'}[name];
+      code += '@' + Math.round(e.clientX) + ',' + Math.round(e.clientY) + (e.pointerType ? ':' + e.pointerType : '');
+      log.push(code);
+      cap();
+    }, true);
+  });
+</script>
+</body>
+</html>

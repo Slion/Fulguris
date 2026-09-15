@@ -1,5 +1,5 @@
 # Fulguris UI test run — Pi Compute Module 5 Rev 1.0 · landscape-0-sw584
-timestamp: '2026-08-25T23:27:18+00:00'
+timestamp: '2026-09-14T22:36:17+00:00'
 device:
   serial: 192.168.178.67:5555
   model: Pi Compute Module 5 Rev 1.0
@@ -17,19 +17,17 @@ options:
   keep_tabs: false
   orientation: null
   test_filter: null
-  group: cursor-toggle
+  group: cursor-context
 summary:
-  passed: 3
-  failed: 0
-  total: 3
-  duration_s: 79.2
+  passed: 1
+  failed: 1
+  total: 2
+  duration_s: 46.3
 tests:
-- name: test_cursor_toggle_hotkey_shows_and_hides_overlay
+- name: test_cursor_context_menu_action_long_press
   status: pass
-  duration_s: 21.1
-- name: test_cursor_toggle_exit_focuses_menu_button
-  status: pass
-  duration_s: 20.4
-- name: test_cursor_survives_options_sheet_dismiss
-  status: pass
-  duration_s: 34.8
+  duration_s: 21.6
+- name: test_cursor_context_menu_repeated_long_press_touch_stays_clean
+  status: fail
+  duration_s: 22.8
+  message: each of the 3 long presses should deliver a fresh touch (pointerdown) to the page, but only 2 did — the WebView's touch state is stuck (UP-after-cancel); log='pd0 ts4 pc541 ctx541 tc570 pd3180 ts3181 pc3683 ctx3683 tc3704 ctx6828'

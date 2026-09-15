@@ -485,34 +485,33 @@ def test_cursor_confirm_over_ui_activates_control_under_cursor(device, ctx: dict
         "under the cursor), not the focused widget; the address field did not gain focus")
 
 
-def test_cursor_confirm_yields_to_focused_widget(device, ctx: dict) -> None:
-    # When the cursor is on but Android focus is on a toolbar widget (not the web content),
-    # the confirm key (A / DPAD center / ENTER) must go to the focused control -- NOT click the
-    # page under the cursor. Focus is on the WebView after load; turning the cursor OFF moves
-    # focus to the toolbar menu button (button_more), and turning it back ON leaves focus there
-    # (enabling never moves focus) -- so this yields cursor-on + focus-on-a-toolbar-widget.
-    # Regression: the cursor used to consume the confirm key unconditionally, so it clicked the
-    # WebView under the cursor instead of activating the focused widget.
+def test_cursor_confirm_on_over_web_ignores_stray_focus(device, ctx: dict) -> None:
+    # With the cursor explicitly ON over web content, the confirm key (A / DPAD center / ENTER)
+    # must click the page under the cursor -- even when Android focus is stranded on a toolbar
+    # widget. That stranded state is the exact one users hit: focus is on the WebView after a
+    # load, turning the cursor OFF moves it to the toolbar menu button (button_more), and
+    # turning it back ON leaves it there (enabling never moves focus).
+    # Regression (the user-reported bug): the confirm key was yielded to the focused widget in
+    # this state, so a select press opened the browser menu instead of clicking the page under
+    # the cursor. The yield now only applies to the passive right-stick ghost (shown, never
+    # enabled); an enabled cursor is always the user's active input and acts at the cursor.
     _load_target(device)
     _toggle(device)          # cursor on
     _toggle(device)          # cursor off -> focus moves to button_more
     assert _focused_resource_id(device).endswith(":id/button_more"), \
         f"setup: focus should be on the toolbar menu button, was '{_focused_resource_id(device)}'"
-    _toggle(device)          # cursor on again; enabling does not move focus
+    _toggle(device)          # cursor on again (centered on the page); enabling does not move focus
     assert _overlay_present(device), "the cursor should be on"
     assert _focused_resource_id(device).endswith(":id/button_more"), \
         f"enabling the cursor must not move focus; focus should still be on button_more, was '{_focused_resource_id(device)}'"
     device.key(keys.DPAD_CENTER, wait=1.2)  # the confirm key (A / DPAD center / ENTER)
     title = _title(device)
-    assert not re.fullmatch(r"\d+,\d+", title.strip()), \
-        ("the confirm key with focus on a toolbar widget must activate that widget, "
-         f"not click the page under the cursor; the page was clicked (title was '{title}')")
-    # On leanback, activating the menu button opens the main menu (positive confirmation).
-    if device.is_leanback():
-        assert device.find_node(":id/menuItemCursor") is not None, \
-            "activating the menu button with the cursor on should open the main menu"
-        device.key(keys.BACK, wait=0.8)  # dismiss the menu
-    _toggle(device)          # leave the cursor off
+    assert re.fullmatch(r"\d+,\d+", title.strip()), \
+        ("with the cursor ON over the page the confirm key must click the page under the cursor, "
+         f"even though focus is stranded on the menu button; title was '{title}'")
+    menu_open = device.find_node(":id/menuItemExit") is not None or \
+        device.find_node(":id/menuItemSettings") is not None
+    assert not menu_open, "the confirm key must not activate the focused menu button (the menu opened)"
 
 
 # ===========================================================================
@@ -763,7 +762,7 @@ FEATURE_GROUPS = {
         test_cursor_click_drag_target_seeks,
         test_cursor_click_hesitant_press_still_clicks,
         test_cursor_confirm_over_ui_activates_control_under_cursor,
-        test_cursor_confirm_yields_to_focused_widget,
+        test_cursor_confirm_on_over_web_ignores_stray_focus,
     ],
     "cursor-menu": [
         test_cursor_menu_item_visible_on_leanback,
@@ -804,7 +803,7 @@ TEST_DESCRIPTIONS = {
     "test_cursor_click_drag_target_seeks": "A cursor click seeks a scrub bar via mousedown(mouse) or touch drag, like YouTube's timeline",
     "test_cursor_click_hesitant_press_still_clicks": "A realistically held (~600 ms) select press still clicks — only a deliberate ~1 s hold opens the context menu",
     "test_cursor_confirm_over_ui_activates_control_under_cursor": "With the cursor over a toolbar control, the confirm key (A / select) activates the control under the cursor, not the widget holding focus",
-    "test_cursor_confirm_yields_to_focused_widget": "With the cursor on but focus on a toolbar widget, the confirm key (A / select) activates the widget instead of clicking the page under the cursor",
+    "test_cursor_confirm_on_over_web_ignores_stray_focus": "With the cursor ON over the page and focus stranded on a toolbar widget, the confirm key (A / select) clicks the page under the cursor instead of activating the focused widget",
     "test_cursor_menu_item_visible_on_leanback": "The Cursor main-menu item is shown on Android TV",
     "test_cursor_menu_item_toggles_mode": "Tapping the Cursor menu item turns the cursor on",
     "test_cursor_fullscreen_click_reaches_custom_view": "In HTML5 fullscreen the cursor is visible and its click reaches the fullscreen view",

@@ -827,11 +827,12 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
             // up behind the status bar, so testing against its own bounds would treat the toolbar
             // as web content. In HTML5 fullscreen the override IS the (full-screen) custom view.
             contentBoundsProvider = { iCursorTargetOverride ?: iBinding.webViewFrame },
-            // The confirm key only clicks at the cursor while the web content holds input focus;
-            // otherwise it is yielded to the focused control (a toolbar widget, the address field,
-            // a menu…). In HTML5 fullscreen the tab is INVISIBLE (onShowCustomView), which strips
-            // the WebView's focus, so the fullscreen custom view counts as focused web content
-            // — the cursor keeps its click there.
+            // The confirm key is yielded to the focused control (a toolbar widget, the address
+            // field, a menu…) ONLY while the passive right-stick ghost (shown, never explicitly
+            // enabled) hovers over web content that does not hold input focus; an explicitly
+            // enabled cursor always acts at the cursor. In HTML5 fullscreen the tab is INVISIBLE
+            // (onShowCustomView), which strips the WebView's focus, so the fullscreen custom view
+            // counts as focused web content — the cursor keeps its click there.
             webContentFocusedProvider = { customView != null || currentTabView?.hasFocus() == true },
             settings = iCursorSettings,
             onCursorToggled = { enabled ->

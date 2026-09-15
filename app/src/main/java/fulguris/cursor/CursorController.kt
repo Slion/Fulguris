@@ -41,10 +41,13 @@ import timber.log.Timber
  * D-pad and analog-joystick input, and the construction/dispatch of synthetic pointer
  * [MotionEvent]s into the target view.
  *
- * Web pages get real `:hover` / `mouseover` / `mouseout` from continuous SOURCE_MOUSE
- * `ACTION_HOVER_MOVE` events as the cursor moves; the click is a precise touch DOWN→MOVE→UP at the
- * cursor coordinate (synthetic mouse *button* events can't be turned into a page click through the
- * public API on Android WebView — see [dispatchClick]). Reaching a WebView edge dispatches a
+ * Web pages get real `:hover` / `mouseover` / `mouseout` from a well-formed SOURCE_MOUSE hover
+ * sequence — one `ACTION_HOVER_ENTER` per target, then `ACTION_HOVER_MOVE` events as the cursor
+ * moves, and a matching `ACTION_HOVER_EXIT` when it leaves — because some WebView builds (Android
+ * 13) drop a MOVE that arrives without a prior ENTER, while newer ones (Android 16) accept a bare
+ * MOVE. The click is a precise touch DOWN→MOVE→UP at the cursor coordinate (synthetic mouse
+ * *button* events can't be turned into a page click through the public API on Android WebView —
+ * see [dispatchClick]). Reaching a WebView edge dispatches a
  * synthetic mouse **wheel** ([MotionEvent.ACTION_SCROLL]) at the cursor point so whichever DOM
  * element is under the cursor (including nested scrollable panels) scrolls, like a real mouse wheel.
  *
@@ -113,12 +116,17 @@ import timber.log.Timber
  * flagging the key with [KeyEvent.FLAG_LONG_PRESS] — and the system flag must therefore be
  * ignored here, or hesitant clicks would open the context menu instead of clicking.
  *
- * With the cursor off the action key falls through to its normal meaning. While the cursor is on
- * but the **web content is not focused** ([webContentFocusedProvider]) — e.g. focus is on a
- * toolbar widget or a menu — the action key is likewise yielded to the focused control instead
- * of clicking at the cursor. In HTML5 fullscreen the provider reports the web content as
- * focused (the tab itself is INVISIBLE while the custom fullscreen view is shown), so the
- * cursor keeps its click there.
+ * With the cursor off the action key falls through to its normal meaning. The one case where it
+ * is yielded to the focused control even though the cursor is on screen is the **passive
+ * ghost** state: the cursor is visible only because the right stick moved it (`shown`, not
+ * `enabled`) and the **web content is not focused** ([webContentFocusedProvider]) — e.g. focus
+ * is on a toolbar widget or a menu — so the key goes to that widget instead of clicking the
+ * page under the cursor. When cursor mode is explicitly ON (`enabled`), the cursor is the user's
+ * active input and the action key ALWAYS acts at the cursor, even if Android focus is stranded
+ * on a toolbar widget (which is exactly what happens after toggling the cursor off — the focus
+ * moves to the menu button — and back on). In HTML5 fullscreen the provider reports the web
+ * content as focused (the tab itself is INVISIBLE while the custom fullscreen view is shown), so
+ * the cursor keeps its click there.
  */
 class CursorController(
     private val overlay: CursorView,
@@ -133,8 +141,9 @@ class CursorController(
     // Whether the web content currently "holds focus": the current tab's WebView has input
     // focus, OR an HTML5 fullscreen custom view is up (the tab is INVISIBLE then, so the
     // WebView's focus is stripped — the fullscreen view counts as web content). Re-queried on
-    // every key event. Decides whether the confirm key clicks at the cursor or is yielded to
-    // the focused control (see [dispatchKeyEvent]).
+    // every key event. Only the passive ghost (shown, not [enabled]) is affected by it: the
+    // confirm key is yielded to the focused control when the ghost hovers over web content that
+    // does not hold focus (see [dispatchKeyEvent]). An enabled cursor always acts at the cursor.
     private val webContentFocusedProvider: () -> Boolean = { true },
     // The bounds of the WEB CONTENT region (the container that holds the page), used to decide
     // whether the cursor point is over the web content or over the browser's own UI (see
@@ -170,6 +179,14 @@ class CursorController(
     // HOVER_EXIT can be sent when the cursor leaves it (moves to another control, back to the page,
     // or the cursor is suspended / disabled) — otherwise its hover highlight would get stuck on.
     private var hoveredUiView: View? = null
+
+    // The WEB target that currently has the synthetic hover (an ENTER has been delivered to it). A
+    // well-formed mouse hover is ENTER -> MOVE* -> EXIT: newer WebView builds (Android 16) accept a
+    // bare HOVER_MOVE (synthesizing the pointer-over themselves), but older ones (Android 13) drop a
+    // MOVE that arrived without a prior ENTER, so the page never sees :hover / mouseover at all. The
+    // ENTER is therefore sent once per target (re-sent after a target change or a return from a UI
+    // control) and the matching EXIT when the cursor leaves the web content or goes away.
+    private var hoveredWebTarget: View? = null
 
     // Logical cursor position, in overlay-local pixels.
     private var posX = 0f
@@ -281,15 +298,23 @@ class CursorController(
             //    widget holds input focus. (Otherwise a stray focus on one toolbar button would
             //    steal the click from the button the cursor is actually pointing at.) This works
             //    whether or not the web content is focused.
-            //  - Over the web content while that content is NOT focused, the cursor is a passive
-            //    ghost (not actively driving anything), so the key is YIELDED to whatever widget
-            //    holds focus (a toolbar button, a menu, …) instead of clicking the page under the
+            //  - Over the web content while that content is NOT focused AND the cursor is a
+            //    passive ghost (shown only by the right stick, never explicitly turned on),
+            //    the key is YIELDED to whatever widget holds focus (a toolbar button, a
+            //    menu, …) instead of clicking the page under the cursor.
+            //  - Over the web content while it IS focused, the key clicks the page at the
             //    cursor.
-            //  - Over the web content while it IS focused, the key clicks the page at the cursor.
+            // The yield is ONLY for the ghost case (shown, not enabled): when cursor mode is
+            // explicitly ON, the cursor is the user's active input even if Android focus is
+            // stranded on a toolbar widget (e.g. it moved to the menu button when the cursor
+            // was last turned off) — yielding there would send the select press to that
+            // widget (opening the browser menu) instead of clicking the page under the
+            // cursor. Enabling the cursor never moves Android focus, so that stranded-focus
+            // state is exactly the one users hit every time they toggle off -> on.
             // (HTML5 fullscreen counts as focused web content — see webContentFocusedProvider. A
             //  menu / dialog / sheet is suspended, so this branch is never reached with one up.)
-            if (!webContentFocusedProvider() && !isUiPoint()) {
-                Timber.d("Cursor: yielding confirm key ${event.keyCode} (over web, web content not focused)")
+            if (!enabled && !webContentFocusedProvider() && !isUiPoint()) {
+                Timber.d("Cursor: yielding confirm key ${event.keyCode} (ghost over web, web content not focused)")
                 return false
             }
             when (event.action) {
@@ -788,18 +813,47 @@ class CursorController(
                     uiHover(view, MotionEvent.ACTION_HOVER_MOVE, now)
                 }
             }
+            // The cursor is over a UI control now: end the web hover (a real mouse would have
+            // left the page, and the matching EXIT keeps the sequence well-formed).
+            hoveredWebTarget?.let { exitWebHover(it, now) }
+            hoveredWebTarget = null
             return
         }
         // Over the web content: the cursor leaves any UI control it was over, so clear its hover.
         hoveredUiView?.let { exitUiHover(it, now) }
         hoveredUiView = null
         val (x, y) = targetCoords(target)
+        if (target !== hoveredWebTarget) {
+            // First hover on this target (or back from a UI control): the well-formed sequence
+            // starts with an ENTER (see [hoveredWebTarget]). If a different target was hovered
+            // (a tab switch), end its hover first so its :hover state doesn't linger.
+            hoveredWebTarget?.let { exitWebHover(it, now) }
+            val enter = obtainMouseEvent(now, now, MotionEvent.ACTION_HOVER_ENTER, x, y, 0)
+            try {
+                target.dispatchGenericMotionEvent(enter)
+            } finally {
+                enter.recycle()
+            }
+            hoveredWebTarget = target
+        }
         val event = obtainMouseEvent(now, now, MotionEvent.ACTION_HOVER_MOVE, x + xOffset, y, 0)
         try {
             target.dispatchGenericMotionEvent(event)
         } finally {
             event.recycle()
         }
+    }
+
+    /** End the synthetic hover on a web [target] (its [hoveredWebTarget] counterpart). */
+    private fun exitWebHover(target: View, now: Long) {
+        val (x, y) = targetCoords(target)
+        val event = obtainMouseEvent(now, now, MotionEvent.ACTION_HOVER_EXIT, x, y, 0)
+        try {
+            target.dispatchGenericMotionEvent(event)
+        } finally {
+            event.recycle()
+        }
+        if (target === hoveredWebTarget) hoveredWebTarget = null
     }
 
     /** Clear a synthetic hover on a browser-UI view (its [hoveredUiView] counterpart). */
@@ -823,10 +877,12 @@ class CursorController(
         }
     }
 
-    /** Clear any pending UI hover (and forget which view had it). */
+    /** Clear any pending hover (UI control and web content) and forget which views had it. */
     private fun clearUiHover() {
-        hoveredUiView?.let { exitUiHover(it, SystemClock.uptimeMillis()) }
+        val now = SystemClock.uptimeMillis()
+        hoveredUiView?.let { exitUiHover(it, now) }
         hoveredUiView = null
+        hoveredWebTarget?.let { exitWebHover(it, now) }
     }
 
     private fun dispatchClick() {
