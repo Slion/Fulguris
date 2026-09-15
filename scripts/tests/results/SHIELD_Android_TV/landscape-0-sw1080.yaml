@@ -1,7 +1,6 @@
 # Fulguris UI test run — SHIELD Android TV · landscape-0-sw1080
 timestamp: '2026-08-24T00:51:06+00:00'
 device:
-  serial: 192.168.178.37:5555
   model: SHIELD Android TV
   brand: Nvidia
   product_name: SHIELD Android TV

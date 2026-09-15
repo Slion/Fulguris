@@ -152,18 +152,25 @@ records that configuration (`adb.device_config()` returns a matching
 **Results & regressions.** Every run is saved under a folder named after the
 device **model** (see `scripts/tests/results.py`):
 
-    scripts/tests/results/<MODEL>/<config-id>-<serial>.yaml    # machine-readable record
-    scripts/tests/results/<MODEL>/<config-id>-<serial>.md      # human-readable table
+    scripts/tests/results/<MODEL>/<config-id>.yaml    # machine-readable record
+    scripts/tests/results/<MODEL>/<config-id>.md      # human-readable table
 
-There is one file pair per configuration + device serial, overwritten on each
-run — the **git history of each file is the time dimension**. The Markdown
-table lists every test with a short description (from each module's
-`TEST_DESCRIPTIONS` — add an entry for every new test), its result (✅/❌/⚠️)
-and duration. History is thus tracked **per device model and per
-configuration**. The runner compares each run against the previous one for the
-same model+config+serial and prints `REGRESSIONS`/`fixed` lines (pass↔fail
-transitions). The `results/` files are **committed** — that's the point, so
-runs can be compared across time, devices and configurations — so stage the
+There is one file pair per device model + configuration. A run **updates the
+record in place**: only the tests it actually ran are replaced; every other
+test is carried forward (marked `ran: false`, shown with a ⏸ in the Markdown)
+so the file — and its git diff — reflects only what that run changed. That
+also means a group run and a full-suite run share one record. The **git
+history of each file is the time dimension**. The Markdown table lists every
+test with a short description (from each module's `TEST_DESCRIPTIONS` — add an
+entry for every new test), its result (✅/❌/⚠️), duration and whether it ran
+in the latest run. History is thus tracked **per device model and per
+configuration**. The runner compares each run against the previous record and
+prints `REGRESSIONS`/`fixed` lines (pass↔fail transitions among the tests that
+ran). Device **serials are deliberately kept out of the file names and
+contents** (they are IP:port for network adb devices) — note that two
+*identical* devices connected at once would therefore share one record.
+The `results/` files are **committed** — that's the point, so runs can be
+compared across time, devices and configurations — so stage the
 new/changed `.yaml`/`.md` files after each run. Pass `--no-save` to skip
 recording. Uses PyYAML (`pip install pyyaml`).
 

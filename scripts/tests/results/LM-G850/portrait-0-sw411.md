@@ -1,7 +1,7 @@
 # Test run — LM-G850 · portrait-0-sw411
 
 - **When:** 2026-08-19T11:51:22+00:00
-- **Device:** LM-G850 (Lge LM-G850) — Android 12 (serial `192.168.178.83:5555`)
+- **Device:** LM-G850 (Lge LM-G850) — Android 12
 - **Config:** portrait, rotation 0°, smallest width 411dp
 - **Package:** `net.slions.fulguris.full.download.debug`
 - **Options:** restart=False, keep_tabs=False, orientation=default, filter=all

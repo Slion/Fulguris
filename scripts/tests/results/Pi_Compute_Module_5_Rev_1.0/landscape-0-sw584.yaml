@@ -1,7 +1,6 @@
 # Fulguris UI test run — Pi Compute Module 5 Rev 1.0 · landscape-0-sw584
 timestamp: '2026-09-14T22:36:17+00:00'
 device:
-  serial: 192.168.178.67:5555
   model: Pi Compute Module 5 Rev 1.0
   brand: Raspberry
   product_name: Raspberry Pi 5 TV box

@@ -220,13 +220,14 @@ def main() -> int:
                 pass
 
         if not args.no_save:
-            previous = results_store.load_last_run(config["model"], config["config_id"], device.id)
+            previous = results_store.load_last_run(config["model"], config["config_id"])
             record = results_store.build_record(
                 config, package,
                 {"restart": args.restart, "keep_tabs": args.keep_tabs,
                  "orientation": args.orientation, "test_filter": args.test,
                  "group": selected_group},
                 test_records, device_elapsed,
+                prev=previous,
             )
             diff = results_store.compare(previous, record)
             yaml_path, md_path = results_store.save_run(record, TEST_DESCRIPTIONS)

@@ -1,7 +1,7 @@
 # Test run — SM-A225F · landscape-90-sw384
 
 - **When:** 2026-08-18T18:36:03+00:00
-- **Device:** SM-A225F — Android 13 (serial `R58R91GBTZK`)
+- **Device:** SM-A225F — Android 13
 - **Config:** landscape, rotation 90°, smallest width 384dp
 - **Package:** `net.slions.fulguris.full.download.debug`
 - **Options:** restart=False, keep_tabs=False, orientation=landscape, filter=all

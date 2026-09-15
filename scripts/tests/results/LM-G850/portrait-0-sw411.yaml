@@ -1,7 +1,6 @@
 # Fulguris UI test run — LM-G850 · portrait-0-sw411
 timestamp: '2026-08-19T11:51:22+00:00'
 device:
-  serial: 192.168.178.83:5555
   model: LM-G850
   brand: Lge
   product_name: LM-G850
