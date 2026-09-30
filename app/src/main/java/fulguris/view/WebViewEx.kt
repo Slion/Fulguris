@@ -16,7 +16,6 @@ import android.view.View
 import android.webkit.JavascriptInterface
 import android.webkit.MimeTypeMap
 import android.webkit.WebView
-import androidx.annotation.ColorInt
 import androidx.core.text.parseAsHtml
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import fulguris.R
@@ -206,14 +205,6 @@ class WebViewEx : WebView {
 
         return super.dispatchKeyEvent(event)
     }
-
-    /**
-     * We use that to debug our beautiful color mess.
-     */
-    override fun setBackgroundColor(@ColorInt color: Int) {
-        super<WebView>.setBackgroundColor(color)
-    }
-
 
     /**
      * Start a print job, thus notably enabling saving a web page as PDF.

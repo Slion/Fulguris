@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Install the agentDebug APK on a device or on all connected devices.
+"""Install a deployable APK on a device or on all connected devices.
 
 The agentDebug variant (slionsFullAgentDebug) is a debug build of the "agent"
 PUBLISHER flavor — a robot launcher icon, dedicated to automated testing; see
@@ -10,6 +10,7 @@ docs/features/agent-variant.md.
     python scripts/tools/install.py --device SERIAL
     python scripts/tools/install.py --build         # build first, then install
     python scripts/tools/install.py --build-type agentRelease
+    python scripts/tools/install.py --build --build-type downloadDebug
 """
 from __future__ import annotations
 
@@ -25,7 +26,7 @@ def main() -> int:
     parser.add_argument("--build", action="store_true", help="Build before installing")
     parser.add_argument("--build-type", choices=sorted(adb.AGENT_VARIANTS),
                         default=adb.DEFAULT_BUILD_TYPE,
-                        help="Which Agent variant to install (default: agentDebug)")
+                        help="Which variant to install (default: agentDebug)")
     args = parser.parse_args()
 
     if args.build:

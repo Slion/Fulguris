@@ -25,7 +25,7 @@ DEFAULT_PACKAGE = "net.slions.fulguris.full.agent.debug"
 LAUNCH_ACTIVITY = "fulguris.activity.SplashActivity"
 MAIN_ACTIVITY = "fulguris.activity.MainActivity"
 
-# Gradle assemble task / APK location per Agent variant. agentDebug is the
+# Gradle assemble task / APK location per deployable variant. agentDebug is the
 # default (debuggable, so it supports run-as / logcat) and what the test harness
 # uses; agentRelease is a minified/shrunk build for testing release behavior.
 AGENT_VARIANTS = {
@@ -33,6 +33,8 @@ AGENT_VARIANTS = {
                    "app/build/outputs/apk/slionsFullAgent/debug/*.apk"),
     "agentRelease": (":app:assembleSlionsFullAgentRelease",
                      "app/build/outputs/apk/slionsFullAgent/release/*.apk"),
+    "downloadDebug": (":app:assembleSlionsFullDownloadDebug",
+                      "app/build/outputs/apk/slionsFullDownload/debug/*.apk"),
 }
 DEFAULT_BUILD_TYPE = "agentDebug"
 
@@ -963,4 +965,3 @@ def reload_button_center(serial: str) -> tuple[int, int] | None:
     x1, y1, x2, y2 = n.bounds
     w = x2 - x1
     return x1 - w // 2, (y1 + y2) // 2
-

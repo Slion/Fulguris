@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build an Agent APK (default: the slionsFullAgentDebug variant).
+"""Build a deployable APK (default: the slionsFullAgentDebug variant).
 
 "agent" is a PUBLISHER-dimension flavor with a robot launcher icon, dedicated to
 automated testing; see docs/features/agent-variant.md.
@@ -19,7 +19,7 @@ def main() -> int:
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--build-type", choices=sorted(adb.AGENT_VARIANTS),
                         default=adb.DEFAULT_BUILD_TYPE,
-                        help="Which Agent variant to build (default: agentDebug)")
+                        help="Which variant to build (default: agentDebug)")
     args = parser.parse_args()
 
     code = adb.gradle_build(args.build_type)

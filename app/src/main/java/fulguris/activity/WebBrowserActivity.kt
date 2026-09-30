@@ -592,9 +592,6 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     // Used to avoid running that too many times, by keeping a reference to it we can cancel that runnable
     //  That works around graphical glitches happening when run too many times
     var onSizeChangeRunnable : Runnable = Runnable {};
-    // Used to cancel that runnable as needed
-    private var resetBackgroundColorRunnable : Runnable = Runnable {};
-
     /**
      * Used for both tabs and bookmarks.
      */
@@ -4231,34 +4228,6 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         // Somehow this was needed to make sure background colors are not swapped, most visible during page navigation animation
         // TODO: Investigate what's going on here, as that should not be the case and could lead to other issues
         iTabViewContainerBack.setBackgroundColor(color)
-
-
-        currentTabView?.let {
-            // Now also set WebView background color otherwise it is just white and we don't want that.
-            // This one is going to be a problem as it will break some websites such as bbc.com.
-            // Make sure we reset our background color after page load, thanks bbc.com and bbc.com/news for not defining background color.
-            if (iBinding.toolbarInclude.progressView.progress >= 100
-                    // Don't reset background color back to white on empty urls, that prevents displaying large empty white pages and blinding users in dark mode.
-                    // When opening some download links a tab is spawned first with the download URL and later that URL is set back to null.
-                    // Luckily our delayed call and the absence of invalidate prevents a flicker to white screen.
-                    && !it.url.isNullOrBlank()) {
-                // We delay that to avoid some web sites including default startup page to flash white on app startup
-                mainHandler.removeCallbacks(resetBackgroundColorRunnable)
-                resetBackgroundColorRunnable = Runnable {
-                    it.setBackgroundColor(Color.WHITE)
-                    // We do not want to apply that color on the spot though.
-                    // It does not make sense anyway since it is a delayed call.
-                    // It also still causes a flicker notably when a tab is spawned by a download link.
-                    //webViewEx.invalidate()
-                }
-                mainHandler.postDelayed(resetBackgroundColorRunnable, 750);
-            } else {
-                mainHandler.removeCallbacks(resetBackgroundColorRunnable)
-                it.setBackgroundColor(color)
-                // Make sure that color is applied on the spot for earlier color change when loading tabs
-                it.invalidate()
-            }
-        }
 
         // No animation for now
         // Toolbar background color
