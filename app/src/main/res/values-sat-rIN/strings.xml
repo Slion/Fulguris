@@ -760,4 +760,25 @@
     <string name="extension_author_not_specified">ᱮᱠᱥᱴᱮᱱᱥᱚᱱ ᱚᱱᱚᱞᱤᱭᱟᱹ ᱵᱟᱹᱱᱩᱜ</string>
     <string name="action_install">ᱞᱟᱜᱟᱣ</string>
     <string name="pref_title_source_code">ᱥᱨᱚᱛ ᱠᱳᱰ</string>
+    <string name="action_cursor">ᱠᱩᱢᱵᱩᱨ</string>
+    <string name="pref_summary_cursor_category">Android TV leanback ᱦᱟᱨᱟᱝ ᱢᱟᱲᱟᱝ ᱟᱠᱟ ᱞᱮᱠᱟ ᱫᱟᱜ ᱟᱭᱟ</string>
+    <string name="cursor_on">ᱠᱩᱢᱵᱩᱨ ᱡᱳᱯᱷᱤ</string>
+    <string name="cursor_off">ᱠᱩᱢᱵᱩᱨ ᱥᱴᱩᱝ ᱟᱠᱟ</string>
+    <string name="pref_title_cursor_hotkey">ᱠᱩᱢᱵᱩᱨ ᱠᱩᱞᱤᱱ ᱥᱚᱨᱮᱞ</string>
+    <string name="pref_summary_cursor_hotkey_on">ᱠᱩᱢᱵᱩᱨ ᱡᱳᱯᱷᱤ/ᱥᱴᱩᱝ ᱛᱮ ᱞᱟᱨ ᱡᱟᱭᱜᱟ ᱞᱟᱹᱜᱤᱫ ᱠᱮᱴᱮᱨᱤᱭᱟ ᱨᱮ ᱠᱩᱢᱵᱩᱨ ᱡᱳᱯᱷᱤ/ᱥᱴᱩᱝ ᱢᱮ</string>
+    <string name="pref_summary_cursor_hotkey_off">ᱢᱩᱬᱩᱛ ᱨᱮᱭᱟᱜ ᱠᱩᱢᱵᱩᱨ ᱡᱳᱯᱷᱤ/ᱥᱴᱩᱝ ᱢᱮᱱᱟᱜ-ᱟ</string>
+    <string name="pref_title_cursor_speed">ᱠᱩᱢᱵᱩᱨ ᱨᱮᱠᱟᱨ</string>
+    <string name="pref_title_cursor_acceleration">ᱠᱩᱢᱵᱩᱨ ᱨᱮᱠᱟᱨ ᱡᱳᱯᱷᱤ</string>
+    <string name="pref_title_cursor_fade_timeout">ᱠᱩᱢᱵᱩᱨ ᱥᱴᱩᱝ ᱟᱠᱟᱫᱽ ᱟᱨᱢᱟᱫᱽ</string>
+    <string name="pref_summary_cursor_fade_timeout">ᱠᱩᱢᱵᱩᱨ ᱥᱴᱩᱝ ᱟᱠᱟ ᱞᱟᱹᱜᱤᱫ ᱠᱟᱹᱣᱰᱤ ᱵᱷᱟᱨᱚᱛ</string>
+    <string name="pref_title_cursor_action_hold">ᱠᱩᱢᱵᱩᱨ ᱵᱷᱤᱡᱽᱣᱟᱨ ᱢᱩᱬᱩᱛ ᱡᱚᱝᱠᱷᱚᱱ</string>
+    <string name="pref_summary_cursor_action_hold">ᱵᱷᱤᱡᱽᱣᱟᱨ ᱢᱩᱬᱩᱛ ᱯᱩᱨᱟᱹᱣ ᱞᱟᱹᱜᱤᱫ ᱢᱟᱨᱟᱯ ᱥᱚᱨᱮᱞ ᱡᱚᱛᱚ ᱪᱟᱹᱞᱦᱟᱹ</string>
+    <string name="pref_title_hide_tool_bar_after">ᱞᱮᱠᱟ ᱯᱚᱱᱚᱛ ᱥᱴᱩᱝ ᱟᱠᱟ</string>
+    <string name="pref_summary_hide_tool_bar_after">ᱢᱟᱲᱟᱝ ᱞᱮᱠᱷᱟᱶ ᱨᱮᱭᱟᱜ ᱞᱮᱠᱟ ᱯᱚᱱᱚᱛ ᱥᱴᱩᱝ ᱟᱠᱟ</string>
+    <string name="action_pip">ᱯᱷᱚᱵᱚᱢᱟ ᱞᱮᱠᱟᱛᱮ ᱯᱷᱚᱵᱚᱢᱟ</string>
+    <string name="message_pip_not_supported">ᱯᱷᱚᱵᱚᱢᱟ-ᱞᱮᱠᱟ-ᱛᱮ-ᱯᱷᱚᱵᱚᱢᱟ ᱟᱠᱟᱱ-ᱟᱢ</string>
+    <string name="pref_summary_downloads_count">ᱛᱟᱦᱮᱸ ᱠᱟᱱᱟ %d ᱵᱷᱟᱨᱚᱢ</string>
+    <string name="pref_summary_downloads_count_plural">ᱛᱟᱦᱮᱸ ᱠᱟᱱᱟ %d ᱵᱷᱟᱨᱚᱢᱚᱜ</string>
+    <string name="pref_summary_loading_downloads">ᱵᱷᱟᱨᱚᱢ ᱨᱟᱡᱽ ᱨᱮᱭᱟ %1$d / %2$d</string>
+    <string name="pref_summary_updating_downloads">ᱟᱨᱥᱟᱯᱲᱟᱣ ᱨᱮᱭᱟ %1$d / %2$d</string>
 </resources>
