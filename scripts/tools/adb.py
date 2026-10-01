@@ -35,6 +35,9 @@ AGENT_VARIANTS = {
                      "app/build/outputs/apk/slionsFullAgent/release/*.apk"),
     "downloadDebug": (":app:assembleSlionsFullDownloadDebug",
                       "app/build/outputs/apk/slionsFullDownload/debug/*.apk"),
+    # Play Store AAB (Google Play release build).
+    "playstoreRelease": (":app:bundleSlionsFullPlaystoreRelease",
+                         "app/build/outputs/bundle/slionsFullPlaystoreRelease/*.aab"),
 }
 DEFAULT_BUILD_TYPE = "agentDebug"
 
@@ -70,12 +73,18 @@ def gradle_build(build_type: str = DEFAULT_BUILD_TYPE) -> int:
     return result.returncode
 
 
-def apk_path(build_type: str = DEFAULT_BUILD_TYPE) -> str | None:
-    _, apk_glob = AGENT_VARIANTS[build_type]
-    matches = glob.glob(os.path.join(repo_root(), apk_glob))
+def build_output_path(build_type: str = DEFAULT_BUILD_TYPE) -> str | None:
+    """Newest APK (assemble) or AAB (bundle) for the given build type."""
+    _, output_glob = AGENT_VARIANTS[build_type]
+    matches = glob.glob(os.path.join(repo_root(), output_glob))
     if not matches:
         return None
     return max(matches, key=os.path.getmtime)
+
+
+# Backwards-compatible alias (agent variants are all APKs).
+def apk_path(build_type: str = DEFAULT_BUILD_TYPE) -> str | None:
+    return build_output_path(build_type)
 
 
 def install_apk(serial: str, apk: str) -> bool:

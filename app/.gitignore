@@ -1,3 +1,6 @@
 /build
 *.apk
+*.aab
 manifest-merger-release-report.txt
+# Release build outputs (APK/AAB copies, metadata, baseline profiles).
+slionsFull*/

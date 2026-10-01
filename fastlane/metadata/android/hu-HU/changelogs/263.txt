@@ -1,0 +1,8 @@
+📺 Android TV támogatás képernyés kurzorral távirányítóhoz és gamepadhez
+⏱️ Új időkorlát beállítás az "Eszköztár elrejtése ideje után" opcióhoz
+🖱️ Nyomja meg és tartsa lenyomva a kijelölt billentyűt a kurzorral a kontextusmenü megnyitásához
+🔒 Új SSL/HTTPS zár ikonok
+🔍 Keresőmező fejlesztések: az ESC a Vissza billentyűként törli
+📝 Az Android verzió megjelent a Névjegy képernyőn
+🌐 Fordítások frissítése
+🐛 Diverse hibajavítások és fejlesztések

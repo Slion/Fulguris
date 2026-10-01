@@ -1,0 +1,8 @@
+📺 Android TV-støtte med markør på skærmen til fjernbetjeninge og gamepads
+⏱️ Ny tidsgrænsningsindstilling "Skjul værktøjslinje efter"
+🖱️ Tryk og hold på valgknappen med markøren for at åbne kontekstmenuen
+🔒 Nye SSL/HTTPS-låseikoner
+🔍 Forbedringer til søgefeltet: ESC annullerer som tilbage
+📝 Android-version føjet til Om-skærmen
+🌐 Oversættelsesopdatering
+🐛 Diverse rettelser og forbedringer

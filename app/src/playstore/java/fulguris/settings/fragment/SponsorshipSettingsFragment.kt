@@ -198,10 +198,12 @@ class SponsorshipSettingsFragment : AbstractSettingsFragment(),
                 .build()
         }
         val params = QueryProductDetailsParams.newBuilder().setProductList(productList).build()
-        playStoreBillingClient.queryProductDetailsAsync(params) { billingResult, productDetailsList ->
+        playStoreBillingClient.queryProductDetailsAsync(params) { billingResult, queryResult ->
             when (billingResult.responseCode) {
                 BillingClient.BillingResponseCode.OK -> {
                     Timber.d( "populateSubscriptions OK")
+                    // Play Billing Library 8+ returns the details wrapped in a QueryProductDetailsResult
+                    val productDetailsList = queryResult.productDetailsList
                     if (productDetailsList.isNotEmpty()) {
                         // We got a valid list of product details for our subscriptions
                         val purchaseParams = QueryPurchasesParams.newBuilder()

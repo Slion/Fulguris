@@ -26,8 +26,8 @@ def main() -> int:
     if code != 0:
         print("Build FAILED.")
         return code
-    apk = adb.apk_path(args.build_type)
-    print(f"Build OK: {apk}")
+    out = adb.build_output_path(args.build_type)
+    print(f"Build OK: {out}")
     return 0
 
 

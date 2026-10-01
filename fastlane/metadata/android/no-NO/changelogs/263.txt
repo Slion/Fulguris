@@ -1,0 +1,8 @@
+📺 Android TV-støtte med skjermpil for fjernkontroller og gamepads
+⏱️ Ny tidsbegrensning "Skjul verktøylinje etter"
+🖱️ Trykk og hold valgknappen med pekeren for å åpne kontekstmenyen
+🔒 Nye SSL/HTTPS-låseikoner
+🔍 Forbedringer i søkefeltet: ESC avbryter som tilbake
+📝 Android-versjon lagt til i Om-skjermen
+🌐 Oversettelsesoppdatering
+🐛 Diverse feilrettinger og forbedringer

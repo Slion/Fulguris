@@ -145,4 +145,15 @@ git log TAG_NAME..HEAD --pretty=format:"%s" --no-merges | Out-String
 python subs\l10n\android\changelogs.py {version}
 ```
 
+**⚠️ Each language's release notes must be 500 characters or fewer.** Google Play
+Console's bulk editor rejects any language whose note exceeds the limit (e.g.
+`Release note for es-ES is too long`). Translations often run longer than the
+English source, so keep them tight. `changelogs.py` now reports any over-limit
+notes (language + char count + how much to trim) — fix those and re-run before
+pasting. You can check a single note's length with:
+
+```powershell
+(Get-Content -LiteralPath "fastlane\metadata\android\es-ES\changelogs\{version}.txt" -Encoding UTF8) -join "`n" | % { $_.Length }
+```
+
 **Last Updated:** December 22, 2025

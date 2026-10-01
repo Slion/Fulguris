@@ -271,6 +271,36 @@ jacoco {
     toolVersion = '0.8.7' // See http://www.eclemma.org/jacoco/
 }
 
+// Name the AAB like the APKs above (Fulguris-v<version>-<dashed-variant>.aab).
+// AGP names the AAB from base.archivesName (default "app") plus the dashed
+// variant name, but the sign task's finalBundleFile output CAN be re-set at
+// configuration time. That matters because Android Studio's "Generate Signed
+// Bundle / APK" wizard copies the AAB from the task's REGISTERED output path —
+// a post-build rename (doLast) can't rename the file the wizard copies.
+android.applicationVariants.configureEach { variant ->
+    if (!variant.flavorName.contains("slions")) return
+    def variantName = variant.name.capitalize()
+    // The sign task is what actually writes the final AAB (FinalizeBundleTask).
+    // Its default output name is "app-<dashed-variant>.aab"; just swap the prefix.
+    tasks.matching { it.name == "sign${variantName}Bundle" }.configureEach { signTask ->
+        def aabFileName = signTask.finalBundleFileName.replaceFirst(/^app-/, "Fulguris-v${variant.versionName}-")
+        signTask.finalBundleFile.set(layout.buildDirectory.file("outputs/bundle/${variant.name}/${aabFileName}"))
+    }
+    // Safety net: if an old-format app-*.aab is left behind (e.g. by a build
+    // before this change), move it so the output dir only holds the Fulguris name.
+    tasks.matching { it.name == "bundle${variantName}" }.configureEach { bundleTask ->
+        bundleTask.doLast {
+            def outDir = layout.buildDirectory.dir("outputs/bundle/${variant.name}").get().asFile
+            outDir.listFiles()?.findAll { it.name.startsWith("app-") && it.name.endsWith(".aab") }?.each { aab ->
+                if (!aab.renameTo(new File(outDir, aab.name.replaceFirst(/^app-/, "Fulguris-v${variant.versionName}-")))) {
+                    throw new GradleException("Failed to rename AAB ${aab.name}")
+                }
+                println "Renamed AAB: ${aab.name}"
+            }
+        }
+    }
+}
+
 // unMock is required for tests that use android.net.Uri
 unMock {
     keepStartingWith "libcore."
@@ -332,7 +362,7 @@ dependencies {
     implementation project(path: ":AppIntro")
 
     // Play Store billing
-    playstoreImplementation 'com.android.billingclient:billing:7.1.1'
+    playstoreImplementation 'com.android.billingclient:billing:8.3.0'
 
     // html parsing for reading mode
     implementation 'org.jsoup:jsoup:1.13.1'

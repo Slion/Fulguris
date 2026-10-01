@@ -1,0 +1,8 @@
+📺 Android TV-stöd med skärmmarkör för fjärrkontroller och spelkontroller
+⏱️ Ny tidsbegränsning för "Dölj verktygsfält efter"
+🖱️ Tryck och håll in valknappen med markören för att öppna snabbmenyn
+🔒 Nya SSL/HTTPS-låsikoner
+🔍 Förbättringar i sökfältet: ESC avbryter som tillbaka
+📝 Android-version tillagd på Om-skärmen
+🌐 Översättningsuppdatering
+🐛 Diverse felberättelser och förbättringar

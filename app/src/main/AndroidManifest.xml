@@ -3,6 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:installLocation="auto">
 
+    <!-- Play Billing Library 8 (and its play-services-basement dependency) declare
+         minSdk 23; we keep supporting API 21 (the billing feature only ships in the
+         playstore flavor). May lead to runtime failures on API 21-22 devices if the
+         libraries use newer APIs. -->
+    <uses-sdk tools:overrideLibrary="com.android.billingclient,com.google.android.gms.common" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <!-- Required for notifications on Android 13+ (API level 33+) -->
