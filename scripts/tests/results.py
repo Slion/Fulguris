@@ -93,14 +93,24 @@ def merge_tests(prev_record: dict | None, ran: list[dict]) -> list[dict]:
 
 def build_record(device: dict, package: str, options: dict,
                  ran: list[dict], duration_s: float,
-                 prev: dict | None = None) -> dict:
+                 prev: dict | None = None,
+                 known: set[str] | None = None) -> dict:
     """Assemble the record for one run from its per-test results.
 
     Each entry in ``ran`` is {"name", "status", "duration_s", "message"?} where
     status is "pass", "fail" or "error". ``prev`` (the previously saved record,
     if any) contributes the tests this run did not run — see [merge_tests].
+
+    ``known`` is the set of test names currently in the suite. When given,
+    entries for tests that are no longer in the suite (renamed or removed) are
+    dropped: the carry-forward design otherwise keeps such a test's last status
+    in the record forever, so a renamed test would linger as a permanent stale
+    "fail" that can never be re-run or fixed. Omit ``known`` to keep every
+    carried-forward entry.
     """
     tests = merge_tests(prev, ran)
+    if known is not None:
+        tests = [t for t in tests if t["name"] in known]
     passed = sum(1 for t in tests if t["status"] == "pass")
     return {
         "timestamp": datetime.now(timezone.utc).isoformat(timespec="seconds"),

@@ -231,6 +231,7 @@ def main() -> int:
                  "group": selected_group},
                 test_records, device_elapsed,
                 prev=previous,
+                known={t.__name__ for t in ALL_TESTS},
             )
             diff = results_store.compare(previous, record)
             yaml_path, md_path = results_store.save_run(record, TEST_DESCRIPTIONS)
