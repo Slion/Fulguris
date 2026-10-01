@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+        Agent-flavor launcher label override so the AI-agent test variant is visually
+        distinguishable from a developer's own build (shown as "Fulguris Agent" in the
+        launcher instead of "Fulguris").
+    -->
+    <string name="app_name">Fulguris Agent</string>
+</resources>

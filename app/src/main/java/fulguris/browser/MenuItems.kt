@@ -135,7 +135,7 @@ object MenuItems {
         MenuItemId.Settings to MenuItem(
             id = MenuItemId.Settings,
             labelId = R.string.settings,
-            iconId = R.drawable.ic_settings,
+            iconId = R.drawable.ic_settings_outline,
             viewId = R.id.menuItemSettings,
             canBeInMainMenu = true,
             canBeInTabMenu = false,

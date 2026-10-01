@@ -210,7 +210,7 @@
                         style="@style/BrowserTextMenuItem"
                         android:visibility="gone"
                         tools:visibility="visible"
-                        app:drawableStartCompat="@drawable/ic_settings"
+                        app:drawableStartCompat="@drawable/ic_settings_outline"
                         android:text="@string/settings" />
 
                     <TextView

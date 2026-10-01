@@ -97,6 +97,13 @@
             https://developer.huawei.com/consumer/en/doc/90101
         -->
         <meta-data android:name="android.min_aspect" android:value="1.0" />
+        <!--
+            The "Stealth" incognito launcher entry is a *dynamic* app shortcut registered at
+            launch (see App.registerIncognitoShortcut), so IncognitoActivity does not need its
+            own launcher icon. It is a dynamic shortcut (not a static res/xml one) because
+            launchers such as Samsung One UI only render dynamic shortcuts bound to the
+            launcher icon's own activity (SplashActivity) in the app long-press menu.
+        -->
 
         <!-- Splash screen activity not sure exactly if we need MAIN and DEFAULT intent TBH -->
         <!-- Make it resizable for Multi-Window mode support, such as Samsung Dex
@@ -211,21 +218,13 @@
             android:process=":incognito"
             android:theme="@style/Theme.App.DayNight"
             android:windowSoftInputMode="stateHidden|adjustResize"
-            android:exported="true"
-            android:icon="@mipmap/ic_launcher_incognito"
-            android:roundIcon="@mipmap/ic_launcher_incognito_round">
+            android:exported="true">
 
             <!--
-            Incognito mode currently not going through splash screen
-            Therefore it must be shown in the launcher
+            Incognito (Stealth) is no longer a separate launcher icon: it is a dynamic
+            launcher app shortcut instead (long-press the app icon → "Stealth", see
+            App.registerIncognitoShortcut), so there is no MAIN/LAUNCHER filter here.
             -->
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.LAUNCHER" />
-                <category android:name="android.intent.category.APP_BROWSER" />
-            </intent-filter>
 
             <!--  Handle various mime types and allow being used as default viewer -->
             <intent-filter>

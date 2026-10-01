@@ -403,7 +403,7 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxkotlin:2.4.0'
 
     // memory leak analysis
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.13'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.14'
 
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"

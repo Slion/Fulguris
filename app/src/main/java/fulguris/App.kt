@@ -23,6 +23,8 @@
 package fulguris
 
 import fulguris.activity.IncognitoActivity
+import fulguris.activity.SettingsActivity
+import fulguris.activity.SplashActivity
 import fulguris.database.bookmark.BookmarkExporter
 import fulguris.database.bookmark.BookmarkRepository
 import fulguris.di.DatabaseScheduler
@@ -34,8 +36,13 @@ import fulguris.utils.installMultiDex
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Application
+import android.content.ComponentName
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.ShortcutInfo
+import android.content.pm.ShortcutManager
+import android.graphics.drawable.Icon
 import android.os.Build
 import android.os.Bundle
 import android.webkit.WebView
@@ -246,6 +253,85 @@ class App : Application(), SharedPreferences.OnSharedPreferenceChangeListener,
         // Log build and device information
         logBuildInfo()
 
+        // Register the "Stealth" and "Settings" dynamic app shortcuts (mirrors LeakCanary's
+        // "Leaks" shortcut). Re-registered at every launch so they survive launcher DB resets.
+        registerShortcuts(this)
+    }
+
+    /**
+     * Registers the app's dynamic shortcuts (a "Stealth" incognito-browser entry and a
+     * "Settings" entry) so they show up as entries in the launcher's long-press context menu
+     * (instead of additional launcher icons).
+     *
+     * This mirrors exactly how LeakCanary's "Leaks" shortcut works (see
+     * `leakcanary.LeakCanaryAndroidInternalUtils.addLeakActivityDynamicShortcut`): it uses
+     * `ShortcutManager.addDynamicShortcuts` with a `ShortcutInfo.Builder` that sets **both**
+     * `setActivity(...)` and `setIntent(...)` — the launcher needs `setActivity` to know which
+     * app to bind the shortcut to, and the intent must carry an action (a known Android quirk).
+     * It is re-registered at every app launch (from [onCreate]), which is precisely why
+     * LeakCanary's shortcut survives launcher-DB resets and reinstalls: it is simply re-added.
+     *
+     * No user interaction is required (unlike `requestPinShortcut`). Each shortcut is
+     * idempotent: it is skipped when already registered.
+     */
+    internal fun registerShortcuts(context: Context) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N_MR1) {
+            return
+        }
+        val shortcutManager = context.getSystemService(SHORTCUT_SERVICE) as? ShortcutManager ?: return
+        val component = ComponentName(context.packageName, SplashActivity::class.java.name)
+        // The "Stealth" incognito-browser entry (not available while already in incognito mode).
+        // Both shortcuts use adaptive icons (colored background + white glyph): a plain
+        // transparent glyph gets a white circular backdrop painted behind it by Samsung One
+        // UI's Quick-Options popup, but an adaptive icon fills the circle with its own
+        // background so that never shows through (and it renders identically on other
+        // launchers, e.g. Honor, which don't add a backdrop).
+        if (!incognito) {
+            addShortcut(context, shortcutManager, component, "incognito",
+                getString(R.string.action_incognito), R.mipmap.ic_launcher_incognito,
+                Intent(context, IncognitoActivity::class.java).apply {
+                    flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
+                    // The shortcut intent must carry an action (Android quirk — see LeakCanary).
+                    action = Intent.ACTION_VIEW
+                })
+        }
+        // Settings opens the app's settings screen, using the matching settings adaptive icon.
+        addShortcut(context, shortcutManager, component, "settings",
+            getString(R.string.settings), R.mipmap.ic_launcher_settings,
+            Intent(context, SettingsActivity::class.java).apply {
+                action = Intent.ACTION_VIEW
+            })
+    }
+
+    /**
+     * Adds a single dynamic shortcut bound to the launcher icon's own component ([component] —
+     * [SplashActivity], which carries the LAUNCHER intent-filter). One UI groups dynamic
+     * shortcuts by the launcher target and only shows shortcuts whose activity matches the
+     * icon, so [component] must be the launcher activity even when the [intent] opens a
+     * different one; `setActivity` only controls grouping. Skips when the shortcut with [id]
+     * is already registered (pinned or dynamic).
+     */
+    private fun addShortcut(context: Context, shortcutManager: ShortcutManager, component: ComponentName,
+                            id: String, label: String, iconRes: Int, intent: Intent) {
+        try {
+            if (shortcutManager.pinnedShortcuts.any { it.id == id } ||
+                shortcutManager.dynamicShortcuts.any { it.id == id }
+            ) {
+                return
+            }
+            val shortcut = ShortcutInfo.Builder(context, id)
+                .setShortLabel(label)
+                .setLongLabel(label)
+                .setIcon(Icon.createWithResource(context, iconRes))
+                .setActivity(component)
+                .setIntent(intent)
+                .build()
+            if (!shortcutManager.addDynamicShortcuts(listOf(shortcut))) {
+                Timber.w("Could not add the '$id' dynamic shortcut")
+            }
+        } catch (e: Exception) {
+            Timber.w(e, "Could not register the '$id' shortcut")
+        }
     }
 
     /**
