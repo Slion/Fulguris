@@ -1,7 +1,5 @@
 📺 Dukungan Android TV dengan kursor di layar untuk remote dan gamepad
 ⏱️ Pengaturan batas waktu baru "Sembunyikan bilah alat setelah"
-🖱️ Tekan dan tahan tombol pilih dengan kursor untuk membuka menu konteks
-🔒 Ikon gembok SSL/HTTPS baru
 🔍 Peningkatan kolom pencarian: ESC membatalkan seperti kembali
 📝 Versi Android ditambahkan ke layar Tentang
 🌐 Pembaruan terjemahan

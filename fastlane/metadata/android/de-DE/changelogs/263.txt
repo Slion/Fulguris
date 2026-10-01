@@ -1,7 +1,5 @@
 📺 Android-TV-Unterstützung mit Bildschirmcursor für Fernbedienungen und Gamepads
 ⏱️ Neue Zeitbegrenzungs-Einstellung "Werkzeugleiste ausblenden nach"
-🖱️ Auswahl Taste mit dem Cursor gedrückt halten, um das Kontextmenü zu öffnen
-🔒 Neue SSL/HTTPS-Schloss-Symbole
 🔍 Verbesserungen am Suchfeld: ESC bricht wie Zurück ab
 📝 Android-Version wurde zum Info-Bildschirm hinzugefügt
 🌐 Übersetzungsupdate

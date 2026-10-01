@@ -1,7 +1,5 @@
 📺 Podpora Android TV s kurzorem na obrazovce pro ovladače a herní ovladače
 ⏱️ Nová nastavení časového limitu „Skrýt panel nástrojů po“
-🖱️ Stisknutím a podržením tlačítka výběru kurzorem otevřete kontextové menu
-🔒 Nové ikony zámku SSL/HTTPS
 🔍 Vylepšení pole pro vyhledávání: ESC zruší jako zpět
 📝 Na obrazovce O aplikaci se zobrazuje verze Androidu
 🌐 Aktualizace překladů

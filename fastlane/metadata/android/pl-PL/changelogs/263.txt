@@ -1,7 +1,5 @@
 📺 Wsparcie dla Android TV z kursorem na ekranie dla pilotów i gamepadów
 ⏱️ Nowe ustawienie czasu "Ukryj pasek narzędzi po"
-🖱️ Przytrzymaj przycisk wyboru z kursorem, aby otworzyć menu kontekstowe
-🔒 Nowe ikony kłódki SSL/HTTPS
 🔍 Ulepszenia pola wyszukiwania: ESC anuluje jak wstecz
 📝 Dodano wersję Android do ekranu O aplikacji
 🌐 Aktualizacja tłumaczeń

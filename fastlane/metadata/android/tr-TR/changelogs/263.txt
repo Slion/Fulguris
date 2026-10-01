@@ -1,7 +1,5 @@
 📺 Kumanda ve oyun kolları için ekran üstü imleçli Android TV desteği
 ⏱️ Yeni "Araç çubuğunu gizle (süre)" zaman aşımı ayarı
-🖱️ Bağlam menüsünü açmak için imleçle seçim tuşuna basılı tutun
-🔒 Yeni SSL/HTTPS kilit simgeleri
 🔍 Arama alanı iyileştirmeleri: ESC geri gibi iptal eder
 📝 Hakkında ekranına Android sürümü eklendi
 🌐 Çeviri güncellemesi

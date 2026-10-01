@@ -1,7 +1,5 @@
 📺 Hỗ trợ Android TV với con trỏ trên màn hình cho điều khiển và tay cầm game
 ⏱️ Thiết lập thời gian mới "Ẩn thanh công cụ sau"
-🖱️ Nhấn giữ nút chọn với con trỏ để mở menu ngữ cảnh
-🔒 Biểu tượng khóa SSL/HTTPS mới
 🔍 Cải tiến ô tìm kiếm: ESC hủy như quay lại
 📝 Thêm phiên bản Android vào màn hình Giới thiệu
 🌐 Cập nhật bản dịch

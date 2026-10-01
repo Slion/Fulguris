@@ -1,7 +1,5 @@
 📺 Podrška za Android TV s kursorom na ekranu za daljinske upravljače i gamepadove
 ⏱️ Nova postavka vremenskog ograničenja "Sakrij traku alata nakon"
-🖱️ Pritisnite i držite tipku za odabir uz kursor za otvaranje kontekstnog izbornika
-🔒 Novi SSL/HTTPS ikone zaključanja
 🔍 Poboljšanja polja za pretragu: ESC poništava kao natrag
 📝 Verzija Androida dodana na zaslon O aplikaciji
 🌐 Ažuriranje prijevoda

@@ -1,7 +1,5 @@
 📺 Android TV -tuki näytöllä näkyvällä osoittimella kaukosäätimiin ja peliohjaimiin
 ⏱️ Uusi aikakatkais asetukseella "Piilota työkalupalkki jälkeen"
-🖱️ Pidä valintanappainta pohjassa osoittimella avataksesi tilaspeifisen valikon
-🔒 Uudet SSL/HTTPS-lukkokuvakkeet
 🔍 Parannukset hakukenttään: ESC peruuttaa kuten takaisin-nappi
 📝 Androidin versiotieto lisätty Tietoja-näkymään
 🌐 Käännöspäivitys

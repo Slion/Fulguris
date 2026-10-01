@@ -1,7 +1,5 @@
 📺 Android TV-ondersteuning met schermcursor voor afstandsbedieningen en gamepads
 ⏱️ Nieuwe timeout-instelling "Werkbalk verbergen na"
-🖱️ Druk lang op de selectieknop met de cursor om het contextmenu te openen
-🔒 Nieuwe SSL/HTTPS-slotpictogrammen
 🔍 Verbeteringen aan het zoekveld: ESC annuleert als terug
 📝 Android-versie toegevoegd aan het Over-scherm
 🌐 Vertalingen bijgewerkt

@@ -1,7 +1,5 @@
 📺 Android TV palaikymas su ekrano žymekliu nuotolinio valdymo įrenginiams ir žaidimų valdikliams
 ⏱️ Nustatymas naujo laikmačio "Pasleisti įrankių juostą po"
-🖱️ Laikykite pasirinkimo mygtuką su žymekliu, kad atvertumėte kontekstinį meniu
-🔒 Nauji SSL/HTTPS užrakinimo simboliai
 🔍 Paieškos lauko patobulinimai: ESC atšaukia kaip „atgal“
 📝 Apie ekrane pridėta Android versija
 🌐 Vertimų atnaujinimas

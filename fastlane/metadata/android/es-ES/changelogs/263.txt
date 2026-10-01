@@ -1,7 +1,5 @@
 📺 Soporte para Android TV con cursor en pantalla para mandos y gamepads
 ⏱️ Nueva configuración de tiempo de espera para «Ocultar barra de herramientas después de»
-🖱️ Mantén pulsado el botón de selección con el cursor para abrir el menú contextual
-🔒 Nuevos iconos de candado SSL/HTTPS
 🔍 Mejoras en el campo de búsqueda: ESC cancela como atrás
 📝 Se añadió la versión de Android a la pantalla Acerca de
 🌐 Actualización de traducciones

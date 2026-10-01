@@ -1,7 +1,5 @@
 📺 Prise en charge d'Android TV avec curseur à l'écran pour télécommandes et manettes
 ⏱️ Nouveau paramètre de temporisation « Masquer la barre d'outils après »
-🖱️ Appuyez longuement sur le bouton de sélection avec le curseur pour ouvrir le menu contextuel
-🔒 Nouvelles icônes de verrou SSL/HTTPS
 🔍 Améliorations du champ de recherche : ÉCH annule comme retour
 📝 Version Android ajoutée à l'écran À propos
 🌐 Mise à jour des traductions
