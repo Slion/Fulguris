@@ -1,11 +1,11 @@
 # Test run — SM-A225F · portrait-0-sw384
 
-- **When:** 2026-09-15T08:00:53+00:00
+- **When:** 2026-10-01T11:17:34+00:00
 - **Device:** Galaxy A22 5G (Samsung SM-A225F) — Android 13
 - **Config:** portrait, rotation 0°, smallest width 384dp
 - **Package:** `net.slions.fulguris.full.agent.debug`
-- **Options:** restart=False, keep_tabs=False, orientation=default, filter=all
-- **Result:** 60/63 passed in 34.6s (1 ran, 62 carried forward)
+- **Options:** restart=False, keep_tabs=False, orientation=default, filter=test_back_two_stage_keyboard_then_cancel
+- **Result:** 64/68 passed in 27.4s (1 ran, 67 carried forward)
 
 | Test | Description | Result | Duration |
 |---|---|---|---|
@@ -16,7 +16,7 @@
 | `test_cursor_click_hesitant_press_still_clicks` | A realistically held (~600 ms) select press still clicks — only a deliberate ~1 s hold opens the context menu | ✅ pass ⏸ | 24.3s |
 | `test_cursor_confirm_over_ui_activates_control_under_cursor` | With the cursor over a toolbar control, the confirm key (A / select) activates the control under the cursor, not the widget holding focus | ✅ pass ⏸ | 34.6s |
 | `test_cursor_confirm_on_over_web_ignores_stray_focus` | With the cursor ON over the page and focus stranded on a toolbar widget, the confirm key (A / select) clicks the page under the cursor instead of activating the focused widget | ✅ pass ⏸ | 40.8s |
-| `test_cursor_fade_hides_then_wakes` | The cursor fades out after the inactivity timeout and wakes on movement | ✅ pass | 33.6s |
+| `test_cursor_fade_hides_then_wakes` | The cursor fades out after the inactivity timeout and wakes on movement | ✅ pass ⏸ | 33.6s |
 | `test_launch_focus_is_webview` | After a fresh launch, initial focus lands on the web view | ✅ pass ⏸ | 6.2s |
 | `test_unfocused_shows_label` | Unfocused address bar shows the page label, not the URL | ✅ pass ⏸ | 11.5s |
 | `test_directional_focus_is_navigation_not_edit` | D-pad focus enters navigation mode without showing the keyboard | ✅ pass ⏸ | 13.4s |
@@ -25,8 +25,8 @@
 | `test_edit_shows_url` | Edit mode shows the URL, not the label | ✅ pass ⏸ | 13.7s |
 | `test_dpad_edit_selects_all` | Entering edit via D-pad selects all, so typing replaces the URL | ✅ pass ⏸ | 17.7s |
 | `test_type_and_validate_navigates` | Typing a URL and pressing enter navigates and returns focus to the web view | ✅ pass ⏸ | 18.1s |
-| `test_back_two_stage_keyboard_then_cancel` | First back hides the keyboard, second back cancels back to the label | ✅ pass ⏸ | 24.6s |
-| `test_back_from_navigation_returns_to_web` | Back from navigation focus returns to the web view | ✅ pass ⏸ | 15.8s |
+| `test_back_two_stage_keyboard_then_cancel` | First back hides the keyboard, second back cancels back to the label | ✅ pass | 26.4s |
+| `test_back_from_navigation_returns_to_web` | Back from navigation focus returns to the web view | ✅ pass ⏸ | 17.3s |
 | `test_down_from_navigation_returns_to_web` | D-pad down from navigation focus leaves the field for the web view | ✅ pass ⏸ | 16.0s |
 | `test_suggestions_navigable_without_touch` | Suggestions popup can be navigated and opened with D-pad only | ✅ pass ⏸ | 20.6s |
 | `test_touch_tap_enters_edit` | Touch tap on the field goes straight to edit mode with keyboard | ✅ pass ⏸ | 15.6s |
@@ -43,11 +43,11 @@
 | `test_short_page_shows_reload_button` | On a short non-scrollable page the reload button stays visible | ✅ pass ⏸ | 18.8s |
 | `test_reload_button_tracks_tab_on_ctrl_tab` | CTRL+TAB tab switch updates the reload button to match the tab | ✅ pass ⏸ | 36.2s |
 | `test_reload_button_tracks_tab_via_tab_menu` | Tab switch via the tab list drawer updates the reload button | ✅ pass ⏸ | 36.0s |
-| `test_smoke_launch` | The app launches and reaches the main browser UI in the foreground | ✅ pass ⏸ | 2.4s |
+| `test_smoke_launch` | The app launches and reaches the main browser UI in the foreground | ✅ pass ⏸ | 2.3s |
 | `test_smoke_open_website` | Navigating to a web site loads and the address bar shows its label | ✅ pass ⏸ | 12.4s |
-| `test_smoke_open_settings` | The settings activity opens via its component and renders its content | ✅ pass ⏸ | 7.8s |
-| `test_smoke_background_app_switch` | KEYCODE_APP_SWITCH backgrounds the app; launching brings it back to the front | ✅ pass ⏸ | 6.0s |
-| `test_smoke_background_home` | KEYCODE_HOME backgrounds the app; the activity intent brings it back to the front | ✅ pass ⏸ | 6.0s |
+| `test_smoke_open_settings` | The settings activity opens via its component and renders its content | ✅ pass ⏸ | 7.5s |
+| `test_smoke_background_app_switch` | KEYCODE_APP_SWITCH backgrounds the app; launching brings it back to the front | ✅ pass ⏸ | 5.9s |
+| `test_smoke_background_home` | KEYCODE_HOME backgrounds the app; the activity intent brings it back to the front | ✅ pass ⏸ | 5.8s |
 | `test_cursor_toggle_hotkey_shows_and_hides_overlay` | Long-press play/pause toggles the cursor overlay on and off | ✅ pass ⏸ | 28.9s |
 | `test_cursor_toggle_exit_focuses_menu_button` | Turning the cursor off moves focus to the toolbar menu button | ✅ pass ⏸ | 28.4s |
 | `test_cursor_survives_options_sheet_dismiss` | Opening then dismissing the options bottom sheet does not leave the cursor suspended (resumes on sheet close) | ✅ pass ⏸ | 43.3s |
@@ -55,7 +55,7 @@
 | `test_cursor_movement_dpad_down_moves_down` | D-pad down moves the cursor down (click Y increases) | ✅ pass ⏸ | 28.7s |
 | `test_cursor_movement_edge_scrolls_page` | Pushing past the bottom edge scrolls the page | ✅ pass ⏸ | 40.5s |
 | `test_cursor_movement_gamepad_dpad_yields_to_focus_nav` | With the cursor on, a two-stick gamepad's D-pad is yielded to focus navigation (the right stick drives the cursor) while the stick-less D-pad still moves it | ✅ pass ⏸ | 0.4s |
-| `test_cursor_menu_item_visible_on_leanback` | The Cursor main-menu item is shown on Android TV | ✅ pass ⏸ | 19.2s |
+| `test_cursor_menu_item_visible_on_leanback` | The Cursor main-menu item is shown on Android TV | ✅ pass ⏸ | 18.9s |
 | `test_cursor_menu_item_toggles_mode` | Tapping the Cursor menu item turns the cursor on | ✅ pass ⏸ | 17.6s |
 | `test_cursor_fullscreen_click_reaches_custom_view` | In HTML5 fullscreen the cursor is visible and its click reaches the fullscreen view | ✅ pass ⏸ | 33.0s |
 | `test_cursor_media_play_pause` | The media play/pause key pauses and resumes the page video | ✅ pass ⏸ | 29.7s |
@@ -72,6 +72,12 @@
 | `test_toolbar_not_starved_on_busy_page` | A busy page that keeps firing tab-state callbacks (theme-color changes) does not starve the countdown - the tool bar still hides ~timeout s after load | ✅ pass ⏸ | 27.0s |
 | `test_toolbar_not_reset_by_interaction` | A D-pad press after load does not reset the countdown (it stays anchored at load) | ✅ pass ⏸ | 29.7s |
 | `test_toolbar_rearms_on_focus_gain` | After a first auto-hide, regaining web-view input focus restarts the countdown | ✅ pass ⏸ | 48.4s |
-| `test_toolbar_rehides_after_back_reshow` | After an auto-hide, back re-shows the tool bar (web view keeps focus) and it auto-hides again - the countdown is re-armed at re-show | ✅ pass ⏸ | 42.8s |
+| `test_toolbar_rehides_after_back_reshow` | After an auto-hide, back re-shows the tool bar (web view keeps focus) and it auto-hides again - the countdown is re-armed at re-show | ✅ pass ⏸ | 43.4s |
 | `test_cursor_toolbar_rehides_after_back_reshow` | With the cursor on (TV) the same back-reshow cycle auto-hides again - the non-focusable cursor overlay must not prevent the re-arm | ✅ pass ⏸ | 0.0s |
 | `test_toolbar_disabled_at_zero` | A timeout of 0 disables the feature (the tool bar never auto-hides) | ✅ pass ⏸ | 31.0s |
+| `test_back_two_tabs_keeps_foreground` | Back with a tab to close closes the top tab, not finish the app (regression: predictive back bypassing onBackPressed) | ✅ pass ⏸ | 39.1s |
+| `test_back_last_tab_stays_foreground` | Back on the last tab closes it (start page), not finish the app | ✅ pass ⏸ | 25.3s |
+| `test_back_editing_two_stage_exit` | Back while editing the URL field: first press hides the keyboard, second press cancels back to the label | ✅ pass ⏸ | 31.3s |
+| `test_settings_back_nested_pops_not_finish` | Renamed to test_settings_back_from_nested_no_crash | ❌ fail ⏸ | 55.2s |
+| | _back from the nested screen did not pop back to Appearance (nodes: [' ', ' (~16%), ', ' (~2%), ', ' (~2%), and ', ' (~2%).', ' (~5%), ', ' (~69% ', ' As of 2023, an estimated 5.4 billion people had used a browser.', ' and ', " and then displays the page on the user's screen. Browsers can also display content stored locally on the user's device.", ' displaying the ', ' for accessing ', ' from a ', ' from a particular website, the browser retrieves its ', ' requests a ', ' unless otherwise noted.', ') on a ', '), ', ', ', ', is an ', ', often abbreviated as ', ', the most used browsers worldwide are ', '.', '. When a ', '1', '2', '3', '4', '500px-Safari_15.png?utm_source=en.wikipedia', 'A ', 'A web browser (', 'Article', 'As of 2026', 'Browser market', 'Browsers are used on a range of devices, including ', 'CC BY-SA 4.0', 'Code of Conduct', 'Contact Wikipedia', 'Content is available under ', 'Cookie statement'])_ | | |
+| `test_settings_back_from_nested_no_crash` | Back from a nested settings screen (Appearance > Portrait) pops the nested screen back to the parent and keeps back usable until it exits, without crashing or getting stuck | ✅ pass ⏸ | 40.2s |

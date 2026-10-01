@@ -17,6 +17,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.core.view.doOnLayout
 import androidx.fragment.app.Fragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -55,6 +56,16 @@ class SettingsActivity : ThemedSettingsActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         Timber.d("$ihs : onCreate")
         super.onCreate(savedInstanceState)
+        // Since targetSdk 36 the system back is dispatched through the
+        // OnBackPressedDispatcher and no longer calls onBackPressed(); without
+        // this callback a back gesture would finish the activity even when a
+        // nested settings fragment (e.g. Look & Feel > Portrait) still needs
+        // its breadcrumb popped first.
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                doOnBackPressed()
+            }
+        })
         setContentView(R.layout.activity_settings)
 
         responsive = ResponsiveSettingsFragment()
@@ -226,15 +237,27 @@ class SettingsActivity : ThemedSettingsActivity() {
         // Deploy workaround to make sure we exit this activity when user hits back from top level fragments
         // You can reproduce that issue by disabling that workaround and going in a nested settings fragment such as Look & Feel > Portrait
         // Then hit back button twice won't exit the settings activity. You can't exit the settings activity anymore.
-        val doFinish = (responsive.childFragmentManager.backStackEntryCount==0 && (!responsive.slidingPaneLayout.isOpen || !responsive.slidingPaneLayout.isSlideable))
-        //val doFinish = !responsive.slidingPaneLayout.isOpen
-        super.onBackPressed()
-        if (doFinish) {
-            finish()
-        } else {
-            // Do not update title if we exit the activity to avoid showing broken title before exit
-            responsive.popBreadcrumbs()
-            updateTitleOnLayout()
+        val childStack = responsive.childFragmentManager
+        when {
+            // A nested settings fragment (e.g. Look & Feel > Portrait) is on the
+            // back stack: pop it so its screen is actually replaced, not just the
+            // title crumb (before this, back only called popBreadcrumbs() and the
+            // nested screen stayed visible, so back could never exit the activity).
+            childStack.backStackEntryCount > 0 -> {
+                childStack.popBackStack()
+                responsive.popBreadcrumbs()
+                updateTitleOnLayout()
+            }
+            // No nested fragment: exit only when the detail pane is closed or the
+            // layout is single-pane (not slideable).
+            !responsive.slidingPaneLayout.isOpen || !responsive.slidingPaneLayout.isSlideable -> {
+                finish()
+            }
+            else -> {
+                // Dual-pane, top-level detail shown in the side pane: close it.
+                responsive.slidingPaneLayout.closePane()
+                updateTitleOnLayout()
+            }
         }
     }
 

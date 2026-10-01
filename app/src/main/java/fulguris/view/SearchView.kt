@@ -152,17 +152,31 @@ class SearchView @JvmOverloads constructor(
         // ESC and BACK follow the same two-stage exit: keyboard first, then cancel editing.
         if ((keyCode == KeyEvent.KEYCODE_BACK || keyCode == KeyEvent.KEYCODE_ESCAPE) && isEditing) {
             if (event.action == KeyEvent.ACTION_UP) {
-                if (isKeyboardShown) {
-                    // First press hides the keyboard, keeping the suggestion popup.
-                    hideKeyboard()
-                } else {
-                    // Second press cancels the edition.
-                    cancelEditing()
-                }
+                performBackAction()
             }
             return true
         }
         return super.onKeyPreIme(keyCode, event)
+    }
+
+    /**
+     * One step of the two-stage edit-mode back exit: the first call hides the
+     * keyboard (keeping the suggestion popup), the second cancels the edition.
+     * No-op while not editing. Called both for the BACK/ESC key (onKeyPreIme)
+     * and for the system back gesture (the gesture produces no key events, so
+     * the host activity's OnBackPressedCallback routes here instead).
+     */
+    fun performBackAction() {
+        if (!isEditing) {
+            return
+        }
+        if (isKeyboardShown) {
+            // First press hides the keyboard, keeping the suggestion popup.
+            hideKeyboard()
+        } else {
+            // Second press cancels the edition.
+            cancelEditing()
+        }
     }
 
     private fun isConfirmKey(keyCode: Int): Boolean =

@@ -55,15 +55,17 @@ import cursor_tests
 import rotation_tests
 import settings_tests
 import toolbar_hide_tests
+import back_tests
 
 # All tests across every suite, plus a merged description map for the reports.
 ALL_TESTS = (suite.ALL_TESTS + smoke_tests.ALL_TESTS + cursor_tests.ALL_TESTS
              + rotation_tests.ALL_TESTS + settings_tests.ALL_TESTS
-             + toolbar_hide_tests.ALL_TESTS)
+             + toolbar_hide_tests.ALL_TESTS + back_tests.ALL_TESTS)
 TEST_DESCRIPTIONS = {**suite.TEST_DESCRIPTIONS, **smoke_tests.TEST_DESCRIPTIONS,
                      **cursor_tests.TEST_DESCRIPTIONS, **rotation_tests.TEST_DESCRIPTIONS,
                      **settings_tests.TEST_DESCRIPTIONS,
-                     **toolbar_hide_tests.TEST_DESCRIPTIONS}
+                     **toolbar_hide_tests.TEST_DESCRIPTIONS,
+                     **back_tests.TEST_DESCRIPTIONS}
 
 # Named feature groups that can be run as a subset via --group. url_field_tests has no groups of
 # its own; cursor_tests defines the cursor feature groups. "cursor" is a convenience alias for all
@@ -74,6 +76,7 @@ FEATURE_GROUPS["cursor"] = cursor_tests.ALL_TESTS
 FEATURE_GROUPS.update(rotation_tests.FEATURE_GROUPS)
 FEATURE_GROUPS.update(settings_tests.FEATURE_GROUPS)
 FEATURE_GROUPS.update(toolbar_hide_tests.FEATURE_GROUPS)
+FEATURE_GROUPS.update(back_tests.FEATURE_GROUPS)
 FEATURE_GROUPS["all"] = ALL_TESTS
 
 

@@ -44,6 +44,7 @@ import android.widget.*
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.ImageView
 import android.widget.TextView.OnEditorActionListener
+import androidx.activity.OnBackPressedCallback
 import androidx.annotation.ColorInt
 import androidx.annotation.IdRes
 import androidx.annotation.RequiresApi
@@ -382,6 +383,22 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         Timber.v("onCreate")
         // Need to go first to inject our components
         super.onCreate(savedInstanceState)
+        // Since targetSdk 36 the system back gesture is dispatched through the
+        // OnBackPressedDispatcher and no longer calls onBackPressed(); without
+        // this callback the gesture would finish the activity (send it to the
+        // background) instead of navigating the current tab back. While the URL
+        // field is being edited the two-stage exit (hide keyboard, then cancel
+        // the edition) normally happens in SearchView.onKeyPreIme, but the
+        // gesture produces no key events, so route it here instead.
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (searchView.isEditing) {
+                    searchView.performBackAction()
+                } else {
+                    doBackAction()
+                }
+            }
+        })
         // Check if terms have been accepted
         if (!userPreferences.acceptTerms) {
             // Show app introduction for first-time users
@@ -3948,7 +3965,10 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
                 }
             } else {
                 Timber.d("This shouldn't happen ever")
-                super.onBackPressed()
+                // finish() directly: super.onBackPressed() would route back
+                // through the OnBackPressedDispatcher into our own callback
+                // (infinite recursion) on API 35+.
+                finish()
             }
         }
     }

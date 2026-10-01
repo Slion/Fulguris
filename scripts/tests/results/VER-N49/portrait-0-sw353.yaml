@@ -1,0 +1,46 @@
+# Fulguris UI test run — VER-N49 · portrait-0-sw353
+timestamp: '2026-10-01T10:27:47+00:00'
+device:
+  model: VER-N49
+  brand: Honor
+  product_name: VER-N49
+  android: '16'
+config:
+  id: portrait-0-sw353
+  orientation: portrait
+  rotation: 0
+  smallest_width_dp: 353
+package: net.slions.fulguris.full.agent.debug
+options:
+  restart: false
+  keep_tabs: false
+  orientation: null
+  test_filter: null
+  group: smoke
+summary:
+  passed: 5
+  failed: 0
+  total: 5
+  ran: 5
+  duration_s: 33.4
+tests:
+- name: test_smoke_launch
+  status: pass
+  duration_s: 2.5
+  ran: true
+- name: test_smoke_open_website
+  status: pass
+  duration_s: 10.5
+  ran: true
+- name: test_smoke_open_settings
+  status: pass
+  duration_s: 7.4
+  ran: true
+- name: test_smoke_background_app_switch
+  status: pass
+  duration_s: 6.0
+  ran: true
+- name: test_smoke_background_home
+  status: pass
+  duration_s: 5.9
+  ran: true
