@@ -4374,7 +4374,11 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
      */
     fun updateToolBarText() {
 
-        if (!searchView.hasFocus()) {
+        // Leave the text alone only while the user is actively editing the field (cursor +
+        // keyboard + suggestions). When the field merely has *navigation* focus it is showing
+        // the current tab's label, so a title/url change must refresh it — otherwise the label
+        // goes stale (e.g. stuck on "New tab" after a cold-start link, issue #694).
+        if (!searchView.isEditing) {
 
             val text = getHeaderInfoText(userPreferences.toolbarLabel)
             Timber.i("updateToolBarText: $text")

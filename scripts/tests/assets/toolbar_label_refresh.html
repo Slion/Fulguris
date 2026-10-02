@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LBL-BEGIN</title>
+<script>
+  // Change the document title after a short, deterministic delay. Fulguris mirrors the
+  // title into the toolbar/address label via onTabChangedTitle, so this exercises a live
+  // title change while the test holds the address field in navigation focus.
+  // Regression for https://github.com/Slion/Fulguris/issues/694 (stale toolbar label).
+  setTimeout(function () { document.title = "LBL-END"; }, 15000);
+</script>
+</head>
+<body>
+  <h1>Toolbar label refresh target</h1>
+  <p>The page title changes from LBL-BEGIN to LBL-END after 4 seconds.</p>
+</body>
+</html>

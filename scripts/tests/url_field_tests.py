@@ -15,6 +15,10 @@ import time
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 from framework import keys
 
+# The label-refresh test serves a local page over an adb reverse tunnel, reusing the
+# asset server the cursor/intent suites already define.
+from cursor_tests import PORT, _ensure_reverse, _ensure_server
+
 OUT_DIR = os.path.join(os.path.dirname(__file__), "out")
 
 
@@ -32,6 +36,19 @@ def _enter_edit(device) -> None:
     """Focus for navigation then press center to enter edit mode."""
     _focus_field_for_navigation(device)
     device.key(keys.DPAD_CENTER, wait=0.8)
+
+
+def _wait_for_label(device, expected: str, timeout: float = 20.0) -> str:
+    """Poll until the address field shows ``expected`` (the current tab's label).
+
+    Returns the final field text so the caller can build a precise failure message.
+    """
+    deadline = time.time() + timeout
+    text = device.field_text()
+    while expected not in text and time.time() < deadline:
+        time.sleep(0.4)
+        text = device.field_text()
+    return text
 
 
 def _reset(device, restart: bool | None = None) -> None:
@@ -73,6 +90,40 @@ def test_navigation_shows_label_not_url(device, ctx: dict) -> None:
     nav_text = device.field_text()
     assert nav_text == label, f"navigation should keep showing the label '{label}', got '{nav_text}'"
     assert not nav_text.lower().startswith("http"), "navigation should show the label, not the URL"
+
+
+def test_toolbar_label_refreshes_while_field_focused(device, ctx: dict) -> None:
+    """A live title change must update the address label even while the field is focused.
+
+    Regression for https://github.com/Slion/Fulguris/issues/694: the address bar showed a
+    stale label (e.g. "New tab") because ``updateToolBarText()`` skipped the refresh whenever
+    the field had *any* focus, including the navigation focus that is not editing. The field
+    shows the label in every non-editing state, so a title change must always refresh it.
+
+    We serve a page whose ``document.title`` changes from LBL-BEGIN to LBL-END after 4 s,
+    focus the field for navigation (no keyboard), and require the label to follow the change.
+    """
+    _ensure_server()
+    _ensure_reverse(device)
+    url = "http://localhost:%d/toolbar_label_refresh.html?cb=%d" % (
+        PORT, int(time.time() * 1000))
+    device.navigate(url)
+    text = _wait_for_label(device, "LBL-BEGIN")
+    assert "LBL-BEGIN" in text, f"page did not load / initial title not shown, got '{text}'"
+
+    # Focus the field for navigation (not editing): the label must still be visible.
+    _focus_field_for_navigation(device)
+    assert device.field_focused(), "field should be focused for navigation"
+    assert not device.ime_shown(), "navigation focus must not show the keyboard"
+    assert "LBL-BEGIN" in device.field_text(), \
+        f"navigation focus should show the current label, got '{device.field_text()}'"
+
+    # The title flips to LBL-END shortly after; the label must follow while the field
+    # is navigation-focused. On a broken build the refresh is skipped and it stays LBL-BEGIN.
+    text = _wait_for_label(device, "LBL-END", timeout=15.0)
+    assert "LBL-END" in text, (
+        "the address label did not follow the live title change while the field was "
+        "navigation-focused (stale label, issue #694): expected 'LBL-END', got %r" % text)
 
 
 def test_edit_shows_url(device, ctx: dict) -> None:
@@ -510,6 +561,7 @@ ALL_TESTS = [
     test_unfocused_shows_label,
     test_directional_focus_is_navigation_not_edit,
     test_navigation_shows_label_not_url,
+    test_toolbar_label_refreshes_while_field_focused,
     test_center_enters_edit_mode,
     test_edit_shows_url,
     test_dpad_edit_selects_all,
@@ -541,6 +593,7 @@ TEST_DESCRIPTIONS = {
     "test_unfocused_shows_label": "Unfocused address bar shows the page label, not the URL",
     "test_directional_focus_is_navigation_not_edit": "D-pad focus enters navigation mode without showing the keyboard",
     "test_navigation_shows_label_not_url": "Navigation focus keeps showing the label, not the URL",
+    "test_toolbar_label_refreshes_while_field_focused": "A live title change updates the label even while the field is navigation-focused (#694)",
     "test_center_enters_edit_mode": "D-pad center/enter enters edit mode and shows the keyboard",
     "test_edit_shows_url": "Edit mode shows the URL, not the label",
     "test_dpad_edit_selects_all": "Entering edit via D-pad selects all, so typing replaces the URL",
