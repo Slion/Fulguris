@@ -936,12 +936,11 @@ class WebPageClient(
                     // Query for all apps that can handle this intent
                     val allResolveInfos = packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY)
 
-                    // Filter to get specialized apps (non-browser apps)
+                    // Filter to get specialized apps (non-browser apps), using the same
+                    // criteria as IntentUtils.isSpecializedHandlerAvailable
+                    val url = intent.data
                     val specializedApps = allResolveInfos.filter { info ->
-                        val filter = info.filter
-                        // Look for apps with specific schemes or data authorities (specialized apps)
-                        filter != null && (filter.countDataAuthorities() > 0 ||
-                                (filter.countDataSchemes() > 0 && !filter.hasDataScheme("http") && !filter.hasDataScheme("https")))
+                        info.filter?.isSpecializedFor(url) ?: false
                     }
 
                     // Use specialized apps if available, otherwise use all

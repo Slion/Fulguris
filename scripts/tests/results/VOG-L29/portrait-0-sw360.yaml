@@ -1,5 +1,5 @@
 # Fulguris UI test run — VOG-L29 · portrait-0-sw360
-timestamp: '2026-10-02T09:58:38+00:00'
+timestamp: '2026-10-02T13:17:16+00:00'
 device:
   model: VOG-L29
   brand: Huawei
@@ -15,16 +15,24 @@ options:
   restart: false
   keep_tabs: false
   orientation: null
-  test_filter: null
-  group: downloads
+  test_filter: launch_dialog
+  group: null
 summary:
-  passed: 1
+  passed: 3
   failed: 0
-  total: 1
-  ran: 1
-  duration_s: 35.5
+  total: 3
+  ran: 2
+  duration_s: 115.5
 tests:
 - name: test_downloads_sheet_survives_active_download
   status: pass
   duration_s: 34.2
+  ran: false
+- name: test_no_launch_dialog_for_plain_site
+  status: pass
+  duration_s: 94.6
+  ran: true
+- name: test_launch_dialog_for_specialized_handler
+  status: pass
+  duration_s: 19.7
   ran: true

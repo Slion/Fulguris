@@ -2,6 +2,7 @@ package fulguris.utils
 
 import android.app.Activity
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.net.MailTo
 import android.net.Uri
@@ -151,17 +152,51 @@ import java.util.regex.Pattern
                 ?: // No intent filter matches this intent?
                 // Error on the side of staying in the browser, ignore
                 continue
-            // NOTICE: Use of && instead of || will cause the browser
-            // to launch a new intent for every URL, using OR only
-            // launches a new one if there is a non-browser app that
-            // can handle it.
-            // Previously we checked the number of data paths, but it is unnecessary
-            // filter.countDataAuthorities() == 0 || filter.countDataPaths() == 0
-            if (filter.countDataAuthorities() == 0) {
-                // Generic handler, skip
-                continue
+            if (filter.isSpecializedFor(intent.data)) {
+                return true
             }
-            return true
+        }
+        return false
+    }
+
+    /**
+     * Whether this intent filter is "specialized" for the given URL, i.e. it refers
+     * specifically to this URL rather than to URLs in general (a plain browser).
+     * Shared by [isSpecializedHandlerAvailable] (whether to ask the user at all) and
+     * by the app-launch dialog's app list so both make the same call.
+     *
+     * For web URLs (http/https) a filter only counts when at least one of its data
+     * authorities actually refers to the URL's host: a filter that merely matched
+     * the URL can still declare unrelated or wildcard authorities (e.g. a browser
+     * whose filter also covers a custom scheme, or a wildcard authority that matches
+     * any host), which would otherwise make every site look launchable.
+     * See https://github.com/Slion/Fulguris/issues/542
+     *
+     * For non-web URLs (mailto, custom schemes) there is no host to match against,
+     * so any declared data authority, or any non-web data scheme, counts.
+     */
+    internal fun IntentFilter.isSpecializedFor(url: Uri?): Boolean {
+        url?.scheme?.lowercase()?.let { scheme ->
+            if (scheme == "http" || scheme == "https") {
+                return hasAuthorityMatchingHost(url.host)
+            }
+        }
+        return countDataAuthorities() > 0 ||
+                (countDataSchemes() > 0 && !hasDataScheme("http") && !hasDataScheme("https"))
+    }
+
+    private fun IntentFilter.hasAuthorityMatchingHost(host: String?): Boolean {
+        if (host.isNullOrEmpty()) return false
+        val target = host.lowercase()
+        val count = countDataAuthorities()
+        for (i in 0 until count) {
+            val authority = getDataAuthority(i)?.host ?: continue
+            val base = authority.lowercase().removePrefix(".")
+            if (base.isNotEmpty() &&
+                (target == base || target.endsWith(".$base"))
+            ) {
+                return true
+            }
         }
         return false
     }

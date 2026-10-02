@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>redirecting</title>
+<meta http-equiv="refresh" content="0;url=https://play.google.com/store/apps/details?id=com.google.android.apps.maps">
+</head>
+<body>
+Redirecting to the Play Store…
+<script>
+// The redirect (not the initial load) is what fires shouldOverrideUrlLoading,
+// which is where the launch-app decision happens.
+window.location.replace("https://play.google.com/store/apps/details?id=com.google.android.apps.maps");
+</script>
+</body>
+</html>

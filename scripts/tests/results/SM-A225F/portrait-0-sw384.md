@@ -1,11 +1,11 @@
 # Test run — SM-A225F · portrait-0-sw384
 
-- **When:** 2026-10-02T09:59:18+00:00
+- **When:** 2026-10-02T13:07:19+00:00
 - **Device:** Galaxy A22 5G (Samsung SM-A225F) — Android 13
 - **Config:** portrait, rotation 0°, smallest width 384dp
 - **Package:** `net.slions.fulguris.full.agent.debug`
 - **Options:** restart=False, keep_tabs=False, orientation=default, filter=all
-- **Result:** 65/68 passed in 39.7s (1 ran, 67 carried forward)
+- **Result:** 67/70 passed in 145.7s (2 ran, 68 carried forward)
 
 | Test | Description | Result | Duration |
 |---|---|---|---|
@@ -79,4 +79,6 @@
 | `test_back_last_tab_stays_foreground` | Back on the last tab closes it (start page), not finish the app | ✅ pass ⏸ | 25.3s |
 | `test_back_editing_two_stage_exit` | Back while editing the URL field: first press hides the keyboard, second press cancels back to the label | ✅ pass ⏸ | 31.3s |
 | `test_settings_back_from_nested_no_crash` | Back from a nested settings screen (Appearance > Portrait) pops the nested screen back to the parent and keeps back usable until it exits, without crashing or getting stuck | ✅ pass ⏸ | 40.2s |
-| `test_downloads_sheet_survives_active_download` | Opening the downloads sheet while a download is in progress must not crash the app (regression: NoSuchMethodError in ContentObserver, issue #802) | ✅ pass | 38.7s |
+| `test_downloads_sheet_survives_active_download` | Opening the downloads sheet while a download is in progress must not crash the app (regression: NoSuchMethodError in ContentObserver, issue #802) | ✅ pass ⏸ | 38.7s |
+| `test_no_launch_dialog_for_plain_site` | Typing a plain https site shows no 'Launch third-party app?' dialog (EMUI wildcard-authority regression, #542). | ✅ pass | 119.4s |
+| `test_launch_dialog_for_specialized_handler` | A Play Store details URL still shows the launch dialog listing the Play Store (the #542 host-matching fix must not over-filter real specialized handlers). | ✅ pass | 25.3s |

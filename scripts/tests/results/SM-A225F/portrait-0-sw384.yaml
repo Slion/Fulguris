@@ -1,5 +1,5 @@
 # Fulguris UI test run — SM-A225F · portrait-0-sw384
-timestamp: '2026-10-02T09:59:18+00:00'
+timestamp: '2026-10-02T13:07:19+00:00'
 device:
   model: SM-A225F
   brand: Samsung
@@ -16,13 +16,13 @@ options:
   keep_tabs: false
   orientation: null
   test_filter: null
-  group: downloads
+  group: intent
 summary:
-  passed: 65
+  passed: 67
   failed: 3
-  total: 68
-  ran: 1
-  duration_s: 39.7
+  total: 70
+  ran: 2
+  duration_s: 145.7
 tests:
 - name: test_cursor_click_hover_fires_mouseover
   status: fail
@@ -298,4 +298,12 @@ tests:
 - name: test_downloads_sheet_survives_active_download
   status: pass
   duration_s: 38.7
+  ran: false
+- name: test_no_launch_dialog_for_plain_site
+  status: pass
+  duration_s: 119.4
+  ran: true
+- name: test_launch_dialog_for_specialized_handler
+  status: pass
+  duration_s: 25.3
   ran: true
