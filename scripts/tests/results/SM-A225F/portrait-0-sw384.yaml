@@ -1,5 +1,5 @@
 # Fulguris UI test run — SM-A225F · portrait-0-sw384
-timestamp: '2026-10-01T11:17:34+00:00'
+timestamp: '2026-10-02T09:59:18+00:00'
 device:
   model: SM-A225F
   brand: Samsung
@@ -15,14 +15,14 @@ options:
   restart: false
   keep_tabs: false
   orientation: null
-  test_filter: test_back_two_stage_keyboard_then_cancel
-  group: null
+  test_filter: null
+  group: downloads
 summary:
-  passed: 64
-  failed: 4
+  passed: 65
+  failed: 3
   total: 68
   ran: 1
-  duration_s: 27.4
+  duration_s: 39.7
 tests:
 - name: test_cursor_click_hover_fires_mouseover
   status: fail
@@ -88,7 +88,7 @@ tests:
 - name: test_back_two_stage_keyboard_then_cancel
   status: pass
   duration_s: 26.4
-  ran: true
+  ran: false
 - name: test_back_from_navigation_returns_to_web
   status: pass
   duration_s: 17.3
@@ -291,13 +291,11 @@ tests:
   status: pass
   duration_s: 31.3
   ran: false
-- name: test_settings_back_nested_pops_not_finish
-  status: fail
-  duration_s: 55.2
-  message: 'back from the nested screen did not pop back to Appearance (nodes: ['' '', '' (~16%), '', '' (~2%), '', '' (~2%), and '', '' (~2%).'', '' (~5%), '', '' (~69% '', '' As of 2023, an estimated 5.4 billion people had used a browser.'', '' and '', " and then displays the page on the user''s screen. Browsers can also display content stored locally on the user''s device.", '' displaying the '', '' for accessing '', '' from a '', '' from a particular website, the browser retrieves its '', '' requests a '', '' unless otherwise noted.'', '') on a '', ''), '', '', '', '', is an '', '', often abbreviated as '', '', the most used browsers worldwide are '', ''.'', ''. When a '', ''1'', ''2'', ''3'', ''4'', ''500px-Safari_15.png?utm_source=en.wikipedia'', ''A '', ''A web browser ('', ''Article'', ''As of 2026'', ''Browser market'', ''Browsers are used on a range of devices, including '', ''CC BY-SA 4.0'', ''Code of Conduct'', ''Contact Wikipedia'', ''Content is available under '', ''Cookie
-    statement''])'
-  ran: false
 - name: test_settings_back_from_nested_no_crash
   status: pass
   duration_s: 40.2
   ran: false
+- name: test_downloads_sheet_survives_active_download
+  status: pass
+  duration_s: 38.7
+  ran: true

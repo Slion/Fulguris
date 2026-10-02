@@ -5709,6 +5709,11 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
          */
         const val INTENT_OPEN_CONFIGURATION = "fulguris.action.OPEN_CONFIGURATION"
 
+        /**
+         * Custom action to open the downloads bottom sheet (see [openDownloads]).
+         */
+        const val INTENT_OPEN_DOWNLOADS = "fulguris.action.OPEN_DOWNLOADS"
+
         private const val FILE_CHOOSER_REQUEST_CODE = 1111
 
         // Constant

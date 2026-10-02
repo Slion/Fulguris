@@ -1,11 +1,11 @@
 # Test run — SM-A225F · portrait-0-sw384
 
-- **When:** 2026-10-01T11:17:34+00:00
+- **When:** 2026-10-02T09:59:18+00:00
 - **Device:** Galaxy A22 5G (Samsung SM-A225F) — Android 13
 - **Config:** portrait, rotation 0°, smallest width 384dp
 - **Package:** `net.slions.fulguris.full.agent.debug`
-- **Options:** restart=False, keep_tabs=False, orientation=default, filter=test_back_two_stage_keyboard_then_cancel
-- **Result:** 64/68 passed in 27.4s (1 ran, 67 carried forward)
+- **Options:** restart=False, keep_tabs=False, orientation=default, filter=all
+- **Result:** 65/68 passed in 39.7s (1 ran, 67 carried forward)
 
 | Test | Description | Result | Duration |
 |---|---|---|---|
@@ -25,7 +25,7 @@
 | `test_edit_shows_url` | Edit mode shows the URL, not the label | ✅ pass ⏸ | 13.7s |
 | `test_dpad_edit_selects_all` | Entering edit via D-pad selects all, so typing replaces the URL | ✅ pass ⏸ | 17.7s |
 | `test_type_and_validate_navigates` | Typing a URL and pressing enter navigates and returns focus to the web view | ✅ pass ⏸ | 18.1s |
-| `test_back_two_stage_keyboard_then_cancel` | First back hides the keyboard, second back cancels back to the label | ✅ pass | 26.4s |
+| `test_back_two_stage_keyboard_then_cancel` | First back hides the keyboard, second back cancels back to the label | ✅ pass ⏸ | 26.4s |
 | `test_back_from_navigation_returns_to_web` | Back from navigation focus returns to the web view | ✅ pass ⏸ | 17.3s |
 | `test_down_from_navigation_returns_to_web` | D-pad down from navigation focus leaves the field for the web view | ✅ pass ⏸ | 16.0s |
 | `test_suggestions_navigable_without_touch` | Suggestions popup can be navigated and opened with D-pad only | ✅ pass ⏸ | 20.6s |
@@ -78,6 +78,5 @@
 | `test_back_two_tabs_keeps_foreground` | Back with a tab to close closes the top tab, not finish the app (regression: predictive back bypassing onBackPressed) | ✅ pass ⏸ | 39.1s |
 | `test_back_last_tab_stays_foreground` | Back on the last tab closes it (start page), not finish the app | ✅ pass ⏸ | 25.3s |
 | `test_back_editing_two_stage_exit` | Back while editing the URL field: first press hides the keyboard, second press cancels back to the label | ✅ pass ⏸ | 31.3s |
-| `test_settings_back_nested_pops_not_finish` | Renamed to test_settings_back_from_nested_no_crash | ❌ fail ⏸ | 55.2s |
-| | _back from the nested screen did not pop back to Appearance (nodes: [' ', ' (~16%), ', ' (~2%), ', ' (~2%), and ', ' (~2%).', ' (~5%), ', ' (~69% ', ' As of 2023, an estimated 5.4 billion people had used a browser.', ' and ', " and then displays the page on the user's screen. Browsers can also display content stored locally on the user's device.", ' displaying the ', ' for accessing ', ' from a ', ' from a particular website, the browser retrieves its ', ' requests a ', ' unless otherwise noted.', ') on a ', '), ', ', ', ', is an ', ', often abbreviated as ', ', the most used browsers worldwide are ', '.', '. When a ', '1', '2', '3', '4', '500px-Safari_15.png?utm_source=en.wikipedia', 'A ', 'A web browser (', 'Article', 'As of 2026', 'Browser market', 'Browsers are used on a range of devices, including ', 'CC BY-SA 4.0', 'Code of Conduct', 'Contact Wikipedia', 'Content is available under ', 'Cookie statement'])_ | | |
 | `test_settings_back_from_nested_no_crash` | Back from a nested settings screen (Appearance > Portrait) pops the nested screen back to the parent and keeps back usable until it exits, without crashing or getting stuck | ✅ pass ⏸ | 40.2s |
+| `test_downloads_sheet_survives_active_download` | Opening the downloads sheet while a download is in progress must not crash the app (regression: NoSuchMethodError in ContentObserver, issue #802) | ✅ pass | 38.7s |

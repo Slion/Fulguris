@@ -707,6 +707,13 @@ def find_node(serial: str, id_suffix: str) -> Node | None:
     return None
 
 
+def find_node_by_text(serial: str, text: str) -> Node | None:
+    for n in nodes(serial):
+        if n.text == text:
+            return n
+    return None
+
+
 def field_node(serial: str) -> Node | None:
     return find_node(serial, ":id/search")
 

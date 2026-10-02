@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import os
 import sys
+import time
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "tools"))
 import adb
@@ -101,6 +102,9 @@ class AndroidDevice(Device):
     def start_component(self, component: str, action: str | None = None, wait: float = 2.0) -> None:
         adb.start_component(self.serial, component, action, wait)
 
+    def logcat(self, grep: str, clear: bool = False) -> str:
+        return adb.logcat(self.serial, grep, clear=clear)
+
     def force_stop(self) -> None:
         adb.force_stop(self.serial, self._package)
 
@@ -135,6 +139,20 @@ class AndroidDevice(Device):
 
     def find_node(self, id_suffix: str) -> Node | None:
         return adb.find_node(self.serial, id_suffix)
+
+    def tap_text(self, text: str, timeout: float = 10.0) -> bool:
+        """Tap the node whose text exactly equals ``text``; False if it never appears."""
+        deadline = time.time() + timeout
+        while True:
+            n = adb.find_node_by_text(self.serial, text)
+            if n and n.bounds:
+                x = (n.bounds[0] + n.bounds[2]) // 2
+                y = (n.bounds[1] + n.bounds[3]) // 2
+                self.tap(x, y)
+                return True
+            if time.time() >= deadline:
+                return False
+            time.sleep(0.5)
 
     def field_node(self) -> Node | None:
         return adb.field_node(self.serial)

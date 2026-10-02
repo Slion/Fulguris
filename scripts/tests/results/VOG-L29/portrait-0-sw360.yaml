@@ -1,0 +1,30 @@
+# Fulguris UI test run — VOG-L29 · portrait-0-sw360
+timestamp: '2026-10-02T09:58:38+00:00'
+device:
+  model: VOG-L29
+  brand: Huawei
+  product_name: VOG-L29
+  android: '10'
+config:
+  id: portrait-0-sw360
+  orientation: portrait
+  rotation: 0
+  smallest_width_dp: 360
+package: net.slions.fulguris.full.agent.debug
+options:
+  restart: false
+  keep_tabs: false
+  orientation: null
+  test_filter: null
+  group: downloads
+summary:
+  passed: 1
+  failed: 0
+  total: 1
+  ran: 1
+  duration_s: 35.5
+tests:
+- name: test_downloads_sheet_survives_active_download
+  status: pass
+  duration_s: 34.2
+  ran: true

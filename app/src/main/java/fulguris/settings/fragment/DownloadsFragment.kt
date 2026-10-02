@@ -10,6 +10,7 @@ import android.content.IntentFilter
 import android.database.Cursor
 import android.net.Uri
 import android.os.Build
+import androidx.annotation.RequiresApi
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -71,15 +72,28 @@ class DownloadsFragment : PreferenceFragmentCompat() {
     }
 
     // ContentObserver to detect changes in DownloadManager database (new downloads, status changes)
+    //
+    // NOTE (GitHub issue #802): never call super.onChange(...) from here. On some Android 10
+    // devices (e.g. Huawei/EMUI) the framework's ContentObserver is missing the 3-arg super
+    // method, so invoking it throws NoSuchMethodError the first time the observer fires.
+    // The 2-argument onChange(boolean, Uri) is the stable entry point of the dispatch chain on
+    // every API level: on API 29+ the framework's 3-arg/4-arg defaults forward into it, and on
+    // API < 29 the framework calls it directly. The 3-arg override below (API 29+) only exists
+    // to log the `flags` value and then delegates to it with a plain virtual call.
     private val downloadObserver = object : android.database.ContentObserver(handler) {
+        @RequiresApi(Build.VERSION_CODES.Q)
         override fun onChange(selfChange: Boolean, uri: Uri?, flags: Int) {
-            super.onChange(selfChange, uri, flags)
-
-            // Log all parameters
             Timber.d("Download database changed: selfChange=$selfChange, uri=$uri, flags=$flags")
+            // Virtual call into our own 2-arg override — no super involved (see note above).
+            onChange(selfChange, uri)
+        }
 
-            // We a download is removed we get:
-            // Download database changed: selfChange=false, uri=content://downloads/all_downloads, flags=1
+        override fun onChange(selfChange: Boolean, uri: Uri?) {
+            // Log all parameters
+            Timber.d("Download database changed: selfChange=$selfChange, uri=$uri")
+
+            // When a download is removed we get:
+            // Download database changed: selfChange=false, uri=content://downloads/all_downloads
 
             // Only process if fragment is visible/resumed
             if (!isResumed) {

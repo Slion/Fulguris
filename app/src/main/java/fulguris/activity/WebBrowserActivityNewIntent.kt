@@ -55,6 +55,13 @@ fun WebBrowserActivity.doOnNewIntent(aIntent: Intent?, aIncognitoStartup: Boolea
         return
     }
 
+    // Custom action that does not carry a URL: open the downloads bottom sheet
+    // (same intent-consumption path as INTENT_OPEN_CONFIGURATION above).
+    if (aIntent?.action == WebBrowserActivity.INTENT_OPEN_DOWNLOADS) {
+        openDownloads()
+        return
+    }
+
     var subject: String = app.getString(R.string.unknown)
 
     // Obtain a URL from the intent

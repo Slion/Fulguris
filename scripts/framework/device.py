@@ -173,6 +173,20 @@ class Device(abc.ABC):
     def find_node(self, id_suffix: str) -> Node | None:
         ...
 
+    def tap_text(self, text: str, timeout: float = 10.0) -> bool:
+        """Tap the node whose text exactly equals ``text``. Returns False if none appears before the timeout."""
+        import time
+
+        deadline = time.time() + timeout
+        while True:
+            for n in self.nodes():
+                if n.text == text and n.bounds:
+                    self.tap((n.bounds[0] + n.bounds[2]) // 2, (n.bounds[1] + n.bounds[3]) // 2)
+                    return True
+            if time.time() >= deadline:
+                return False
+            time.sleep(0.5)
+
     @abc.abstractmethod
     def field_node(self) -> Node | None:
         ...
@@ -226,6 +240,14 @@ class Device(abc.ABC):
     @abc.abstractmethod
     def screenshot(self, path: str) -> None:
         ...
+
+    @abc.abstractmethod
+    def logcat(self, grep: str, clear: bool = False) -> str:
+        """Dump the device log, keeping only lines containing ``grep``.
+
+        With ``clear`` the log is wiped first, so the result is exactly what was
+        logged since the call — used to prove a code path ran (or crashed).
+        """
 
     # --- orientation -------------------------------------------------------
 
