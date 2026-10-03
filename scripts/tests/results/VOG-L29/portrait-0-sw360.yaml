@@ -1,5 +1,5 @@
 # Fulguris UI test run — VOG-L29 · portrait-0-sw360
-timestamp: '2026-10-02T21:28:44+00:00'
+timestamp: '2026-10-03T15:27:36+00:00'
 device:
   model: VOG-L29
   brand: Huawei
@@ -16,13 +16,13 @@ options:
   keep_tabs: false
   orientation: null
   test_filter: null
-  group: intent-send
+  group: empty-tab
 summary:
-  passed: 12
+  passed: 21
   failed: 0
-  total: 12
-  ran: 6
-  duration_s: 82.4
+  total: 21
+  ran: 4
+  duration_s: 110.9
 tests:
 - name: test_downloads_sheet_survives_active_download
   status: pass
@@ -51,24 +51,60 @@ tests:
 - name: test_view_cold_start_new_tab
   status: pass
   duration_s: 15.3
-  ran: true
+  ran: false
 - name: test_view_warm_start_new_tab
   status: pass
   duration_s: 10.8
-  ran: true
+  ran: false
 - name: test_send_url_new_tab
   status: pass
   duration_s: 10.9
-  ran: true
+  ran: false
 - name: test_send_plain_text_no_new_tab
   status: pass
   duration_s: 10.9
-  ran: true
+  ran: false
 - name: test_web_search_new_tab
   status: pass
   duration_s: 13.3
-  ran: true
+  ran: false
 - name: test_open_document_file_url
   status: pass
   duration_s: 14.9
+  ran: false
+- name: test_empty_tab_back_key_backgrounds_app
+  status: pass
+  duration_s: 8.8
+  ran: true
+- name: test_smoke_launch
+  status: pass
+  duration_s: 2.3
+  ran: false
+- name: test_smoke_open_website
+  status: pass
+  duration_s: 10.7
+  ran: false
+- name: test_smoke_open_settings
+  status: pass
+  duration_s: 6.8
+  ran: false
+- name: test_smoke_background_app_switch
+  status: pass
+  duration_s: 6.0
+  ran: false
+- name: test_smoke_background_home
+  status: pass
+  duration_s: 6.0
+  ran: false
+- name: test_empty_tab_shows_logo
+  status: pass
+  duration_s: 25.5
+  ran: true
+- name: test_empty_tab_menu_hides_tab_items
+  status: pass
+  duration_s: 49.0
+  ran: true
+- name: test_empty_tab_tabs_button_creates_tab
+  status: pass
+  duration_s: 25.2
   ran: true

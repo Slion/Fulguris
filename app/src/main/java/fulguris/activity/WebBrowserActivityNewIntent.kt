@@ -62,6 +62,26 @@ fun WebBrowserActivity.doOnNewIntent(aIntent: Intent?, aIncognitoStartup: Boolea
         return
     }
 
+    // Custom actions that do not carry a URL: close tabs (tests / debugging).
+    // Closing the last tab shows the no-tab empty state rather than exiting.
+    when (aIntent?.action) {
+        WebBrowserActivity.INTENT_CLOSE_TAB -> {
+            val position = tabsManager.indexOfCurrentTab()
+            if (position >= 0) {
+                tabsManager.deleteTab(position)
+            }
+            return
+        }
+        WebBrowserActivity.INTENT_CLOSE_ALL_TABS -> {
+            // Delete one tab at a time: closing the last tab shows the empty
+            // state and further deletions are no-ops.
+            while (tabsManager.size() > 0) {
+                tabsManager.deleteTab(0)
+            }
+            return
+        }
+    }
+
     var subject: String = app.getString(R.string.unknown)
 
     // Obtain a URL from the intent

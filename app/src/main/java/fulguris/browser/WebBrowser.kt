@@ -40,6 +40,12 @@ interface WebBrowser {
     fun closeBrowser()
 
     /**
+     * Called when the last tab is closed and there is no tab left to show.
+     * The browser stays alive: typically show an empty state (e.g. the app logo).
+     */
+    fun showNoTabs()
+
+    /**
      * Only called when the current tab just opened from an external app through ACTION_VIEW intent is closed
      * TODO: Rename that to something more explicit
      */

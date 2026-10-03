@@ -1,5 +1,5 @@
 # Fulguris UI test run — SM-A225F · portrait-0-sw384
-timestamp: '2026-10-02T21:30:50+00:00'
+timestamp: '2026-10-03T15:29:55+00:00'
 device:
   model: SM-A225F
   brand: Samsung
@@ -16,13 +16,13 @@ options:
   keep_tabs: false
   orientation: null
   test_filter: null
-  group: intent-send
+  group: empty-tab
 summary:
-  passed: 74
+  passed: 78
   failed: 3
-  total: 77
-  ran: 6
-  duration_s: 100.4
+  total: 81
+  ran: 4
+  duration_s: 135.0
 tests:
 - name: test_cursor_click_hover_fires_mouseover
   status: fail
@@ -159,23 +159,23 @@ tests:
   ran: false
 - name: test_smoke_launch
   status: pass
-  duration_s: 2.3
+  duration_s: 2.5
   ran: false
 - name: test_smoke_open_website
   status: pass
-  duration_s: 12.4
+  duration_s: 12.1
   ran: false
 - name: test_smoke_open_settings
   status: pass
-  duration_s: 7.5
+  duration_s: 7.9
   ran: false
 - name: test_smoke_background_app_switch
   status: pass
-  duration_s: 5.9
+  duration_s: 6.2
   ran: false
 - name: test_smoke_background_home
   status: pass
-  duration_s: 5.8
+  duration_s: 6.2
   ran: false
 - name: test_cursor_toggle_hotkey_shows_and_hides_overlay
   status: pass
@@ -314,24 +314,40 @@ tests:
 - name: test_view_cold_start_new_tab
   status: pass
   duration_s: 17.4
-  ran: true
+  ran: false
 - name: test_view_warm_start_new_tab
   status: pass
   duration_s: 14.6
-  ran: true
+  ran: false
 - name: test_send_url_new_tab
   status: pass
   duration_s: 14.5
-  ran: true
+  ran: false
 - name: test_send_plain_text_no_new_tab
   status: pass
   duration_s: 15.3
-  ran: true
+  ran: false
 - name: test_web_search_new_tab
   status: pass
   duration_s: 13.8
-  ran: true
+  ran: false
 - name: test_open_document_file_url
   status: pass
   duration_s: 19.9
+  ran: false
+- name: test_empty_tab_back_key_backgrounds_app
+  status: pass
+  duration_s: 10.0
+  ran: true
+- name: test_empty_tab_shows_logo
+  status: pass
+  duration_s: 34.4
+  ran: true
+- name: test_empty_tab_menu_hides_tab_items
+  status: pass
+  duration_s: 59.1
+  ran: true
+- name: test_empty_tab_tabs_button_creates_tab
+  status: pass
+  duration_s: 29.6
   ran: true

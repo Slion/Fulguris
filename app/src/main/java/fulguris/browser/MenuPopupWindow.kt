@@ -356,7 +356,34 @@ class MenuPopupWindow : PopupWindow {
 
         // Rules based on current tab state
         (contentView.context as WebBrowserActivity).tabsManager.let { tm ->
-            tm.currentTab?.let { tab ->
+            val tab = tm.currentTab
+            if (tab == null) {
+                // No tab open: hide every tab-specific item, since there is no
+                // page to operate on (users can move items between menus, so
+                // hide them regardless of which menu they currently live in).
+                // The "Web page" switcher itself is KEPT visible: the tab menu
+                // is user-configurable and may hold items that make sense with
+                // no tab, so it must stay reachable.
+                iBinding.menuItemPageHistory.isVisible = false
+                iBinding.menuItemDomainSettings.isVisible = false
+                iBinding.menuItemFind.isVisible = false
+                iBinding.menuItemPrint.isVisible = false
+                iBinding.menuItemReaderMode.isVisible = false
+                iBinding.menuItemDesktopMode.isVisible = false
+                iBinding.menuItemDarkMode.isVisible = false
+                iBinding.menuItemAddToHome.isVisible = false
+                iBinding.menuItemAddBookmark.isVisible = false
+                iBinding.menuItemShare.isVisible = false
+                iBinding.menuItemAdBlock.isVisible = false
+                iBinding.menuItemTranslate.isVisible = false
+                iBinding.menuItemPageRequests.isVisible = false
+                iBinding.menuItemConsole.isVisible = false
+                iBinding.menuItemCookies.isVisible = false
+                iBinding.menuItemForceReload.isVisible = false
+                iBinding.menuItemLaunchApp.isVisible = false
+                iBinding.menuItemPip.isVisible = false
+                iBinding.menuItemCursor.isVisible = false
+            } else {
                 val isSpecialUrl = tab.url.isSpecialUrl() || tab.url.isAppScheme()
 
                 // Hide certain items for special URLs (internal pages, about:, file:, etc.)

@@ -112,6 +112,28 @@
                                 android:clipChildren="true"
                                 android:animateLayoutChanges="false" />
 
+                            <!--
+                                                        Empty state shown when there is no tab open (the last one was
+                                                        closed): the large Fulguris logo on the empty background, as on
+                                                        the onboarding first screen. The address field (focused) is the
+                                                        way to get back in by typing a URL or search.
+                                                        -->
+                                                        <FrameLayout
+                                                            android:id="@+id/emptyTabsView"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="match_parent"
+                                                            android:background="?android:attr/colorBackground"
+                                                            android:visibility="gone"
+                                                            tools:visibility="visible">
+
+                                                            <ImageView
+                                                                android:layout_width="240dp"
+                                                                android:layout_height="240dp"
+                                                                android:layout_gravity="center"
+                                                                android:src="@drawable/ic_lightning_large"
+                                                                android:importantForAccessibility="no" />
+                                                        </FrameLayout>
+
                             <include layout="@layout/touch_tab_switcher"
                                 android:id="@+id/fabInclude" />
 

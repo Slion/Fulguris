@@ -1,11 +1,11 @@
 # Test run — SM-A225F · portrait-0-sw384
 
-- **When:** 2026-10-02T21:30:50+00:00
+- **When:** 2026-10-03T15:29:55+00:00
 - **Device:** Galaxy A22 5G (Samsung SM-A225F) — Android 13
 - **Config:** portrait, rotation 0°, smallest width 384dp
 - **Package:** `net.slions.fulguris.full.agent.debug`
 - **Options:** restart=False, keep_tabs=False, orientation=default, filter=all
-- **Result:** 74/77 passed in 100.4s (6 ran, 71 carried forward)
+- **Result:** 78/81 passed in 135.0s (4 ran, 77 carried forward)
 
 | Test | Description | Result | Duration |
 |---|---|---|---|
@@ -43,11 +43,11 @@
 | `test_short_page_shows_reload_button` | On a short non-scrollable page the reload button stays visible | ✅ pass ⏸ | 18.8s |
 | `test_reload_button_tracks_tab_on_ctrl_tab` | CTRL+TAB tab switch updates the reload button to match the tab | ✅ pass ⏸ | 36.2s |
 | `test_reload_button_tracks_tab_via_tab_menu` | Tab switch via the tab list drawer updates the reload button | ✅ pass ⏸ | 36.0s |
-| `test_smoke_launch` | The app launches and reaches the main browser UI in the foreground | ✅ pass ⏸ | 2.3s |
-| `test_smoke_open_website` | Navigating to a web site loads and the address bar shows its label | ✅ pass ⏸ | 12.4s |
-| `test_smoke_open_settings` | The settings activity opens via its component and renders its content | ✅ pass ⏸ | 7.5s |
-| `test_smoke_background_app_switch` | KEYCODE_APP_SWITCH backgrounds the app; launching brings it back to the front | ✅ pass ⏸ | 5.9s |
-| `test_smoke_background_home` | KEYCODE_HOME backgrounds the app; the activity intent brings it back to the front | ✅ pass ⏸ | 5.8s |
+| `test_smoke_launch` | The app launches and reaches the main browser UI in the foreground | ✅ pass ⏸ | 2.5s |
+| `test_smoke_open_website` | Navigating to a web site loads and the address bar shows its label | ✅ pass ⏸ | 12.1s |
+| `test_smoke_open_settings` | The settings activity opens via its component and renders its content | ✅ pass ⏸ | 7.9s |
+| `test_smoke_background_app_switch` | KEYCODE_APP_SWITCH backgrounds the app; launching brings it back to the front | ✅ pass ⏸ | 6.2s |
+| `test_smoke_background_home` | KEYCODE_HOME backgrounds the app; the activity intent brings it back to the front | ✅ pass ⏸ | 6.2s |
 | `test_cursor_toggle_hotkey_shows_and_hides_overlay` | Long-press play/pause toggles the cursor overlay on and off | ✅ pass ⏸ | 28.9s |
 | `test_cursor_toggle_exit_focuses_menu_button` | Turning the cursor off moves focus to the toolbar menu button | ✅ pass ⏸ | 28.4s |
 | `test_cursor_survives_options_sheet_dismiss` | Opening then dismissing the options bottom sheet does not leave the cursor suspended (resumes on sheet close) | ✅ pass ⏸ | 43.3s |
@@ -83,9 +83,13 @@
 | `test_no_launch_dialog_for_plain_site` | Typing a plain https site shows no 'Launch third-party app?' dialog (EMUI wildcard-authority regression, #542). | ✅ pass ⏸ | 119.4s |
 | `test_launch_dialog_for_specialized_handler` | A Play Store details URL still shows the launch dialog listing the Play Store (the #542 host-matching fix must not over-filter real specialized handlers). | ✅ pass ⏸ | 25.3s |
 | `test_toolbar_label_refreshes_while_field_focused` | A live title change updates the label even while the field is navigation-focused (#694) | ✅ pass ⏸ | 27.4s |
-| `test_view_cold_start_new_tab` | Cold start via an external ACTION_VIEW intent opens a new tab on top of the restored session (the issue #694 'link sent to a non-running app' path). | ✅ pass | 17.4s |
-| `test_view_warm_start_new_tab` | Warm start via ACTION_VIEW (onNewIntent) opens exactly one new tab. | ✅ pass | 14.6s |
-| `test_send_url_new_tab` | Sharing text that is a URL (ACTION_SEND) opens exactly one new tab. | ✅ pass | 14.5s |
-| `test_send_plain_text_no_new_tab` | Sharing plain text (no URL) fills the address bar and opens no new tab. | ✅ pass | 15.3s |
-| `test_web_search_new_tab` | A search-widget ACTION_WEB_SEARCH intent opens a new tab with the query. | ✅ pass | 13.8s |
-| `test_open_document_file_url` | Opening a local document (ACTION_VIEW file://, no host) opens a new tab. | ✅ pass | 19.9s |
+| `test_view_cold_start_new_tab` | Cold start via an external ACTION_VIEW intent opens a new tab on top of the restored session (the issue #694 'link sent to a non-running app' path). | ✅ pass ⏸ | 17.4s |
+| `test_view_warm_start_new_tab` | Warm start via ACTION_VIEW (onNewIntent) opens exactly one new tab. | ✅ pass ⏸ | 14.6s |
+| `test_send_url_new_tab` | Sharing text that is a URL (ACTION_SEND) opens exactly one new tab. | ✅ pass ⏸ | 14.5s |
+| `test_send_plain_text_no_new_tab` | Sharing plain text (no URL) fills the address bar and opens no new tab. | ✅ pass ⏸ | 15.3s |
+| `test_web_search_new_tab` | A search-widget ACTION_WEB_SEARCH intent opens a new tab with the query. | ✅ pass ⏸ | 13.8s |
+| `test_open_document_file_url` | Opening a local document (ACTION_VIEW file://, no host) opens a new tab. | ✅ pass ⏸ | 19.9s |
+| `test_empty_tab_back_key_backgrounds_app` | With zero tabs open, the back key backgrounds the app instead of crashing or reopening a tab | ✅ pass | 10.0s |
+| `test_empty_tab_shows_logo` | Closing the last tab keeps the app alive on the empty state (large logo, no 'New tab' button); typing a URL in the field opens a fresh tab | ✅ pass | 34.4s |
+| `test_empty_tab_menu_hides_tab_items` | With zero tabs the 'Web page' switcher stays reachable but the tab menu hides its tab-specific items; they reappear once a tab is open | ✅ pass | 59.1s |
+| `test_empty_tab_tabs_button_creates_tab` | With zero tabs, tapping the tabs button creates a tab (the way back in) instead of opening an empty tab list | ✅ pass | 29.6s |

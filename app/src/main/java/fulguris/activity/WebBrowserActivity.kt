@@ -1077,7 +1077,10 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         // Should notably hide the virtual keyboard
         currentTabView?.clearFocus()
         searchView.clearFocus()
-        // Show popup menu once our virtual keyboard is hidden
+        // Show popup menu once our virtual keyboard is hidden. This stays
+        // reachable with no tab open: the tab menu is user-configurable and
+        // may hold items that make sense without a page (the tab-specific
+        // items are hidden there by MenuPopupWindow).
         doOnceVirtualKeyboardIsGone { doShowMenuWebPage() }
     }
 
@@ -1334,7 +1337,10 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         iBinding.fabInclude.fabTabClose.setOnClickListener {
             iEasyTabSwitcherWasUsed = true
             restartDisableFabsCountdown()
-            tabsManager.let { tabsManager.deleteTab(it.indexOfCurrentTab()) }
+            // No tab (empty state): there is nothing to close
+            if (tabsManager.currentTab != null) {
+                tabsManager.let { tabsManager.deleteTab(it.indexOfCurrentTab()) }
+            }
             tabSwitchReset()
         }
 
@@ -3298,6 +3304,8 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
      */
     override fun setTabView(aView: View, aWasTabAdded: Boolean, aPreviousTabClosed: Boolean, aGoingBack: Boolean) {
         Timber.i("setTabView")
+        // A tab view is coming in: hide the no-tab empty state
+        iBinding.emptyTabsView.isVisible = false
         if (lastTabView == aView) {
             Timber.d("setTabView: tab already set")
             return
@@ -3829,6 +3837,98 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         finishAndRemoveTask()
     }
 
+    /**
+     * From [WebBrowser].
+     *
+     * The last tab was closed: stay alive and show the empty state (the large
+     * Fulguris logo, as on the onboarding first screen) instead of exiting.
+     */
+    override fun showNoTabs() {
+        Timber.i("No tabs left, showing empty state")
+        lastTabView = null
+        // The destroyed WebView of the closed tab is still attached to one of our
+        // containers (it only destroys itself once its animation ends); detach and
+        // destroy it once the close animation is done (or right away if the user
+        // does not want tab animations or another animation is already running).
+        val front = iTabViewContainerFront
+        if (userPreferences.onTabChangeShowAnimation && iTabAnimator == null && front.childCount > 0) {
+            animateNoTabsOut(front)
+        }
+        else {
+            cleanUpNoTabsContainers()
+            showNoTabsEmptyState()
+        }
+    }
+
+    /**
+     * Scale the last (closed) tab away, like [animateTabOutScaleDown], then show
+     * the no-tab empty state. tabChanged returns early when no tab is left so the
+     * regular close animation never runs in this case.
+     */
+    private fun animateNoTabsOut(front: View) {
+        if (userPreferences.onTabCloseVibrate) {
+            vibrate()
+        }
+        // Scale the closed tab's WebView down, exactly like the regular close
+        // animation ([animateTabOutScaleDown]); falling back to the whole
+        // container if the WebView is not there for some reason.
+        val tab = front.findViewById<WebViewEx>(R.id.web_view) ?: front
+        iTabAnimator = tab.animate()
+                .scaleY(0f)
+                .scaleX(0f)
+                .setDuration(userPreferences.onTabChangeAnimationDuration.toLong())
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        tab.post {
+                            // Swap so the cleaned-up (empty) container ends up in
+                            // front, matching the regular close animation.
+                            swapTabViewsFrontToBack()
+                            cleanUpNoTabsContainers()
+                            iPlaceHolder?.let { iTabViewContainerFront.addView(it) }
+                            tab.scaleX = 1.0f
+                            tab.scaleY = 1.0f
+                            iTabAnimator = null
+                            showNoTabsEmptyState()
+                        }
+                    }
+                })
+    }
+
+    /**
+     * Detach and destroy any leftover WebView from both tab containers.
+     */
+    private fun cleanUpNoTabsContainers() {
+        for (container in listOf(iTabViewContainerFront, iTabViewContainerBack)) {
+            while (container.childCount > 0) {
+                when (val child = container.getChildAt(0)) {
+                    is WebViewEx -> {
+                        container.removeViewAt(0)
+                        child.destroyIfNeeded()
+                    }
+                    else -> container.removeViewAt(0)
+                }
+            }
+        }
+    }
+
+    /**
+     * Show the no-tab empty state (logo + new tab button).
+     */
+    private fun showNoTabsEmptyState() {
+        showLabel()
+        // No tab to show a label for: clear the address field (showLabel's
+        // fallback is the app name) so editing it starts from an empty field.
+        searchView.setText("")
+        // The closed tab's SSL icon and toolbar color would otherwise linger, so
+        // reset both to their neutral / theme defaults. updateSslState(SslState.None)
+        // clears the icon's drawable, but its visibility reset is skipped while the
+        // (now focused) search field has focus, so hide it explicitly.
+        updateSslState(SslState.None)
+        iBindingToolbarContent.addressBarInclude.searchSslStatus.visibility = View.GONE
+        applyToolbarColor(primaryColor)
+        iBinding.emptyTabsView.isVisible = true
+    }
+
     override fun onPause() {
         super.onPause()
         Timber.d("onPause")
@@ -3964,7 +4064,9 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
                     }
                 }
             } else {
-                Timber.d("This shouldn't happen ever")
+                // No tab open (empty state): leaving the foreground is the only
+                // meaningful action left.
+                Timber.d("onBackPressed with no tab, leaving foreground")
                 // finish() directly: super.onBackPressed() would route back
                 // through the OnBackPressedDispatcher into our own callback
                 // (infinite recursion) on API 35+.
@@ -4183,6 +4285,17 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
             // User don't want us the create a new tab
             currentTab.stopLoading()
             tabsManager.loadUrlInCurrentView(url)
+        }
+        else {
+            // No tab open (empty state): "load in current tab" has nowhere to
+            // go, so open a new tab instead of silently doing nothing.
+            when {
+                url.isHomeUri() -> tabsManager.newTab(homePageInitializer, true)
+                url.isIncognitoUri() -> tabsManager.newTab(incognitoPageInitializer, true)
+                url.isBookmarkUri() -> tabsManager.newTab(bookmarkPageInitializer, true)
+                url.isHistoryUri() -> tabsManager.newTab(historyPageInitializer, true)
+                else -> tabsManager.newTab(UrlInitializer(url), true)
+            }
         }
     }
 
@@ -4439,6 +4552,11 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
 
     override fun updateTabNumber(number: Int) {
         iBindingToolbarContent.tabsButton.updateCount(number)
+        // Hide the no-tab empty state as soon as a tab exists again (e.g. a tab
+        // is restored from the "tab closed" snackbar or a new tab is created).
+        if (number > 0) {
+            iBinding.emptyTabsView.isVisible = false
+        }
     }
 
     /**
@@ -5333,6 +5451,16 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
      * @param v the view that the user has clicked
      */
     override fun onClick(v: View) {
+        // With no tab open the tabs button is the way back in: instead of
+        // opening an empty tab list / web-page menu it creates a tab.
+        if (v.id == R.id.tabs_button && tabsManager.currentTab == null) {
+            if (isIncognito()) {
+                tabsManager.newTab(incognitoPageInitializer, true)
+            } else {
+                tabsManager.newTab(homePageInitializer, true)
+            }
+            return
+        }
         val currentTab = tabsManager.currentTab ?: return
         when (v.id) {
             R.id.home_button -> currentTab.apply { requestFocus(); loadHomePage() }
@@ -5717,6 +5845,18 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
          * Custom action to open the downloads bottom sheet (see [openDownloads]).
          */
         const val INTENT_OPEN_DOWNLOADS = "fulguris.action.OPEN_DOWNLOADS"
+
+        /**
+         * Custom action to close the current tab (tests / debugging).
+         * Closing the last tab shows the no-tab empty state rather than exiting.
+         */
+        const val INTENT_CLOSE_TAB = "fulguris.action.CLOSE_TAB"
+
+        /**
+         * Custom action to close every open tab (tests / debugging), leaving the
+         * no-tab empty state.
+         */
+        const val INTENT_CLOSE_ALL_TABS = "fulguris.action.CLOSE_ALL_TABS"
 
         private const val FILE_CHOOSER_REQUEST_CODE = 1111
 

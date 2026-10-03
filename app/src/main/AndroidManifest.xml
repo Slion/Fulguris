@@ -201,6 +201,17 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+            <!-- Custom actions to close tabs (tests / debugging) -->
+            <intent-filter>
+                <action android:name="fulguris.action.CLOSE_TAB" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="fulguris.action.CLOSE_ALL_TABS" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
 
         <!--

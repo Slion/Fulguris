@@ -918,8 +918,11 @@ class TabsManager @Inject constructor(
         Timber.v("deleteTab - currentDeleted=$currentDeleted, afterTab=${afterTab?.url}")
 
         if (afterTab == null) {
-            Timber.d("deleteTab - No tabs left, closing browser")
-            iWebBrowser.closeBrowser()
+            // No tab left: the browser stays alive and shows its empty state
+            // (the large app logo). updateTabNumber(0) was already delivered to the
+            // tab number listeners above, no need to call it again here.
+            Timber.d("deleteTab - No tabs left, showing empty state")
+            iWebBrowser.showNoTabs()
             return
         } else if (afterTab !== beforeTab) {
             iWebBrowser.notifyTabViewChanged(indexOfCurrentTab())

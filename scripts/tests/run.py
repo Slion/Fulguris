@@ -59,13 +59,14 @@ import back_tests
 import downloads_tests
 import intent_tests
 import intent_send_tests
+import empty_tab_tests
 
 # All tests across every suite, plus a merged description map for the reports.
 ALL_TESTS = (suite.ALL_TESTS + smoke_tests.ALL_TESTS + cursor_tests.ALL_TESTS
              + rotation_tests.ALL_TESTS + settings_tests.ALL_TESTS
              + toolbar_hide_tests.ALL_TESTS + back_tests.ALL_TESTS
              + downloads_tests.ALL_TESTS + intent_tests.ALL_TESTS
-             + intent_send_tests.ALL_TESTS)
+             + intent_send_tests.ALL_TESTS + empty_tab_tests.ALL_TESTS)
 TEST_DESCRIPTIONS = {**suite.TEST_DESCRIPTIONS, **smoke_tests.TEST_DESCRIPTIONS,
                      **cursor_tests.TEST_DESCRIPTIONS, **rotation_tests.TEST_DESCRIPTIONS,
                      **settings_tests.TEST_DESCRIPTIONS,
@@ -73,7 +74,8 @@ TEST_DESCRIPTIONS = {**suite.TEST_DESCRIPTIONS, **smoke_tests.TEST_DESCRIPTIONS,
                      **back_tests.TEST_DESCRIPTIONS,
                      **downloads_tests.TEST_DESCRIPTIONS,
                      **intent_tests.TEST_DESCRIPTIONS,
-                     **intent_send_tests.TEST_DESCRIPTIONS}
+                     **intent_send_tests.TEST_DESCRIPTIONS,
+                     **empty_tab_tests.TEST_DESCRIPTIONS}
 
 # Named feature groups that can be run as a subset via --group. url_field_tests has no groups of
 # its own; cursor_tests defines the cursor feature groups. "cursor" is a convenience alias for all
@@ -88,6 +90,7 @@ FEATURE_GROUPS.update(back_tests.FEATURE_GROUPS)
 FEATURE_GROUPS.update(downloads_tests.FEATURE_GROUPS)
 FEATURE_GROUPS.update(intent_tests.FEATURE_GROUPS)
 FEATURE_GROUPS.update(intent_send_tests.FEATURE_GROUPS)
+FEATURE_GROUPS.update(empty_tab_tests.FEATURE_GROUPS)
 FEATURE_GROUPS["all"] = ALL_TESTS
 
 
