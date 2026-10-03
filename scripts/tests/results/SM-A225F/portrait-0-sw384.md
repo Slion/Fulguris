@@ -1,11 +1,11 @@
 # Test run — SM-A225F · portrait-0-sw384
 
-- **When:** 2026-10-02T15:25:22+00:00
+- **When:** 2026-10-02T21:30:50+00:00
 - **Device:** Galaxy A22 5G (Samsung SM-A225F) — Android 13
 - **Config:** portrait, rotation 0°, smallest width 384dp
 - **Package:** `net.slions.fulguris.full.agent.debug`
-- **Options:** restart=False, keep_tabs=False, orientation=default, filter=label
-- **Result:** 68/71 passed in 64.4s (3 ran, 68 carried forward)
+- **Options:** restart=False, keep_tabs=False, orientation=default, filter=all
+- **Result:** 74/77 passed in 100.4s (6 ran, 71 carried forward)
 
 | Test | Description | Result | Duration |
 |---|---|---|---|
@@ -18,9 +18,9 @@
 | `test_cursor_confirm_on_over_web_ignores_stray_focus` | With the cursor ON over the page and focus stranded on a toolbar widget, the confirm key (A / select) clicks the page under the cursor instead of activating the focused widget | ✅ pass ⏸ | 40.8s |
 | `test_cursor_fade_hides_then_wakes` | The cursor fades out after the inactivity timeout and wakes on movement | ✅ pass ⏸ | 33.6s |
 | `test_launch_focus_is_webview` | After a fresh launch, initial focus lands on the web view | ✅ pass ⏸ | 6.2s |
-| `test_unfocused_shows_label` | Unfocused address bar shows the page label, not the URL | ✅ pass | 15.8s |
+| `test_unfocused_shows_label` | Unfocused address bar shows the page label, not the URL | ✅ pass ⏸ | 15.8s |
 | `test_directional_focus_is_navigation_not_edit` | D-pad focus enters navigation mode without showing the keyboard | ✅ pass ⏸ | 13.4s |
-| `test_navigation_shows_label_not_url` | Navigation focus keeps showing the label, not the URL | ✅ pass | 18.2s |
+| `test_navigation_shows_label_not_url` | Navigation focus keeps showing the label, not the URL | ✅ pass ⏸ | 18.2s |
 | `test_center_enters_edit_mode` | D-pad center/enter enters edit mode and shows the keyboard | ✅ pass ⏸ | 11.2s |
 | `test_edit_shows_url` | Edit mode shows the URL, not the label | ✅ pass ⏸ | 13.7s |
 | `test_dpad_edit_selects_all` | Entering edit via D-pad selects all, so typing replaces the URL | ✅ pass ⏸ | 17.7s |
@@ -82,4 +82,10 @@
 | `test_downloads_sheet_survives_active_download` | Opening the downloads sheet while a download is in progress must not crash the app (regression: NoSuchMethodError in ContentObserver, issue #802) | ✅ pass ⏸ | 38.7s |
 | `test_no_launch_dialog_for_plain_site` | Typing a plain https site shows no 'Launch third-party app?' dialog (EMUI wildcard-authority regression, #542). | ✅ pass ⏸ | 119.4s |
 | `test_launch_dialog_for_specialized_handler` | A Play Store details URL still shows the launch dialog listing the Play Store (the #542 host-matching fix must not over-filter real specialized handlers). | ✅ pass ⏸ | 25.3s |
-| `test_toolbar_label_refreshes_while_field_focused` | A live title change updates the label even while the field is navigation-focused (#694) | ✅ pass | 27.4s |
+| `test_toolbar_label_refreshes_while_field_focused` | A live title change updates the label even while the field is navigation-focused (#694) | ✅ pass ⏸ | 27.4s |
+| `test_view_cold_start_new_tab` | Cold start via an external ACTION_VIEW intent opens a new tab on top of the restored session (the issue #694 'link sent to a non-running app' path). | ✅ pass | 17.4s |
+| `test_view_warm_start_new_tab` | Warm start via ACTION_VIEW (onNewIntent) opens exactly one new tab. | ✅ pass | 14.6s |
+| `test_send_url_new_tab` | Sharing text that is a URL (ACTION_SEND) opens exactly one new tab. | ✅ pass | 14.5s |
+| `test_send_plain_text_no_new_tab` | Sharing plain text (no URL) fills the address bar and opens no new tab. | ✅ pass | 15.3s |
+| `test_web_search_new_tab` | A search-widget ACTION_WEB_SEARCH intent opens a new tab with the query. | ✅ pass | 13.8s |
+| `test_open_document_file_url` | Opening a local document (ACTION_VIEW file://, no host) opens a new tab. | ✅ pass | 19.9s |

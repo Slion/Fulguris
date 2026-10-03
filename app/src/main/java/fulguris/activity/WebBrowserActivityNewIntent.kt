@@ -89,8 +89,19 @@ fun WebBrowserActivity.doOnNewIntent(aIntent: Intent?, aIncognitoStartup: Boolea
                 Timber.d("ACTION_SEND - Extracted URL: $extractedUrl")
                 extractedUrl
             } else {
-                // Fallback to trying to parse the entire text as URI
-                setAddressBarText(subject)
+                // No URL in the shared text: put the text itself in the address bar (the manifest
+                // advertises ACTION_SEND as "accept text to put it in the address bar"). Use the
+                // subject when one was actually provided, otherwise the shared text (its first
+                // line). Note `subject` defaults to R.string.unknown ("Unknown") when no
+                // EXTRA_SUBJECT is present, so its blank-ness is not a reliable signal.
+                // See: https://github.com/Slion/Fulguris/issues/710
+                setAddressBarText(if (aIntent.hasExtra(Intent.EXTRA_SUBJECT) && subject.isNotBlank()) {
+                    subject
+                } else if (clue.isNullOrBlank()) {
+                    ""
+                } else {
+                    clue.lineSequence().first()
+                })
                 // Cancel other operation as we won't open a tab here
                 null
             }
@@ -121,9 +132,11 @@ fun WebBrowserActivity.doOnNewIntent(aIntent: Intent?, aIncognitoStartup: Boolea
         }
         val uri = url.toUri()
 
-        if (aIntent?.action != Intent.ACTION_WEB_SEARCH && uri.host != null) {
+        if (aIntent?.action != Intent.ACTION_WEB_SEARCH && uri.host.isNullOrBlank().not()) {
 
-            // Will load defaults if domain does not exists yet
+            // Will load defaults if domain does not exists yet.
+            // NB: file:// URLs have an empty (not null) host, so the blank
+            // check routes them to the "block local files" dialog below.
             val domainPreferences = DomainPreferences(app, uri.host!!)
             var action = domainPreferences.incomingUrlAction
             if (isIncognito() && action != IncomingUrlAction.BLOCK) {

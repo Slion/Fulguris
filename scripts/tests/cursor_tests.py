@@ -54,8 +54,11 @@ class _NoCacheHandler(SimpleHTTPRequestHandler):
     a stale copy after the page is edited.)
     """
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, directory=ASSETS_DIR, **kwargs)
+    def __init__(self, *args, directory=None, **kwargs):
+        # The server calls the handler without `directory`, so default it here
+        # (SimpleHTTPRequestHandler only applies its own default when it receives
+        # the keyword; a missing attr breaks translate_path).
+        super().__init__(*args, directory=directory or ASSETS_DIR, **kwargs)
 
     def send_header(self, key, value):  # suppress Last-Modified so the client never sends 304
         if key.lower() == "last-modified":
