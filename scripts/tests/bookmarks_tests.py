@@ -149,8 +149,20 @@ def _open_main_menu(device):
     """Open the toolbar overflow menu (idempotent — skips if already open)."""
     if _main_menu_open(device):
         return
-    n = adb.find_node(device.serial, ":id/button_more")
-    assert n and n.bounds, "toolbar menu button not found"
+    # After a cold start the toolbar can take a few seconds to render (and the
+    # app restores its last UI state, which may briefly be mid-transition), so
+    # poll for the menu button instead of asserting on the first snapshot.
+    n = None
+    deadline = time.time() + 20.0
+    while time.time() < deadline:
+        n = adb.find_node(device.serial, ":id/button_more")
+        if n and n.bounds:
+            break
+        time.sleep(1.0)
+    assert n and n.bounds, (
+        f"toolbar menu button not found "
+        f"(nodes: {sorted(_texts(device))[:40]!r})"
+    )
     device.tap(n.center[0], n.center[1], wait=1.5)
     deadline = time.time() + 15.0
     while time.time() < deadline and not _main_menu_open(device):
@@ -167,7 +179,14 @@ def _open_settings(device):
 
 
 def _open_backup_page(device):
-    """Settings → Backup (the 'Import' / 'Export' / 'Reset' rows)."""
+    """Settings → Backup (the 'Import' / 'Export' / 'Reset' rows).
+
+    Normalizes to the browser first: the app restores its last UI state on
+    launch, and a previous run may have ended deep in Settings (whose pages
+    have no toolbar :id/button_more), which would otherwise make
+    _open_settings fail with 'toolbar menu button not found'.
+    """
+    _close_to_browser(device)
     _open_settings(device)
     if not _tap_text(device, "Backup", timeout=8.0, exact=True):
         _scroll_view(device, 2, down=True)
@@ -189,25 +208,40 @@ def _close_to_browser(device):
     would over-traverse). If the app leaves the foreground (overshot to the
     launcher) we return and relaunch.
     """
-    for _ in range(20):
+    # The app restores its last UI state on launch, so after a restart we may
+    # be back at the browser (drawer possibly re-shown on top) OR deep in
+    # Settings (whose pages have NO toolbar :id/button_more — the previous
+    # run ended there). Handle each state explicitly:
+    restarts = 0
+    stuck = 0
+    last_sig = None
+    for _i in range(30):
         n = adb.find_node(device.serial, ":id/button_more")
-        if n and n.bounds and not (_drawer_open(device) or _main_menu_open(device)):
-            break
-        # A drawer/menu closes faster than a page transition; poll briefly.
-        deadline = time.time() + 3.0
-        while time.time() < deadline:
-            n = adb.find_node(device.serial, ":id/button_more")
-            if n and n.bounds and not (_drawer_open(device) or _main_menu_open(device)):
-                break
-            time.sleep(0.5)
         if n and n.bounds:
-            break
-        # Overshot to the launcher? Recover with a fresh launch.
-        if not _app_foreground(device.serial):
+            # The browser's toolbar is present. A restored bookmarks drawer or
+            # menu may still sit on top — close the overlay, then we're done.
+            if _drawer_open(device) or _main_menu_open(device):
+                device.key(keys.BACK, 0.9)
+                time.sleep(1.0)
+            else:
+                break
+            continue
+        # No toolbar: some in-app page (Settings, the SAF picker, a sheet...).
+        # BACK out of it — but if the screen stops changing (BACK is a no-op
+        # here) or we overshot to the launcher, relaunch instead of spinning;
+        # at most twice, so a genuinely stuck state surfaces as a test error.
+        sig = tuple(sorted(x.text for x in _nodes(device) if x.text and x.bounds)[:30])
+        stuck = stuck + 1 if sig == last_sig else 0
+        last_sig = sig
+        if stuck >= 3 or not _app_foreground(device.serial):
+            if restarts >= 2:
+                break
+            restarts += 1
             adb.restart(device.serial, adb.DEFAULT_PACKAGE)
-            time.sleep(4.0)
+            time.sleep(5.0)
             continue
         device.key(keys.BACK, 0.9)
+        time.sleep(1.0)
     device.settle()
 
 
@@ -503,10 +537,10 @@ def test_bookmarks_drawer_opens_and_closes(device, ctx: dict) -> None:
     device.settle()
     _close_to_browser(device)
     _open_bookmarks_drawer(device)
-    # The default bookmarks are present on a fresh install (Fulguris folder).
-    assert _drawer_has(device, "Fulguris", timeout=15.0) or _drawer_entries(device), (
-        "the bookmarks drawer shows no rows at all"
-    )
+    # NOTE: do NOT assert on the drawer's CONTENTS here. A fresh install
+    # shows the default Fulguris folder, but a previous run ending in the
+    # 'Reset' test leaves zero bookmarks — the drawer's open/close behavior
+    # (this test's contract) must not depend on bookmark state.
     _close_drawer(device)
     deadline = time.time() + 5.0
     while time.time() < deadline and _drawer_open(device):
@@ -811,6 +845,9 @@ def test_bookmarks_import_creates_entries(device, ctx: dict) -> None:
         f"(nodes: {sorted(_texts(device))[:40]!r})"
     )
 
+    # The import leaves us on Settings -> Backup (no toolbar there); get back
+    # to the browser before opening the bookmarks drawer.
+    _close_to_browser(device)
     _open_bookmarks_drawer(device)
     assert _drawer_has(device, IMPORT_ROOT_TITLE, timeout=15.0), (
         f"imported root entry missing (entries: {_drawer_entries(device)!r})"
@@ -853,6 +890,9 @@ def test_bookmarks_import_skips_duplicates(device, ctx: dict) -> None:
         f"(nodes: {sorted(_texts(device))[:40]!r})"
     )
 
+    # The import leaves us on Settings -> Backup (no toolbar there); get back
+    # to the browser before opening the bookmarks drawer.
+    _close_to_browser(device)
     _open_bookmarks_drawer(device)
     entries = [t for t, _ in _drawer_entries(device)]
     assert entries.count(IMPORT_ROOT_TITLE) <= 1, f"duplicate root entry: {entries!r}"
@@ -900,6 +940,9 @@ def test_bookmarks_reset_deletes_all(device, ctx: dict) -> None:
     assert _tap_text(device, "Delete", timeout=10.0, exact=True), "no 'Delete' confirm button"
     time.sleep(1.5)
 
+    # We're still on Settings -> Backup (no toolbar there); get back to the
+    # browser before opening the bookmarks drawer.
+    _close_to_browser(device)
     _open_bookmarks_drawer(device)
     time.sleep(1.0)
     entries = [t for t, _ in _drawer_entries(device)]
@@ -910,6 +953,9 @@ def test_bookmarks_reset_deletes_all(device, ctx: dict) -> None:
     _close_drawer(device)
 
     # Export with an (AutoTest-wise) empty set: a valid header-only file.
+    # Re-enter Settings -> Backup (the drawer check above took us back to the
+    # browser, whose toolbar has no Export row).
+    _open_backup_page(device)
     assert _tap_text(device, "Export", timeout=15.0, exact=True), "no 'Export' row after reset"
     deadline = time.time() + 20.0
     saved = False

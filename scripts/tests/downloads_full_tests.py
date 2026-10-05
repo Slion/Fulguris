@@ -42,6 +42,9 @@ from cursor_tests import PORT, _NoCacheHandler  # noqa: E402
 LOCAL_DIR = os.path.join(os.path.dirname(__file__), "local_downloads")
 FILE_SMALL = "autotest_small_10mb.bin"      # 15 MB (the name is historical)
 NAME_FAILED = "autotest_missing_file.bin"   # 404 on purpose
+# A tiny payload for dialog/link tests (no throttling needed — the file must
+# land quickly so the completion row appears before the test moves on).
+FILE_TINY = "autotest_tiny.bin"
 
 # The app formats every size with Formatter.formatFileSize — SI (decimal) MB,
 # so the payload is exactly 15,000,000 bytes and the app shows "15 MB" (a
@@ -191,6 +194,26 @@ class _ThrottledHandler(_NoCacheHandler):
         print(f"[slow-server] GET {self.path} from {self.client_address}", flush=True)
         url = urllib.parse.urlparse(self.path)
         params = urllib.parse.parse_qs(url.query)
+        # ?attach=1 adds a Content-Disposition: attachment header (with
+        # filename) to an otherwise-plain file response; ?attach=0 is the
+        # same file with NO content-disposition. Used to test which response
+        # shapes trigger the download dialog (the WebView only calls
+        # onDownloadStart for attachment-marked responses).
+        path = self.translate_path(url.path)
+        if os.path.isfile(path) and "attach" in params and "slow" not in params \
+                and "fail" not in params:
+            attach = params["attach"][0] == "1"
+            size = os.path.getsize(path)
+            self.send_response(200)
+            self.send_header("Content-Type", "application/octet-stream")
+            self.send_header("Content-Length", str(size))
+            if attach:
+                base = os.path.basename(path).split(".")[0]
+                self.send_header("Content-Disposition", f'attachment; filename="{base}.bin"')
+            self.end_headers()
+            with open(path, "rb") as f:
+                self.wfile.write(f.read())
+            return
         if "fail" in params:
             body = b"not found\n"
             self.send_response(404)
@@ -990,7 +1013,160 @@ def test_downloads_same_url_twice_creates_second_file(device, ctx: dict) -> None
         device.transport.shell(["shell", "rm", "-f", f"/sdcard/Download/{n}"], timeout=20)
 
 
+# --- link-pattern tests -------------------------------------------------------
+#
+# Real web pages offer downloads as plain LINKS with a `download` attribute
+# (and/or a Content-Disposition: attachment response header), not as blob:
+# URLs. The download-attribute filename must be honored — it is the name the
+# site asked the user to save the file as. The page (assets/
+# download_links.html) serves every pattern from the same tiny file so only
+# the headers/attributes differ.
+
+from cursor_tests import _ensure_server as _ensure_assets_server  # noqa: E402
+
+LINKS_PAGE = "http://localhost:%d/download_links.html" % PORT
+ATTR_FILENAME = "autotest_plain_attr.txt"   # download attribute on pattern 1
+JS_ATTR_FILENAME = "autotest_js_attr.txt"   # JS anchor download attribute (5)
+
+
+def _links_ready(device) -> None:
+    """Bring up both servers, reverse both ports and land on the links page."""
+    _ensure_file(FILE_TINY, size=64 * 1024)
+    _ensure_assets_server()
+    _ensure_slow_server()
+    device.reverse(PORT)
+    device.reverse(SLOW_PORT)
+    _cleanup_all(device)
+    device.navigate(LINKS_PAGE)
+    if not _wait_text(device, "Download link patterns", timeout=15.0):
+        assert False, (
+            f"links page did not load (nodes: {sorted(_texts(device))[:40]!r})"
+        )
+
+
+def _tap_link(device, link_id: str) -> None:
+    for n in _nodes(device):
+        if (n.resource_id or "").endswith(link_id) and n.bounds and n.enabled:
+            device.tap(n.center[0], n.center[1], wait=2.0)
+            return
+    assert False, (
+        f"link with id suffix {link_id!r} not found "
+        f"(nodes: {sorted(_texts(device))[:40]!r})"
+    )
+
+
+def _back_to_links(device) -> None:
+    """Return to the links page after a link tap (dialog cancelled / page navigated)."""
+    # Cancel the confirmation dialog if it is still up, then go back.
+    if _wait_text(device, "Download file?", timeout=3.0):
+        assert _tap_text(device, "Cancel", timeout=10.0), "no 'Cancel' in dialog"
+        time.sleep(1.0)
+    device.navigate(LINKS_PAGE)
+    assert _wait_text(device, "Download link patterns", timeout=15.0), "links page not reloaded"
+
+
+def test_download_link_attr_filename(device, ctx: dict) -> None:
+    """<a download="name.txt"> with NO Content-Disposition header.
+
+    The most common link-download pattern on the web (GitHub release buttons,
+    forum attachments, etc.). The dialog must offer the file under the
+    `download`-attribute name — NOT the URL basename — and confirming must
+    save the file under that name.
+    """
+    _links_ready(device)
+    _rm_file(device, ATTR_FILENAME)
+    _rm_file(device, FILE_TINY)
+    _tap_link(device, "p_attr")
+    assert _wait_text(device, "Download file?", timeout=20.0), (
+        f"no download dialog for a <a download> link "
+        f"(nodes: {sorted(_texts(device))[:40]!r})"
+    )
+    assert _wait_text(device, ATTR_FILENAME, timeout=10.0), (
+        f"dialog must propose the download-attribute filename "
+        f"{ATTR_FILENAME!r}, not the URL basename "
+        f"(nodes: {sorted(_texts(device))[:40]!r})"
+    )
+    assert _tap_download_button(device), "no 'Download' button"
+    _sheet_open(device)
+    title, summary = _wait_complete(device, ATTR_FILENAME, timeout=60.0)
+    assert title == ATTR_FILENAME, (
+        f"downloads sheet row must be titled {ATTR_FILENAME!r}, got {title!r} "
+        f"(summary: {summary!r})"
+    )
+    _sheet_close(device)
+    assert _disk(device, ATTR_FILENAME), (
+        f"{ATTR_FILENAME} is missing from /sdcard/Download "
+        f"(dir: {_disk_names(device, 'autotest_')})"
+    )
+
+
+def test_download_link_js_anchor_filename(device, ctx: dict) -> None:
+    """JS-created anchor (a.click()) with a download attribute, NO Content-
+    Disposition. The GitHub-style programmatic download must also honor the
+    attribute filename.
+    """
+    _links_ready(device)
+    _rm_file(device, JS_ATTR_FILENAME)
+    _rm_file(device, FILE_TINY)
+    _tap_link(device, "p_js_attr")
+    assert _wait_text(device, "Download file?", timeout=20.0), (
+        f"no download dialog for a JS-created <a download> anchor "
+        f"(nodes: {sorted(_texts(device))[:40]!r})"
+    )
+    assert _wait_text(device, JS_ATTR_FILENAME, timeout=10.0), (
+        f"dialog must propose the JS download-attribute filename "
+        f"{JS_ATTR_FILENAME!r}, not the URL basename "
+        f"(nodes: {sorted(_texts(device))[:40]!r})"
+    )
+    assert _tap_download_button(device), "no 'Download' button"
+    _sheet_open(device)
+    title, _ = _wait_complete(device, JS_ATTR_FILENAME, timeout=60.0)
+    assert title == JS_ATTR_FILENAME, (
+        f"downloads sheet row must be titled {JS_ATTR_FILENAME!r}, got {title!r}"
+    )
+    _sheet_close(device)
+    assert _disk(device, JS_ATTR_FILENAME), (
+        f"{JS_ATTR_FILENAME} is missing from /sdcard/Download "
+        f"(dir: {_disk_names(device, 'autotest_')})"
+    )
+
+
+def test_download_link_content_disposition_filename(device, ctx: dict) -> None:
+    """Content-Disposition: attachment filename, NO download attribute.
+
+    The server-provided name is the baseline (known-working) pattern — it must
+    keep working: dialog + file under the header's filename.
+    """
+    cd_name = "autotest_tiny.bin"  # the handler sends the request basename
+    _links_ready(device)
+    _rm_file(device, cd_name)
+    _tap_link(device, "p_cd")
+    assert _wait_text(device, "Download file?", timeout=20.0), (
+        f"no download dialog for a Content-Disposition: attachment link "
+        f"(nodes: {sorted(_texts(device))[:40]!r})"
+    )
+    assert _wait_text(device, cd_name, timeout=10.0), (
+        f"dialog must propose {cd_name!r} (nodes: {sorted(_texts(device))[:40]!r})"
+    )
+    assert _tap_download_button(device), "no 'Download' button"
+    _sheet_open(device)
+    title, _ = _wait_complete(device, cd_name, timeout=60.0)
+    assert title == cd_name, (
+        f"downloads sheet row must be titled {cd_name!r}, got {title!r}"
+    )
+    _sheet_close(device)
+    assert _disk(device, cd_name), (
+        f"{cd_name} is missing from /sdcard/Download "
+        f"(dir: {_disk_names(device, 'autotest_')})"
+    )
+
+
 FEATURE_GROUPS = {
+    "downloads-links": [
+        test_download_link_attr_filename,
+        test_download_link_js_anchor_filename,
+        test_download_link_content_disposition_filename,
+    ],
     "downloads-full": [
         test_downloads_sheet_empty_state,
         test_downloads_dialog_and_completion,
@@ -1014,6 +1190,18 @@ FEATURE_GROUPS = {
 ALL_TESTS = [t for group in FEATURE_GROUPS.values() for t in group]
 
 TEST_DESCRIPTIONS = {
+    "test_download_link_attr_filename": (
+        "<a download='name.txt'> link, no Content-Disposition: dialog + row + "
+        "file use the download-attribute filename, not the URL basename"
+    ),
+    "test_download_link_js_anchor_filename": (
+        "JS-created <a download> anchor (a.click()), no Content-Disposition: "
+        "the attribute filename is honored"
+    ),
+    "test_download_link_content_disposition_filename": (
+        "Content-Disposition: attachment link, no download attribute: the "
+        "server's filename is honored (baseline)"
+    ),
     "test_downloads_sheet_empty_state": (
         "A fresh downloads sheet shows the empty state; only 'Open folder' is enabled"
     ),

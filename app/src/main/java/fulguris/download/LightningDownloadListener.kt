@@ -201,17 +201,22 @@ class LightningDownloadListener     //Injector.getInjector(context).inject(this)
         // Get original filename WITHOUT extension changes to check for mismatches
         var originalFileName = fulguris.utils.guessFileNameWithoutExtensionChange(url, contentDisposition, mimetype, null)
 
-        // For blob: URLs, BlobHook.js may have already captured the real filename
-        // from the HTML5 download attribute and sent it to us via the JS bridge.
-        if (url.startsWith("blob:")) {
-            val webView = webViewProvider()
-            if (webView != null) {
-                synchronized(webView.blobFilenames) {
-                    webView.blobFilenames[url]?.let { name ->
-                        originalFileName = name
-                        Timber.d("Blob download: using captured filename: %s", name)
-                    }
-                }
+        // BlobHook.js may have already captured the real filename from the
+        // HTML5 download attribute (on any anchor click, blob: or not) and
+        // sent it to us via the JS bridge. The WebView's download listener
+        // never receives the download attribute itself, so without this the
+        // file would be saved under the URL's basename.
+        val webView = webViewProvider()
+        var capturedFilename: String? = null
+        if (webView != null) {
+            synchronized(webView.blobFilenames) {
+                capturedFilename = webView.blobFilenames.remove(url)
+            }
+            if (capturedFilename != null) {
+                originalFileName = capturedFilename
+                Timber.d("Download: using captured download-attribute filename: %s", originalFileName)
+            }
+            if (url.startsWith("blob:")) {
                 // If the user already confirmed this download via the early dialog
                 // shown from BlobHook.js (onConfirmDownload), skip the duplicate dialog
                 // and proceed directly to downloading the blob data.
@@ -273,6 +278,20 @@ class LightningDownloadListener     //Injector.getInjector(context).inject(this)
             ) { _, _ ->
                 if (url.startsWith("blob:")) {
                     downloadBlobUrl(url, originalFileName)
+                } else if (capturedFilename != null) {
+                    // The download attribute named the file (the WebView's
+                    // download listener never reports it), so DownloadManager
+                    // would guess the URL's basename — save it as requested.
+                    downloadHandler.onDownloadStartWithFilename(
+                        mActivity,
+                        userPreferences,
+                        url,
+                        userAgent,
+                        contentDisposition,
+                        mimetype,
+                        downloadSize,
+                        originalFileName
+                    )
                 } else {
                     downloadHandler.onDownloadStart(
                         mActivity,

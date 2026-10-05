@@ -1,11 +1,11 @@
 # Test run — SM-A225F · portrait-0-sw384
 
-- **When:** 2026-10-05T12:37:56+00:00
+- **When:** 2026-10-05T18:13:34+00:00
 - **Device:** Galaxy A22 5G (Samsung SM-A225F) — Android 13
 - **Config:** portrait, rotation 0°, smallest width 384dp
 - **Package:** `net.slions.fulguris.full.agent.debug`
-- **Options:** restart=False, keep_tabs=False, orientation=default, filter=bookmarks_import_creates_entries
-- **Result:** 92/106 passed in 61.8s (1 ran, 105 carried forward)
+- **Options:** restart=False, keep_tabs=False, orientation=default, filter=all
+- **Result:** 100/109 passed in 34.9s (5 ran, 104 carried forward)
 
 | Test | Description | Result | Duration |
 |---|---|---|---|
@@ -48,11 +48,11 @@
 | | _tab B (short) should show the button_ | | |
 | `test_reload_button_tracks_tab_via_tab_menu` | Tab switch via the tab list drawer updates the reload button | ❌ fail ⏸ | 50.0s |
 | | _short tab should show the button_ | | |
-| `test_smoke_launch` | The app launches and reaches the main browser UI in the foreground | ✅ pass ⏸ | 2.5s |
-| `test_smoke_open_website` | Navigating to a web site loads and the address bar shows its label | ✅ pass ⏸ | 12.3s |
-| `test_smoke_open_settings` | The settings activity opens via its component and renders its content | ✅ pass ⏸ | 7.8s |
-| `test_smoke_background_app_switch` | KEYCODE_APP_SWITCH backgrounds the app; launching brings it back to the front | ✅ pass ⏸ | 6.2s |
-| `test_smoke_background_home` | KEYCODE_HOME backgrounds the app; the activity intent brings it back to the front | ✅ pass ⏸ | 6.2s |
+| `test_smoke_launch` | The app launches and reaches the main browser UI in the foreground | ✅ pass | 2.5s |
+| `test_smoke_open_website` | Navigating to a web site loads and the address bar shows its label | ✅ pass | 11.4s |
+| `test_smoke_open_settings` | The settings activity opens via its component and renders its content | ✅ pass | 7.7s |
+| `test_smoke_background_app_switch` | KEYCODE_APP_SWITCH backgrounds the app; launching brings it back to the front | ✅ pass | 6.2s |
+| `test_smoke_background_home` | KEYCODE_HOME backgrounds the app; the activity intent brings it back to the front | ✅ pass | 6.1s |
 | `test_cursor_toggle_hotkey_shows_and_hides_overlay` | Long-press play/pause toggles the cursor overlay on and off | ✅ pass ⏸ | 28.3s |
 | `test_cursor_toggle_exit_focuses_menu_button` | Turning the cursor off moves focus to the toolbar menu button | ✅ pass ⏸ | 28.1s |
 | `test_cursor_survives_options_sheet_dismiss` | Opening then dismissing the options bottom sheet does not leave the cursor suspended (resumes on sheet close) | ✅ pass ⏸ | 43.1s |
@@ -99,33 +99,31 @@
 | `test_empty_tab_shows_logo` | Closing the last tab keeps the app alive on the empty state (large logo, no 'New tab' button); typing a URL in the field opens a fresh tab | ✅ pass ⏸ | 40.3s |
 | `test_empty_tab_menu_hides_tab_items` | With zero tabs the 'Web page' switcher stays reachable but the tab menu hides its tab-specific items; they reappear once a tab is open | ✅ pass ⏸ | 58.5s |
 | `test_empty_tab_tabs_button_creates_tab` | With zero tabs, tapping the tabs button creates a tab (the way back in) instead of opening an empty tab list | ✅ pass ⏸ | 29.3s |
-| `test_downloads_sheet_empty_state` | A fresh downloads sheet shows the empty state; only 'Open folder' is enabled | ✅ pass ⏸ | 41.1s |
-| `test_downloads_dialog_and_completion` | File-URL download: dialog copy + known size, in-flight row (percentage + 'bytes / total' + speed), completed row (size), file on disk | ✅ pass ⏸ | 160.1s |
-| `test_downloads_in_progress_row_states` | While a download runs, the row shows 'NN%' and the '• speed' sample; cancelling removes the row and the partial file | ✅ pass ⏸ | 151.0s |
-| `test_downloads_cancel_running` | 'Cancel download' on a running download removes the row and the partial file | ✅ pass ⏸ | 118.5s |
-| `test_downloads_clean_up_failed` | 'Clean up' removes the failed/orphaned entries only | ✅ pass ⏸ | 48.8s |
-| `test_downloads_delete_file_orphans_entry` | 'Delete file' deletes the file, keeps the entry, and orphans it ('File not found') | ✅ pass ⏸ | 100.7s |
-| `test_downloads_remove_and_keep` | 'Remove and keep' deletes the entry but keeps the file on disk | ✅ pass ⏸ | 130.8s |
-| `test_downloads_remove_and_delete` | 'Remove and delete' deletes both the entry and the file | ✅ pass ⏸ | 131.2s |
-| `test_downloads_remove_all_keeps_files` | 'Remove all' clears every entry but keeps the files on disk | ✅ pass ⏸ | 133.9s |
-| `test_downloads_delete_all` | 'Delete all' clears every entry and deletes the files | ✅ pass ⏸ | 88.4s |
-| `test_downloads_same_url_twice_creates_second_file` | Downloading the same URL twice creates two entries; the system re-names the file '-1' | ✅ pass ⏸ | 135.4s |
-| `test_downloads_failure_mid_download` | A stream that dies mid-download ends in an 'Error: 0' row / 'Download failed' snackbar (a 404 can't be used: no dialog is shown for error responses) | ✅ pass ⏸ | 147.8s |
-| `test_bookmarks_drawer_opens_and_closes` | The main menu opens the bookmarks drawer; back closes it | ✅ pass ⏸ | 67.1s |
-| `test_bookmarks_add_root` | Ctrl+B 'Add bookmark' saves a bookmark at root; the drawer shows it | ✅ pass ⏸ | 126.0s |
-| `test_bookmarks_add_duplicate_guard` | Re-adding the same URL shows 'Bookmark already exists.' and adds nothing | ✅ pass ⏸ | 137.6s |
-| `test_bookmarks_add_in_folder` | Typing a new folder name in the add dialog creates the folder and entry; the folder opens with a '..' parent row | ✅ pass ⏸ | 146.8s |
-| `test_bookmarks_edit_title_and_url` | The bookmark context menu's 'Edit bookmark' changes title and URL | ✅ pass ⏸ | 146.2s |
-| `test_bookmarks_remove_no_confirmation` | 'Remove bookmark' deletes the entry immediately (no confirmation dialog) | ✅ pass ⏸ | 110.4s |
+| `test_downloads_sheet_empty_state` | A fresh downloads sheet shows the empty state; only 'Open folder' is enabled | ✅ pass ⏸ | 66.3s |
+| `test_downloads_dialog_and_completion` | File-URL download: dialog copy + known size, in-flight row (percentage + 'bytes / total' + speed), completed row (size), file on disk | ✅ pass ⏸ | 164.7s |
+| `test_downloads_in_progress_row_states` | While a download runs, the row shows 'NN%' and the '• speed' sample; cancelling removes the row and the partial file | ✅ pass ⏸ | 150.0s |
+| `test_downloads_cancel_running` | 'Cancel download' on a running download removes the row and the partial file | ✅ pass ⏸ | 139.6s |
+| `test_downloads_clean_up_failed` | 'Clean up' removes the failed/orphaned entries only | ✅ pass ⏸ | 48.7s |
+| `test_downloads_delete_file_orphans_entry` | 'Delete file' deletes the file, keeps the entry, and orphans it ('File not found') | ✅ pass ⏸ | 101.6s |
+| `test_downloads_remove_and_keep` | 'Remove and keep' deletes the entry but keeps the file on disk | ✅ pass ⏸ | 129.3s |
+| `test_downloads_remove_and_delete` | 'Remove and delete' deletes both the entry and the file | ✅ pass ⏸ | 129.5s |
+| `test_downloads_remove_all_keeps_files` | 'Remove all' clears every entry but keeps the files on disk | ✅ pass ⏸ | 132.6s |
+| `test_downloads_delete_all` | 'Delete all' clears every entry and deletes the files | ✅ pass ⏸ | 88.3s |
+| `test_downloads_same_url_twice_creates_second_file` | Downloading the same URL twice creates two entries; the system re-names the file '-1' | ✅ pass ⏸ | 135.6s |
+| `test_downloads_failure_mid_download` | A stream that dies mid-download ends in an 'Error: 0' row / 'Download failed' snackbar (a 404 can't be used: no dialog is shown for error responses) | ✅ pass ⏸ | 146.3s |
+| `test_bookmarks_drawer_opens_and_closes` | The main menu opens the bookmarks drawer; back closes it | ✅ pass ⏸ | 58.7s |
+| `test_bookmarks_add_root` | Ctrl+B 'Add bookmark' saves a bookmark at root; the drawer shows it | ✅ pass ⏸ | 139.0s |
+| `test_bookmarks_add_duplicate_guard` | Re-adding the same URL shows 'Bookmark already exists.' and adds nothing | ✅ pass ⏸ | 137.7s |
+| `test_bookmarks_add_in_folder` | Typing a new folder name in the add dialog creates the folder and entry; the folder opens with a '..' parent row | ✅ pass ⏸ | 146.9s |
+| `test_bookmarks_edit_title_and_url` | The bookmark context menu's 'Edit bookmark' changes title and URL | ✅ pass ⏸ | 146.5s |
+| `test_bookmarks_remove_no_confirmation` | 'Remove bookmark' deletes the entry immediately (no confirmation dialog) | ✅ pass ⏸ | 110.3s |
 | `test_bookmarks_rename_folder` | The folder context menu's 'Rename folder' renames the folder | ✅ pass ⏸ | 77.5s |
-| `test_bookmarks_remove_folder_moves_to_root` | 'Remove folder' deletes nothing: its entries move up to the root | ✅ pass ⏸ | 74.9s |
-| `test_bookmarks_export_file_and_content` | Export writes a FulgurisBookmarks-*.html to Downloads (SAF save dialog + snackbar) with the Netscape header, entries, nested folder and HTML escaping | ❌ fail ⏸ | 88.2s |
-| | _the folder <H3> is missing in the export_ | | |
-| `test_bookmarks_import_creates_entries` | Import picks the pushed Netscape file and creates the entries + folder ('N Bookmarks were imported') | ❌ fail | 61.8s |
-| | _toolbar menu button not found_ | | |
-| `test_bookmarks_import_skips_duplicates` | Re-importing an already-imported file imports only the missing entries | ❌ fail ⏸ | 165.4s |
-| | _the snackbar reports the file's bookmark count (3), got None (nodes: ['07:01', '550 B', 'Files in downloads', 'Large files', 'This week', 'autotest_import_probe.html', 'autotest_import_probe.html'])_ | | |
-| `test_bookmarks_import_malformed_file_errors` | Importing an HTML file with no bookmark list shows the error dialog | ❌ fail ⏸ | 168.0s |
-| | _the import error dialog never appeared (nodes: ['07:26', '339 B', 'Files in downloads', 'Large files', 'This week', 'autotest_import_malformed.html', 'autotest_import_malformed.html'])_ | | |
-| `test_bookmarks_reset_deletes_all` | Reset shows the 'Delete all bookmarks?' dialog and clears everything; the subsequent export is header-only (runs last) | ❌ fail ⏸ | 133.1s |
-| | _toolbar menu button not found_ | | |
+| `test_bookmarks_remove_folder_moves_to_root` | 'Remove folder' deletes nothing: its entries move up to the root | ✅ pass ⏸ | 74.8s |
+| `test_bookmarks_export_file_and_content` | Export writes a FulgurisBookmarks-*.html to Downloads (SAF save dialog + snackbar) with the Netscape header, entries, nested folder and HTML escaping | ✅ pass ⏸ | 119.0s |
+| `test_bookmarks_import_creates_entries` | Import picks the pushed Netscape file and creates the entries + folder ('N Bookmarks were imported') | ✅ pass ⏸ | 142.2s |
+| `test_bookmarks_import_skips_duplicates` | Re-importing an already-imported file imports only the missing entries | ✅ pass ⏸ | 146.4s |
+| `test_bookmarks_import_malformed_file_errors` | Importing an HTML file with no bookmark list shows the error dialog | ✅ pass ⏸ | 90.6s |
+| `test_bookmarks_reset_deletes_all` | Reset shows the 'Delete all bookmarks?' dialog and clears everything; the subsequent export is header-only (runs last) | ✅ pass ⏸ | 195.8s |
+| `test_download_link_attr_filename` | <a download='name.txt'> link, no Content-Disposition: dialog + row + file use the download-attribute filename, not the URL basename | ✅ pass ⏸ | 56.9s |
+| `test_download_link_js_anchor_filename` | JS-created <a download> anchor (a.click()), no Content-Disposition: the attribute filename is honored | ✅ pass ⏸ | 79.2s |
+| `test_download_link_content_disposition_filename` | Content-Disposition: attachment link, no download attribute: the server's filename is honored (baseline) | ✅ pass ⏸ | 79.0s |

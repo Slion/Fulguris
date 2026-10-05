@@ -196,10 +196,13 @@ python scripts/tests/run.py --all --group cursor-youtube    # cursor click seeks
 python scripts/tests/run.py --all --group cursor-context    # deliberate action-key hold opens the WebView context menu
 python scripts/tests/run.py --all --group toolbar-hide     # the "Hide tool bar after" auto-hide timeout
 python scripts/tests/run.py --all --group downloads        # the downloads bottom sheet (survives an active download)
+python scripts/tests/run.py --all --group downloads-full   # the whole download lifecycle: dialog, in-flight row, failure, cancel, per-row actions
+python scripts/tests/run.py --all --group downloads-links  # <a download> / Content-Disposition link patterns: the filename must be honored (see docs/features/downloads.md)
+python scripts/tests/run.py --all --group bookmarks        # bookmarks: add/edit/remove/folders + import/export/reset via the SAF picker
 ```
 
-`run.py` merges `url_field_tests`, `cursor_tests`, `toolbar_hide_tests` and
-`downloads_tests` into
+`run.py` merges `url_field_tests`, `cursor_tests`, `toolbar_hide_tests`,
+`downloads_tests`, `downloads_full_tests` and `bookmarks_tests` into
 one `ALL_TESTS`; `--group` selects a group (defined in each module's
 `FEATURE_GROUPS`), `--test <substr>` still filters by name, and a plain `--all`
 runs everything. Add new groups to `FEATURE_GROUPS` and give every test a

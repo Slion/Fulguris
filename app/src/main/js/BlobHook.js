@@ -146,11 +146,17 @@
     // -- Anchor click hooks ----------------------------------------------------
 
     // Hook HTMLAnchorElement.click() to capture the download attribute from
-    // programmatically triggered blob downloads (the most common pattern).
+    // programmatically triggered downloads (the most common pattern, e.g.
+    // GitHub's release buttons). The download attribute names the file the
+    // site wants the user to save — the WebView's download listener never
+    // receives it, so without this hook the file would be saved under the
+    // URL's basename instead. Works for blob: and ordinary URLs alike (the
+    // attribute is only effective same-origin, but capturing it for any
+    // href is harmless).
     var origClick = HTMLAnchorElement.prototype.click;
     HTMLAnchorElement.prototype.click = function() {
         var href = this.href;
-        if (href && href.indexOf('blob:') === 0 && this.download) {
+        if (href && this.download) {
             window._fulgurisBlobNames[href] = this.download;
             // Notify native side so the download dialog can show the real filename.
             // This fires synchronously before the WebView download listener callback.
@@ -164,7 +170,7 @@
         while (el && el.tagName !== 'A') el = el.parentElement;
         if (!el) return;
         var href = el.href;
-        if (href && href.indexOf('blob:') === 0 && el.download) {
+        if (href && el.download) {
             window._fulgurisBlobNames[href] = el.download;
             _fulgurisBlobDownload.onFilename(href, el.download);
         }

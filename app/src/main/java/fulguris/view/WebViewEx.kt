@@ -67,9 +67,12 @@ class WebViewEx : WebView {
     var onBlobDownload: ((dataUrl: String, filename: String) -> Unit)? = null
 
     /**
-     * Map of blob: URL → filename, populated by [BlobDownloadBridge.onFilename]
-     * when BlobHook.js intercepts a programmatic anchor click with a download attribute.
-     * Read (and consumed) by [LightningDownloadListener] to show the correct name in the dialog.
+     * Map of URL → filename, populated by [BlobDownloadBridge.onFilename]
+     * when BlobHook.js intercepts an anchor click whose `download` attribute
+     * names the file (blob: and ordinary URLs alike — the WebView's download
+     * listener never receives the attribute itself). Consumed (removed) by
+     * [LightningDownloadListener] when the matching download starts, so the
+     * dialog and the saved file use the attribute's name.
      */
     val blobFilenames: MutableMap<String, String> = mutableMapOf()
 
@@ -110,13 +113,19 @@ class WebViewEx : WebView {
         }
 
         /**
-         * Called by BlobHook.js when it intercepts a click on an anchor with a blob: href
-         * and a download attribute. This fires BEFORE onDownloadStart, allowing the
-         * download dialog to show the correct filename.
+         * Called by BlobHook.js when it intercepts a click on an anchor with a
+         * download attribute (blob: or ordinary URLs). This fires BEFORE
+         * onDownloadStart, allowing the download dialog to show the correct
+         * filename (the WebView's download listener never receives the
+         * download attribute).
          */
         @JavascriptInterface
         fun onFilename(blobUrl: String, filename: String) {
             synchronized(blobFilenames) {
+                // Entries are consumed by LightningDownloadListener when the
+                // download starts; cap the map so a page that fires many
+                // anchor clicks without downloads can't grow it unbounded.
+                if (blobFilenames.size > 64) blobFilenames.clear()
                 blobFilenames[blobUrl] = filename
             }
         }

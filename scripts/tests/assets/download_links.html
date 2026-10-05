@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>idle</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body style="font-family:sans-serif;background:#111;color:#eee">
+<h3>Download link patterns</h3>
+<p>Each link points at the same small file, but with different
+Content-Disposition / download-attribute combinations. Tapping one sets the
+title to the pattern id so the test can read back what was clicked.</p>
+
+<!-- 1. download attribute, server sends NO content-disposition (plain file).
+     The classic pattern. If the browser honors `download`, it saves the file. -->
+<a id="p_attr" href="http://localhost:8900/autotest_tiny.bin?attach=0&cb=1"
+   download="autotest_plain_attr.txt"
+   onclick="document.title='clicked:attr'"
+   style="display:block;margin:20px 0;font-size:20px">1: download attr, no CD</a>
+
+<!-- 2. download attribute AND content-disposition: attachment -->
+<a id="p_attr_cd" href="http://localhost:8900/autotest_tiny.bin?attach=1&cb=2"
+   download="autotest_attr_cd.txt"
+   onclick="document.title='clicked:attr_cd'"
+   style="display:block;margin:20px 0;font-size:20px">2: download attr + CD</a>
+
+<!-- 3. content-disposition: attachment, NO download attribute (known-working path) -->
+<a id="p_cd" href="http://localhost:8900/autotest_tiny.bin?attach=1&cb=3"
+   onclick="document.title='clicked:cd'"
+   style="display:block;margin:20px 0;font-size:20px">3: CD attach, no attr</a>
+
+<!-- 4. NO download attribute, NO content-disposition.
+     Should navigate (show raw file) — NOT a download. -->
+<a id="p_plain" href="http://localhost:8900/autotest_tiny.bin?attach=0&cb=4"
+   onclick="document.title='clicked:plain'"
+   style="display:block;margin:20px 0;font-size:20px">4: no attr, no CD</a>
+
+<!-- 5. JS-created anchor with download attribute + real URL (GitHub-style) -->
+<button id="p_js_attr" onclick="var a=document.createElement('a');
+        a.href='http://localhost:8900/autotest_tiny.bin?attach=0&cb=5';
+        a.download='autotest_js_attr.txt';
+        document.body.appendChild(a);a.click();a.remove();
+        document.title='clicked:js_attr'"
+        style="display:block;margin:20px 0;font-size:20px;width:100%">
+  5: JS download attr, no CD</button>
+
+</body>
+</html>
