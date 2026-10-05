@@ -1,5 +1,5 @@
-# Fulguris UI test run — SM-A225F · portrait-0-sw384
-timestamp: '2026-10-03T15:29:55+00:00'
+# UI test run — SM-A225F · portrait-0-sw384
+timestamp: '2026-10-05T12:37:56+00:00'
 device:
   model: SM-A225F
   brand: Samsung
@@ -15,31 +15,31 @@ options:
   restart: false
   keep_tabs: false
   orientation: null
-  test_filter: null
-  group: empty-tab
+  test_filter: bookmarks_import_creates_entries
+  group: null
 summary:
-  passed: 78
-  failed: 3
-  total: 81
-  ran: 4
-  duration_s: 135.0
+  passed: 92
+  failed: 14
+  total: 106
+  ran: 1
+  duration_s: 61.8
 tests:
 - name: test_cursor_click_hover_fires_mouseover
   status: fail
-  duration_s: 28.5
+  duration_s: 28.6
   message: enabling cursor should fire a mouse hover on the page, title was 'start'
   ran: false
 - name: test_cursor_click_activates_under_cursor
   status: pass
-  duration_s: 25.9
+  duration_s: 26.0
   ran: false
 - name: test_cursor_click_drag_target_seeks
   status: pass
-  duration_s: 24.1
+  duration_s: 23.7
   ran: false
 - name: test_cursor_click_hesitant_press_still_clicks
   status: pass
-  duration_s: 24.3
+  duration_s: 24.4
   ran: false
 - name: test_cursor_confirm_over_ui_activates_control_under_cursor
   status: pass
@@ -47,11 +47,12 @@ tests:
   ran: false
 - name: test_cursor_confirm_on_over_web_ignores_stray_focus
   status: pass
-  duration_s: 40.8
+  duration_s: 40.7
   ran: false
 - name: test_cursor_fade_hides_then_wakes
-  status: pass
-  duration_s: 33.6
+  status: fail
+  duration_s: 28.9
+  message: cursor should fade out after the inactivity timeout
   ran: false
 - name: test_launch_focus_is_webview
   status: pass
@@ -59,15 +60,15 @@ tests:
   ran: false
 - name: test_unfocused_shows_label
   status: pass
-  duration_s: 15.8
+  duration_s: 11.8
   ran: false
 - name: test_directional_focus_is_navigation_not_edit
   status: pass
-  duration_s: 13.4
+  duration_s: 12.9
   ran: false
 - name: test_navigation_shows_label_not_url
   status: pass
-  duration_s: 18.2
+  duration_s: 17.9
   ran: false
 - name: test_center_enters_edit_mode
   status: pass
@@ -79,7 +80,7 @@ tests:
   ran: false
 - name: test_dpad_edit_selects_all
   status: pass
-  duration_s: 17.7
+  duration_s: 17.5
   ran: false
 - name: test_type_and_validate_navigates
   status: pass
@@ -87,11 +88,11 @@ tests:
   ran: false
 - name: test_back_two_stage_keyboard_then_cancel
   status: pass
-  duration_s: 26.4
+  duration_s: 24.7
   ran: false
 - name: test_back_from_navigation_returns_to_web
   status: pass
-  duration_s: 17.3
+  duration_s: 15.8
   ran: false
 - name: test_down_from_navigation_returns_to_web
   status: pass
@@ -102,24 +103,25 @@ tests:
   duration_s: 20.6
   ran: false
 - name: test_touch_tap_enters_edit
-  status: pass
-  duration_s: 15.6
+  status: fail
+  duration_s: 14.9
+  message: could not locate the address field bounds
   ran: false
 - name: test_retap_after_cancel_reenters_edit
   status: pass
-  duration_s: 15.4
+  duration_s: 18.2
   ran: false
 - name: test_pill_only_when_focused
   status: pass
-  duration_s: 13.8
+  duration_s: 14.1
   ran: false
 - name: test_https_shows_ssl_icon
   status: pass
-  duration_s: 14.3
+  duration_s: 14.5
   ran: false
 - name: test_http_shows_off_icon
   status: pass
-  duration_s: 14.1
+  duration_s: 14.2
   ran: false
 - name: test_invalid_https_shows_ssl_icon
   status: pass
@@ -131,31 +133,34 @@ tests:
   ran: false
 - name: test_reload_button_hidden_after_load
   status: pass
-  duration_s: 20.0
+  duration_s: 21.1
   ran: false
 - name: test_stop_button_visible_during_load
   status: pass
-  duration_s: 10.4
+  duration_s: 11.1
   ran: false
 - name: test_reload_button_hidden_after_reload
   status: pass
-  duration_s: 24.5
+  duration_s: 23.9
   ran: false
 - name: test_stop_button_click_stops_load
   status: pass
-  duration_s: 18.5
+  duration_s: 19.2
   ran: false
 - name: test_short_page_shows_reload_button
-  status: pass
-  duration_s: 18.8
+  status: fail
+  duration_s: 39.0
+  message: short page should keep the reload button visible, got GONE
   ran: false
 - name: test_reload_button_tracks_tab_on_ctrl_tab
-  status: pass
-  duration_s: 36.2
+  status: fail
+  duration_s: 51.0
+  message: tab B (short) should show the button
   ran: false
 - name: test_reload_button_tracks_tab_via_tab_menu
-  status: pass
-  duration_s: 36.0
+  status: fail
+  duration_s: 50.0
+  message: short tab should show the button
   ran: false
 - name: test_smoke_launch
   status: pass
@@ -163,11 +168,11 @@ tests:
   ran: false
 - name: test_smoke_open_website
   status: pass
-  duration_s: 12.1
+  duration_s: 12.3
   ran: false
 - name: test_smoke_open_settings
   status: pass
-  duration_s: 7.9
+  duration_s: 7.8
   ran: false
 - name: test_smoke_background_app_switch
   status: pass
@@ -179,19 +184,19 @@ tests:
   ran: false
 - name: test_cursor_toggle_hotkey_shows_and_hides_overlay
   status: pass
-  duration_s: 28.9
+  duration_s: 28.3
   ran: false
 - name: test_cursor_toggle_exit_focuses_menu_button
   status: pass
-  duration_s: 28.4
+  duration_s: 28.1
   ran: false
 - name: test_cursor_survives_options_sheet_dismiss
   status: pass
-  duration_s: 43.3
+  duration_s: 43.1
   ran: false
 - name: test_cursor_movement_dpad_right_moves_right
   status: pass
-  duration_s: 29.7
+  duration_s: 29.5
   ran: false
 - name: test_cursor_movement_dpad_down_moves_down
   status: pass
@@ -199,7 +204,7 @@ tests:
   ran: false
 - name: test_cursor_movement_edge_scrolls_page
   status: pass
-  duration_s: 40.5
+  duration_s: 40.3
   ran: false
 - name: test_cursor_movement_gamepad_dpad_yields_to_focus_nav
   status: pass
@@ -207,27 +212,28 @@ tests:
   ran: false
 - name: test_cursor_menu_item_visible_on_leanback
   status: pass
-  duration_s: 18.9
+  duration_s: 19.2
   ran: false
 - name: test_cursor_menu_item_toggles_mode
   status: pass
-  duration_s: 17.6
+  duration_s: 17.5
   ran: false
 - name: test_cursor_fullscreen_click_reaches_custom_view
-  status: pass
-  duration_s: 33.0
+  status: fail
+  duration_s: 23.9
+  message: tapping should enter fullscreen, title was ''
   ran: false
 - name: test_cursor_media_play_pause
   status: pass
-  duration_s: 29.7
+  duration_s: 29.0
   ran: false
 - name: test_cursor_wheel_ff_rewind_scrolls
   status: pass
-  duration_s: 37.1
+  duration_s: 36.7
   ran: false
 - name: test_cursor_youtube_scrubber_seek
   status: fail
-  duration_s: 67.6
+  duration_s: 66.8
   message: cursor click on the YouTube-style scrubber should seek, last title was 'ctrl-hidden'
   ran: false
 - name: test_cursor_youtube_scrubber_seek_after_idle
@@ -236,16 +242,16 @@ tests:
   ran: false
 - name: test_cursor_context_menu_action_long_press
   status: pass
-  duration_s: 30.4
+  duration_s: 29.9
   ran: false
 - name: test_cursor_context_menu_repeated_long_press_touch_stays_clean
   status: fail
-  duration_s: 31.8
+  duration_s: 31.5
   message: each of the 3 long presses should deliver a fresh touch (pointerdown) to the page, but only 0 did — the WebView's touch state is stuck (UP-after-cancel); log='Web browser - Wikipedia'
   ran: false
 - name: test_repeated_rotations_keep_page
   status: pass
-  duration_s: 30.8
+  duration_s: 31.0
   ran: false
 - name: test_configuration_bottom_sheet_opens
   status: pass
@@ -253,23 +259,23 @@ tests:
   ran: false
 - name: test_toolbar_hides_after_timeout
   status: pass
-  duration_s: 30.2
+  duration_s: 30.9
   ran: false
 - name: test_toolbar_not_starved_on_busy_page
   status: pass
-  duration_s: 27.0
+  duration_s: 27.4
   ran: false
 - name: test_toolbar_not_reset_by_interaction
   status: pass
-  duration_s: 29.7
+  duration_s: 30.4
   ran: false
 - name: test_toolbar_rearms_on_focus_gain
   status: pass
-  duration_s: 48.4
+  duration_s: 48.7
   ran: false
 - name: test_toolbar_rehides_after_back_reshow
   status: pass
-  duration_s: 43.4
+  duration_s: 43.3
   ran: false
 - name: test_cursor_toolbar_rehides_after_back_reshow
   status: pass
@@ -277,11 +283,11 @@ tests:
   ran: false
 - name: test_toolbar_disabled_at_zero
   status: pass
-  duration_s: 31.0
+  duration_s: 31.2
   ran: false
 - name: test_back_two_tabs_keeps_foreground
   status: pass
-  duration_s: 39.1
+  duration_s: 39.0
   ran: false
 - name: test_back_last_tab_stays_foreground
   status: pass
@@ -289,65 +295,170 @@ tests:
   ran: false
 - name: test_back_editing_two_stage_exit
   status: pass
-  duration_s: 31.3
+  duration_s: 31.4
   ran: false
 - name: test_settings_back_from_nested_no_crash
   status: pass
-  duration_s: 40.2
+  duration_s: 40.5
   ran: false
 - name: test_downloads_sheet_survives_active_download
   status: pass
-  duration_s: 38.7
+  duration_s: 35.6
   ran: false
 - name: test_no_launch_dialog_for_plain_site
   status: pass
-  duration_s: 119.4
+  duration_s: 117.7
   ran: false
 - name: test_launch_dialog_for_specialized_handler
   status: pass
-  duration_s: 25.3
+  duration_s: 25.2
   ran: false
 - name: test_toolbar_label_refreshes_while_field_focused
   status: pass
-  duration_s: 27.4
+  duration_s: 27.7
   ran: false
 - name: test_view_cold_start_new_tab
   status: pass
-  duration_s: 17.4
+  duration_s: 17.6
   ran: false
 - name: test_view_warm_start_new_tab
   status: pass
-  duration_s: 14.6
+  duration_s: 14.8
   ran: false
 - name: test_send_url_new_tab
   status: pass
-  duration_s: 14.5
+  duration_s: 15.0
   ran: false
 - name: test_send_plain_text_no_new_tab
   status: pass
-  duration_s: 15.3
+  duration_s: 16.7
   ran: false
 - name: test_web_search_new_tab
   status: pass
-  duration_s: 13.8
+  duration_s: 15.4
   ran: false
 - name: test_open_document_file_url
   status: pass
-  duration_s: 19.9
+  duration_s: 20.1
   ran: false
 - name: test_empty_tab_back_key_backgrounds_app
   status: pass
-  duration_s: 10.0
-  ran: true
+  duration_s: 10.1
+  ran: false
 - name: test_empty_tab_shows_logo
   status: pass
-  duration_s: 34.4
-  ran: true
+  duration_s: 40.3
+  ran: false
 - name: test_empty_tab_menu_hides_tab_items
   status: pass
-  duration_s: 59.1
-  ran: true
+  duration_s: 58.5
+  ran: false
 - name: test_empty_tab_tabs_button_creates_tab
   status: pass
-  duration_s: 29.6
+  duration_s: 29.3
+  ran: false
+- name: test_downloads_sheet_empty_state
+  status: pass
+  duration_s: 41.1
+  ran: false
+- name: test_downloads_dialog_and_completion
+  status: pass
+  duration_s: 160.1
+  ran: false
+- name: test_downloads_in_progress_row_states
+  status: pass
+  duration_s: 151.0
+  ran: false
+- name: test_downloads_cancel_running
+  status: pass
+  duration_s: 118.5
+  ran: false
+- name: test_downloads_clean_up_failed
+  status: pass
+  duration_s: 48.8
+  ran: false
+- name: test_downloads_delete_file_orphans_entry
+  status: pass
+  duration_s: 100.7
+  ran: false
+- name: test_downloads_remove_and_keep
+  status: pass
+  duration_s: 130.8
+  ran: false
+- name: test_downloads_remove_and_delete
+  status: pass
+  duration_s: 131.2
+  ran: false
+- name: test_downloads_remove_all_keeps_files
+  status: pass
+  duration_s: 133.9
+  ran: false
+- name: test_downloads_delete_all
+  status: pass
+  duration_s: 88.4
+  ran: false
+- name: test_downloads_same_url_twice_creates_second_file
+  status: pass
+  duration_s: 135.4
+  ran: false
+- name: test_downloads_failure_mid_download
+  status: pass
+  duration_s: 147.8
+  ran: false
+- name: test_bookmarks_drawer_opens_and_closes
+  status: pass
+  duration_s: 67.1
+  ran: false
+- name: test_bookmarks_add_root
+  status: pass
+  duration_s: 126.0
+  ran: false
+- name: test_bookmarks_add_duplicate_guard
+  status: pass
+  duration_s: 137.6
+  ran: false
+- name: test_bookmarks_add_in_folder
+  status: pass
+  duration_s: 146.8
+  ran: false
+- name: test_bookmarks_edit_title_and_url
+  status: pass
+  duration_s: 146.2
+  ran: false
+- name: test_bookmarks_remove_no_confirmation
+  status: pass
+  duration_s: 110.4
+  ran: false
+- name: test_bookmarks_rename_folder
+  status: pass
+  duration_s: 77.5
+  ran: false
+- name: test_bookmarks_remove_folder_moves_to_root
+  status: pass
+  duration_s: 74.9
+  ran: false
+- name: test_bookmarks_export_file_and_content
+  status: fail
+  duration_s: 88.2
+  message: the folder <H3> is missing in the export
+  ran: false
+- name: test_bookmarks_import_creates_entries
+  status: fail
+  duration_s: 61.8
+  message: toolbar menu button not found
   ran: true
+- name: test_bookmarks_import_skips_duplicates
+  status: fail
+  duration_s: 165.4
+  message: 'the snackbar reports the file''s bookmark count (3), got None (nodes: [''07:01'', ''550 B'', ''Files in downloads'', ''Large files'', ''This week'', ''autotest_import_probe.html'', ''autotest_import_probe.html''])'
+  ran: false
+- name: test_bookmarks_import_malformed_file_errors
+  status: fail
+  duration_s: 168.0
+  message: 'the import error dialog never appeared (nodes: [''07:26'', ''339 B'', ''Files in downloads'', ''Large files'', ''This week'', ''autotest_import_malformed.html'', ''autotest_import_malformed.html''])'
+  ran: false
+- name: test_bookmarks_reset_deletes_all
+  status: fail
+  duration_s: 133.1
+  message: toolbar menu button not found
+  ran: false

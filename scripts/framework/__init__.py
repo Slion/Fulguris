@@ -1,67 +1,57 @@
-"""A small, platform-agnostic device-automation framework.
+"""Back-compat shim for the old ``framework`` package.
 
-Tests and tools talk to a :class:`Device` (semantic, platform-neutral calls);
-each ``Device`` is backed by a :class:`~framework.transport.Transport` (the pipe
-to the target). Today the only implementation is Android over adb
-(:class:`AndroidDevice` / :class:`AdbTransport`), but every test is written to the
-``Device`` contract, so adding another platform is additive — no test changes.
+The generic, platform-agnostic device-automation framework (the ``Device``
+contract, the ``Transport`` protocol, the Android/adb backend, the key symbols,
+and the per-run session state) now lives in the **AutoTest** submodule as the
+:mod:`autotest` package. This package re-exports that generic surface so the
+historical probes and tools that do ``import framework`` /
+``from framework import AndroidDevice, keys`` keep working unchanged.
 
-Public surface::
-
-    from framework import resolve_devices, keys
-    for device in resolve_devices(spec, use_all):
-        device.navigate("example.com")
-        device.key(keys.DPAD_DOWN)
-
-Runner/session configuration (restart-between-tests, tab hygiene) is exposed here
-as thin functions so the runner has one import; they currently delegate to the
-adb layer's process-wide state.
+``AndroidDevice`` and ``resolve_devices`` here are the **Fulguris** device
+(:class:`appdevice.FulgurisDevice`) — the old ``framework.AndroidDevice`` already
+knew the Fulguris app (its address bar, tabs, …), so the alias preserves that
+behavior for callers that relied on it. The pure-generic device is
+:class:`autotest.android.device.AndroidDevice`.
 """
 from __future__ import annotations
 
 import os
 import sys
 
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "tools"))
-import adb
+_here = os.path.dirname(os.path.abspath(__file__))          # .../scripts/framework
+_scripts = os.path.dirname(_here)                            # .../scripts
+_at = os.path.join(_scripts, "..", "subs", "AutoTest")       # .../subs/AutoTest
 
-from . import keys
-from .android import AndroidDevice
-from .device import Device, Node
-from .transport import AdbTransport, Transport
+for _d in (_at, os.path.join(_scripts, "tools"), os.path.join(_scripts, "tests")):
+    _d = os.path.normpath(_d)
+    if _d not in sys.path:
+        sys.path.insert(0, _d)
+
+from autotest import (  # noqa: E402,F401
+    keys,
+    Device,
+    Node,
+    Transport,
+    AdbTransport,
+    ORIENTATIONS,
+)
+import adb  # noqa: E402  (the back-compat adb shim in scripts/tools)
+
+from appdevice import FulgurisDevice, resolve_devices  # noqa: E402
+
+# The old framework.AndroidDevice was the Fulguris device (it knew the app's
+# address bar / tabs / …). Keep that behavior for back-compat callers.
+AndroidDevice = FulgurisDevice
 
 __all__ = [
-    "keys",
-    "Device",
-    "Node",
-    "AndroidDevice",
-    "Transport",
-    "AdbTransport",
-    "resolve_devices",
-    "reset_between_tests",
-    "set_keep_tabs",
-    "reset_tab_counter",
-    "tabs_opened",
-    "keep_tabs",
-    "ORIENTATIONS",
+    "keys", "Device", "Node", "Transport", "AdbTransport",
+    "AndroidDevice", "resolve_devices", "ORIENTATIONS",
+    "reset_between_tests", "set_keep_tabs", "reset_tab_counter",
+    "tabs_opened", "keep_tabs",
 ]
 
-# Orientation names accepted by set_orientation / the runner's --orientation flag.
-ORIENTATIONS = adb.ORIENTATIONS
 
-
-def resolve_devices(device: str | None, use_all: bool, package: str | None = None) -> list[Device]:
-    """Resolve the selected target(s) into :class:`Device` objects.
-
-    Mirrors the adb device selection (exiting with a message when ambiguous) and
-    wraps each serial in an :class:`AndroidDevice`. When another platform is added
-    this is where its devices would be discovered and wrapped too.
-    """
-    serials = adb.resolve_devices(device, use_all)
-    return [AndroidDevice(serial, package) for serial in serials]
-
-
-# --- runner/session configuration (process-wide) ---------------------------
+# --- per-run session state (delegated to the adb shim's module globals) -----
 
 
 def reset_between_tests(restart: bool) -> None:

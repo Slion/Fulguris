@@ -10,3 +10,6 @@
 [submodule "subs/l10n"]
 	path = subs/l10n
 	url = https://github.com/Slion/l10n.git
+[submodule "subs/AutoTest"]
+	path = subs/AutoTest
+	url = https://github.com/Slion/AutoTest

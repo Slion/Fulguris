@@ -4679,6 +4679,17 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
      * Display downloads in bottom sheet
      */
     fun openDownloads() {
+        // iBottomSheet is a single shared DialogFragment for every sheet: re-opening it while
+        // the previous instance is still on the back stack (e.g. the OPEN_DOWNLOADS intent
+        // delivered on a hot start while the sheet is open, or a sheet restored from a saved
+        // state) makes DialogFragment.show() add it twice and crash on the next resume with
+        // "Fragment already added". Flush any pending transaction first, then dismiss the
+        // stale instance (added or about-to-be) before showing a fresh one.
+        supportFragmentManager.executePendingTransactions()
+        if (iBottomSheet.isAdded) {
+            iBottomSheet.dismissAllowingStateLoss()
+            supportFragmentManager.executePendingTransactions()
+        }
         iBottomSheet.setLayout(R.layout.fragment_downloads).show()
     }
 

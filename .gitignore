@@ -38,6 +38,10 @@ build
 *.class
 build.xml
 .DS_Store
+
+# Generated test artifacts (recreated by the test suites)
+scripts/tests/local_downloads/
+scripts/tests/.temp_export/
 gen/
 .gradle/
 proguard/
