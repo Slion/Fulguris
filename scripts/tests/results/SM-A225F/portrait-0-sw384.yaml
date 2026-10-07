@@ -1,5 +1,5 @@
 # UI test run — SM-A225F · portrait-0-sw384
-timestamp: '2026-10-05T18:13:34+00:00'
+timestamp: '2026-10-07T06:25:34+00:00'
 device:
   model: SM-A225F
   brand: Samsung
@@ -16,13 +16,13 @@ options:
   keep_tabs: false
   orientation: null
   test_filter: null
-  group: smoke
+  group: history
 summary:
   passed: 100
-  failed: 9
-  total: 109
-  ran: 5
-  duration_s: 34.9
+  failed: 11
+  total: 111
+  ran: 2
+  duration_s: 275.4
 tests:
 - name: test_cursor_click_hover_fires_mouseover
   status: fail
@@ -165,23 +165,23 @@ tests:
 - name: test_smoke_launch
   status: pass
   duration_s: 2.5
-  ran: true
+  ran: false
 - name: test_smoke_open_website
   status: pass
   duration_s: 11.4
-  ran: true
+  ran: false
 - name: test_smoke_open_settings
   status: pass
   duration_s: 7.7
-  ran: true
+  ran: false
 - name: test_smoke_background_app_switch
   status: pass
   duration_s: 6.2
-  ran: true
+  ran: false
 - name: test_smoke_background_home
   status: pass
   duration_s: 6.1
-  ran: true
+  ran: false
 - name: test_cursor_toggle_hotkey_shows_and_hides_overlay
   status: pass
   duration_s: 28.3
@@ -469,3 +469,13 @@ tests:
   status: pass
   duration_s: 79.0
   ran: false
+- name: test_in_tab_back_navigates_history
+  status: fail
+  duration_s: 166.5
+  message: page A did not load (field='')
+  ran: true
+- name: test_in_tab_back_not_confused_with_field_edit
+  status: fail
+  duration_s: 106.8
+  message: page A did not load
+  ran: true

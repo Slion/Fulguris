@@ -72,6 +72,7 @@ import bookmarks_tests  # noqa: E402
 import intent_tests  # noqa: E402
 import intent_send_tests  # noqa: E402
 import empty_tab_tests  # noqa: E402
+import history_tests  # noqa: E402
 
 # All tests across every suite, plus a merged description map for the reports.
 ALL_TESTS = (suite.ALL_TESTS + smoke_tests.ALL_TESTS + cursor_tests.ALL_TESTS
@@ -79,7 +80,8 @@ ALL_TESTS = (suite.ALL_TESTS + smoke_tests.ALL_TESTS + cursor_tests.ALL_TESTS
              + toolbar_hide_tests.ALL_TESTS + back_tests.ALL_TESTS
              + downloads_tests.ALL_TESTS + downloads_full_tests.ALL_TESTS
              + bookmarks_tests.ALL_TESTS + intent_tests.ALL_TESTS
-             + intent_send_tests.ALL_TESTS + empty_tab_tests.ALL_TESTS)
+             + intent_send_tests.ALL_TESTS + empty_tab_tests.ALL_TESTS
+             + history_tests.ALL_TESTS)
 TEST_DESCRIPTIONS = {**suite.TEST_DESCRIPTIONS, **smoke_tests.TEST_DESCRIPTIONS,
                      **cursor_tests.TEST_DESCRIPTIONS, **rotation_tests.TEST_DESCRIPTIONS,
                      **settings_tests.TEST_DESCRIPTIONS,
@@ -90,7 +92,8 @@ TEST_DESCRIPTIONS = {**suite.TEST_DESCRIPTIONS, **smoke_tests.TEST_DESCRIPTIONS,
                      **bookmarks_tests.TEST_DESCRIPTIONS,
                      **intent_tests.TEST_DESCRIPTIONS,
                      **intent_send_tests.TEST_DESCRIPTIONS,
-                     **empty_tab_tests.TEST_DESCRIPTIONS}
+                     **empty_tab_tests.TEST_DESCRIPTIONS,
+                     **history_tests.TEST_DESCRIPTIONS}
 
 # Named feature groups that can be run as a subset via --group. url_field_tests has
 # no groups of its own; cursor_tests defines the cursor feature groups. "cursor" is
@@ -108,6 +111,7 @@ FEATURE_GROUPS.update(bookmarks_tests.FEATURE_GROUPS)
 FEATURE_GROUPS.update(intent_tests.FEATURE_GROUPS)
 FEATURE_GROUPS.update(intent_send_tests.FEATURE_GROUPS)
 FEATURE_GROUPS.update(empty_tab_tests.FEATURE_GROUPS)
+FEATURE_GROUPS.update(history_tests.FEATURE_GROUPS)
 
 RESULTS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "results")
 

@@ -1,11 +1,11 @@
 # Test run — SM-A225F · portrait-0-sw384
 
-- **When:** 2026-10-05T18:13:34+00:00
+- **When:** 2026-10-07T06:25:34+00:00
 - **Device:** Galaxy A22 5G (Samsung SM-A225F) — Android 13
 - **Config:** portrait, rotation 0°, smallest width 384dp
 - **Package:** `net.slions.fulguris.full.agent.debug`
 - **Options:** restart=False, keep_tabs=False, orientation=default, filter=all
-- **Result:** 100/109 passed in 34.9s (5 ran, 104 carried forward)
+- **Result:** 100/111 passed in 275.4s (2 ran, 109 carried forward)
 
 | Test | Description | Result | Duration |
 |---|---|---|---|
@@ -48,11 +48,11 @@
 | | _tab B (short) should show the button_ | | |
 | `test_reload_button_tracks_tab_via_tab_menu` | Tab switch via the tab list drawer updates the reload button | ❌ fail ⏸ | 50.0s |
 | | _short tab should show the button_ | | |
-| `test_smoke_launch` | The app launches and reaches the main browser UI in the foreground | ✅ pass | 2.5s |
-| `test_smoke_open_website` | Navigating to a web site loads and the address bar shows its label | ✅ pass | 11.4s |
-| `test_smoke_open_settings` | The settings activity opens via its component and renders its content | ✅ pass | 7.7s |
-| `test_smoke_background_app_switch` | KEYCODE_APP_SWITCH backgrounds the app; launching brings it back to the front | ✅ pass | 6.2s |
-| `test_smoke_background_home` | KEYCODE_HOME backgrounds the app; the activity intent brings it back to the front | ✅ pass | 6.1s |
+| `test_smoke_launch` | The app launches and reaches the main browser UI in the foreground | ✅ pass ⏸ | 2.5s |
+| `test_smoke_open_website` | Navigating to a web site loads and the address bar shows its label | ✅ pass ⏸ | 11.4s |
+| `test_smoke_open_settings` | The settings activity opens via its component and renders its content | ✅ pass ⏸ | 7.7s |
+| `test_smoke_background_app_switch` | KEYCODE_APP_SWITCH backgrounds the app; launching brings it back to the front | ✅ pass ⏸ | 6.2s |
+| `test_smoke_background_home` | KEYCODE_HOME backgrounds the app; the activity intent brings it back to the front | ✅ pass ⏸ | 6.1s |
 | `test_cursor_toggle_hotkey_shows_and_hides_overlay` | Long-press play/pause toggles the cursor overlay on and off | ✅ pass ⏸ | 28.3s |
 | `test_cursor_toggle_exit_focuses_menu_button` | Turning the cursor off moves focus to the toolbar menu button | ✅ pass ⏸ | 28.1s |
 | `test_cursor_survives_options_sheet_dismiss` | Opening then dismissing the options bottom sheet does not leave the cursor suspended (resumes on sheet close) | ✅ pass ⏸ | 43.1s |
@@ -127,3 +127,7 @@
 | `test_download_link_attr_filename` | <a download='name.txt'> link, no Content-Disposition: dialog + row + file use the download-attribute filename, not the URL basename | ✅ pass ⏸ | 56.9s |
 | `test_download_link_js_anchor_filename` | JS-created <a download> anchor (a.click()), no Content-Disposition: the attribute filename is honored | ✅ pass ⏸ | 79.2s |
 | `test_download_link_content_disposition_filename` | Content-Disposition: attachment link, no download attribute: the server's filename is honored (baseline) | ✅ pass ⏸ | 79.0s |
+| `test_in_tab_back_navigates_history` | With in-page history the back key navigates the tab back to the previous page (goBack), it does not close the tab or finish the app | ❌ fail | 166.5s |
+| | _page A did not load (field='')_ | | |
+| `test_in_tab_back_not_confused_with_field_edit` | Back with in-page history and an unfocused address field still steps the page history (the two-stage edit exit does not swallow it) | ❌ fail | 106.8s |
+| | _page A did not load_ | | |

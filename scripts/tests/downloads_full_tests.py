@@ -683,8 +683,9 @@ def test_downloads_dialog_and_completion(device, ctx: dict) -> None:
     )
     pct, speed_part, bytes_part = _parse_status(summary)
     assert pct is not None, f"row should show a percentage while running, got {summary!r}"
-    # The total renders as '15 MB' or '15.00 MB' (Formatter.formatFileSize).
-    assert bytes_part and re.search(r"/\s*15(\.0+)?\s*MB$", bytes_part), (
+    # The total renders as '15 MB' or '15.00 MB' (Formatter.formatFileSize); the decimal
+    # separator follows the device locale ('.' in en-GB, ',' in en-DE), so accept both.
+    assert bytes_part and re.search(r"/\s*15([.,]0+)?\s*MB$", bytes_part), (
         f"row should show 'bytes / 15 MB' while running, got {summary!r}"
     )
     # The speed part (• …/s) appears only once the 10 s sample window has two
@@ -705,7 +706,7 @@ def test_downloads_dialog_and_completion(device, ctx: dict) -> None:
     title, summary = _wait_complete(device, FILE_SMALL, timeout=180.0)
     assert title, "row disappeared before completion"
     assert not _row_progressing(summary), f"row still shows progress: {summary!r}"
-    assert re.search(r"\b15(\.0+)?\s*MB", summary), (
+    assert re.search(r"\b15([.,]0+)?\s*MB", summary), (
         f"completed row should report its size ('15 MB'), got summary {summary!r}"
     )
     assert _disk(device, FILE_SMALL), f"{FILE_SMALL} is missing from /sdcard/Download"
@@ -766,7 +767,7 @@ def test_downloads_in_progress_row_states(device, ctx: dict) -> None:
     # Let it finish naturally, then clean up.
     title, summary = _wait_complete(device, FILE_SMALL, timeout=240.0)
     assert title, "row disappeared before completion"
-    assert re.search(r"\b15(\.0+)?\s*MB", summary), (
+    assert re.search(r"\b15([.,]0+)?\s*MB", summary), (
         f"completed row should report its size ('15 MB'), got summary {summary!r}"
     )
     _cleanup_all(device)

@@ -70,6 +70,12 @@ def _reset(device, restart: bool | None = None) -> None:
 KNOWN_URL = "example.com"
 KNOWN_DOMAIN = "example.com"
 
+# EMUI 10 (Huawei P30 Pro) updates mInputShown 0-3 s *after* the keyboard
+# actually appears, non-deterministically, so positive "keyboard shown"
+# assertions poll with this timeout instead of a single-shot read. Negative
+# assertions stay single-shot: the flag clears immediately on hide.
+IME_SHOW_TIMEOUT = 5.0
+
 
 # --- State tests -----------------------------------------------------------
 
@@ -129,7 +135,7 @@ def test_toolbar_label_refreshes_while_field_focused(device, ctx: dict) -> None:
 def test_edit_shows_url(device, ctx: dict) -> None:
     device.navigate(KNOWN_URL)
     _enter_edit(device)
-    assert device.ime_shown(), "editing should show the keyboard"
+    assert device.ime_shown(timeout=IME_SHOW_TIMEOUT), "editing should show the keyboard"
     text = device.field_text().lower()
     assert KNOWN_DOMAIN in text or text.startswith("http"), f"edit mode should show the URL, got '{text}'"
 
@@ -174,7 +180,16 @@ def test_center_enters_edit_mode(device, ctx: dict) -> None:
     _focus_field_for_navigation(device)
     assert not device.ime_shown(), "precondition: keyboard hidden in navigation"
     device.key(keys.DPAD_CENTER, wait=0.8)
-    assert device.ime_shown(), "center/enter should enter edit mode and show the keyboard"
+    if not device.ime_shown(timeout=IME_SHOW_TIMEOUT):
+        # Diagnostic: capture what the screen actually looks like when the
+        # keyboard fails to appear (a standalone probe of the same flow shows
+        # it DOES appear, so something in the run context differs).
+        shot = os.path.join(_ensure_out(), "diag_center_edit_%s.png" % device.id)
+        device.screenshot(shot)
+        raise AssertionError(
+            "center/enter should enter edit mode and show the keyboard "
+            "(screenshot: %s, field_focused=%s, field_text=%r)"
+            % (shot, device.field_focused(), device.field_text()))
 
 
 def test_type_and_validate_navigates(device, ctx: dict) -> None:
@@ -197,7 +212,7 @@ def test_back_two_stage_keyboard_then_cancel(device, ctx: dict) -> None:
     expected = device.field_text()
     device.key(keys.DPAD_CENTER, wait=0.8)
     device.type_text("somethingelse", wait=0.4)
-    assert device.ime_shown(), "precondition: keyboard shown while editing"
+    assert device.ime_shown(timeout=IME_SHOW_TIMEOUT), "precondition: keyboard shown while editing"
 
     # First back: keyboard hidden, field still focused (still editing).
     device.key(keys.BACK, wait=0.8)
@@ -246,6 +261,10 @@ def test_suggestions_navigable_without_touch(device, ctx: dict) -> None:
     device.key(keys.DPAD_CENTER, wait=3.0)
     device.note_tab_opened()  # opening a suggestion opens a new tab (searchInNewTab)
     assert not device.ime_shown(), "keyboard should be hidden after opening a suggestion"
+    # Focus returning to the web view can lag a little on slower devices; poll.
+    deadline = time.time() + 5.0
+    while not device.webview_focused() and time.time() < deadline:
+        time.sleep(0.4)
     assert device.webview_focused(), "opening a suggestion should navigate and focus the web view"
 
 
@@ -255,7 +274,8 @@ def test_touch_tap_enters_edit(device, ctx: dict) -> None:
     center = device.field_center()
     assert center, "could not locate the address field bounds"
     device.tap(center[0], center[1], wait=0.9)
-    assert device.ime_shown(), "tapping the field should enter edit mode and show the keyboard"
+    assert device.ime_shown(timeout=IME_SHOW_TIMEOUT), \
+        "tapping the field should enter edit mode and show the keyboard"
 
 
 def test_retap_after_cancel_reenters_edit(device, ctx: dict) -> None:
@@ -266,7 +286,8 @@ def test_retap_after_cancel_reenters_edit(device, ctx: dict) -> None:
     device.key(keys.BACK, wait=0.7)  # hide keyboard
     device.key(keys.BACK, wait=0.7)  # cancel
     device.tap(center[0], center[1], wait=0.9)
-    assert device.ime_shown(), "tapping again after cancel should re-enter edit mode"
+    assert device.ime_shown(timeout=IME_SHOW_TIMEOUT), \
+        "tapping again after cancel should re-enter edit mode"
 
 
 # --- SSL / HTTPS status icon tests ----------------------------------------
@@ -444,6 +465,22 @@ def _ctrl_tab_to(device, label: str, tries: int = 4) -> bool:
     return device.field_text() == label
 
 
+def _short_page_url(device) -> str:
+    """A locally-served, guaranteed non-scrollable page (the 'short page' state).
+
+    ``example.com`` is the historical stand-in, but whether it scrolls depends on the
+    device's viewport width: on a narrow phone (e.g. sw360) it overflows and becomes
+    vertically scrollable, so the reload button correctly hides and the old assumption
+    that it is always 'short' broke. This page has ``overflow:hidden`` and content that
+    fits any screen, so the container can never scroll and the reload button always
+    stays visible. Served over the same assets server / reverse tunnel the
+    label-refresh test uses.
+    """
+    _ensure_server()
+    _ensure_reverse(device)
+    return "http://localhost:%d/short_page.html?cb=%d" % (PORT, int(time.time() * 1000))
+
+
 def test_reload_button_hidden_after_load(device, ctx: dict) -> None:
     """On a loaded, scrollable page the reload/stop button must stay hidden.
 
@@ -501,7 +538,7 @@ def test_stop_button_click_stops_load(device, ctx: dict) -> None:
 
 def test_short_page_shows_reload_button(device, ctx: dict) -> None:
     """On a short, non-scrollable page the reload button stays visible by design."""
-    device.navigate(SHORT_URL)
+    device.navigate(_short_page_url(device))
     state = _wait_reload_button(device, "VISIBLE", timeout=20.0)
     assert state == "VISIBLE", f"short page should keep the reload button visible, got {state}"
 
@@ -518,7 +555,7 @@ def test_reload_button_tracks_tab_on_ctrl_tab(device, ctx: dict) -> None:
     label_a = device.field_text()
     # Tab B: navigating opens a new tab for the URL; a short page -> button VISIBLE.
     # (Both tabs stay alive for the test; the runner closes them afterwards.)
-    device.navigate(SHORT_URL, reset=False)
+    device.navigate(_short_page_url(device), reset=False)
     assert _wait_reload_button(device, "VISIBLE") == "VISIBLE", "tab B (short) should show the button"
     label_b = device.field_text()
     assert label_a != label_b, "the two tabs should have distinct labels"
@@ -538,7 +575,7 @@ def test_reload_button_tracks_tab_via_tab_menu(device, ctx: dict) -> None:
     device.navigate(SCROLLABLE_URL)
     assert _wait_reload_button_gone(device) == "GONE", "scrollable tab should hide the button"
     label_scroll = device.field_text()
-    device.navigate(SHORT_URL, reset=False)
+    device.navigate(_short_page_url(device), reset=False)
     assert _wait_reload_button(device, "VISIBLE") == "VISIBLE", "short tab should show the button"
 
     # Open the tab drawer and tap the scrollable tab: button must hide.

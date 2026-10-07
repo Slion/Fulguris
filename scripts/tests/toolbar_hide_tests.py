@@ -204,9 +204,13 @@ def test_toolbar_hides_after_timeout(device, ctx: dict) -> None:
         t0 = _wait_loaded(device, "loaded")
         hidden = _wait_toolbar_hidden(device, 17.0)
         assert hidden is not None, "tool bar never hid within 17 s of load"
-        # navigate() returns a few seconds after the true load, so "10 s after load"
-        # reads as ~7-8 s from t0; this window catches both under- and over-shooting.
-        assert 6.5 <= hidden <= 12.0, f"tool bar hid {hidden:.2f} s after load (expected ~10 s)"
+        # navigate() returns ~3 s after the true load (key(ENTER, wait=3.0)) and the
+        # countdown arms on the progress-100 edge, which for this tiny local page fires
+        # well before the title mirrors into t0. So "10 s after the arm point" reads as
+        # ~7 s from t0 (a little less on a slow device); the lower bound must stay below
+        # that or the test is a false negative. The upper bound still catches a real
+        # over-shoot (and a never-hides starve shows up as the None assert above).
+        assert 5.0 <= hidden <= 12.0, f"tool bar hid {hidden:.2f} s after load (expected ~10 s)"
     finally:
         _finish(device)
 
@@ -249,9 +253,12 @@ def test_toolbar_not_reset_by_interaction(device, ctx: dict) -> None:
         hidden = _wait_toolbar_hidden(device, 17.0)
         assert hidden is not None, "tool bar never hid within 17 s of the press"
         from_load = (t_press + hidden) - t0
-        # Anchored at load (~10 s after), not at the press (~2 s after load, which would
-        # read as ~12 s after load under the old interaction-reset semantics).
-        assert 6.5 <= from_load <= 11.5, (
+        # Anchored at the load arm point (~10 s after), not at the press (~2 s after
+        # load, which would read as ~12 s after load under the old interaction-reset
+        # semantics). As with test_toolbar_hides_after_timeout, the arm point precedes
+        # t0 by the ~3 s navigate() tail, so from_load reads ~7 s (a little less on a
+        # slow device) — the lower bound must sit below that.
+        assert 5.0 <= from_load <= 11.5, (
             f"tool bar hid {hidden:.2f} s after the press ({from_load:.2f} s after load); "
             "expected the countdown to stay anchored at load (~10 s after load)"
         )

@@ -38,7 +38,8 @@ import time
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
-from framework import keys
+from framework import keys  # noqa: E402
+import adb  # noqa: E402
 
 ASSETS_DIR = os.path.join(os.path.dirname(__file__), "assets")
 PORT = 8899
@@ -444,6 +445,8 @@ def test_cursor_click_hesitant_press_still_clicks(device, ctx: dict) -> None:
     # start flagging the key as a long press, but the user still means a click. The action key must
     # therefore NOT reclassify a <~1 s hold as the context-menu long press (regression: it used to
     # fire at the system ~400 ms threshold and opened the menu instead of clicking).
+    if not adb.can_hold_key(device.serial, ctx["notes"]):
+        return
     _load_target(device)
     _toggle(device)
     device.key_hold(keys.DPAD_CENTER, 600)  # a clearly short, but realistically held, press
@@ -699,6 +702,8 @@ def test_cursor_context_menu_action_long_press(device, ctx: dict) -> None:
     and opens the WebView's context menu for the element under it. Verified by the presence of
     the link context dialog: its "Copy link" row shows the link URL as secondary text
     (locale-independent, so it's a robust assertion target regardless of device language)."""
+    if not adb.can_hold_key(device.serial, ctx["notes"]):
+        return
     link_url = "https://example.com/"
     _load_page(device, "context_target.html")
     _toggle(device)
@@ -726,6 +731,8 @@ def test_cursor_context_menu_repeated_long_press_touch_stays_clean(device, ctx: 
     (pointercancel) — an UP for a canceled pointer corrupts the WebView's touch state, so a
     later press's touch is swallowed (only `contextmenu` fires, no `pd`). Assert every press
     produced a `pd`."""
+    if not adb.can_hold_key(device.serial, ctx["notes"]):
+        return
     presses = 3
     _load_page(device, "longpress_log.html")
     _toggle(device)

@@ -172,6 +172,35 @@ def _open_main_menu(device):
     )
 
 
+def _add_bookmark_menu(device) -> None:
+    """Open the 'Add bookmark' dialog via the toolbar overflow menu.
+
+    The overflow menu is a two-level switcher: the top level (detected by
+    ``_main_menu_open``) lists Tab menu / Sessions / Bookmarks / … and a
+    ``menuItemTabMenu`` row that switches it to the page-level group holding
+    ``menuItemAddBookmark``. Both are addressed by resource id (locale-
+    independent), and this route works on every API level — unlike the Ctrl+B
+    hotkey, which needs ``input keycombination`` (API 30+; Android 10 / EMUI
+    10, e.g. the Huawei P30 Pro, rejects it with 'Unknown command', silently
+    dropping the chord). The menu item and the hotkey both execute
+    ``action_add_bookmark``.
+    """
+    _open_main_menu(device)
+    assert _tap_text(device, "Tab menu", timeout=10.0), "no 'Tab menu' switcher row"
+    deadline = time.time() + 15.0
+    item = None
+    while time.time() < deadline:
+        item = adb.find_node(device.serial, ":id/menuItemAddBookmark")
+        if item and item.center:
+            break
+        time.sleep(0.5)
+    assert item and item.center, (
+        f"'Add bookmark' item missing from the tab menu "
+        f"(nodes: {sorted(_texts(device))[:40]!r})"
+    )
+    device.tap(item.center[0], item.center[1], wait=1.5)
+
+
 def _open_settings(device):
     _open_main_menu(device)
     assert _tap_text(device, "Settings", timeout=10.0, exact=True), "no 'Settings' menu row"
@@ -216,6 +245,16 @@ def _close_to_browser(device):
     stuck = 0
     last_sig = None
     for _i in range(30):
+        # A leftover 'Open with' chooser (from a failed SAF save on Android 10
+        # builds) covers everything and makes BACK a no-op: resolve it by
+        # picking the 'Files' provider, which lands back in the app's save flow
+        # (or just closes the chooser on its way back to the browser).
+        if _open_with_chooser_present(device):
+            if _resolve_open_with_chooser(device):
+                time.sleep(1.0)
+            device.key(keys.BACK, 0.9)
+            time.sleep(1.0)
+            continue
         n = adb.find_node(device.serial, ":id/button_more")
         if n and n.bounds:
             # The browser's toolbar is present. A restored bookmarks drawer or
@@ -233,7 +272,13 @@ def _close_to_browser(device):
         sig = tuple(sorted(x.text for x in _nodes(device) if x.text and x.bounds)[:30])
         stuck = stuck + 1 if sig == last_sig else 0
         last_sig = sig
-        if stuck >= 3 or not _app_foreground(device.serial):
+        # Restart ONLY when BACK is a no-op (screen unchanged 3x in a row,
+        # e.g. we overshot to the launcher). NOT merely because the foreground
+        # isn't the app: a leftover SAF picker (com.android.documentsui) sits
+        # on top of the app's task and is RESTORED by every restart, so
+        # restarting there loops forever — BACK closes the picker normally
+        # and the screen-change check above keeps us moving.
+        if stuck >= 3:
             if restarts >= 2:
                 break
             restarts += 1
@@ -246,12 +291,14 @@ def _close_to_browser(device):
 
 
 def _app_foreground(serial: str) -> bool:
-    """True while the app holds the top activity (backs past it hit the launcher)."""
-    out = adb._adb(serial, ["shell", "dumpsys", "activity", "activities"], timeout=15)
-    for line in out.splitlines():
-        if "mResumedActivity" in line or "topResumedActivity" in line:
-            return "net.slions.fulguris" in line
-    return "net.slions.fulguris" in out[:2000]
+    """True while the app holds the top activity (backs past it hit the launcher).
+
+    Uses the framework's ``foreground_package`` — its own anchored regex had
+    the same Android 13 bare-``ResumedActivity:`` gap that broke ``settle()``
+    (returned None → this read "not foregrounded" → needless relaunches).
+    Prefix match so any installed Fulguris variant counts as foreground.
+    """
+    return (adb.foreground_package(serial) or "").startswith("net.slions.fulguris")
 
 
 def _drawer_open(device) -> bool:
@@ -396,6 +443,10 @@ def _pick_in_saf(device, remote) -> bool:
         _open_backup_page(device)
         assert _tap_text(device, "Import", timeout=10.0, exact=True, index=0), "no 'Import' row"
         time.sleep(2.0)  # let the picker open
+        # EMUI-10 interposes an 'Open with' chooser in front of the picker
+        # (verified: the search icon never appears until it's resolved via the
+        # AOSP 'Files' provider). Resolve it before looking for the file.
+        _resolve_open_with_chooser(device)
         picked = _picker_find_file(device, remote)
     finally:
         if not picked:
@@ -460,19 +511,60 @@ def _set_field(device, field_id, value):
             break
         n = adb.find_node(device.serial, field_id)  # re-locate (layout may have shifted)
         assert n and n.bounds, f"field {field_id} vanished"
-    # Replace the content by SELECT-ALL + TYPE, NOT by a clear/DEL pass. On
-    # this device the DEL pass makes the IME advance focus to the NEXT field,
-    # so a clear-then-type lands the text one field over (title→url, url→
-    # folder). Typing over a selection keeps focus on the tapped field and
-    # replaces the whole value in one go.
-    device.key_combination(adb.KEY_CTRL_LEFT, keys.A, wait=0.6)  # select all
-    device.type_text(value, 0.25)  # replaces the selection
+    # Replace the content by clearing then typing. The old approach used
+    # Ctrl+A (select-all) + type, but `input keycombination` does not exist
+    # before API 30 (Android 10 / EMUI 10, e.g. the Huawei P30 Pro), so the
+    # chord was silently dropped and typing APPENDED to the pre-filled value.
+    # The portable clear: move the caret to the END (so backspace never leaves
+    # a mid-text remainder) then fire enough discrete backspaces for the
+    # current length. All in ONE shell round-trip. A plain backspace burst is
+    # safe here — unlike the old worry, the caret stays in THIS field (verified
+    # on API 29; the focus assert below is the hard guard regardless).
+    current = n.text or ""
+    presses = min(len(current) + 6, 60)  # +6 slack for a trailing space/emoji
+    device.transport.shell(
+        ["shell", "input keyevent 123; for i in $(seq 1 "
+                 + str(presses) + "); do input keyevent 67; done"],
+        timeout=30)
+    time.sleep(0.4)
+    device.type_text(value, 0.25)  # types into the now-empty field
     time.sleep(0.3)
     after = _focused_id(device)
     assert after.endswith(want), (
         f"focus was {focused!r} before typing but {after!r} after — value may "
         f"have landed in the wrong field (wanted {want})"
     )
+
+
+def _open_with_chooser_present(device) -> bool:
+    """True when an 'Open with' app-disambiguation chooser is on screen.
+
+    Android 10 (EMUI 10, e.g. the Huawei P30 Pro) intercepts the SAF save
+    intent when two document providers can handle it, showing a chooser
+    ('File Manager' / 'Files' with ALWAYS / JUST ONCE) INSTEAD of the SAF
+    save dialog. The test can't see its save-name field while the chooser is
+    up, and a chooser left behind poisons every later test (cascade).
+    """
+    t = {x.strip() for x in _texts(device)}
+    return "JUST ONCE" in t and ("Open with" in t or "ALWAYS" in t)
+
+
+def _resolve_open_with_chooser(device) -> bool:
+    """Resolve an 'Open with' chooser by picking the 'Files' provider.
+
+    Verified on the P30 Pro (probe_export_chooser): tapping 'Files' opens the
+    real SAF save dialog (default-name field + SAVE). Tapping the app row
+    itself is enough on EMUI 10 (no separate JUST ONCE confirmation appears)
+    — but if a JUST ONCE row lingers (other builds), tap it.
+    """
+    if not _open_with_chooser_present(device):
+        return False
+    if not _tap_text(device, "Files", timeout=8.0, exact=True):
+        return False
+    time.sleep(1.5)
+    if _open_with_chooser_present(device):
+        _tap_text(device, "JUST ONCE", timeout=5.0, exact=True)
+    return True
 
 
 def _tap_save(device, timeout=15.0) -> bool:
@@ -503,6 +595,7 @@ def _push_import_file(device, local: str, remote: str) -> None:
     adb.push(device.serial, local, remote)
     name = os.path.basename(remote)
     deadline = time.time() + 25.0
+    nudged = False
     while time.time() < deadline:
         out = device.transport.shell(
             ["shell", "content", "query",
@@ -511,6 +604,20 @@ def _push_import_file(device, local: str, remote: str) -> None:
         if name in out:
             time.sleep(0.5)  # let the index settle
             return
+        # On Android 10 (EMUI 10, Huawei P30 Pro) the FUSE push does NOT
+        # reliably trigger the MediaStore indexer — the file can sit
+        # unindexed for minutes. The (deprecated) MEDIA_SCANNER_SCAN_FILE
+        # broadcast is documented as a no-op "from API 29 on", but EMUI 10
+        # still honours it: a probe measured 0.8 s to index after the
+        # broadcast vs 90 s+ without. Nudge once after a short grace period;
+        # on Android 11+ the push already indexed the file and the nudge is
+        # simply ignored.
+        if not nudged and time.time() > deadline - 18.0:
+            nudged = True
+            device.transport.shell(
+                ["shell", "am", "broadcast",
+                 "-a", "android.intent.action.MEDIA_SCANNER_SCAN_FILE",
+                 "-d", f"file://{remote}"], timeout=20)
         time.sleep(1.0)
     raise AssertionError(f"{remote} never appeared in MediaStore")
 
@@ -562,7 +669,7 @@ def test_bookmarks_add_root(device, ctx: dict) -> None:
             time.sleep(1.0)
     _close_drawer(device)
 
-    device.key_combination(adb.KEY_CTRL_LEFT, keys.KEY_B, wait=1.5)
+    _add_bookmark_menu(device)
     assert _wait_text(device, "Add bookmark", timeout=15.0, exact=True), (
         f"'Add bookmark' dialog did not open (nodes: {sorted(_texts(device))[:40]!r})"
     )
@@ -590,7 +697,7 @@ def test_bookmarks_add_duplicate_guard(device, ctx: dict) -> None:
     assert _drawer_has(device, BM_TITLE, timeout=10.0), "precondition: root bookmark missing"
     _close_drawer(device)
 
-    device.key_combination(adb.KEY_CTRL_LEFT, keys.KEY_B, wait=1.5)
+    _add_bookmark_menu(device)
     assert _wait_text(device, "Add bookmark", timeout=15.0, exact=True)
     _set_field(device, ":id/bookmark_title", BM_TITLE + " dup")
     _set_field(device, ":id/bookmark_url", BM_URL)
@@ -622,7 +729,7 @@ def test_bookmarks_add_in_folder(device, ctx: dict) -> None:
             time.sleep(1.0)
     _close_drawer(device)
 
-    device.key_combination(adb.KEY_CTRL_LEFT, keys.KEY_B, wait=1.5)
+    _add_bookmark_menu(device)
     assert _wait_text(device, "Add bookmark", timeout=15.0, exact=True)
     _set_field(device, ":id/bookmark_title", BM_FOLDER_TITLE)
     _set_field(device, ":id/bookmark_url", BM_FOLDER_URL)
@@ -634,7 +741,12 @@ def test_bookmarks_add_in_folder(device, ctx: dict) -> None:
         f"the new folder is not in the drawer (entries: {_drawer_entries(device)!r})"
     )
     # Enter the folder: its entry is inside, and a '..' row leads back out.
-    assert _tap_text(device, BM_FOLDER, timeout=10.0, exact=True), "folder row not tappable"
+    # Substring (not exact): the row's node text is the folder name, but with
+    # stale state from a previous run the text can carry a suffix (the 8/13
+    # P30 Pro run failed the exact match on a leftover-state drawer). The
+    # match is still unambiguous — the case-sensitive 'AutoTestFolder' cannot
+    # hit the 'AutoTest folder bookmark' entry (lowercase 'f').
+    assert _tap_text(device, BM_FOLDER, timeout=10.0), "folder row not tappable"
     time.sleep(1.0)
     assert _drawer_has(device, BM_FOLDER_TITLE, timeout=10.0), (
         f"the folder's entry is missing (entries: {_drawer_entries(device)!r})"
@@ -688,7 +800,7 @@ def test_bookmarks_remove_no_confirmation(device, ctx: dict) -> None:
     _close_to_browser(device)
     # A throwaway bookmark so the canonical one survives.
     device.navigate("https://www.example.org/")
-    device.key_combination(adb.KEY_CTRL_LEFT, keys.KEY_B, wait=1.5)
+    _add_bookmark_menu(device)
     assert _wait_text(device, "Add bookmark", timeout=15.0, exact=True)
     _set_field(device, ":id/bookmark_title", "AutoTest throwaway")
     _set_field(device, ":id/bookmark_url", "https://www.example.org/autotest-throwaway")
@@ -767,7 +879,7 @@ def test_bookmarks_export_file_and_content(device, ctx: dict) -> None:
     _close_to_browser(device)
     # A special-character bookmark to verify escaping in the export.
     device.navigate("https://www.example.org/")
-    device.key_combination(adb.KEY_CTRL_LEFT, keys.KEY_B, wait=1.5)
+    _add_bookmark_menu(device)
     if _wait_text(device, "Add bookmark", timeout=15.0, exact=True):
         _set_field(device, ":id/bookmark_title", 'AutoTest <special> "quote" & amp')
         _set_field(device, ":id/bookmark_url", "https://www.example.org/autotest-special")
@@ -778,10 +890,16 @@ def test_bookmarks_export_file_and_content(device, ctx: dict) -> None:
 
     _open_backup_page(device)
     assert _tap_text(device, "Export", timeout=10.0, exact=True), "no 'Export' row"
-    # The SAF save-name dialog: an EditText with the default FulgurisBookmarks-… name.
+    # The SAF save-name dialog: an EditText with the default FulgurisBookmarks- name.
+    # On some Android 10 builds (EMUI 10) an 'Open with' chooser appears first
+    # and must be resolved before the save dialog shows.
     deadline = time.time() + 20.0
     name_field = None
+    resolved_chooser = False
     while time.time() < deadline:
+        if _open_with_chooser_present(device) and not resolved_chooser:
+            _resolve_open_with_chooser(device)
+            resolved_chooser = True
         for n in _nodes(device):
             if "EditText" in (n.cls or "") and n.text.startswith("FulgurisBookmarks-") \
                     and n.text.endswith(".html"):
@@ -957,9 +1075,12 @@ def test_bookmarks_reset_deletes_all(device, ctx: dict) -> None:
     # browser, whose toolbar has no Export row).
     _open_backup_page(device)
     assert _tap_text(device, "Export", timeout=15.0, exact=True), "no 'Export' row after reset"
+    # Same SAF save dialog as the export test — and on Android 10 builds the
+    # 'Open with' chooser can appear in front of it, so resolve it here too.
     deadline = time.time() + 20.0
     saved = False
     while time.time() < deadline and not saved:
+        _resolve_open_with_chooser(device)
         if _tap_save(device, timeout=2.0):
             saved = True
     assert saved, "no SAVE button in the post-reset export picker"

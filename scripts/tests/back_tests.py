@@ -187,7 +187,9 @@ def test_back_editing_two_stage_exit(device, ctx: dict) -> None:
     center = device.field_center()
     assert center, "could not locate the address field bounds"
     device.tap(center[0], center[1], wait=1.0)
-    assert device.ime_shown(), "tapping the field should enter edit mode and show the keyboard"
+    # EMUI 10 lags the mInputShown flag 0-3 s behind the keyboard appearing;
+    # poll rather than single-shot (see IME_SHOW_TIMEOUT in url_field_tests).
+    assert device.ime_shown(timeout=5.0), "tapping the field should enter edit mode and show the keyboard"
 
     device.key(keys.BACK, wait=1.0)
     assert not device.ime_shown(), "first back should hide the keyboard"

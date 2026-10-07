@@ -9,11 +9,13 @@
   // title into the toolbar/address label via onTabChangedTitle, so this exercises a live
   // title change while the test holds the address field in navigation focus.
   // Regression for https://github.com/Slion/Fulguris/issues/694 (stale toolbar label).
-  setTimeout(function () { document.title = "LBL-END"; }, 15000);
+  // 8 s: long enough that navigate()'s tail wait + page load + field focus finish while
+  // LBL-BEGIN is still showing, yet comfortably inside the test's 15 s wait for LBL-END.
+  setTimeout(function () { document.title = "LBL-END"; }, 8000);
 </script>
 </head>
 <body>
   <h1>Toolbar label refresh target</h1>
-  <p>The page title changes from LBL-BEGIN to LBL-END after 4 seconds.</p>
+  <p>The page title changes from LBL-BEGIN to LBL-END after 8 seconds.</p>
 </body>
 </html>
