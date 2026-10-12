@@ -1,0 +1,7 @@
+🧩 Stöd utan öppna flikar
+📥 Förbättringar av nedladdningar och bokmärken
+🪲 Åtgärdade krasch vid nedladdning på äldre enheter
+🪲 Åtgärdade krasch vid långtryckning på bokmärkesmappar
+🐛 Åtgärdade föråldrad adressfältet under navigation
+🐛 Åtgärdade onödiga tredjepartsapp-frågor
+🐛 Åtgärdade potentiella krascher i sökförslag och vid start

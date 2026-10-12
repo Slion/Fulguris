@@ -1,0 +1,7 @@
+🧩 Suporte sem abas abertas
+📥 Melhorias em downloads e favoritos
+🪲 Correção de travamento durante download em dispositivos antigos
+🪲 Correção de travamento ao pressionar prolongadamente pastas de favoritos
+🐛 Correção de etiqueta desatualizada na barra de endereços
+🐛 Correção de consultas desnecessárias de apps de terceiros
+🐛 Correção de travamentos potenciais nas sugestões de busca e na inicialização

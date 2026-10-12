@@ -1,0 +1,7 @@
+🧩 Prise en charge sans onglets ouverts
+📥 Améliorations des téléchargements et favoris
+🪲 Correction du plantage lors du téléchargement sur les anciens appareils
+🪲 Correction du plantage lors d'un appui prolongé sur les dossiers de favoris
+🐛 Correction de l'étiquette obsolète de la barre d'adresse
+🐛 Correction des requêtes inutiles d'applications tierces
+🐛 Correction des plantages potentiels dans les suggestions de recherche et au démarrage

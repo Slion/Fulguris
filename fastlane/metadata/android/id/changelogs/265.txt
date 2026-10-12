@@ -1,0 +1,7 @@
+🧩 Dukungan tanpa tab terbuka
+📥 Peningkatan unduhan dan penanda
+🪲 Perbaikan crash saat unduhan pada perangkat lama
+🪲 Perbaikan crash saat tekan lama folder penanda
+🐛 Perbaikan label bilah alamat usang saat menavigasi
+🐛 Perbaikan kueri peluncuran aplikasi pihak ketiga yang tidak perlu
+🐛 Perbaikan crash potensial di saran pencarian dan saat startup

@@ -1,6 +1,16 @@
 Change Log
 ==========
 
+Version 2.1.2 *(2026-10-12)*
+----------------------------
+- Support no open tabs
+- Downloads and bookmarks improvements
+- Fixed crash during download on older devices
+- Fixed crash when long pressing bookmark folders
+- Fixed stale address bar label while navigating
+- Fixed spurious third-party app launch queries
+- Fixed potential crashes in search suggestions and on startup
+
 Version 5.1.0 *(2019-10-01)*
 ----------------------------
 - Made copy link action available in incognito mode.

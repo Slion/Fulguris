@@ -1,0 +1,7 @@
+🧩 Podrška bez otvorenih kartica
+📥 Poboljšanja preuzimanja i oznaka
+🪲 Popravljen pad tijekom preuzimanja na starijim uređajima
+🪲 Popravljen pad pri dugom pritisku na mape oznaka
+🐛 Popravljena zastarjela oznaka adresne trake tijekom navigacije
+🐛 Popravljene nepotrebne upite za pokretanje aplikacija trećih strana
+🐛 Popravljeno potencijalno padanje u prijedlozima pretraživanja i pokretanju

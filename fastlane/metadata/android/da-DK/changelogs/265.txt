@@ -1,0 +1,7 @@
+🧩 Support for ingen åbne faner
+📥 Forbedringer af downloads og bogmærker
+🪲 Retning af nedbrud under download på ældre enheder
+🪲 Retning af nedbrud ved lang tryk på bogmærk mapper
+🐛 Retning af forældet adresselinje under navigation
+🐛 Retning af utilsigtede tredjeparts app-forespørgsler
+🐛 Retning af potentielle nedbrud i søgning og ved opstart

@@ -1,0 +1,7 @@
+🧩 Compatibilidad sin pestañas abiertas
+📥 Mejoras en descargas y marcadores
+🪲 Corrección de bloqueo durante descarga en dispositivos antiguos
+🪲 Corrección de bloqueo al pulsar prolongadamente carpetas de marcadores
+🐛 Corrección de etiqueta obsoleta en la barra de direcciones
+🐛 Corrección de consultas innecesarias de apps de terceros
+🐛 Corrección de bloqueos potenciales en sugerencias de búsqueda e inicio

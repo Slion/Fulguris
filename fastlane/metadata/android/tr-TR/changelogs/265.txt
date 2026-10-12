@@ -1,0 +1,7 @@
+🧩 Açık sekme desteği yok
+📥 İndirme ve yer imi iyileştirmeleri
+🪲 Eski cihazlarda indirme sırasında çökme düzeltildi
+🪲 Yer imi klasörlerine uzun basıldığında çökme düzeltildi
+🐛 Gezinti sırasında eski adres çubuğu etiketi düzeltildi
+🐛 Gereksiz üçüncü taraf uygulama başlatma sorguları düzeltildi
+🐛 Arama önerileri ve başlangıçta potansiyel çökmeler düzeltildi

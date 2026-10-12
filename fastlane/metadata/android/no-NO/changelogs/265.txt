@@ -1,0 +1,7 @@
+🧩 Support uten åpne faner
+📥 Forbedringer av nedlastinger og bokmerker
+🪲 Rettet krasj under nedlasting på eldre enheter
+🪲 Rettet krasj ved lengre trykk på bokmerke mapper
+🐛 Rettet foreldret adresselinje under navigering
+🐛 Rettet unødige tredjeparts app-forespørsler
+🐛 Rettet potensielle krasj i søkeforslag og ved oppstart

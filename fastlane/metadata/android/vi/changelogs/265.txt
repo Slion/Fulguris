@@ -1,0 +1,7 @@
+🧩 Hỗ trợ không có tab mở
+📥 Cải thiện tải xuống và đánh dấu
+🪲 Sửa lỗi treo khi tải xuống trên thiết bị cũ
+🪲 Sửa lỗi treo khi nhấn giữ thư mục đánh dấu
+🐛 Sửa nhãn thanh địa chỉ lỗi thời khi điều hướng
+🐛 Sửa truy vấn khởi chạy ứng dụng bên thứ ba không cần thiết
+🐛 Sửa lỗi treo tiềm ẩn trong gợi ý tìm kiếm và khi khởi động

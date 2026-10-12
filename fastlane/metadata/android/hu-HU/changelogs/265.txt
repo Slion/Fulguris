@@ -1,0 +1,7 @@
+🧩 Nyitott lapok nélküli támogatás
+📥 Letöltés és könyvjelző javítások
+🪲 Javítva a régi eszközökön a letöltés közbeni összeomlás
+🪲 Javítva a könyvjelző mappák hosszas megnyomásakor való összeomlás
+🐛 Javítva az elavult cím sor címke navigálás közben
+🐛 Javítva a felesleges harmadik féltől származó alkalmazásindítási lekérdezések
+🐛 Javítva a keresési javaslatokban és indításkor fellépő összeomlások

@@ -1,0 +1,7 @@
+🧩 Suport fără file deschise
+📥 Îmbunătățiri descărcări și marcaje
+🪲 Corectare blocare în timpul descărcării pe dispozitive mai vechi
+🪲 Corectare blocare la apăsarea prelungită pe dosare de marcaje
+🐛 Corectare etichetă învechită în bara de adresă în timpul navigării
+🐛 Corectare interogări inutile de lansare a aplicațiilor terțe
+🐛 Corectare blocări potențiale în sugestiile de căutare și la pornire

@@ -1,0 +1,7 @@
+🧩 Support senza schede aperte
+📥 Miglioramenti download e preferiti
+🪲 Corretto arresto anomalo durante il download sui dispositivi più vecchi
+🪲 Corretto arresto anomalo al tocco prolungato sulle cartelle dei preferiti
+🐛 Corretta etichetta obsoleta nella barra degli indirizzi durante la navigazione
+🐛 Corrette query inutili di avvio di app di terze parti
+🐛 Corretti arresti anomali potenziali nei suggerimenti di ricerca e all'avvio

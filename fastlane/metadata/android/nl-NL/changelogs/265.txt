@@ -1,0 +1,7 @@
+🧩 Ondersteuning zonder geopende tabs
+📥 Verbeteringen downloads en bladwijzers
+🪲 Crash tijdens downloaden op oudere apparaten opgelost
+🪲 Crash bij lang drukken op bladwijzersmappen opgelost
+🐛 Verouderde adresbalklabel tijdens navigatie opgelost
+🐛 Onnodige derde partij app-opstartqueries opgelost
+🐛 Potentiële crashes in zoeksuggesties en bij opstarten opgelost

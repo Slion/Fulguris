@@ -1,0 +1,7 @@
+🧩 Support no open tabs
+📥 Downloads and bookmarks improvements
+🪲 Fix crash during download on older devices
+🪲 Fix crash when long pressing bookmark folders
+🐛 Fix stale address bar label while navigating
+🐛 Fix spurious third-party app launch queries
+🐛 Fix potential crashes in search suggestions and on startup

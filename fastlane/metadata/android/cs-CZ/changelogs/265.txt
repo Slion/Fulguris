@@ -1,0 +1,7 @@
+🧩 Podpora žádných otevřených záložek
+📥 Vylepšení stahování a záložek
+🪲 Oprava pádu při stahování na starších zařízeních
+🪲 Oprava pádu při dlouhém stisku složek záložek
+🐛 Oprava zastaralého názvu v adresním řádku při navigaci
+🐛 Oprava falešných dotazů na spuštění aplikací třetích stran
+🐛 Oprava potenciálních pádů ve významech hledání a při spuštění

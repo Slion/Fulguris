@@ -1,0 +1,7 @@
+🧩 Obsługa bez otwartych kart
+📥 Ulepszenia pobierania i zakładek
+🪲 Naprawiono awarię podczas pobierania na starszych urządzeniach
+🪲 Naprawiono awarię przy długim naciśnięciu folderów zakładek
+🐛 Naprawiono przestarzałą etykietę paska adresu podczas nawigacji
+🐛 Naprawiono niepotrzebne zapytania o uruchamianie aplikacji zewnętrznych
+🐛 Naprawiono potencjalne awarie w sugestjach wyszukiwania i przy starcie

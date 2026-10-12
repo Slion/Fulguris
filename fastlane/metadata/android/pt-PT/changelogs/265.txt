@@ -1,0 +1,7 @@
+🧩 Suporte sem separadores abertos
+📥 Melhorias nos transferências e favoritos
+🪲 Correção de avaria durante transferência em dispositivos mais antigos
+🪲 Correção de avaria ao pressionar prolongadamente pastas de favoritos
+🐛 Correção de etiqueta desatualizada na barra de endereços
+🐛 Correção de consultas desnecessárias de aplicações de terceiros
+🐛 Correção de avarias potenciais nas sugestões de pesquisa e no arranque

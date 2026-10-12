@@ -1,0 +1,7 @@
+🧩 Tuki ilman avoimia välilehtiä
+📥 Ladattujen ja kirjanmerkkien parannukset
+🪲 Korjattu kaatuminen latauksissa vanhemmilla laitteilla
+🪲 Korjattu kaatuminen painettaessa kirjanmerkkikansioita pitkään
+🐛 Korjattu vanhentunut osoiterivin merkintä navigoinnissa
+🐛 Korjattu tarpeettomat kolmannen osapuolen sovelluskyselyt
+🐛 Korjattu mahdolliset kaatumiset hakuehdotuksissa ja käynnistyksessä

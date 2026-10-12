@@ -1,0 +1,7 @@
+🧩 Palaidėtas veikimas be atidarytų kortelių
+📥 Atnaujinti atsisiuntimai ir žymės
+🪲 Pataisyta klaida senesniuose įrenginiuose atsisiunčiant
+🪲 Pataisyta klaida ilgai paspaudus žymių aplankus
+🐛 Pataisyta senos informacijos adreso juosta naršant
+🐛 Pataisyti nereikalingi trečiųjų šalių programų paleidimo užklausimai
+🐛 Pataisyti galimi nuleidimai paieškos pasiūlymuose ir paleidžiant

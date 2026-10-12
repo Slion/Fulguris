@@ -1,0 +1,7 @@
+🧩 Unterstützung für keine offenen Tabs
+📥 Verbesserungen bei Downloads und Lesezeichen
+🪲 Absturz beim Download auf älteren Geräten behoben
+🪲 Absturz bei Langdrücken auf Lesezeichenordner behoben
+🐛 Veraltete Adressleiste während der Navigation behoben
+🐛 Unerwünschte Drittanbieter-App-Abfragen behoben
+🐛 Potenzielle Abstürze in Suchvorschlägen und beim Start behoben
