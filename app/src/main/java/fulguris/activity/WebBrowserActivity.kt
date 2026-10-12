@@ -528,15 +528,19 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         tabsManager.doOnceAfterInitialization {
             // If our version code was changed
             if (userPreferences.versionCode != BuildConfig.VERSION_CODE) {
+                // This callback is not tied to our lifecycle (TabsManager outlives
+                // us): if we're finishing/destroyed the window token is gone and
+                // showing a dialog would crash with BadTokenException.
+                val canShowDialog = !isFinishing && !isDestroyed
                 if (userPreferences.versionCode==0
                         // Added this check to avoid show welcome message to existing installation
                         // TODO: Remove that a few versions down the road
                         && sessionsManager.sessions().count()==1 && tabsManager.allTabs.count()==1) {
                     // First run
-                    welcomeToFulguris()
+                    if (canShowDialog) welcomeToFulguris()
                 } else {
                     // Version was updated
-                    notifyVersionUpdate()
+                    if (canShowDialog) notifyVersionUpdate()
                 }
                 // Persist our current version so that we don't kick in next time
                 userPreferences.versionCode = BuildConfig.VERSION_CODE
