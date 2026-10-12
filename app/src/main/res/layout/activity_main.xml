@@ -25,13 +25,22 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Don't put a background here as it breaks our status bar color -->
+    <!-- animateLayoutChanges removed: CoordinatorLayout uses custom child drawing order
+         (getChildDrawingOrder / mOrderedChildren) for its Behavior system. Having
+         animateLayoutChanges="true" here creates a race condition where LayoutTransition
+         can corrupt the drawing order cache during cascading layout passes from tab
+         animations, causing IndexOutOfBoundsException in dispatchTouchEvent
+         (getChildDrawingOrder returns stale index >= childCount). This attribute is
+         also a no-op: the root CoordinatorLayout's direct children (DrawerLayout,
+         cursorOverlayHost) never change visibility or get added/removed, so
+         LayoutTransition never fires. The actual toolbar/tab animations are handled
+         by the nested LinearLayouts which have their own animateLayoutChanges="true". -->
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/coordinator_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="fulguris.activity.WebBrowserActivity"
 
-        android:animateLayoutChanges="true"
         android:fitsSystemWindows="true">
 
         <androidx.drawerlayout.widget.DrawerLayout
