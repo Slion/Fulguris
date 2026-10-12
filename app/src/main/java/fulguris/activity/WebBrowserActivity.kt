@@ -3421,7 +3421,9 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
             // Put our incoming frame on top
             // This replaces swapTabViewsFrontToBack for this special case
             // Still must not be on top of floating action buttons (FAB) touch tab switcher
-            it.removeFromParent()?.addView(it,1)
+            it.removeFromParent()?.let { parent ->
+                parent.addView(it, 1)
+            }
             // Animate it
             iTabAnimator = it.animate()
                     .scaleY(1f)
@@ -3434,8 +3436,11 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
                                 it.scaleX = 1f
                                 it.scaleY = 1f
                                 iTabViewContainerBack.findViewById<WebViewEx>(R.id.web_view)?.apply{
-                                     removeFromParent()?.addView(iPlaceHolder)
-                                     //destroyIfNeeded()
+                                    val placeholder = iPlaceHolder
+                                    if (placeholder != null) {
+                                        removeFromParent()?.addView(placeholder)
+                                    }
+                                    //destroyIfNeeded()
                                 }
                                 //
                                 iTabAnimator = null;

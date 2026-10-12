@@ -108,9 +108,12 @@ class BookmarkPageFactory @Inject constructor(
             "$FILE${createBookmarkPage(null)}"
         }
 
-    private fun cacheIcon(icon: Bitmap, file: File) = FileOutputStream(file).safeUse {
-        icon.compress(Bitmap.CompressFormat.PNG, 100, it)
-        icon.recycle()
+    private fun cacheIcon(icon: Bitmap, file: File) {
+        file.parentFile?.mkdirs()
+        FileOutputStream(file).safeUse {
+            icon.compress(Bitmap.CompressFormat.PNG, 100, it)
+            icon.recycle()
+        }
     }
 
     private fun construct(list: List<BookmarkViewModel>): String {

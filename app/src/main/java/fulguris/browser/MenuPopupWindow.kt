@@ -42,6 +42,7 @@ import fulguris.extensions.removeFromParent
 import fulguris.settings.preferences.UserPreferences
 import fulguris.utils.isAppScheme
 import fulguris.utils.isSpecialUrl
+import timber.log.Timber
 
 /**
  * Unified custom menu that can display either MainMenu or TabMenu content
@@ -122,6 +123,9 @@ class MenuPopupWindow : PopupWindow {
      * This should be called after menu creation and when toolbar position changes
      */
     fun setupToolbarLayout() {
+        // Guard: skip if contentView isn't ready (e.g., called before showAtLocation)
+        if (contentView == null) return
+
         val toolbarsBottom = contentView.context.configPrefs.toolbarsBottom
 
         // Set animation style
@@ -132,17 +136,27 @@ class MenuPopupWindow : PopupWindow {
         }
 
         // Move header to correct position
-        if (toolbarsBottom) {
-            iBinding.header.removeFromParent()?.addView(iBinding.header)
-        } else {
-            iBinding.header.removeFromParent()?.addView(iBinding.header, 0)
+        try {
+            if (toolbarsBottom) {
+                iBinding.header.removeFromParent()?.addView(iBinding.header)
+            } else {
+                iBinding.header.removeFromParent()?.addView(iBinding.header, 0)
+            }
+        } catch (e: IllegalStateException) {
+            // View already in correct parent; skip reordering
+            Timber.w(e, "Header view already has parent during setupToolbarLayout")
         }
 
         // Move scroll view to correct position
-        if (toolbarsBottom) {
-            iBinding.scrollViewItems.removeFromParent()?.addView(iBinding.scrollViewItems, 0)
-        } else {
-            iBinding.scrollViewItems.removeFromParent()?.addView(iBinding.scrollViewItems)
+        try {
+            if (toolbarsBottom) {
+                iBinding.scrollViewItems.removeFromParent()?.addView(iBinding.scrollViewItems, 0)
+            } else {
+                iBinding.scrollViewItems.removeFromParent()?.addView(iBinding.scrollViewItems)
+            }
+        } catch (e: IllegalStateException) {
+            // View already in correct parent; skip reordering
+            Timber.w(e, "Scroll view already has parent during setupToolbarLayout")
         }
     }
 

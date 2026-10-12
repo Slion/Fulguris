@@ -1,5 +1,5 @@
 # UI test run — SM-A225F · portrait-0-sw384
-timestamp: '2026-10-12T14:37:28+00:00'
+timestamp: '2026-10-12T17:42:36+00:00'
 device:
   model: SM-A225F
   brand: Samsung
@@ -15,14 +15,14 @@ options:
   restart: false
   keep_tabs: false
   orientation: null
-  test_filter: null
-  group: bookmarks
+  test_filter: test_back_two_tabs
+  group: null
 summary:
-  passed: 101
-  failed: 11
+  passed: 100
+  failed: 12
   total: 112
-  ran: 14
-  duration_s: 1947.1
+  ran: 1
+  duration_s: 37.6
 tests:
 - name: test_cursor_click_hover_fires_mouseover
   status: fail
@@ -164,11 +164,11 @@ tests:
   ran: false
 - name: test_smoke_launch
   status: pass
-  duration_s: 2.5
+  duration_s: 2.7
   ran: false
 - name: test_smoke_open_website
   status: pass
-  duration_s: 11.4
+  duration_s: 12.3
   ran: false
 - name: test_smoke_open_settings
   status: pass
@@ -176,7 +176,7 @@ tests:
   ran: false
 - name: test_smoke_background_app_switch
   status: pass
-  duration_s: 6.2
+  duration_s: 6.1
   ran: false
 - name: test_smoke_background_home
   status: pass
@@ -287,19 +287,20 @@ tests:
   ran: false
 - name: test_back_two_tabs_keeps_foreground
   status: pass
-  duration_s: 39.0
-  ran: false
+  duration_s: 35.6
+  ran: true
 - name: test_back_last_tab_stays_foreground
   status: pass
-  duration_s: 25.3
+  duration_s: 21.2
   ran: false
 - name: test_back_editing_two_stage_exit
-  status: pass
-  duration_s: 31.4
+  status: fail
+  duration_s: 22.8
+  message: first back should hide the keyboard
   ran: false
 - name: test_settings_back_from_nested_no_crash
   status: pass
-  duration_s: 40.5
+  duration_s: 39.4
   ran: false
 - name: test_downloads_sheet_survives_active_download
   status: pass
@@ -408,55 +409,55 @@ tests:
 - name: test_bookmarks_drawer_opens_and_closes
   status: pass
   duration_s: 47.5
-  ran: true
+  ran: false
 - name: test_bookmarks_add_root
   status: pass
   duration_s: 146.4
-  ran: true
+  ran: false
 - name: test_bookmarks_add_duplicate_guard
   status: pass
   duration_s: 157.4
-  ran: true
+  ran: false
 - name: test_bookmarks_add_in_folder
   status: pass
   duration_s: 166.9
-  ran: true
+  ran: false
 - name: test_bookmarks_edit_title_and_url
   status: pass
   duration_s: 154.7
-  ran: true
+  ran: false
 - name: test_bookmarks_remove_no_confirmation
   status: pass
   duration_s: 130.9
-  ran: true
+  ran: false
 - name: test_bookmarks_rename_folder
   status: pass
   duration_s: 79.5
-  ran: true
+  ran: false
 - name: test_bookmarks_remove_folder_moves_to_root
   status: pass
   duration_s: 75.5
-  ran: true
+  ran: false
 - name: test_bookmarks_export_file_and_content
   status: pass
   duration_s: 153.9
-  ran: true
+  ran: false
 - name: test_bookmarks_import_creates_entries
   status: pass
   duration_s: 157.0
-  ran: true
+  ran: false
 - name: test_bookmarks_import_skips_duplicates
   status: pass
   duration_s: 161.1
-  ran: true
+  ran: false
 - name: test_bookmarks_import_malformed_file_errors
   status: pass
   duration_s: 103.9
-  ran: true
+  ran: false
 - name: test_bookmarks_reset_deletes_all
   status: pass
   duration_s: 222.9
-  ran: true
+  ran: false
 - name: test_download_link_attr_filename
   status: pass
   duration_s: 56.9
@@ -482,4 +483,4 @@ tests:
 - name: test_bookmarks_page_folder_longpress_no_crash
   status: pass
   duration_s: 182.4
-  ran: true
+  ran: false

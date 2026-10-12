@@ -1,11 +1,11 @@
 # Test run — SM-A225F · portrait-0-sw384
 
-- **When:** 2026-10-12T14:37:28+00:00
+- **When:** 2026-10-12T17:42:36+00:00
 - **Device:** Galaxy A22 5G (Samsung SM-A225F) — Android 13
 - **Config:** portrait, rotation 0°, smallest width 384dp
 - **Package:** `net.slions.fulguris.full.agent.debug`
-- **Options:** restart=False, keep_tabs=False, orientation=default, filter=all
-- **Result:** 101/112 passed in 1947.1s (14 ran, 98 carried forward)
+- **Options:** restart=False, keep_tabs=False, orientation=default, filter=test_back_two_tabs
+- **Result:** 100/112 passed in 37.6s (1 ran, 111 carried forward)
 
 | Test | Description | Result | Duration |
 |---|---|---|---|
@@ -48,10 +48,10 @@
 | | _tab B (short) should show the button_ | | |
 | `test_reload_button_tracks_tab_via_tab_menu` | Tab switch via the tab list drawer updates the reload button | ❌ fail ⏸ | 50.0s |
 | | _short tab should show the button_ | | |
-| `test_smoke_launch` | The app launches and reaches the main browser UI in the foreground | ✅ pass ⏸ | 2.5s |
-| `test_smoke_open_website` | Navigating to a web site loads and the address bar shows its label | ✅ pass ⏸ | 11.4s |
+| `test_smoke_launch` | The app launches and reaches the main browser UI in the foreground | ✅ pass ⏸ | 2.7s |
+| `test_smoke_open_website` | Navigating to a web site loads and the address bar shows its label | ✅ pass ⏸ | 12.3s |
 | `test_smoke_open_settings` | The settings activity opens via its component and renders its content | ✅ pass ⏸ | 7.7s |
-| `test_smoke_background_app_switch` | KEYCODE_APP_SWITCH backgrounds the app; launching brings it back to the front | ✅ pass ⏸ | 6.2s |
+| `test_smoke_background_app_switch` | KEYCODE_APP_SWITCH backgrounds the app; launching brings it back to the front | ✅ pass ⏸ | 6.1s |
 | `test_smoke_background_home` | KEYCODE_HOME backgrounds the app; the activity intent brings it back to the front | ✅ pass ⏸ | 6.1s |
 | `test_cursor_toggle_hotkey_shows_and_hides_overlay` | Long-press play/pause toggles the cursor overlay on and off | ✅ pass ⏸ | 28.3s |
 | `test_cursor_toggle_exit_focuses_menu_button` | Turning the cursor off moves focus to the toolbar menu button | ✅ pass ⏸ | 28.1s |
@@ -81,10 +81,11 @@
 | `test_toolbar_rehides_after_back_reshow` | After an auto-hide, back re-shows the tool bar (web view keeps focus) and it auto-hides again - the countdown is re-armed at re-show | ✅ pass ⏸ | 43.3s |
 | `test_cursor_toolbar_rehides_after_back_reshow` | With the cursor on (TV) the same back-reshow cycle auto-hides again - the non-focusable cursor overlay must not prevent the re-arm | ✅ pass ⏸ | 0.0s |
 | `test_toolbar_disabled_at_zero` | A timeout of 0 disables the feature (the tool bar never auto-hides) | ✅ pass ⏸ | 31.2s |
-| `test_back_two_tabs_keeps_foreground` | Back with a tab to close closes the top tab, not finish the app (regression: predictive back bypassing onBackPressed) | ✅ pass ⏸ | 39.0s |
-| `test_back_last_tab_stays_foreground` | Back on the last tab closes it (start page), not finish the app | ✅ pass ⏸ | 25.3s |
-| `test_back_editing_two_stage_exit` | Back while editing the URL field: first press hides the keyboard, second press cancels back to the label | ✅ pass ⏸ | 31.4s |
-| `test_settings_back_from_nested_no_crash` | Back from a nested settings screen (Appearance > Portrait) pops the nested screen back to the parent and keeps back usable until it exits, without crashing or getting stuck | ✅ pass ⏸ | 40.5s |
+| `test_back_two_tabs_keeps_foreground` | Back with a tab to close closes the top tab, not finish the app (regression: predictive back bypassing onBackPressed) | ✅ pass | 35.6s |
+| `test_back_last_tab_stays_foreground` | Back on the last tab closes it (start page), not finish the app | ✅ pass ⏸ | 21.2s |
+| `test_back_editing_two_stage_exit` | Back while editing the URL field: first press hides the keyboard, second press cancels back to the label | ❌ fail ⏸ | 22.8s |
+| | _first back should hide the keyboard_ | | |
+| `test_settings_back_from_nested_no_crash` | Back from a nested settings screen (Appearance > Portrait) pops the nested screen back to the parent and keeps back usable until it exits, without crashing or getting stuck | ✅ pass ⏸ | 39.4s |
 | `test_downloads_sheet_survives_active_download` | Opening the downloads sheet while a download is in progress must not crash the app (regression: NoSuchMethodError in ContentObserver, issue #802) | ✅ pass ⏸ | 35.6s |
 | `test_no_launch_dialog_for_plain_site` | Typing a plain https site shows no 'Launch third-party app?' dialog (EMUI wildcard-authority regression, #542). | ✅ pass ⏸ | 117.7s |
 | `test_launch_dialog_for_specialized_handler` | A Play Store details URL still shows the launch dialog listing the Play Store (the #542 host-matching fix must not over-filter real specialized handlers). | ✅ pass ⏸ | 25.2s |
@@ -111,19 +112,19 @@
 | `test_downloads_delete_all` | 'Delete all' clears every entry and deletes the files | ✅ pass ⏸ | 88.3s |
 | `test_downloads_same_url_twice_creates_second_file` | Downloading the same URL twice creates two entries; the system re-names the file '-1' | ✅ pass ⏸ | 135.6s |
 | `test_downloads_failure_mid_download` | A stream that dies mid-download ends in an 'Error: 0' row / 'Download failed' snackbar (a 404 can't be used: no dialog is shown for error responses) | ✅ pass ⏸ | 146.3s |
-| `test_bookmarks_drawer_opens_and_closes` | The main menu opens the bookmarks drawer; back closes it | ✅ pass | 47.5s |
-| `test_bookmarks_add_root` | Ctrl+B 'Add bookmark' saves a bookmark at root; the drawer shows it | ✅ pass | 146.4s |
-| `test_bookmarks_add_duplicate_guard` | Re-adding the same URL shows 'Bookmark already exists.' and adds nothing | ✅ pass | 157.4s |
-| `test_bookmarks_add_in_folder` | Typing a new folder name in the add dialog creates the folder and entry; the folder opens with a '..' parent row | ✅ pass | 166.9s |
-| `test_bookmarks_edit_title_and_url` | The bookmark context menu's 'Edit bookmark' changes title and URL | ✅ pass | 154.7s |
-| `test_bookmarks_remove_no_confirmation` | 'Remove bookmark' deletes the entry immediately (no confirmation dialog) | ✅ pass | 130.9s |
-| `test_bookmarks_rename_folder` | The folder context menu's 'Rename folder' renames the folder | ✅ pass | 79.5s |
-| `test_bookmarks_remove_folder_moves_to_root` | 'Remove folder' deletes nothing: its entries move up to the root | ✅ pass | 75.5s |
-| `test_bookmarks_export_file_and_content` | Export writes a FulgurisBookmarks-*.html to Downloads (SAF save dialog + snackbar) with the Netscape header, entries, nested folder and HTML escaping | ✅ pass | 153.9s |
-| `test_bookmarks_import_creates_entries` | Import picks the pushed Netscape file and creates the entries + folder ('N Bookmarks were imported') | ✅ pass | 157.0s |
-| `test_bookmarks_import_skips_duplicates` | Re-importing an already-imported file imports only the missing entries | ✅ pass | 161.1s |
-| `test_bookmarks_import_malformed_file_errors` | Importing an HTML file with no bookmark list shows the error dialog | ✅ pass | 103.9s |
-| `test_bookmarks_reset_deletes_all` | Reset shows the 'Delete all bookmarks?' dialog and clears everything; the subsequent export is header-only (runs last) | ✅ pass | 222.9s |
+| `test_bookmarks_drawer_opens_and_closes` | The main menu opens the bookmarks drawer; back closes it | ✅ pass ⏸ | 47.5s |
+| `test_bookmarks_add_root` | Ctrl+B 'Add bookmark' saves a bookmark at root; the drawer shows it | ✅ pass ⏸ | 146.4s |
+| `test_bookmarks_add_duplicate_guard` | Re-adding the same URL shows 'Bookmark already exists.' and adds nothing | ✅ pass ⏸ | 157.4s |
+| `test_bookmarks_add_in_folder` | Typing a new folder name in the add dialog creates the folder and entry; the folder opens with a '..' parent row | ✅ pass ⏸ | 166.9s |
+| `test_bookmarks_edit_title_and_url` | The bookmark context menu's 'Edit bookmark' changes title and URL | ✅ pass ⏸ | 154.7s |
+| `test_bookmarks_remove_no_confirmation` | 'Remove bookmark' deletes the entry immediately (no confirmation dialog) | ✅ pass ⏸ | 130.9s |
+| `test_bookmarks_rename_folder` | The folder context menu's 'Rename folder' renames the folder | ✅ pass ⏸ | 79.5s |
+| `test_bookmarks_remove_folder_moves_to_root` | 'Remove folder' deletes nothing: its entries move up to the root | ✅ pass ⏸ | 75.5s |
+| `test_bookmarks_export_file_and_content` | Export writes a FulgurisBookmarks-*.html to Downloads (SAF save dialog + snackbar) with the Netscape header, entries, nested folder and HTML escaping | ✅ pass ⏸ | 153.9s |
+| `test_bookmarks_import_creates_entries` | Import picks the pushed Netscape file and creates the entries + folder ('N Bookmarks were imported') | ✅ pass ⏸ | 157.0s |
+| `test_bookmarks_import_skips_duplicates` | Re-importing an already-imported file imports only the missing entries | ✅ pass ⏸ | 161.1s |
+| `test_bookmarks_import_malformed_file_errors` | Importing an HTML file with no bookmark list shows the error dialog | ✅ pass ⏸ | 103.9s |
+| `test_bookmarks_reset_deletes_all` | Reset shows the 'Delete all bookmarks?' dialog and clears everything; the subsequent export is header-only (runs last) | ✅ pass ⏸ | 222.9s |
 | `test_download_link_attr_filename` | <a download='name.txt'> link, no Content-Disposition: dialog + row + file use the download-attribute filename, not the URL basename | ✅ pass ⏸ | 56.9s |
 | `test_download_link_js_anchor_filename` | JS-created <a download> anchor (a.click()), no Content-Disposition: the attribute filename is honored | ✅ pass ⏸ | 79.2s |
 | `test_download_link_content_disposition_filename` | Content-Disposition: attachment link, no download attribute: the server's filename is honored (baseline) | ✅ pass ⏸ | 79.0s |
@@ -131,4 +132,4 @@
 | | _page A did not load (field='')_ | | |
 | `test_in_tab_back_not_confused_with_field_edit` | Back with in-page history and an unfocused address field still steps the page history (the two-stage edit exit does not swallow it) | ❌ fail ⏸ | 106.8s |
 | | _page A did not load_ | | |
-| `test_bookmarks_page_folder_longpress_no_crash` | Long-pressing a folder box on the bookmarks page shows the folder menu instead of crashing (regression: StringIndexOutOfBoundsException in showLongPressedDialogForBookmarkUrl) | ✅ pass | 182.4s |
+| `test_bookmarks_page_folder_longpress_no_crash` | Long-pressing a folder box on the bookmarks page shows the folder menu instead of crashing (regression: StringIndexOutOfBoundsException in showLongPressedDialogForBookmarkUrl) | ✅ pass ⏸ | 182.4s |

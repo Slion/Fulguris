@@ -6,6 +6,7 @@ import android.view.KeyEvent
 import android.webkit.CookieManager
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.Completable
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -16,8 +17,13 @@ class MainActivity @Inject constructor(): WebBrowserActivity() {
 
 
     public override fun updateCookiePreference(): Completable = Completable.fromAction {
-        val cookieManager = CookieManager.getInstance()
-        cookieManager.setAcceptCookie(userPreferences.cookiesEnabled)
+        try {
+            val cookieManager = CookieManager.getInstance()
+            cookieManager.setAcceptCookie(userPreferences.cookiesEnabled)
+        } catch (e: Exception) {
+            // WebView provider may not be available on some devices (e.g., Android 5.x without Google WebView)
+            Timber.w(e, "Failed to update cookie preference")
+        }
     }
 
 

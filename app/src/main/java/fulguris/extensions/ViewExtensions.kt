@@ -47,6 +47,16 @@ fun View.removeFromParent() : ViewGroup? {
 }
 
 /**
+ * Removes a view from its parent and adds it to the same parent at the specified index.
+ * Safely handles cases where the view has no parent or is already in the correct position.
+ */
+fun View.reorderInParent(index: Int = -1) {
+    val vg = (parent as? ViewGroup) ?: return
+    vg.removeView(this)
+    vg.addView(this, index)
+}
+
+/**
  * Performs an action when the view is laid out.
  *
  * @param runnable the runnable to run when the view is laid out.

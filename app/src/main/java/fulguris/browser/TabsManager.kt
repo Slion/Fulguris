@@ -508,9 +508,22 @@ class TabsManager @Inject constructor(
         )
 
         // Add our new tab at the specified position
+        val currentIndex = indexOfCurrentTab()
         when(newTabPosition){
-            NewTabPosition.BEFORE_CURRENT_TAB -> tabList.add(indexOfCurrentTab(), tab)
-            NewTabPosition.AFTER_CURRENT_TAB -> tabList.add(indexOfCurrentTab() + 1, tab)
+            NewTabPosition.BEFORE_CURRENT_TAB -> {
+                if (currentIndex >= 0) {
+                    tabList.add(currentIndex, tab)
+                } else {
+                    tabList.add(tab)
+                }
+            }
+            NewTabPosition.AFTER_CURRENT_TAB -> {
+                if (currentIndex >= 0) {
+                    tabList.add(currentIndex + 1, tab)
+                } else {
+                    tabList.add(tab)
+                }
+            }
             NewTabPosition.START_OF_TAB_LIST -> tabList.add(0, tab)
             NewTabPosition.END_OF_TAB_LIST -> tabList.add(tab)
         }
