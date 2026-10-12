@@ -23,7 +23,6 @@ import android.webkit.URLUtil
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.EditText
-import androidx.core.net.toUri
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.Reusable
 import fulguris.extensions.copyToClipboard
@@ -52,6 +51,7 @@ class LightningDialogBuilder @Inject constructor(
     private val userPreferences: UserPreferences,
     private val downloadHandler: fulguris.download.DownloadHandler,
     private val clipboardManager: ClipboardManager,
+    private val bookmarkPageFactory: BookmarkPageFactory,
     @DatabaseScheduler private val databaseScheduler: Scheduler,
     @MainScheduler private val mainScheduler: Scheduler
 ) {
@@ -97,11 +97,13 @@ class LightningDialogBuilder @Inject constructor(
         url: String
     ) {
         if (url.isBookmarkUrl()) {
-            // TODO hacky, make a better bookmark mechanism in the future
-            val uri = url.toUri()
-            val filename = requireNotNull(uri.lastPathSegment) { "Last segment should always exist for bookmark file" }
-            val folderTitle = filename.substring(0, filename.length - BookmarkPageFactory.FILENAME.length - 1)
-            showBookmarkFolderLongPressedDialog(activity, webBrowser, folderTitle.asFolder())
+            // The long pressed link is a bookmark PAGE (a folder, or '..' back to
+            // the parent) — show the folder's menu. The root page has no folder
+            // of its own, so there is nothing to show for it.
+            val folder = bookmarkPageFactory.folderForPageUrl(url)
+            if (folder !is Bookmark.Folder.Root) {
+                showBookmarkFolderLongPressedDialog(activity, webBrowser, folder)
+            }
         } else {
             bookmarkManager.findBookmarkForUrl(url)
                 .subscribeOn(databaseScheduler)

@@ -5,6 +5,7 @@ import fulguris.activity.WebBrowserActivity
 import fulguris.constant.FILE
 import fulguris.constant.FOLDER
 import fulguris.database.Bookmark
+import fulguris.database.asFolder
 import fulguris.database.bookmark.BookmarkRepository
 import fulguris.di.DatabaseScheduler
 import fulguris.di.DiskScheduler
@@ -232,6 +233,13 @@ class BookmarkPageFactory @Inject constructor(
     }
 
     /**
+     * The [Bookmark.Folder] whose page the given bookmark page URL points to, or
+     * [Bookmark.Folder.Root] for the root page. The inverse of [createBookmarkPage].
+     */
+    fun folderForPageUrl(url: String): Bookmark.Folder =
+        folderPathForPageUrl(url, application.filesDir.absolutePath).asFolder()
+
+    /**
      * Create the bookmark page file.
      */
     fun createBookmarkPage(folder: Bookmark.Folder?): File {
@@ -254,6 +262,20 @@ class BookmarkPageFactory @Inject constructor(
     companion object {
 
         const val FILENAME = "bookmarks.html"
+
+        /**
+         * The folder path encoded in a bookmark page URL: the part of the URL
+         * between the app's files directory and the ``bookmarks.html`` file (see
+         * [createBookmarkPage]). Empty for the root page, and also when the URL
+         * is not under [filesDirPath].
+         */
+        fun folderPathForPageUrl(url: String, filesDirPath: String): String {
+            val prefix = "$FILE$filesDirPath/"
+            if (!url.startsWith(prefix)) return ""
+            val rest = url.removePrefix(prefix)
+            // The root page's remainder is just the filename itself — no folder.
+            return if (rest.endsWith("/$FILENAME")) rest.removeSuffix("/$FILENAME") else ""
+        }
 
         private const val FOLDER_ICON = "folder.png"
         private const val FOLDER_ICON_ON_DARK = "folder-on-dark.png"

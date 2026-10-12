@@ -1,5 +1,5 @@
 # UI test run — SM-A225F · portrait-0-sw384
-timestamp: '2026-10-07T06:25:34+00:00'
+timestamp: '2026-10-12T14:37:28+00:00'
 device:
   model: SM-A225F
   brand: Samsung
@@ -16,13 +16,13 @@ options:
   keep_tabs: false
   orientation: null
   test_filter: null
-  group: history
+  group: bookmarks
 summary:
-  passed: 100
+  passed: 101
   failed: 11
-  total: 111
-  ran: 2
-  duration_s: 275.4
+  total: 112
+  ran: 14
+  duration_s: 1947.1
 tests:
 - name: test_cursor_click_hover_fires_mouseover
   status: fail
@@ -407,56 +407,56 @@ tests:
   ran: false
 - name: test_bookmarks_drawer_opens_and_closes
   status: pass
-  duration_s: 58.7
-  ran: false
+  duration_s: 47.5
+  ran: true
 - name: test_bookmarks_add_root
   status: pass
-  duration_s: 139.0
-  ran: false
+  duration_s: 146.4
+  ran: true
 - name: test_bookmarks_add_duplicate_guard
   status: pass
-  duration_s: 137.7
-  ran: false
+  duration_s: 157.4
+  ran: true
 - name: test_bookmarks_add_in_folder
   status: pass
-  duration_s: 146.9
-  ran: false
+  duration_s: 166.9
+  ran: true
 - name: test_bookmarks_edit_title_and_url
   status: pass
-  duration_s: 146.5
-  ran: false
+  duration_s: 154.7
+  ran: true
 - name: test_bookmarks_remove_no_confirmation
   status: pass
-  duration_s: 110.3
-  ran: false
+  duration_s: 130.9
+  ran: true
 - name: test_bookmarks_rename_folder
   status: pass
-  duration_s: 77.5
-  ran: false
+  duration_s: 79.5
+  ran: true
 - name: test_bookmarks_remove_folder_moves_to_root
   status: pass
-  duration_s: 74.8
-  ran: false
+  duration_s: 75.5
+  ran: true
 - name: test_bookmarks_export_file_and_content
   status: pass
-  duration_s: 119.0
-  ran: false
+  duration_s: 153.9
+  ran: true
 - name: test_bookmarks_import_creates_entries
   status: pass
-  duration_s: 142.2
-  ran: false
+  duration_s: 157.0
+  ran: true
 - name: test_bookmarks_import_skips_duplicates
   status: pass
-  duration_s: 146.4
-  ran: false
+  duration_s: 161.1
+  ran: true
 - name: test_bookmarks_import_malformed_file_errors
   status: pass
-  duration_s: 90.6
-  ran: false
+  duration_s: 103.9
+  ran: true
 - name: test_bookmarks_reset_deletes_all
   status: pass
-  duration_s: 195.8
-  ran: false
+  duration_s: 222.9
+  ran: true
 - name: test_download_link_attr_filename
   status: pass
   duration_s: 56.9
@@ -473,9 +473,13 @@ tests:
   status: fail
   duration_s: 166.5
   message: page A did not load (field='')
-  ran: true
+  ran: false
 - name: test_in_tab_back_not_confused_with_field_edit
   status: fail
   duration_s: 106.8
   message: page A did not load
+  ran: false
+- name: test_bookmarks_page_folder_longpress_no_crash
+  status: pass
+  duration_s: 182.4
   ran: true

@@ -1,11 +1,11 @@
 # Test run — SM-A225F · portrait-0-sw384
 
-- **When:** 2026-10-07T06:25:34+00:00
+- **When:** 2026-10-12T14:37:28+00:00
 - **Device:** Galaxy A22 5G (Samsung SM-A225F) — Android 13
 - **Config:** portrait, rotation 0°, smallest width 384dp
 - **Package:** `net.slions.fulguris.full.agent.debug`
 - **Options:** restart=False, keep_tabs=False, orientation=default, filter=all
-- **Result:** 100/111 passed in 275.4s (2 ran, 109 carried forward)
+- **Result:** 101/112 passed in 1947.1s (14 ran, 98 carried forward)
 
 | Test | Description | Result | Duration |
 |---|---|---|---|
@@ -111,23 +111,24 @@
 | `test_downloads_delete_all` | 'Delete all' clears every entry and deletes the files | ✅ pass ⏸ | 88.3s |
 | `test_downloads_same_url_twice_creates_second_file` | Downloading the same URL twice creates two entries; the system re-names the file '-1' | ✅ pass ⏸ | 135.6s |
 | `test_downloads_failure_mid_download` | A stream that dies mid-download ends in an 'Error: 0' row / 'Download failed' snackbar (a 404 can't be used: no dialog is shown for error responses) | ✅ pass ⏸ | 146.3s |
-| `test_bookmarks_drawer_opens_and_closes` | The main menu opens the bookmarks drawer; back closes it | ✅ pass ⏸ | 58.7s |
-| `test_bookmarks_add_root` | Ctrl+B 'Add bookmark' saves a bookmark at root; the drawer shows it | ✅ pass ⏸ | 139.0s |
-| `test_bookmarks_add_duplicate_guard` | Re-adding the same URL shows 'Bookmark already exists.' and adds nothing | ✅ pass ⏸ | 137.7s |
-| `test_bookmarks_add_in_folder` | Typing a new folder name in the add dialog creates the folder and entry; the folder opens with a '..' parent row | ✅ pass ⏸ | 146.9s |
-| `test_bookmarks_edit_title_and_url` | The bookmark context menu's 'Edit bookmark' changes title and URL | ✅ pass ⏸ | 146.5s |
-| `test_bookmarks_remove_no_confirmation` | 'Remove bookmark' deletes the entry immediately (no confirmation dialog) | ✅ pass ⏸ | 110.3s |
-| `test_bookmarks_rename_folder` | The folder context menu's 'Rename folder' renames the folder | ✅ pass ⏸ | 77.5s |
-| `test_bookmarks_remove_folder_moves_to_root` | 'Remove folder' deletes nothing: its entries move up to the root | ✅ pass ⏸ | 74.8s |
-| `test_bookmarks_export_file_and_content` | Export writes a FulgurisBookmarks-*.html to Downloads (SAF save dialog + snackbar) with the Netscape header, entries, nested folder and HTML escaping | ✅ pass ⏸ | 119.0s |
-| `test_bookmarks_import_creates_entries` | Import picks the pushed Netscape file and creates the entries + folder ('N Bookmarks were imported') | ✅ pass ⏸ | 142.2s |
-| `test_bookmarks_import_skips_duplicates` | Re-importing an already-imported file imports only the missing entries | ✅ pass ⏸ | 146.4s |
-| `test_bookmarks_import_malformed_file_errors` | Importing an HTML file with no bookmark list shows the error dialog | ✅ pass ⏸ | 90.6s |
-| `test_bookmarks_reset_deletes_all` | Reset shows the 'Delete all bookmarks?' dialog and clears everything; the subsequent export is header-only (runs last) | ✅ pass ⏸ | 195.8s |
+| `test_bookmarks_drawer_opens_and_closes` | The main menu opens the bookmarks drawer; back closes it | ✅ pass | 47.5s |
+| `test_bookmarks_add_root` | Ctrl+B 'Add bookmark' saves a bookmark at root; the drawer shows it | ✅ pass | 146.4s |
+| `test_bookmarks_add_duplicate_guard` | Re-adding the same URL shows 'Bookmark already exists.' and adds nothing | ✅ pass | 157.4s |
+| `test_bookmarks_add_in_folder` | Typing a new folder name in the add dialog creates the folder and entry; the folder opens with a '..' parent row | ✅ pass | 166.9s |
+| `test_bookmarks_edit_title_and_url` | The bookmark context menu's 'Edit bookmark' changes title and URL | ✅ pass | 154.7s |
+| `test_bookmarks_remove_no_confirmation` | 'Remove bookmark' deletes the entry immediately (no confirmation dialog) | ✅ pass | 130.9s |
+| `test_bookmarks_rename_folder` | The folder context menu's 'Rename folder' renames the folder | ✅ pass | 79.5s |
+| `test_bookmarks_remove_folder_moves_to_root` | 'Remove folder' deletes nothing: its entries move up to the root | ✅ pass | 75.5s |
+| `test_bookmarks_export_file_and_content` | Export writes a FulgurisBookmarks-*.html to Downloads (SAF save dialog + snackbar) with the Netscape header, entries, nested folder and HTML escaping | ✅ pass | 153.9s |
+| `test_bookmarks_import_creates_entries` | Import picks the pushed Netscape file and creates the entries + folder ('N Bookmarks were imported') | ✅ pass | 157.0s |
+| `test_bookmarks_import_skips_duplicates` | Re-importing an already-imported file imports only the missing entries | ✅ pass | 161.1s |
+| `test_bookmarks_import_malformed_file_errors` | Importing an HTML file with no bookmark list shows the error dialog | ✅ pass | 103.9s |
+| `test_bookmarks_reset_deletes_all` | Reset shows the 'Delete all bookmarks?' dialog and clears everything; the subsequent export is header-only (runs last) | ✅ pass | 222.9s |
 | `test_download_link_attr_filename` | <a download='name.txt'> link, no Content-Disposition: dialog + row + file use the download-attribute filename, not the URL basename | ✅ pass ⏸ | 56.9s |
 | `test_download_link_js_anchor_filename` | JS-created <a download> anchor (a.click()), no Content-Disposition: the attribute filename is honored | ✅ pass ⏸ | 79.2s |
 | `test_download_link_content_disposition_filename` | Content-Disposition: attachment link, no download attribute: the server's filename is honored (baseline) | ✅ pass ⏸ | 79.0s |
-| `test_in_tab_back_navigates_history` | With in-page history the back key navigates the tab back to the previous page (goBack), it does not close the tab or finish the app | ❌ fail | 166.5s |
+| `test_in_tab_back_navigates_history` | With in-page history the back key navigates the tab back to the previous page (goBack), it does not close the tab or finish the app | ❌ fail ⏸ | 166.5s |
 | | _page A did not load (field='')_ | | |
-| `test_in_tab_back_not_confused_with_field_edit` | Back with in-page history and an unfocused address field still steps the page history (the two-stage edit exit does not swallow it) | ❌ fail | 106.8s |
+| `test_in_tab_back_not_confused_with_field_edit` | Back with in-page history and an unfocused address field still steps the page history (the two-stage edit exit does not swallow it) | ❌ fail ⏸ | 106.8s |
 | | _page A did not load_ | | |
+| `test_bookmarks_page_folder_longpress_no_crash` | Long-pressing a folder box on the bookmarks page shows the folder menu instead of crashing (regression: StringIndexOutOfBoundsException in showLongPressedDialogForBookmarkUrl) | ✅ pass | 182.4s |

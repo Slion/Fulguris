@@ -60,6 +60,10 @@ IMPORT_FOLDER = "Probe folder"
 IMPORT_A = "Probe A"
 IMPORT_B = "Probe B"
 
+CRASH_FOLDER = "AutoTestCrashFolder"
+CRASH_ENTRY_TITLE = "AutoTest crash folder entry"
+CRASH_ENTRY_URL = "https://www.example.org/autotest-crash-folder"
+
 
 # --- navigation helpers -------------------------------------------------------
 
@@ -1045,6 +1049,74 @@ def test_bookmarks_import_malformed_file_errors(device, ctx: dict) -> None:
 # --- reset (deletes everything — MUST run last) -------------------------------
 
 
+def test_bookmarks_page_folder_longpress_no_crash(device, ctx: dict) -> None:
+    """Long-pressing a folder box on the bookmarks HTML page shows the folder
+    menu ('Rename folder' / 'Remove folder') instead of crashing.
+
+    Regression: LightningDialogBuilder.showLongPressedDialogForBookmarkUrl
+    derived the folder title from the page filename with
+    ``substring(0, len - 14 - 1)``; the last path segment is always
+    ``bookmarks.html`` (14 chars), so every long-press on a bookmark page
+    (folder or '..') threw StringIndexOutOfBoundsException and killed the app.
+    """
+    # 1. Deterministic state: exactly one folder with exactly one entry, so
+    #    the bookmarks page renders a single box (flex-centered).
+    _close_to_browser(device)
+    _open_backup_page(device)
+    assert _tap_text(device, "Reset", timeout=10.0, exact=True), "no 'Reset' row"
+    assert _wait_text(device, "Delete all bookmarks?", timeout=15.0, exact=True)
+    assert _tap_text(device, "Delete", timeout=10.0, exact=True)
+    time.sleep(1.5)
+    _close_to_browser(device)
+
+    device.navigate("https://www.example.org/")
+    _add_bookmark_menu(device)
+    assert _wait_text(device, "Add bookmark", timeout=15.0, exact=True)
+    _set_field(device, ":id/bookmark_title", CRASH_ENTRY_TITLE)
+    _set_field(device, ":id/bookmark_url", CRASH_ENTRY_URL)
+    _set_field(device, ":id/bookmark_folder", CRASH_FOLDER)
+    assert _tap_ok(device), "'OK' not found in the add-bookmark dialog"
+
+    # 2. Load the bookmarks HTML page (not the drawer).
+    device.navigate("about:bookmarks")
+    time.sleep(2.0)
+
+    # 3. Long-press the single box. It is flex-centered in the web view, so
+    #    target the web view's center (the toolbar shifts it off screen-center).
+    w, h = device.screen_size()
+    n = adb.find_node(device.serial, ":id/web_view_frame")
+    if n and n.bounds:
+        x1, y1, x2, y2 = n.bounds
+        x, y = (x1 + x2) // 2, (y1 + y2) // 2
+    else:
+        x, y = w // 2, h // 2
+    before = adb.pidof(device.serial, device.package)
+    assert before, "the app was not running before the long press"
+    device.tap_longpress(x, y, hold_ms=1000, wait=2.0)
+    time.sleep(3.0)
+
+    after = adb.pidof(device.serial, device.package)
+    if after != before:
+        # Restore a usable state for the rest of the run, then report.
+        device.restart()
+        raise AssertionError(
+            f"long-pressing the folder on the bookmarks page crashed the app "
+            f"(pid {before!r} -> None)"
+        )
+
+    # 4. The folder context menu must be up (title 'Folder', Rename/Remove rows).
+    assert _wait_text(device, "Rename folder", timeout=10.0, exact=True), (
+        "the folder context menu did not appear after long-pressing the folder "
+        f"(texts: {sorted(_texts(device))[:25]!r})"
+    )
+    assert _wait_text(device, "Remove folder", timeout=5.0, exact=True), (
+        "'Remove folder' row missing from the folder context menu"
+    )
+    device.key(keys.BACK, 0.9)  # dismiss the menu for the next test
+
+
+# --- destructive (runs last in the group) --------------------------------------
+
 def test_bookmarks_reset_deletes_all(device, ctx: dict) -> None:
     """Reset ('Delete all bookmarks') confirms, clears the drawer, and export
     afterwards yields a header-only file."""
@@ -1115,6 +1187,9 @@ FEATURE_GROUPS = {
         test_bookmarks_import_creates_entries,
         test_bookmarks_import_skips_duplicates,
         test_bookmarks_import_malformed_file_errors,
+        # Destructive (resets all bookmarks) but must run BEFORE the final
+        # reset, which cleans up the folder it creates.
+        test_bookmarks_page_folder_longpress_no_crash,
         test_bookmarks_reset_deletes_all,
     ],
 }
@@ -1160,6 +1235,11 @@ TEST_DESCRIPTIONS = {
     ),
     "test_bookmarks_import_malformed_file_errors": (
         "Importing an HTML file with no bookmark list shows the error dialog"
+    ),
+    "test_bookmarks_page_folder_longpress_no_crash": (
+        "Long-pressing a folder box on the bookmarks page shows the folder menu "
+        "instead of crashing (regression: StringIndexOutOfBoundsException in "
+        "showLongPressedDialogForBookmarkUrl)"
     ),
     "test_bookmarks_reset_deletes_all": (
         "Reset shows the 'Delete all bookmarks?' dialog and clears everything; "
