@@ -77,7 +77,7 @@ class SuggestionsAdapter(
         searchFilter.input().results()
             .subscribeOn(databaseScheduler)
             .observeOn(mainScheduler)
-            .subscribe(::publishResults)
+            .subscribe(::publishResults, { Timber.e(it, "Error computing suggestions") })
     }
 
     fun refreshPreferences() {
@@ -91,9 +91,9 @@ class SuggestionsAdapter(
     fun refreshBookmarks() {
         bookmarkRepository.getAllBookmarksSorted()
             .subscribeOn(databaseScheduler)
-            .subscribe { list ->
+            .subscribe({ list ->
                 allBookmarks = list
-            }
+            }, { Timber.e(it, "Error loading bookmarks") })
     }
 
     override fun getCount(): Int = filteredList.size
@@ -210,9 +210,12 @@ class SuggestionsAdapter(
         }
         .map { (bookmarks, history, searches) ->
             val choice: Int = userPreferences.suggestionChoice.value + 2
-            val bookmarkCount = choice - 2.coerceAtMost(history.size) - 1.coerceAtMost(searches.size)
-            val historyCount = choice - bookmarkCount.coerceAtMost(bookmarks.size) - 1.coerceAtMost(searches.size)
-            val searchCount = choice - bookmarkCount.coerceAtMost(bookmarks.size) - historyCount.coerceAtMost(history.size)
+            // Allocate greedily in priority order: bookmarks (2), history (2), search (1)
+            val bookmarkCount = minOf(2, bookmarks.size, choice)
+            val remainingAfterBookmarks = choice - bookmarkCount
+            val historyCount = minOf(2, history.size, remainingAfterBookmarks)
+            val remainingAfterHistory = remainingAfterBookmarks - historyCount
+            val searchCount = minOf(1, searches.size, remainingAfterHistory)
             val results = bookmarks.take(bookmarkCount) + history.take(historyCount) + searches.take(searchCount)
             // Reverse results if needed
             if (iContext.configPrefs.toolbarsBottom) results.reversed() else results
