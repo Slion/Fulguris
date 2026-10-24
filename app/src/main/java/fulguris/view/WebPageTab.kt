@@ -1466,6 +1466,9 @@ class WebPageTab(
     private open inner class TouchListenerLollipop : OnTouchListener {
 
         internal var location: Float = 0f
+        // Highest and lowest finger position since the last show/hide decision
+        private var peakY: Float = 0f
+        private var troughY: Float = 0f
         protected var touchingScreen: Boolean = false
         internal var y: Float = 0f
         internal var action: Int = 0
@@ -1480,21 +1483,32 @@ class WebPageTab(
             }
 
             action = arg1.action
-            y = arg1.y
+            // Use screen coordinates: the web view moves and resizes while the bars animate,
+            // view local coordinates would shift under the finger and feed back into the logic below,
+            // making the bars hide and show repeatedly (flicker).
+            y = arg1.rawY
             // Handle toolbar visibility during the gesture, not after the finger is lifted.
             if (action == MotionEvent.ACTION_DOWN) {
                 location = y
+                peakY = y
+                troughY = y
                 touchingScreen = true
             } else if (action == MotionEvent.ACTION_MOVE) {
-                val distance = y - location
-                if (distance < -SCROLL_UP_THRESHOLD) {
+                if (y > peakY) peakY = y
+                if (y < troughY) troughY = y
+                if (y <= peakY - SCROLL_UP_THRESHOLD) {
                     // Hide as soon as an upward swipe crosses the threshold.
                     webBrowser.hideActionBar()
-                } else if (distance > SCROLL_UP_THRESHOLD
+                    peakY = y
+                    troughY = y
+                } else if (y >= troughY + SCROLL_UP_THRESHOLD
                         && view.canScrollVertically()
                         && view.context.configPrefs.buttonsInBottomBar) {
-                    // Show bars immediately while swiping down.
+                    // Show bars while swiping down, measured from the lowest point reached
+                    // so a direction change needs a deliberate swipe and finger jitter is ignored.
                     webBrowser.showActionBar()
+                    peakY = y
+                    troughY = y
                 }
             } else if (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_CANCEL) {
                 if (view.scrollY < SCROLL_DOWN_THRESHOLD

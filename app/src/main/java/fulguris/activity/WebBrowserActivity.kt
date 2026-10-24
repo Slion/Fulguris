@@ -3843,6 +3843,8 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
      * Bottom bar follows the top toolbar visibility, it only exists when buttons are in it.
      */
     private fun updateBottomBarVisibility(aToolbarVisible: Boolean) {
+        // The show/hide animation drives the bottom bar itself and commits the final state when done
+        if (toolbarAnimating) return
         iBinding.bottomBar.isVisible = buttonsInBottomBar && aToolbarVisible
     }
 
@@ -4011,6 +4013,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     override fun onPause() {
         super.onPause()
         Timber.d("onPause")
+        finishToolBarAnimationNow()
 
         // In PiP mode, only pause non-current tabs so video keeps playing
         val inPip = isPipRequested ||
@@ -5346,17 +5349,151 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
      */
     override fun showActionBar() {
         Timber.d("showActionBar")
-        iBinding.toolbarInclude.toolbarLayout.visibility = View.VISIBLE
-        updateBottomBarVisibility(true)
+        setToolBarVisible(true)
         if (tabsManager.currentTab?.isLoading != true && currentTabView?.hasFocus() == true)
             scheduleHideToolBarTimeout()
     }
 
     private fun doHideToolBar() {
-        iBinding.toolbarInclude.toolbarLayout.visibility = View.GONE
-        updateBottomBarVisibility(false)
+        setToolBarVisible(false)
     }
-    private fun isToolBarVisible() = iBinding.toolbarInclude.toolbarLayout.visibility == View.VISIBLE
+
+    /**
+     * Logical tool bar visibility. While a show/hide animation is running this is the state the
+     * animation is heading to (or the latest state requested meanwhile), not the current view visibility.
+     */
+    private fun isToolBarVisible() =
+        if (toolbarAnimating) toolbarWantedVisible
+        else iBinding.toolbarInclude.toolbarLayout.visibility == View.VISIBLE
+
+    private var toolbarAnimating = false
+    private var toolbarWantedVisible = true
+    private var toolbarAnimator: ValueAnimator? = null
+
+    /**
+     * Show or hide the tool bar (and the bottom bar when it is in use) with a smooth slide.
+     *
+     * Toggling visibility GONE/VISIBLE resizes the web view in a single frame, which makes the page
+     * jump, and resizing it on every frame of an animation is expensive and flickers. Instead we
+     * resize the web view only once, at the start of a hide (or at the end of a show), while it is
+     * hidden behind the bars, and slide everything using translationY only (GPU only, no relayout):
+     *
+     * - Hide: the content gets a negative bottom margin so it already has its final, taller size,
+     *   then toolbar and content slide up together while the bottom bar slides down. Once done we
+     *   set the real final layout (toolbar GONE, margin 0) which is visually identical.
+     * - Show: reverse, the web view keeps its tall size until the bars are fully back.
+     *
+     * If a request comes in while animating, the latest one is applied when the animation ends.
+     */
+    private fun setToolBarVisible(visible: Boolean) {
+        if (toolbarAnimating) {
+            toolbarWantedVisible = visible
+            return
+        }
+        val toolbar = iBinding.toolbarInclude.toolbarLayout
+        val shown = toolbar.visibility == View.VISIBLE
+        if (shown == visible) {
+            updateBottomBarVisibility(visible)
+            return
+        }
+        val canAnimate = iBinding.uiLayout.isLaidOut
+                && iBinding.uiLayout.width > 0
+                && !isInPictureInPictureMode
+                && iBinding.uiLayout.windowVisibility == View.VISIBLE
+        if (!canAnimate) {
+            toolbar.visibility = if (visible) View.VISIBLE else View.GONE
+            updateBottomBarVisibility(visible)
+            return
+        }
+        animateToolBar(visible)
+    }
+
+    private fun animateToolBar(show: Boolean) {
+        val toolbar = iBinding.toolbarInclude.toolbarLayout
+        val content = iBinding.layoutHorizontal
+        val bottom = iBinding.bottomBar
+        val withBottom = buttonsInBottomBar
+
+        if (show) {
+            // A GONE view has no reliable height, make it visible and measure it
+            toolbar.visibility = View.VISIBLE
+            toolbar.measure(
+                View.MeasureSpec.makeMeasureSpec(iBinding.uiLayout.width, View.MeasureSpec.EXACTLY),
+                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED))
+        }
+        val h = if (show) toolbar.measuredHeight else toolbar.height
+        val b = if (withBottom) (bottom.layoutParams.height.takeIf { it > 0 } ?: bottom.height) else 0
+        if (h <= 0) {
+            // Nothing sensible to animate
+            toolbar.visibility = if (show) View.VISIBLE else View.GONE
+            updateBottomBarVisibility(show)
+            return
+        }
+        if (show && withBottom) bottom.visibility = View.VISIBLE
+
+        toolbarAnimating = true
+        toolbarWantedVisible = show
+
+        // Give the content its final (tall) size right away, the extra part is clipped by its parent
+        content.updateLayoutParams<ViewGroup.MarginLayoutParams> { bottomMargin = -(h + b) }
+
+        // progress 0: bars shown, 1: bars hidden
+        val setProgress = { p: Float ->
+            toolbar.translationY = -h * p
+            content.translationY = -h * p
+            bottom.translationY = b * p
+        }
+        setProgress(if (show) 1f else 0f)
+        toolbar.setLayerType(View.LAYER_TYPE_HARDWARE, null)
+        if (withBottom) bottom.setLayerType(View.LAYER_TYPE_HARDWARE, null)
+
+        toolbarAnimator = ValueAnimator.ofFloat(if (show) 1f else 0f, if (show) 0f else 1f).apply {
+            duration = 200
+            interpolator = android.view.animation.DecelerateInterpolator()
+            addUpdateListener { setProgress(it.animatedValue as Float) }
+            addListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator) {
+                    finishToolBarAnimation(show)
+                }
+            })
+            start()
+        }
+    }
+
+    /**
+     * Commit the final layout of a tool bar animation. Visually identical to the last animation frame.
+     */
+    private fun finishToolBarAnimation(shown: Boolean) {
+        if (!toolbarAnimating) return
+        val toolbar = iBinding.toolbarInclude.toolbarLayout
+        val content = iBinding.layoutHorizontal
+        val bottom = iBinding.bottomBar
+        toolbarAnimator = null
+        toolbarAnimating = false
+        toolbar.translationY = 0f
+        content.translationY = 0f
+        bottom.translationY = 0f
+        toolbar.setLayerType(View.LAYER_TYPE_NONE, null)
+        bottom.setLayerType(View.LAYER_TYPE_NONE, null)
+        content.updateLayoutParams<ViewGroup.MarginLayoutParams> { bottomMargin = 0 }
+        toolbar.visibility = if (shown) View.VISIBLE else View.GONE
+        updateBottomBarVisibility(shown)
+        // Something asked for the opposite state while we were animating
+        if (toolbarWantedVisible != shown) {
+            setToolBarVisible(toolbarWantedVisible)
+        }
+    }
+
+    /**
+     * Jump to the end of a running tool bar animation, used when leaving the foreground.
+     */
+    private fun finishToolBarAnimationNow() {
+        val animator = toolbarAnimator ?: return
+        // Cancelling would fire onAnimationEnd and commit the state
+        animator.removeAllListeners()
+        animator.cancel()
+        finishToolBarAnimation(toolbarWantedVisible)
+    }
 
     /**
      * Start the "Hide tool bar after" countdown: after
