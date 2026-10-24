@@ -1466,6 +1466,9 @@ class WebPageTab(
     private open inner class TouchListenerLollipop : OnTouchListener {
 
         internal var location: Float = 0f
+        // Highest and lowest finger position since the last show/hide decision
+        private var peakY: Float = 0f
+        private var troughY: Float = 0f
         protected var touchingScreen: Boolean = false
         internal var y: Float = 0f
         internal var action: Int = 0
@@ -1480,22 +1483,34 @@ class WebPageTab(
             }
 
             action = arg1.action
-            y = arg1.y
+            // Use screen coordinates: the web view moves and resizes while the bars animate,
+            // view local coordinates would shift under the finger and feed back into the logic below,
+            // making the bars hide and show repeatedly (flicker).
+            y = arg1.rawY
             // Handle toolbar visibility during the gesture, not after the finger is lifted.
             if (action == MotionEvent.ACTION_DOWN) {
                 location = y
+                peakY = y
+                troughY = y
                 touchingScreen = true
             } else if (action == MotionEvent.ACTION_MOVE) {
-                val distance = y - location
-                if (distance < -SCROLL_UP_THRESHOLD) {
+                if (y > peakY) peakY = y
+                if (y < troughY) troughY = y
+                if (y <= peakY - SCROLL_UP_THRESHOLD) {
                     // Hide as soon as an upward swipe crosses the threshold.
                     webBrowser.hideActionBar()
-                } else if (distance > SCROLL_UP_THRESHOLD
+                    peakY = y
+                    troughY = y
+                } else if (y >= troughY + SCROLL_UP_THRESHOLD
                         && view.context.configPrefs.barsAutoHide) {
-                    // Show bars immediately while swiping down.
-                    // No check on the web view scrolling ability here: some pages, ChatGPT for instance,
-                    // scroll inside their own container and the web view itself never scrolls.
+                    // Show bars while swiping down, measured from the lowest point reached
+                    // so a direction change needs a deliberate swipe and finger jitter is ignored.
+                    // Deliberately not gated on view.canScrollVertically(): pages such as ChatGPT scroll
+                    // an inner container while the WebView itself cannot scroll, and the bars were
+                    // hidden by the upward swipe above, so they must be able to come back.
                     webBrowser.showActionBar()
+                    peakY = y
+                    troughY = y
                 }
             } else if (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_CANCEL) {
                 if (view.scrollY < SCROLL_DOWN_THRESHOLD
@@ -1563,8 +1578,8 @@ class WebPageTab(
             if (power < -10) {
                 webBrowser.hideActionBar()
             } else if (power > 15) {
-                // No check on the web view scrolling ability: pages such as ChatGPT scroll inside
-                // their own container, the bars would never come back otherwise
+                // Not gated on view.canScrollVertically(): pages scrolling an inner container
+                // (ChatGPT, web apps) hide the bars on swipe up and must be able to show them again.
                 showToolBarOnScrollUpIfNeeded()
             }
             return super.onFling(e1, e2, velocityX, velocityY)
