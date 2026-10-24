@@ -1502,10 +1502,12 @@ class WebPageTab(
                     peakY = y
                     troughY = y
                 } else if (y >= troughY + SCROLL_UP_THRESHOLD
-                        && view.canScrollVertically()
                         && view.context.configPrefs.buttonsInBottomBar) {
                     // Show bars while swiping down, measured from the lowest point reached
                     // so a direction change needs a deliberate swipe and finger jitter is ignored.
+                    // Deliberately not gated on view.canScrollVertically(): pages such as ChatGPT scroll
+                    // an inner container while the WebView itself cannot scroll, and the bars were
+                    // hidden by the upward swipe above, so they must be able to come back.
                     webBrowser.showActionBar()
                     peakY = y
                     troughY = y
@@ -1575,10 +1577,9 @@ class WebPageTab(
             val power = (velocityY * 100 / maxFling).toInt()
             if (power < -10) {
                 webBrowser.hideActionBar()
-            } else if (power > 15
-                    // Touch input won't show tool bar again if no top level vertical scroll
-                    // It can still be accessed using the back button
-                    && view.canScrollVertically()) {
+            } else if (power > 15) {
+                // Not gated on view.canScrollVertically(): pages scrolling an inner container
+                // (ChatGPT, web apps) hide the bars on swipe up and must be able to show them again.
                 showToolBarOnScrollUpIfNeeded()
             }
             return super.onFling(e1, e2, velocityX, velocityY)
