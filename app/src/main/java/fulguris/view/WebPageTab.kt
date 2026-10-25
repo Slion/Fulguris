@@ -36,6 +36,7 @@ import android.net.http.SslCertificate
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.os.Message
 import android.view.*
 import android.view.GestureDetector.SimpleOnGestureListener
@@ -304,6 +305,55 @@ class WebPageTab(
     private val hiltEntryPoint = EntryPointAccessors.fromApplication(activity.applicationContext, HiltEntryPoint::class.java)
 
     val userPreferences: UserPreferences = hiltEntryPoint.userPreferences
+
+    // ------------------------------------------------------------------ saving logins
+
+    private val loginPromptHandler = Handler(Looper.getMainLooper())
+    private var pendingLoginPrompt: Runnable? = null
+    private var lastPromptedLogin: String? = null
+
+    /**
+     * A login form was submitted in this tab, see [fulguris.autofill.LoginCapture]. Called on the main thread.
+     * Offers to save the password unless it is already saved.
+     */
+    fun onLoginSubmitted(username: String, password: String) {
+        if (isIncognito || !userPreferences.savePasswordsEnabled) return
+        // Several events can come from a single submit (click, then submit): ask once
+        pendingLoginPrompt?.let { loginPromptHandler.removeCallbacks(it) }
+        val prompt = Runnable { promptSaveLogin(username, password) }
+        pendingLoginPrompt = prompt
+        loginPromptHandler.postDelayed(prompt, 700)
+    }
+
+    private fun promptSaveLogin(username: String, password: String) {
+        pendingLoginPrompt = null
+        val pageUrl = webView?.url ?: return
+        val uri = Uri.parse(pageUrl)
+        if (uri.scheme != "https" && uri.scheme != "http") return
+        val host = uri.host?.let { fulguris.autofill.SiteCredentials.normalizeHost(it) } ?: return
+        val key = "$host\u0000$username\u0000$password"
+        if (key == lastPromptedLogin) return
+        val appContext = activity.applicationContext
+        val status = fulguris.autofill.SiteCredentials.check(appContext, host, username, password)
+        if (status == fulguris.autofill.SiteCredentials.SaveStatus.UNCHANGED) return
+        lastPromptedLogin = key
+        if (activity.isFinishing || activity.isDestroyed) return
+        val update = status == fulguris.autofill.SiteCredentials.SaveStatus.UPDATED
+        com.google.android.material.dialog.MaterialAlertDialogBuilder(activity)
+            .setTitle(if (update) R.string.update_password_title else R.string.save_password_title)
+            .setMessage(activity.getString(R.string.save_password_message, host, username))
+            .setPositiveButton(if (update) R.string.update_password_update else R.string.save_password_save) { _, _ ->
+                try {
+                    fulguris.autofill.SiteCredentials.save(appContext, host, username, password)
+                    activity.snackbar(R.string.save_password_saved)
+                } catch (e: Exception) {
+                    Timber.e(e, "Could not save the login")
+                }
+            }
+            .setNegativeButton(R.string.save_password_not_now, null)
+            .show()
+    }
+
     val dialogBuilder: LightningDialogBuilder = hiltEntryPoint.dialogBuilder
     val databaseScheduler: Scheduler = hiltEntryPoint.databaseScheduler()
     val mainScheduler: Scheduler = hiltEntryPoint.mainScheduler()

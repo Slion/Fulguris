@@ -57,6 +57,24 @@ class WebViewEx : WebView {
     private fun initNestedScrollDetection() {
         addJavascriptInterface(NestedScrollBridge(), NESTED_SCROLL_JS_INTERFACE)
         addJavascriptInterface(BlobDownloadBridge(), BLOB_JS_INTERFACE)
+        addJavascriptInterface(LoginCaptureBridge(), fulguris.autofill.LoginCapture.JS_INTERFACE)
+    }
+
+    /**
+     * Receives the credentials typed in a submitted login form, see [fulguris.autofill.LoginCapture].
+     * It is write only: any page, frames included, can call it, so it must never return anything
+     * and the site is taken from the tab, not from what the page claims.
+     */
+    inner class LoginCaptureBridge {
+        @JavascriptInterface
+        fun onSubmit(username: String?, password: String?) {
+            if (username.isNullOrBlank() || password.isNullOrEmpty()) return
+            // Bound the size of what a page can make us hold on to
+            if (username.length > 256 || password.length > 256) return
+            Handler(Looper.getMainLooper()).post {
+                if (this@WebViewEx::proxy.isInitialized) proxy.onLoginSubmitted(username, password)
+            }
+        }
     }
 
     /**

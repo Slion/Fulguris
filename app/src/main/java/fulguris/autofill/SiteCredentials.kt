@@ -13,8 +13,9 @@ import org.json.JSONObject
  * "host" matches the page host or any of its subdomains.
  * Anything stored in an APK can be extracted, so never publish a build or a repo containing real passwords.
  *
- * Entries restored from a backup file (see fulguris.backup.CredentialsBackup) are kept in the same format in
- * the app private storage, noBackupFilesDir/site_credentials.json (excluded from Android auto backup), and take precedence over the ones from assets.
+ * Logins saved by the user when submitting a login form (see LoginCapture) and the ones restored from a backup file
+ * (see fulguris.backup.CredentialsBackup) are kept in the same format, encrypted with a Keystore key (CredentialCrypto),
+ * in noBackupFilesDir/site_credentials.json (excluded from Android auto backup). They take precedence over the ones from assets.
  */
 object SiteCredentials {
 
@@ -23,6 +24,22 @@ object SiteCredentials {
     @Volatile private var entries: List<Entry>? = null
 
     private const val IMPORTED_FILE = "site_credentials.json"
+
+    private val lock = Any()
+
+    private fun key(e: Entry) = e.host + "\u0000" + e.username
+
+    private fun toJson(list: Collection<Entry>): JSONArray {
+        val arr = JSONArray()
+        for (e in list) {
+            arr.put(JSONObject()
+                .put("host", e.host)
+                .put("username", e.username)
+                .put("password", e.password)
+                .put("autoSubmit", e.autoSubmit))
+        }
+        return arr
+    }
 
     private fun parse(text: String, into: MutableList<Entry>) {
         val arr = JSONArray(text)
@@ -36,73 +53,93 @@ object SiteCredentials {
         }
     }
 
-    private fun load(context: Context): List<Entry> {
-        entries?.let { return it }
+    /** The logins kept on the device (saved by the user or restored from a backup), newest first. */
+    private fun readStored(context: Context): MutableList<Entry> {
         val list = mutableListOf<Entry>()
-        // Restored entries first: firstOrNull in fill() then prefers them over the bundled ones
         try {
             val f = File(context.noBackupFilesDir, IMPORTED_FILE)
-            if (f.exists()) parse(f.readText(), list)
+            if (f.exists()) parse(CredentialCrypto.decrypt(f.readText()), list)
         } catch (e: Exception) {
+            timber.log.Timber.e(e, "Could not read the saved logins")
         }
-        try {
-            val text = context.assets.open("site_credentials.json").bufferedReader().use { it.readText() }
-            parse(text, list)
-        } catch (e: Exception) {
-        }
-        entries = list
         return list
     }
 
-    /** All known entries (restored and bundled) in the file format described above. */
-    fun exportAll(context: Context): JSONArray {
-        val arr = JSONArray()
-        val seen = HashSet<String>()
-        for (e in load(context)) {
-            // Restored entries come first and win over bundled ones for the same host and user
-            if (!seen.add(e.host + "\u0000" + e.username)) continue
-            arr.put(JSONObject()
-                .put("host", e.host)
-                .put("username", e.username)
-                .put("password", e.password)
-                .put("autoSubmit", e.autoSubmit))
-        }
-        return arr
-    }
-
-    /**
-     * Merge [imported] entries into the restored ones. An entry with the same host and user
-     * replaces the existing one. @return the number of entries read from [imported].
-     */
-    fun importAll(context: Context, imported: JSONArray): Int {
-        val current = mutableListOf<Entry>()
-        try {
-            val f = File(context.noBackupFilesDir, IMPORTED_FILE)
-            if (f.exists()) parse(f.readText(), current)
-        } catch (e: Exception) {
-        }
-        val incoming = mutableListOf<Entry>()
-        parse(imported.toString(), incoming)
-        val merged = LinkedHashMap<String, Entry>()
-        for (e in current) merged[e.host + "\u0000" + e.username] = e
-        for (e in incoming) merged[e.host + "\u0000" + e.username] = e
-        val out = JSONArray()
-        for (e in merged.values) {
-            out.put(JSONObject()
-                .put("host", e.host)
-                .put("username", e.username)
-                .put("password", e.password)
-                .put("autoSubmit", e.autoSubmit))
-        }
+    private fun writeStored(context: Context, list: Collection<Entry>) {
+        val content = CredentialCrypto.encrypt(toJson(list).toString())
         val target = File(context.noBackupFilesDir, IMPORTED_FILE)
         val tmp = File(context.noBackupFilesDir, "$IMPORTED_FILE.tmp")
-        tmp.writeText(out.toString())
+        tmp.writeText(content)
         if (!tmp.renameTo(target)) {
-            target.writeText(out.toString())
+            target.writeText(content)
             tmp.delete()
         }
         entries = null
-        return incoming.size
+    }
+
+    private fun load(context: Context): List<Entry> {
+        entries?.let { return it }
+        synchronized(lock) {
+            entries?.let { return it }
+            // Saved entries first: firstOrNull in fill() then prefers them over the bundled ones
+            val list = readStored(context)
+            try {
+                val text = context.assets.open("site_credentials.json").bufferedReader().use { it.readText() }
+                parse(text, list)
+            } catch (e: Exception) {
+            }
+            entries = list
+            return list
+        }
+    }
+
+    /** All known entries (saved, restored and bundled) in the file format described above. */
+    fun exportAll(context: Context): JSONArray {
+        val seen = HashSet<String>()
+        // Saved entries come first and win over bundled ones for the same host and user
+        return toJson(load(context).filter { seen.add(key(it)) })
+    }
+
+    /**
+     * Merge [imported] entries into the saved ones. An entry with the same host and user
+     * replaces the existing one. @return the number of entries read from [imported].
+     */
+    fun importAll(context: Context, imported: JSONArray): Int = synchronized(lock) {
+        val incoming = mutableListOf<Entry>()
+        parse(imported.toString(), incoming)
+        val merged = LinkedHashMap<String, Entry>()
+        for (e in readStored(context)) merged[key(e)] = e
+        for (e in incoming) merged[key(e)] = e
+        writeStored(context, merged.values)
+        incoming.size
+    }
+
+    // ------------------------------------------------------------------ saving what the user types
+
+    enum class SaveStatus { NEW, UPDATED, UNCHANGED }
+
+    /** Hosts are stored without the "www." prefix, a login is the same on both. */
+    fun normalizeHost(host: String) = host.lowercase().removePrefix("www.")
+
+    /** Tell if saving this login would add, change or do nothing. */
+    fun check(context: Context, host: String, username: String, password: String): SaveStatus {
+        val h = normalizeHost(host)
+        val known = load(context).firstOrNull {
+            it.username == username && (h == it.host || h.endsWith("." + it.host))
+        } ?: return SaveStatus.NEW
+        return if (known.password == password) SaveStatus.UNCHANGED else SaveStatus.UPDATED
+    }
+
+    /** Save the login on the device; the latest one saved for a site is the one that gets filled in. */
+    fun save(context: Context, host: String, username: String, password: String) {
+        synchronized(lock) {
+            val h = normalizeHost(host)
+            val list = readStored(context)
+            val old = list.firstOrNull { it.host == h && it.username == username }
+            list.removeAll { it.host == h && it.username == username }
+            list.add(0, Entry(h, username, password, old?.autoSubmit ?: false))
+            writeStored(context, list)
+        }
     }
 
     fun fill(view: WebView, url: String) {

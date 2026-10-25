@@ -400,6 +400,11 @@ class WebPageClient(
             fulguris.autofill.SiteCredentials.fill(view, url)
         }
 
+        // Offer to save the password when a login form is submitted
+        if (view.settings.javaScriptEnabled && !webPageTab.isIncognito && userPreferences.savePasswordsEnabled) {
+            fulguris.autofill.LoginCapture.inject(view)
+        }
+
         // Hook URL.createObjectURL so we can download blob: URLs even after the
         // page revokes them (e.g. GitHub file downloads).
         if (view.settings.javaScriptEnabled) {

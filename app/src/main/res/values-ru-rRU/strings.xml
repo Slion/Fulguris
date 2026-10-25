@@ -806,4 +806,11 @@
     <string name="backup_credentials_not_in_incognito">Недоступно в режиме инкогнито</string>
     <string name="backup_credentials_continue">Продолжить</string>
     <string name="backup_credentials_unlock">Открыть</string>
+    <string name="save_password_title">Сохранить пароль?</string>
+    <string name="update_password_title">Обновить сохранённый пароль?</string>
+    <string name="save_password_message">Сайт: %1$s\nЛогин: %2$s</string>
+    <string name="save_password_save">Сохранить</string>
+    <string name="update_password_update">Обновить</string>
+    <string name="save_password_not_now">Не сейчас</string>
+    <string name="save_password_saved">Пароль сохранён</string>
 </resources>

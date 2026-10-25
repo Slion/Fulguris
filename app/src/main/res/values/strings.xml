@@ -903,4 +903,11 @@
     <string name="backup_credentials_not_in_incognito">Not available in incognito mode</string>
     <string name="backup_credentials_continue">Continue</string>
     <string name="backup_credentials_unlock">Unlock</string>
+    <string name="save_password_title">Save password?</string>
+    <string name="update_password_title">Update saved password?</string>
+    <string name="save_password_message">Site: %1$s\nLogin: %2$s</string>
+    <string name="save_password_save">Save</string>
+    <string name="update_password_update">Update</string>
+    <string name="save_password_not_now">Not now</string>
+    <string name="save_password_saved">Password saved</string>
 </resources>
