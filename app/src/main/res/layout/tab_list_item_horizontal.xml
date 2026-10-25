@@ -21,7 +21,8 @@
             android:clickable="false"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingHorizontal="6dp"
+            android:paddingStart="6dp"
+            android:paddingEnd="0dp"
             android:weightSum="1">
 
             <fulguris.view.ImageView
@@ -48,11 +49,12 @@
 
             <FrameLayout
                 android:id="@+id/deleteAction"
-                android:layout_width="@dimen/material_grid_touch_small"
+                android:layout_width="56dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
                 android:background="?attr/actionBarItemBackground"
-                android:gravity="center">
+                android:gravity="center"
+                android:paddingStart="8dp">
 
                 <fulguris.view.ImageView
                     android:id="@+id/deleteButton"
