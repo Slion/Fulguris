@@ -5423,6 +5423,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         }
         val canAnimate = iBinding.uiLayout.isLaidOut
                 && iBinding.uiLayout.width > 0
+                && iBinding.uiLayout.height > 0
                 && !isInPictureInPictureMode
                 && iBinding.uiLayout.windowVisibility == View.VISIBLE
         if (!canAnimate) {
@@ -5459,8 +5460,17 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         toolbarAnimating = true
         toolbarWantedVisible = show
 
-        // Give the content its final (tall) size right away, the extra part is clipped by its parent
-        content.updateLayoutParams<ViewGroup.MarginLayoutParams> { bottomMargin = -(h + b) }
+        // Give the content its final (tall) size right away, the extra part is clipped by its parent.
+        // A negative bottom margin alone does NOT enlarge a weighted child of a LinearLayout (negative
+        // margins are ignored when sharing out the excess space) while it still pulls the next sibling
+        // up: that made the bottom bar jump up by (h + b) at the start of every animation.
+        // So we give the content an explicit height instead and drop its weight for the duration.
+        val fullHeight = iBinding.uiLayout.height
+        content.updateLayoutParams<LinearLayout.LayoutParams> {
+            height = fullHeight
+            weight = 0f
+            bottomMargin = -(h + b)
+        }
 
         // progress 0: bars shown, 1: bars hidden
         val setProgress = { p: Float ->
@@ -5500,7 +5510,11 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         bottom.translationY = 0f
         toolbar.setLayerType(View.LAYER_TYPE_NONE, null)
         bottom.setLayerType(View.LAYER_TYPE_NONE, null)
-        content.updateLayoutParams<ViewGroup.MarginLayoutParams> { bottomMargin = 0 }
+        content.updateLayoutParams<LinearLayout.LayoutParams> {
+            height = 0
+            weight = 1f
+            bottomMargin = 0
+        }
         toolbar.visibility = if (shown) View.VISIBLE else View.GONE
         updateBottomBarVisibility(shown)
         // Something asked for the opposite state while we were animating
