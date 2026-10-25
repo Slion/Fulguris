@@ -2,6 +2,7 @@ package fulguris.autofill
 
 import android.content.Context
 import android.webkit.WebView
+import java.io.File
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -11,6 +12,9 @@ import org.json.JSONObject
  * File format: [{"host":"github.com","username":"...","password":"...","autoSubmit":false}]
  * "host" matches the page host or any of its subdomains.
  * Anything stored in an APK can be extracted, so never publish a build or a repo containing real passwords.
+ *
+ * Entries restored from a backup file (see fulguris.backup.CredentialsBackup) are kept in the same format in
+ * the app private storage, noBackupFilesDir/site_credentials.json (excluded from Android auto backup), and take precedence over the ones from assets.
  */
 object SiteCredentials {
 
@@ -18,24 +22,87 @@ object SiteCredentials {
 
     @Volatile private var entries: List<Entry>? = null
 
+    private const val IMPORTED_FILE = "site_credentials.json"
+
+    private fun parse(text: String, into: MutableList<Entry>) {
+        val arr = JSONArray(text)
+        for (i in 0 until arr.length()) {
+            val o: JSONObject = arr.getJSONObject(i)
+            val user = o.optString("username")
+            val pass = o.optString("password")
+            // Skip unfilled placeholders
+            if (user.isBlank() || pass.isBlank() || user.startsWith("CHANGE_ME") || pass.startsWith("CHANGE_ME")) continue
+            into.add(Entry(o.getString("host").lowercase(), user, pass, o.optBoolean("autoSubmit", false)))
+        }
+    }
+
     private fun load(context: Context): List<Entry> {
         entries?.let { return it }
         val list = mutableListOf<Entry>()
+        // Restored entries first: firstOrNull in fill() then prefers them over the bundled ones
+        try {
+            val f = File(context.noBackupFilesDir, IMPORTED_FILE)
+            if (f.exists()) parse(f.readText(), list)
+        } catch (e: Exception) {
+        }
         try {
             val text = context.assets.open("site_credentials.json").bufferedReader().use { it.readText() }
-            val arr = JSONArray(text)
-            for (i in 0 until arr.length()) {
-                val o: JSONObject = arr.getJSONObject(i)
-                val user = o.optString("username")
-                val pass = o.optString("password")
-                // Skip unfilled placeholders
-                if (user.isBlank() || pass.isBlank() || user.startsWith("CHANGE_ME") || pass.startsWith("CHANGE_ME")) continue
-                list.add(Entry(o.getString("host").lowercase(), user, pass, o.optBoolean("autoSubmit", false)))
-            }
+            parse(text, list)
         } catch (e: Exception) {
         }
         entries = list
         return list
+    }
+
+    /** All known entries (restored and bundled) in the file format described above. */
+    fun exportAll(context: Context): JSONArray {
+        val arr = JSONArray()
+        val seen = HashSet<String>()
+        for (e in load(context)) {
+            // Restored entries come first and win over bundled ones for the same host and user
+            if (!seen.add(e.host + "\u0000" + e.username)) continue
+            arr.put(JSONObject()
+                .put("host", e.host)
+                .put("username", e.username)
+                .put("password", e.password)
+                .put("autoSubmit", e.autoSubmit))
+        }
+        return arr
+    }
+
+    /**
+     * Merge [imported] entries into the restored ones. An entry with the same host and user
+     * replaces the existing one. @return the number of entries read from [imported].
+     */
+    fun importAll(context: Context, imported: JSONArray): Int {
+        val current = mutableListOf<Entry>()
+        try {
+            val f = File(context.noBackupFilesDir, IMPORTED_FILE)
+            if (f.exists()) parse(f.readText(), current)
+        } catch (e: Exception) {
+        }
+        val incoming = mutableListOf<Entry>()
+        parse(imported.toString(), incoming)
+        val merged = LinkedHashMap<String, Entry>()
+        for (e in current) merged[e.host + "\u0000" + e.username] = e
+        for (e in incoming) merged[e.host + "\u0000" + e.username] = e
+        val out = JSONArray()
+        for (e in merged.values) {
+            out.put(JSONObject()
+                .put("host", e.host)
+                .put("username", e.username)
+                .put("password", e.password)
+                .put("autoSubmit", e.autoSubmit))
+        }
+        val target = File(context.noBackupFilesDir, IMPORTED_FILE)
+        val tmp = File(context.noBackupFilesDir, "$IMPORTED_FILE.tmp")
+        tmp.writeText(out.toString())
+        if (!tmp.renameTo(target)) {
+            target.writeText(out.toString())
+            tmp.delete()
+        }
+        entries = null
+        return incoming.size
     }
 
     fun fill(view: WebView, url: String) {

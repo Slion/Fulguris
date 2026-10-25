@@ -257,6 +257,7 @@ class MenuPopupWindow : PopupWindow {
         iBinding.menuItemOptions.isVisible = false
         iBinding.menuItemSettings.isVisible = false
         iBinding.menuItemExit.isVisible = false
+        iBinding.menuItemBackupCredentials.isVisible = false
 
         // Tab menu items
         iBinding.menuItemPageHistory.isVisible = false
@@ -300,6 +301,7 @@ class MenuPopupWindow : PopupWindow {
             MenuItemId.Options -> iBinding.menuItemOptions.isVisible = true
             MenuItemId.Settings -> iBinding.menuItemSettings.isVisible = true
             MenuItemId.Exit -> iBinding.menuItemExit.isVisible = true
+            MenuItemId.BackupCredentials -> iBinding.menuItemBackupCredentials.isVisible = true
 
             // Tab menu items
             MenuItemId.TabHistory -> iBinding.menuItemPageHistory.isVisible = true

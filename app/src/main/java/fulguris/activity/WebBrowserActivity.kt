@@ -49,6 +49,7 @@ import androidx.annotation.ColorInt
 import androidx.annotation.IdRes
 import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
+import androidx.lifecycle.lifecycleScope
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
@@ -130,6 +131,8 @@ import io.reactivex.Scheduler
 import io.reactivex.rxkotlin.subscribeBy
 import junit.framework.Assert.assertNull
 import org.json.JSONObject
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.io.IOException
 import java.util.*
@@ -756,6 +759,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
             onMenuItemClicked(iBinding.menuItemBookmarks) { dismiss(); executeAction(R.id.action_bookmarks) }
             onMenuItemClicked(iBinding.menuItemExit) { dismiss(); executeAction(R.id.action_exit) }
             onMenuItemClicked(iBinding.menuItemSettings) { dismiss(); executeAction(R.id.action_settings) }
+            onMenuItemClicked(iBinding.menuItemBackupCredentials) { dismiss(); executeAction(R.id.action_backup_credentials) }
             onMenuItemClicked(iBinding.menuItemOptions) {
                 dismiss()
                 app.domain = currentHost()
@@ -993,6 +997,174 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
      */
     private fun showConsole() {
         iBottomSheet.setLayout(R.layout.fragment_console).show()
+    }
+
+    // ------------------------------------------------------------------ passwords and cookies backup
+
+    /** Passphrase chosen for the export in progress, kept while the user picks the file */
+    private var credentialsExportPassphrase: String? = null
+
+    /** Content of the file being imported, kept while we ask for its passphrase */
+    private var credentialsImportData: ByteArray? = null
+
+    private val credentialsExportPicker = registerForActivityResult(androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult()) { result ->
+        val passphrase = credentialsExportPassphrase
+        credentialsExportPassphrase = null
+        val uri = result.data?.data
+        if (result.resultCode != Activity.RESULT_OK || uri == null) return@registerForActivityResult
+        val appContext = applicationContext
+        lifecycleScope.launch(kotlinx.coroutines.Dispatchers.Main) {
+            try {
+                val done = withContext(kotlinx.coroutines.Dispatchers.IO) {
+                    val data = fulguris.backup.CredentialsBackup.create(appContext, passphrase)
+                    contentResolver.openOutputStream(uri, "wt")?.use { it.write(data) }
+                        ?: throw java.io.IOException("No output stream")
+                    // Re-read what we just wrote to report what is really in the file
+                    fulguris.backup.CredentialsBackup.summary(data, passphrase)
+                }
+                snackbar(getString(R.string.backup_credentials_saved, done.passwords, done.cookies))
+            } catch (e: Exception) {
+                Timber.e(e, "Passwords and cookies export failed")
+                snackbar(R.string.backup_credentials_save_failed)
+            }
+        }
+    }
+
+    private val credentialsImportPicker = registerForActivityResult(androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult()) { result ->
+        val uri = result.data?.data
+        if (result.resultCode != Activity.RESULT_OK || uri == null) return@registerForActivityResult
+        lifecycleScope.launch(kotlinx.coroutines.Dispatchers.Main) {
+            val data = try {
+                withContext(kotlinx.coroutines.Dispatchers.IO) {
+                    contentResolver.openInputStream(uri)?.use { it.readBytes() } ?: throw java.io.IOException("No input stream")
+                }
+            } catch (e: Exception) {
+                Timber.e(e, "Passwords and cookies import: could not read file")
+                snackbar(R.string.backup_credentials_read_failed)
+                return@launch
+            }
+            if (fulguris.backup.CredentialsBackup.isEncrypted(data)) {
+                credentialsImportData = data
+                askCredentialsPassphrase(
+                    title = R.string.backup_credentials_unlock_title,
+                    message = R.string.backup_credentials_unlock_message,
+                    positive = R.string.backup_credentials_unlock,
+                    onCancel = { credentialsImportData = null }
+                ) { passphrase -> restoreCredentials(data, passphrase) }
+            } else {
+                restoreCredentials(data, null)
+            }
+        }
+    }
+
+    /**
+     * Single menu entry for both directions: save everything to a file, or load it back.
+     */
+    private fun showCredentialsBackupDialog() {
+        if (isIncognito()) {
+            snackbar(R.string.backup_credentials_not_in_incognito)
+            return
+        }
+        val items = arrayOf(
+            getString(R.string.backup_credentials_export),
+            getString(R.string.backup_credentials_import)
+        )
+        MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.backup_credentials_title)
+            .setItems(items) { _, which ->
+                if (which == 0) startCredentialsExport() else startCredentialsImport()
+            }
+            .setNegativeButton(R.string.action_cancel, null)
+            .show()
+    }
+
+    /**
+     * Ask for an optional passphrase, then let the user choose where the file goes.
+     */
+    private fun startCredentialsExport() {
+        askCredentialsPassphrase(
+            title = R.string.backup_credentials_protect_title,
+            message = R.string.backup_credentials_protect_message,
+            positive = R.string.backup_credentials_continue,
+            allowEmpty = true
+        ) { passphrase ->
+            credentialsExportPassphrase = passphrase.ifEmpty { null }
+            val stamp = java.text.SimpleDateFormat("yyyyMMdd-HHmmss", java.util.Locale.US).format(java.util.Date())
+            val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+                addCategory(Intent.CATEGORY_OPENABLE)
+                type = "application/json"
+                // The user can change the name and the folder, that is the "where to save" question
+                putExtra(Intent.EXTRA_TITLE, "FulgurisPasswordsCookies-$stamp.json")
+            }
+            credentialsExportPicker.launch(intent)
+        }
+    }
+
+    /**
+     * Let the user choose the file to load.
+     */
+    private fun startCredentialsImport() {
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "*/*"
+        }
+        credentialsImportPicker.launch(intent)
+    }
+
+    private fun restoreCredentials(data: ByteArray, passphrase: String?) {
+        lifecycleScope.launch(kotlinx.coroutines.Dispatchers.Main) {
+            try {
+                val done = withContext(kotlinx.coroutines.Dispatchers.IO) {
+                    fulguris.backup.CredentialsBackup.restore(applicationContext, data, passphrase)
+                }
+                credentialsImportData = null
+                snackbar(getString(R.string.backup_credentials_loaded, done.passwords, done.cookies))
+            } catch (e: fulguris.backup.CredentialsBackup.WrongPassphraseException) {
+                snackbar(R.string.backup_credentials_wrong_passphrase)
+                // Let the user try again
+                askCredentialsPassphrase(
+                    title = R.string.backup_credentials_unlock_title,
+                    message = R.string.backup_credentials_unlock_message,
+                    positive = R.string.backup_credentials_unlock,
+                    onCancel = { credentialsImportData = null }
+                ) { again -> restoreCredentials(data, again) }
+            } catch (e: fulguris.backup.CredentialsBackup.NotABackupException) {
+                snackbar(R.string.backup_credentials_not_a_backup)
+            } catch (e: Exception) {
+                Timber.e(e, "Passwords and cookies import failed")
+                snackbar(R.string.backup_credentials_read_failed)
+            }
+        }
+    }
+
+    private fun askCredentialsPassphrase(
+        @StringRes title: Int,
+        @StringRes message: Int,
+        @StringRes positive: Int,
+        allowEmpty: Boolean = false,
+        onCancel: (() -> Unit)? = null,
+        onDone: (String) -> Unit
+    ) {
+        val input = EditText(this).apply {
+            inputType = android.text.InputType.TYPE_CLASS_TEXT or android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD
+            setHint(R.string.backup_credentials_passphrase_hint)
+        }
+        val padding = (20 * resources.displayMetrics.density).toInt()
+        val container = FrameLayout(this).apply {
+            setPadding(padding, padding / 2, padding, 0)
+            addView(input)
+        }
+        MaterialAlertDialogBuilder(this)
+            .setTitle(title)
+            .setMessage(message)
+            .setView(container)
+            .setPositiveButton(positive) { _, _ ->
+                val text = input.text.toString()
+                if (text.isEmpty() && !allowEmpty) onCancel?.invoke() else onDone(text)
+            }
+            .setNegativeButton(R.string.action_cancel) { _, _ -> onCancel?.invoke() }
+            .setOnCancelListener { onCancel?.invoke() }
+            .show()
     }
 
     /**
@@ -2906,6 +3078,10 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
             R.id.action_sessions -> {
                 // Show sessions menu
                 showSessions()
+                return true
+            }
+            R.id.action_backup_credentials -> {
+                showCredentialsBackupDialog()
                 return true
             }
 

@@ -788,4 +788,22 @@
     <string name="pref_title_hide_tool_bar_after">Скрывать панель инструментов через</string>
     <string name="pref_summary_hide_tool_bar_after">Скрывать панель инструментов после истечения заданного времени</string>
     <string name="side_tabs">Боковые вкладки</string>
+    <string name="action_backup_credentials">Резервная копия паролей и куки</string>
+    <string name="backup_credentials_title">Пароли и куки</string>
+    <string name="backup_credentials_export">Сохранить в файл…</string>
+    <string name="backup_credentials_import">Загрузить из файла…</string>
+    <string name="backup_credentials_protect_title">Защита файла</string>
+    <string name="backup_credentials_protect_message">В файле будут ваши пароли и сессии, в которых вы авторизованы. Введите пароль для шифрования файла или оставьте поле пустым, чтобы сохранить его без шифрования. Тот же пароль понадобится при загрузке файла.</string>
+    <string name="backup_credentials_passphrase_hint">Пароль для файла</string>
+    <string name="backup_credentials_unlock_title">Зашифрованный файл</string>
+    <string name="backup_credentials_unlock_message">Введите пароль, с которым был сохранён этот файл.</string>
+    <string name="backup_credentials_saved">Сохранено паролей: %1$d, куки: %2$d</string>
+    <string name="backup_credentials_loaded">Загружено паролей: %1$d, куки: %2$d</string>
+    <string name="backup_credentials_save_failed">Не удалось сохранить файл</string>
+    <string name="backup_credentials_not_a_backup">Это не файл резервной копии паролей и куки</string>
+    <string name="backup_credentials_read_failed">Не удалось прочитать файл</string>
+    <string name="backup_credentials_wrong_passphrase">Неверный пароль</string>
+    <string name="backup_credentials_not_in_incognito">Недоступно в режиме инкогнито</string>
+    <string name="backup_credentials_continue">Продолжить</string>
+    <string name="backup_credentials_unlock">Открыть</string>
 </resources>

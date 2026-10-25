@@ -885,4 +885,22 @@
     <string name="action_install">Install</string>
     <string name="pref_title_source_code">Source code</string>
     <string name="side_tabs">Side tabs</string>
+    <string name="action_backup_credentials">Passwords and cookies backup</string>
+    <string name="backup_credentials_title">Passwords and cookies</string>
+    <string name="backup_credentials_export">Save to a file…</string>
+    <string name="backup_credentials_import">Load from a file…</string>
+    <string name="backup_credentials_protect_title">Protect the file</string>
+    <string name="backup_credentials_protect_message">The file will contain your passwords and the sessions you are logged in to. Enter a passphrase to encrypt it, or leave the field empty to save it unencrypted. You will need the same passphrase to load it.</string>
+    <string name="backup_credentials_passphrase_hint">Passphrase</string>
+    <string name="backup_credentials_unlock_title">Encrypted file</string>
+    <string name="backup_credentials_unlock_message">Enter the passphrase this file was saved with.</string>
+    <string name="backup_credentials_saved">Saved %1$d passwords and %2$d cookies</string>
+    <string name="backup_credentials_loaded">Loaded %1$d passwords and %2$d cookies</string>
+    <string name="backup_credentials_save_failed">Could not save the file</string>
+    <string name="backup_credentials_not_a_backup">This is not a passwords and cookies backup file</string>
+    <string name="backup_credentials_read_failed">Could not read the file</string>
+    <string name="backup_credentials_wrong_passphrase">Wrong passphrase</string>
+    <string name="backup_credentials_not_in_incognito">Not available in incognito mode</string>
+    <string name="backup_credentials_continue">Continue</string>
+    <string name="backup_credentials_unlock">Unlock</string>
 </resources>

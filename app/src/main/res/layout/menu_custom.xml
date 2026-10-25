@@ -214,6 +214,14 @@
                         android:text="@string/settings" />
 
                     <TextView
+                        android:id="@+id/menuItemBackupCredentials"
+                        style="@style/BrowserTextMenuItem"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        app:drawableStartCompat="@drawable/ic_settings_backup_restore"
+                        android:text="@string/action_backup_credentials" />
+
+                    <TextView
                         android:id="@+id/menuItemExit"
                         style="@style/BrowserTextMenuItem"
                         android:visibility="gone"

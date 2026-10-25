@@ -152,6 +152,15 @@ object MenuItems {
             defaultMenu = MenuType.HiddenMenu,
             preferredMenu = MenuType.MainMenu
         ),
+        MenuItemId.BackupCredentials to MenuItem(
+            id = MenuItemId.BackupCredentials,
+            labelId = R.string.action_backup_credentials,
+            iconId = R.drawable.ic_settings_backup_restore,
+            viewId = R.id.menuItemBackupCredentials,
+            canBeInMainMenu = true,
+            canBeInTabMenu = true,
+            defaultMenu = MenuType.MainMenu
+        ),
 
         // Tab menu items (can also appear in both menus)
         MenuItemId.TabHistory to MenuItem(

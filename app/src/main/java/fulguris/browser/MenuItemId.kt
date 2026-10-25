@@ -38,6 +38,7 @@ enum class MenuItemId {
     Options,
     Settings,
     Exit,
+    BackupCredentials,
 
     // Tab menu items
     MainMenu,
