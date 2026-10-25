@@ -5452,12 +5452,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
             updateBottomBarVisibility(visible)
             return
         }
-        val canAnimate = iBinding.uiLayout.isLaidOut
-                && iBinding.uiLayout.width > 0
-                && iBinding.uiLayout.height > 0
-                && !isInPictureInPictureMode
-                && iBinding.uiLayout.windowVisibility == View.VISIBLE
-        if (!canAnimate) {
+        if (!canAnimateToolBar()) {
             toolbar.visibility = if (visible) View.VISIBLE else View.GONE
             updateBottomBarVisibility(visible)
             return
@@ -5465,7 +5460,35 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         animateToolBar(visible)
     }
 
-    private fun animateToolBar(show: Boolean) {
+    private fun canAnimateToolBar() = iBinding.uiLayout.isLaidOut
+            && iBinding.uiLayout.width > 0
+            && iBinding.uiLayout.height > 0
+            && !isInPictureInPictureMode
+            && iBinding.uiLayout.windowVisibility == View.VISIBLE
+
+    /** Distance in pixels moved by the top tool bar and by the bottom bar in the current transition */
+    private var toolbarTransH = 0
+    private var toolbarTransB = 0
+
+    /** Current position of the bars in the running transition: 0 shown, 1 hidden */
+    private var toolbarProgress = 0f
+
+    /** True while the bars follow the finger, see [dragActionBar] */
+    private var toolbarDragging = false
+
+    private fun applyToolBarProgress(p: Float) {
+        toolbarProgress = p
+        iBinding.toolbarInclude.toolbarLayout.translationY = -toolbarTransH * p
+        iBinding.layoutHorizontal.translationY = -toolbarTransH * p
+        iBinding.bottomBar.translationY = toolbarTransB * p
+    }
+
+    /**
+     * Prepare the layout for sliding the bars, see [setToolBarVisible].
+     * Does not move anything yet, the caller sets the progress.
+     * @return false if there is nothing to slide, the final state is then applied right away.
+     */
+    private fun prepareToolBarTransition(show: Boolean): Boolean {
         val toolbar = iBinding.toolbarInclude.toolbarLayout
         val content = iBinding.layoutHorizontal
         val bottom = iBinding.bottomBar
@@ -5484,10 +5507,12 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
             // Nothing sensible to animate
             toolbar.visibility = if (show) View.VISIBLE else View.GONE
             updateBottomBarVisibility(show)
-            return
+            return false
         }
         if (show && withBottom) bottom.visibility = View.VISIBLE
 
+        toolbarTransH = h
+        toolbarTransB = b
         toolbarAnimating = true
         toolbarWantedVisible = show
 
@@ -5502,21 +5527,29 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
             weight = 0f
             bottomMargin = -(h + b)
         }
-
-        // progress 0: bars shown, 1: bars hidden
-        val setProgress = { p: Float ->
-            toolbar.translationY = -h * p
-            content.translationY = -h * p
-            bottom.translationY = b * p
-        }
-        setProgress(if (show) 1f else 0f)
         toolbar.setLayerType(View.LAYER_TYPE_HARDWARE, null)
         if (withBottom) bottom.setLayerType(View.LAYER_TYPE_HARDWARE, null)
+        return true
+    }
 
-        toolbarAnimator = ValueAnimator.ofFloat(if (show) 1f else 0f, if (show) 0f else 1f).apply {
-            duration = 200
+    private fun animateToolBar(show: Boolean) {
+        if (!prepareToolBarTransition(show)) return
+        applyToolBarProgress(if (show) 1f else 0f)
+        runToolBarAnimator(show)
+    }
+
+    /**
+     * Slide the bars from where they are now to their shown or hidden position.
+     */
+    private fun runToolBarAnimator(show: Boolean) {
+        toolbarWantedVisible = show
+        val from = toolbarProgress
+        val to = if (show) 0f else 1f
+        toolbarAnimator = ValueAnimator.ofFloat(from, to).apply {
+            // Duration proportional to the remaining distance
+            duration = (200 * kotlin.math.abs(to - from)).toLong().coerceAtLeast(1L)
             interpolator = android.view.animation.DecelerateInterpolator()
-            addUpdateListener { setProgress(it.animatedValue as Float) }
+            addUpdateListener { applyToolBarProgress(it.animatedValue as Float) }
             addListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {
                     finishToolBarAnimation(show)
@@ -5524,6 +5557,61 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
             })
             start()
         }
+    }
+
+    /**
+     * Move the bars together with the finger. [dy] is the vertical finger movement in pixels since
+     * the previous call: negative (finger up) hides the bars, positive shows them, one to one.
+     * The layout is only committed in [releaseActionBar], resizing the web view in the middle
+     * of a gesture can make it cancel the touch.
+     */
+    override fun dragActionBar(dy: Float) {
+        if (dy == 0f) return
+        val canHide = isFullScreen || configPrefs.barsAutoHide
+        val canShow = configPrefs.barsAutoHide || configPrefs.showToolBarOnScrollUp
+        if ((dy < 0 && !canHide) || (dy > 0 && !canShow)) return
+
+        if (!toolbarDragging) {
+            if (!canAnimateToolBar()) {
+                // No animation possible, fall back on an immediate change
+                setToolBarVisible(dy > 0)
+                return
+            }
+            if (toolbarAnimating) {
+                // Take over a running animation from where it is
+                toolbarAnimator?.let { it.removeAllListeners(); it.cancel() }
+                toolbarAnimator = null
+            } else {
+                val shown = iBinding.toolbarInclude.toolbarLayout.visibility == View.VISIBLE
+                if (shown == (dy > 0)) {
+                    // Hide while already hidden, or show while already shown
+                    return
+                }
+                if (!prepareToolBarTransition(dy > 0)) return
+                applyToolBarProgress(if (dy > 0) 1f else 0f)
+            }
+            toolbarDragging = true
+            cancelHideToolBarTimeout()
+        }
+        if (toolbarTransH <= 0) return
+        toolbarWantedVisible = dy > 0
+        applyToolBarProgress((toolbarProgress - dy / toolbarTransH).coerceIn(0f, 1f))
+    }
+
+    /**
+     * The finger is up: slide the bars the rest of the way, to the closest end unless they
+     * are in the middle, in which case the last movement direction decides.
+     */
+    override fun releaseActionBar() {
+        if (!toolbarDragging) return
+        toolbarDragging = false
+        val p = toolbarProgress
+        val show = when {
+            p < 0.25f -> true
+            p > 0.75f -> false
+            else -> toolbarWantedVisible
+        }
+        runToolBarAnimator(show)
     }
 
     /**
@@ -5536,6 +5624,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         val bottom = iBinding.bottomBar
         toolbarAnimator = null
         toolbarAnimating = false
+        toolbarDragging = false
         toolbar.translationY = 0f
         content.translationY = 0f
         bottom.translationY = 0f
@@ -5558,11 +5647,10 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
      * Jump to the end of a running tool bar animation, used when leaving the foreground.
      */
     private fun finishToolBarAnimationNow() {
-        val animator = toolbarAnimator ?: return
         // Cancelling would fire onAnimationEnd and commit the state
-        animator.removeAllListeners()
-        animator.cancel()
-        finishToolBarAnimation(toolbarWantedVisible)
+        toolbarAnimator?.let { it.removeAllListeners(); it.cancel() }
+        toolbarAnimator = null
+        if (toolbarAnimating) finishToolBarAnimation(toolbarWantedVisible)
     }
 
     /**

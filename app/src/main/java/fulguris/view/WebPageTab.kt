@@ -1466,9 +1466,11 @@ class WebPageTab(
     private open inner class TouchListenerLollipop : OnTouchListener {
 
         internal var location: Float = 0f
-        // Highest and lowest finger position since the last show/hide decision
-        private var peakY: Float = 0f
-        private var troughY: Float = 0f
+        private var lastY: Float = 0f
+        private var slopAccum: Float = 0f
+        // True once this gesture moves the bars
+        private var barDragging: Boolean = false
+        private var multiTouch: Boolean = false
         protected var touchingScreen: Boolean = false
         internal var y: Float = 0f
         internal var action: Int = 0
@@ -1483,44 +1485,52 @@ class WebPageTab(
             }
 
             action = arg1.action
-            // Use screen coordinates: the web view moves and resizes while the bars animate,
-            // view local coordinates would shift under the finger and feed back into the logic below,
-            // making the bars hide and show repeatedly (flicker).
+            // Use screen coordinates: the web view moves while the bars slide,
+            // view local coordinates would shift under the finger.
             y = arg1.rawY
-            // Handle toolbar visibility during the gesture, not after the finger is lifted.
-            if (action == MotionEvent.ACTION_DOWN) {
-                location = y
-                peakY = y
-                troughY = y
-                touchingScreen = true
-            } else if (action == MotionEvent.ACTION_MOVE) {
-                if (y > peakY) peakY = y
-                if (y < troughY) troughY = y
-                if (y <= peakY - SCROLL_UP_THRESHOLD) {
-                    // Hide as soon as an upward swipe crosses the threshold.
-                    webBrowser.hideActionBar()
-                    peakY = y
-                    troughY = y
-                } else if (y >= troughY + SCROLL_UP_THRESHOLD
-                        && view.context.configPrefs.barsAutoHide) {
-                    // Show bars while swiping down, measured from the lowest point reached
-                    // so a direction change needs a deliberate swipe and finger jitter is ignored.
-                    // Deliberately not gated on view.canScrollVertically(): pages such as ChatGPT scroll
-                    // an inner container while the WebView itself cannot scroll, and the bars were
-                    // hidden by the upward swipe above, so they must be able to come back.
-                    webBrowser.showActionBar()
-                    peakY = y
-                    troughY = y
+            // The bars follow the finger during the gesture, one to one.
+            when (arg1.actionMasked) {
+                MotionEvent.ACTION_DOWN -> {
+                    location = y
+                    lastY = y
+                    slopAccum = 0f
+                    barDragging = false
+                    multiTouch = false
+                    touchingScreen = true
                 }
-            } else if (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_CANCEL) {
-                if (view.scrollY < SCROLL_DOWN_THRESHOLD
-                        // Touch input won't show tool bar again if no vertical scroll
-                        // It can still be accessed using the back button
-                        && view.canScrollVertically()) {
-                    showToolBarOnPageTopIfNeeded()
+                MotionEvent.ACTION_POINTER_DOWN -> {
+                    // Pinch zoom, leave the bars alone
+                    multiTouch = true
+                    if (barDragging) webBrowser.releaseActionBar()
                 }
-                location = 0f
-                touchingScreen = false
+                MotionEvent.ACTION_MOVE -> {
+                    if (!multiTouch) {
+                        val dy = y - lastY
+                        lastY = y
+                        if (barDragging) {
+                            webBrowser.dragActionBar(dy)
+                        } else {
+                            // Ignore small finger jitter, taps and long presses
+                            slopAccum += dy
+                            if (kotlin.math.abs(slopAccum) > android.view.ViewConfiguration.get(view.context).scaledTouchSlop) {
+                                barDragging = true
+                                webBrowser.dragActionBar(slopAccum)
+                            }
+                        }
+                    }
+                }
+                MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                    if (barDragging) {
+                        webBrowser.releaseActionBar()
+                    } else if (view.scrollY < SCROLL_DOWN_THRESHOLD
+                            // Touch input won't show tool bar again if no vertical scroll
+                            // It can still be accessed using the back button
+                            && view.canScrollVertically()) {
+                        showToolBarOnPageTopIfNeeded()
+                    }
+                    location = 0f
+                    touchingScreen = false
+                }
             }
 
             // Handle tool bar visibility upon fling gesture
@@ -1542,7 +1552,8 @@ class WebPageTab(
                 if (canScrollVertically()) {
                     // Handle the case after fling all the way to the top of the web page
                     // Are we near the top of our web page and is user finger not on the screen
-                    if (scrollY < SCROLL_DOWN_THRESHOLD && !touchingScreen) {
+                    // Only when moving toward the top: a resize while the bars slide must not bring them back
+                    if (scrollY < SCROLL_DOWN_THRESHOLD && scrollY < oldScrollY && !touchingScreen) {
                         showToolBarOnPageTopIfNeeded()
                     }
                 }

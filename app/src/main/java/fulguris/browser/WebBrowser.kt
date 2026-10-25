@@ -165,6 +165,17 @@ interface WebBrowser {
     fun showActionBar()
 
     /**
+     * Move the bars together with the finger, [dy] being the vertical finger movement in pixels
+     * since the previous call (negative: up, hides the bars).
+     */
+    fun dragActionBar(dy: Float) {}
+
+    /**
+     * The finger is up, finish the movement started with [dragActionBar].
+     */
+    fun releaseActionBar() {}
+
+    /**
      * Show the close browser dialog for the tab at [position].
      */
     fun showCloseDialog(position: Int)
