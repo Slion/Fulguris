@@ -99,6 +99,18 @@
         app:srcCompat="@drawable/ic_share"
         android:visibility="gone" />
 
+    <!-- Side tabs button, only shown in the top toolbar of large screens, before the share button -->
+    <ImageButton
+        android:id="@+id/button_side_tabs"
+        style="?android:attr/actionButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:contentDescription="@string/side_tabs"
+        app:tooltipText="@{@string/side_tabs}"
+        app:srcCompat="@drawable/ic_side_tabs"
+        android:visibility="gone" />
+
     <!-- Favorites shortcut, only shown in the bottom bar -->
     <ImageButton
         android:id="@+id/button_bookmarks"

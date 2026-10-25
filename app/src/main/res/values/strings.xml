@@ -884,4 +884,5 @@
     <string name="extension_author_not_specified">Not specified</string>
     <string name="action_install">Install</string>
     <string name="pref_title_source_code">Source code</string>
+    <string name="side_tabs">Side tabs</string>
 </resources>

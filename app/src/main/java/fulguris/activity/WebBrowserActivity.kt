@@ -1349,6 +1349,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
 
         iBindingToolbarContent.homeButton.setOnClickListener(this)
         iBindingToolbarContent.buttonShare.setOnClickListener { executeAction(R.id.action_share) }
+        iBindingToolbarContent.buttonSideTabs.setOnClickListener { toggleSideTabs() }
         iBindingToolbarContent.buttonBookmarks.setOnClickListener { executeAction(R.id.action_bookmarks) }
         iBindingToolbarContent.buttonNewTab.setOnClickListener { newTabButtonClicked() }
         iBindingToolbarContent.buttonNewTab.setOnLongClickListener { newTabButtonLongClicked(); true }
@@ -1638,6 +1639,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
             //iBinding.leftDrawer.isVisible = true
             //iBinding.rightDrawer.isVisible = true
         }
+        updateSideTabsButton()
     }
 
     /**
@@ -3854,7 +3856,35 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
             iBindingToolbarContent.tabsButton.isVisible = true
             iBindingToolbarContent.buttonBookmarks.isVisible = false
         }
+        // Large screens: side tabs button goes at the very left, before the share button
+        val sideTabs = iBindingToolbarContent.buttonSideTabs
+        if (largeTop && content.indexOfChild(sideTabs) != 0) {
+            content.removeView(sideTabs)
+            content.addView(sideTabs, 0, sideTabs.layoutParams)
+        }
+        updateSideTabsButton()
         updateBottomBarVisibility(isToolBarVisible())
+    }
+
+    /**
+     * The side tabs button only exists in the top toolbar of large screens, and only makes sense
+     * when we are using the vertical tab bar (tab list in a drawer or in a side panel).
+     */
+    private fun updateSideTabsButton() {
+        iBindingToolbarContent.buttonSideTabs.isVisible =
+            isLargeScreenToolbar() && !configPrefs.buttonsInBottomBar && configPrefs.verticalTabBar
+    }
+
+    /**
+     * Open or close our side tabs: the tab drawer, or the side panel when tabs are not in a drawer.
+     */
+    private fun toggleSideTabs() {
+        if (configPrefs.tabBarInDrawer) {
+            toggleTabs()
+        } else if (configPrefs.verticalTabBar) {
+            val panel = if (swapBookmarksAndTabs) iBinding.layoutTabsRight else iBinding.layoutTabsLeft
+            panel.isVisible = !panel.isVisible
+        }
     }
 
     /**
@@ -4462,6 +4492,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         iBindingToolbarContent.buttonMore.setColorFilter(currentToolBarTextColor)
         iBindingToolbarContent.buttonNewTab.setColorFilter(currentToolBarTextColor)
         iBindingToolbarContent.buttonShare.setColorFilter(currentToolBarTextColor)
+        iBindingToolbarContent.buttonSideTabs.setColorFilter(currentToolBarTextColor)
         iBindingToolbarContent.buttonBookmarks.setColorFilter(currentToolBarTextColor)
         iBindingToolbarContent.addressBarInclude.buttonReload.setColorFilter(currentToolBarTextColor)
 
