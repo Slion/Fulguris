@@ -295,7 +295,7 @@ class UserPreferences @Inject constructor(
     /**
      * The index of the theme used by the application.
      */
-    var useTheme by preferences.enumPreference(R.string.pref_key_theme, AppTheme.DEFAULT)
+    var useTheme by preferences.enumPreference(R.string.pref_key_theme, AppTheme.LIGHT)
 
     /**
      * Internal flag to track if theme picker dialog should be reopened after activity recreation.
