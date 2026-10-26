@@ -5741,17 +5741,17 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
      * The layout is only committed in [releaseActionBar], resizing the web view in the middle
      * of a gesture can make it cancel the touch.
      */
-    override fun dragActionBar(dy: Float) {
-        if (dy == 0f) return
+    override fun dragActionBar(dy: Float): Float {
+        if (dy == 0f) return 0f
         val canHide = isFullScreen || configPrefs.barsAutoHide
         val canShow = configPrefs.barsAutoHide || configPrefs.showToolBarOnScrollUp
-        if ((dy < 0 && !canHide) || (dy > 0 && !canShow)) return
+        if ((dy < 0 && !canHide) || (dy > 0 && !canShow)) return 0f
 
         if (!toolbarDragging) {
             if (!canAnimateToolBar()) {
                 // No animation possible, fall back on an immediate change
                 setToolBarVisible(dy > 0)
-                return
+                return 0f
             }
             if (toolbarAnimating) {
                 // Take over a running animation from where it is
@@ -5761,17 +5761,20 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
                 val shown = iBinding.toolbarInclude.toolbarLayout.visibility == View.VISIBLE
                 if (shown == (dy > 0)) {
                     // Hide while already hidden, or show while already shown
-                    return
+                    return 0f
                 }
-                if (!prepareToolBarTransition(dy > 0)) return
+                if (!prepareToolBarTransition(dy > 0)) return 0f
                 applyToolBarProgress(if (dy > 0) 1f else 0f)
             }
             toolbarDragging = true
             cancelHideToolBarTimeout()
         }
-        if (toolbarTransH <= 0) return
+        if (toolbarTransH <= 0) return 0f
         toolbarWantedVisible = dy > 0
+        val before = toolbarProgress
         applyToolBarProgress((toolbarProgress - dy / toolbarTransH).coerceIn(0f, 1f))
+        // The content slid up by this much under the finger
+        return (toolbarProgress - before) * toolbarTransH
     }
 
     /**

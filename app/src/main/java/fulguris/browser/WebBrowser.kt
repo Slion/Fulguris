@@ -167,8 +167,12 @@ interface WebBrowser {
     /**
      * Move the bars together with the finger, [dy] being the vertical finger movement in pixels
      * since the previous call (negative: up, hides the bars).
+     *
+     * @return how many pixels the web content was moved up by this call (negative if moved down).
+     * The web view slides together with the bars, so its touch coordinates must be corrected by that
+     * amount or it sees the finger movement late and noisy, which makes slow scrolling jerky.
      */
-    fun dragActionBar(dy: Float) {}
+    fun dragActionBar(dy: Float): Float = 0f
 
     /**
      * The finger is up, finish the movement started with [dragActionBar].

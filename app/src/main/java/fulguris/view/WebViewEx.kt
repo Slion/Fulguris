@@ -301,8 +301,28 @@ class WebViewEx : WebView {
      */
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         //Timber.d("onTouchEvent $event")
-        return super.onTouchEvent(event)
+        val shift = touchShiftY
+        touchShiftY = 0f
+        if (event == null || shift == 0f) {
+            return super.onTouchEvent(event)
+        }
+        // The bars just slid this view by [shift] pixels but the event was delivered in the previous,
+        // not yet moved, frame. Express it in the new frame so that the finger looks still while the
+        // bars consume the movement and moves normally once they are done. Without that the page
+        // sees a late and noisy movement, which makes slow scrolling jerky.
+        event.offsetLocation(0f, shift)
+        try {
+            return super.onTouchEvent(event)
+        } finally {
+            event.offsetLocation(0f, -shift)
+        }
     }
+
+    /**
+     * Vertical correction in pixels applied to the next [onTouchEvent], set by the touch listener
+     * of [WebPageTab] when the bars slide the web view while following the finger.
+     */
+    var touchShiftY: Float = 0f
 
     /**
      *

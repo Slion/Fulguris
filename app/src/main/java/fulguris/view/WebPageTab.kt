@@ -1535,6 +1535,8 @@ class WebPageTab(
             }
 
             action = arg1.action
+            // Only set when the bars move during this very event, see below
+            (view as? WebViewEx)?.touchShiftY = 0f
             // Use screen coordinates: the web view moves while the bars slide,
             // view local coordinates would shift under the finger.
             y = arg1.rawY
@@ -1558,13 +1560,13 @@ class WebPageTab(
                         val dy = y - lastY
                         lastY = y
                         if (barDragging) {
-                            webBrowser.dragActionBar(dy)
+                            (view as? WebViewEx)?.touchShiftY = webBrowser.dragActionBar(dy)
                         } else {
                             // Ignore small finger jitter, taps and long presses
                             slopAccum += dy
                             if (kotlin.math.abs(slopAccum) > android.view.ViewConfiguration.get(view.context).scaledTouchSlop) {
                                 barDragging = true
-                                webBrowser.dragActionBar(slopAccum)
+                                (view as? WebViewEx)?.touchShiftY = webBrowser.dragActionBar(slopAccum)
                             }
                         }
                     }
