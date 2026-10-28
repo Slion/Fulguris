@@ -889,6 +889,9 @@
     <string name="backup_credentials_title">Passwords and cookies</string>
     <string name="backup_credentials_export">Save to a file…</string>
     <string name="backup_credentials_import">Load from a file…</string>
+    <string name="backup_credentials_download">Download from GitHub</string>
+    <string name="backup_credentials_downloading">Downloading the file…</string>
+    <string name="backup_credentials_download_failed">Could not download the file</string>
     <string name="backup_credentials_protect_title">Protect the file</string>
     <string name="backup_credentials_protect_message">The file will contain your passwords and the sessions you are logged in to. Enter a passphrase to encrypt it, or leave the field empty to save it unencrypted. You will need the same passphrase to load it.</string>
     <string name="backup_credentials_passphrase_hint">Passphrase</string>

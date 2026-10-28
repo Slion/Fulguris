@@ -792,6 +792,9 @@
     <string name="backup_credentials_title">Пароли и куки</string>
     <string name="backup_credentials_export">Сохранить в файл…</string>
     <string name="backup_credentials_import">Загрузить из файла…</string>
+    <string name="backup_credentials_download">Скачать с GitHub</string>
+    <string name="backup_credentials_downloading">Скачивание файла…</string>
+    <string name="backup_credentials_download_failed">Не удалось скачать файл</string>
     <string name="backup_credentials_protect_title">Защита файла</string>
     <string name="backup_credentials_protect_message">В файле будут ваши пароли и сессии, в которых вы авторизованы. Введите пароль для шифрования файла или оставьте поле пустым, чтобы сохранить его без шифрования. Тот же пароль понадобится при загрузке файла.</string>
     <string name="backup_credentials_passphrase_hint">Пароль для файла</string>

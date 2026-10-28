@@ -1043,17 +1043,54 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
                 snackbar(R.string.backup_credentials_read_failed)
                 return@launch
             }
-            if (fulguris.backup.CredentialsBackup.isEncrypted(data)) {
-                credentialsImportData = data
-                askCredentialsPassphrase(
-                    title = R.string.backup_credentials_unlock_title,
-                    message = R.string.backup_credentials_unlock_message,
-                    positive = R.string.backup_credentials_unlock,
-                    onCancel = { credentialsImportData = null }
-                ) { passphrase -> restoreCredentials(data, passphrase) }
-            } else {
-                restoreCredentials(data, null)
+            handleCredentialsData(data)
+        }
+    }
+
+    /**
+     * Ask for the passphrase if [data] is encrypted, then restore it.
+     */
+    private fun handleCredentialsData(data: ByteArray) {
+        if (fulguris.backup.CredentialsBackup.isEncrypted(data)) {
+            credentialsImportData = data
+            askCredentialsPassphrase(
+                title = R.string.backup_credentials_unlock_title,
+                message = R.string.backup_credentials_unlock_message,
+                positive = R.string.backup_credentials_unlock,
+                onCancel = { credentialsImportData = null }
+            ) { passphrase -> restoreCredentials(data, passphrase) }
+        } else {
+            restoreCredentials(data, null)
+        }
+    }
+
+    /**
+     * Download the backup file from GitHub, then load it like a file picked by the user.
+     */
+    private fun startCredentialsDownload() {
+        snackbar(R.string.backup_credentials_downloading)
+        lifecycleScope.launch(kotlinx.coroutines.Dispatchers.Main) {
+            val data = try {
+                withContext(kotlinx.coroutines.Dispatchers.IO) {
+                    val connection = java.net.URL(CREDENTIALS_DOWNLOAD_URL).openConnection() as java.net.HttpURLConnection
+                    try {
+                        connection.connectTimeout = 15_000
+                        connection.readTimeout = 30_000
+                        connection.instanceFollowRedirects = true
+                        if (connection.responseCode != java.net.HttpURLConnection.HTTP_OK) {
+                            throw java.io.IOException("HTTP ${connection.responseCode}")
+                        }
+                        connection.inputStream.use { it.readBytes() }
+                    } finally {
+                        connection.disconnect()
+                    }
+                }
+            } catch (e: Exception) {
+                Timber.e(e, "Passwords and cookies download failed")
+                snackbar(R.string.backup_credentials_download_failed)
+                return@launch
             }
+            handleCredentialsData(data)
         }
     }
 
@@ -1067,12 +1104,17 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         }
         val items = arrayOf(
             getString(R.string.backup_credentials_export),
-            getString(R.string.backup_credentials_import)
+            getString(R.string.backup_credentials_import),
+            getString(R.string.backup_credentials_download)
         )
         MaterialAlertDialogBuilder(this)
             .setTitle(R.string.backup_credentials_title)
             .setItems(items) { _, which ->
-                if (which == 0) startCredentialsExport() else startCredentialsImport()
+                when (which) {
+                    0 -> startCredentialsExport()
+                    1 -> startCredentialsImport()
+                    else -> startCredentialsDownload()
+                }
             }
             .setNegativeButton(R.string.action_cancel, null)
             .show()
@@ -6411,6 +6453,10 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     companion object {
 
         private const val TAG = "BrowserActivity"
+
+        /** Where the passwords and cookies backup file is downloaded from */
+        private const val CREDENTIALS_DOWNLOAD_URL =
+            "https://github.com/definitly486/definitly486/releases/download/FulgurisPasswordsCookies/FulgurisPasswordsCookies-20261028-011621.json"
 
         const val INTENT_PANIC_TRIGGER = "info.guardianproject.panic.action.TRIGGER"
 
