@@ -59,10 +59,11 @@ android:focusableInTouchMode="true"
 
             <fulguris.view.ImageView
                 android:id="@+id/deleteAction"
-                android:layout_width="64dp"
+                android:layout_width="76dp"
                 android:layout_height="match_parent"
                 android:layout_marginRight="-16dp"
                 android:paddingLeft="16dp"
+                android:paddingRight="8dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="@string/close_tab"
                 android:scaleType="center"

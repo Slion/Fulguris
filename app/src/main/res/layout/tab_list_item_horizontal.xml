@@ -49,7 +49,7 @@
 
             <FrameLayout
                 android:id="@+id/deleteAction"
-                android:layout_width="56dp"
+                android:layout_width="68dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
                 android:background="?attr/actionBarItemBackground"
