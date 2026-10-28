@@ -892,6 +892,9 @@
     <string name="backup_credentials_download">Download from GitHub</string>
     <string name="backup_credentials_downloading">Downloading the file…</string>
     <string name="backup_credentials_download_failed">Could not download the file</string>
+    <string name="backup_credentials_searching">Looking for files on GitHub…</string>
+    <string name="backup_credentials_no_files">No .json files found in the GitHub release</string>
+    <string name="backup_credentials_choose_file">Choose a file to download</string>
     <string name="backup_credentials_protect_title">Protect the file</string>
     <string name="backup_credentials_protect_message">The file will contain your passwords and the sessions you are logged in to. Enter a passphrase to encrypt it, or leave the field empty to save it unencrypted. You will need the same passphrase to load it.</string>
     <string name="backup_credentials_passphrase_hint">Passphrase</string>

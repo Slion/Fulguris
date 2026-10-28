@@ -1064,27 +1064,99 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         }
     }
 
+    /** A .json file attached to the GitHub release with the backups */
+    private class RemoteBackupFile(val name: String, val url: String, val size: Long)
+
     /**
-     * Download the backup file from GitHub, then load it like a file picked by the user.
+     * Look for the .json files of the GitHub release, let the user choose one, download it,
+     * then load it like a file picked by the user.
      */
     private fun startCredentialsDownload() {
+        snackbar(R.string.backup_credentials_searching)
+        lifecycleScope.launch(kotlinx.coroutines.Dispatchers.Main) {
+            val files = try {
+                withContext(kotlinx.coroutines.Dispatchers.IO) { listRemoteCredentialsFiles() }
+            } catch (e: Exception) {
+                Timber.e(e, "Passwords and cookies: could not list files on GitHub")
+                snackbar(R.string.backup_credentials_download_failed)
+                return@launch
+            }
+            when {
+                files.isEmpty() -> snackbar(R.string.backup_credentials_no_files)
+                files.size == 1 -> downloadCredentialsFile(files[0])
+                else -> {
+                    val items = files.map { file ->
+                        if (file.size > 0) "${file.name} (${android.text.format.Formatter.formatShortFileSize(this@WebBrowserActivity, file.size)})" else file.name
+                    }.toTypedArray()
+                    MaterialAlertDialogBuilder(this@WebBrowserActivity)
+                        .setTitle(R.string.backup_credentials_choose_file)
+                        .setItems(items) { _, which -> downloadCredentialsFile(files[which]) }
+                        .setNegativeButton(R.string.action_cancel, null)
+                        .show()
+                }
+            }
+        }
+    }
+
+    /** Open [url] and return the whole response, throws if the server does not answer with 200. */
+    private fun httpGetBytes(url: String, accept: String? = null): ByteArray {
+        val connection = java.net.URL(url).openConnection() as java.net.HttpURLConnection
+        try {
+            connection.connectTimeout = 15_000
+            connection.readTimeout = 30_000
+            connection.instanceFollowRedirects = true
+            if (accept != null) connection.setRequestProperty("Accept", accept)
+            if (connection.responseCode != java.net.HttpURLConnection.HTTP_OK) {
+                throw java.io.IOException("HTTP ${connection.responseCode}")
+            }
+            return connection.inputStream.use { it.readBytes() }
+        } finally {
+            connection.disconnect()
+        }
+    }
+
+    /**
+     * Names and links of the .json assets of the release, newest names first.
+     * Uses the GitHub API; when it refuses (anonymous requests are rate limited) falls back to the
+     * list of assets that the release page itself uses.
+     * Call it off the main thread.
+     */
+    private fun listRemoteCredentialsFiles(): List<RemoteBackupFile> {
+        val result = mutableListOf<RemoteBackupFile>()
+        try {
+            val body = String(httpGetBytes(CREDENTIALS_RELEASE_API_URL, "application/vnd.github+json"), Charsets.UTF_8)
+            val assets = JSONObject(body).optJSONArray("assets")
+            if (assets != null) {
+                for (i in 0 until assets.length()) {
+                    val a = assets.optJSONObject(i) ?: continue
+                    val name = a.optString("name")
+                    val url = a.optString("browser_download_url")
+                    if (name.endsWith(".json", ignoreCase = true) && url.isNotEmpty()) {
+                        result.add(RemoteBackupFile(name, url, a.optLong("size", 0L)))
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            Timber.w(e, "GitHub API failed, trying the release page")
+            val html = String(httpGetBytes(CREDENTIALS_RELEASE_ASSETS_URL), Charsets.UTF_8)
+            val regex = Regex("href=\"(/[^\"]+/releases/download/[^\"]+\\.json)\"", RegexOption.IGNORE_CASE)
+            for (m in regex.findAll(html)) {
+                val path = m.groupValues[1]
+                val url = "https://github.com$path"
+                if (result.none { it.url == url }) {
+                    result.add(RemoteBackupFile(java.net.URLDecoder.decode(path.substringAfterLast('/'), "UTF-8"), url, 0L))
+                }
+            }
+        }
+        return result.sortedByDescending { it.name }
+    }
+
+    /** Download the chosen file and load it. */
+    private fun downloadCredentialsFile(file: RemoteBackupFile) {
         snackbar(R.string.backup_credentials_downloading)
         lifecycleScope.launch(kotlinx.coroutines.Dispatchers.Main) {
             val data = try {
-                withContext(kotlinx.coroutines.Dispatchers.IO) {
-                    val connection = java.net.URL(CREDENTIALS_DOWNLOAD_URL).openConnection() as java.net.HttpURLConnection
-                    try {
-                        connection.connectTimeout = 15_000
-                        connection.readTimeout = 30_000
-                        connection.instanceFollowRedirects = true
-                        if (connection.responseCode != java.net.HttpURLConnection.HTTP_OK) {
-                            throw java.io.IOException("HTTP ${connection.responseCode}")
-                        }
-                        connection.inputStream.use { it.readBytes() }
-                    } finally {
-                        connection.disconnect()
-                    }
-                }
+                withContext(kotlinx.coroutines.Dispatchers.IO) { httpGetBytes(file.url) }
             } catch (e: Exception) {
                 Timber.e(e, "Passwords and cookies download failed")
                 snackbar(R.string.backup_credentials_download_failed)
@@ -6454,9 +6526,13 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
 
         private const val TAG = "BrowserActivity"
 
-        /** Where the passwords and cookies backup file is downloaded from */
-        private const val CREDENTIALS_DOWNLOAD_URL =
-            "https://github.com/definitly486/definitly486/releases/download/FulgurisPasswordsCookies/FulgurisPasswordsCookies-20261028-011621.json"
+        /** The GitHub release holding the passwords and cookies backup files (.json) */
+        private const val CREDENTIALS_RELEASE_API_URL =
+            "https://api.github.com/repos/definitly486/definitly486/releases/tags/FulgurisPasswordsCookies"
+
+        /** Fallback when the API is rate limited: the HTML list of the release assets */
+        private const val CREDENTIALS_RELEASE_ASSETS_URL =
+            "https://github.com/definitly486/definitly486/releases/expanded_assets/FulgurisPasswordsCookies"
 
         const val INTENT_PANIC_TRIGGER = "info.guardianproject.panic.action.TRIGGER"
 
