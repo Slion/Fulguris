@@ -79,6 +79,20 @@ android {
         }
     }
 
+    signingConfigs {
+        // Release key, only available when the KEYSTORE_FILE environment variable is set (CI, see
+        // .github/workflows/release-on-push.yml). Without it the release build falls back to the debug key.
+        release {
+            def keystoreFile = System.getenv("KEYSTORE_FILE")
+            if (keystoreFile) {
+                storeFile file(keystoreFile)
+                storePassword System.getenv("KEYSTORE_PASSWORD")
+                keyAlias System.getenv("KEY_ALIAS")
+                keyPassword System.getenv("KEY_PASSWORD")
+            }
+        }
+    }
+
     buildTypes {
         debug {
             debuggable = true
@@ -104,8 +118,8 @@ android {
             proguardFiles getDefaultProguardFile(
                     'proguard-android-optimize.txt'),
                     'proguard-project.txt'
-            // Use debug signing for now
-            signingConfig = debug.signingConfig
+            // Sign with our own key when it is provided, use debug signing otherwise
+            signingConfig = System.getenv("KEYSTORE_FILE") ? signingConfigs.release : debug.signingConfig
 
             ndk {
                 //abiFilters "arm64-v8a", "armeabi-v7a", "armeabi", "mips"
