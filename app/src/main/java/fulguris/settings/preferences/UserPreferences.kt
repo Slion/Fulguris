@@ -170,6 +170,22 @@ class UserPreferences @Inject constructor(
     var incomingViewAction by preferences.enumPreference(R.string.pref_key_incoming_view_action, IncomingViewAction.NEW_TAB)
 
     /**
+     * True if the app should show up in the system text selection menu (ACTION_PROCESS_TEXT).
+     */
+    var processTextMenuEnabled by preferences.booleanPreference(R.string.pref_key_process_text_menu, true)
+
+    /**
+     * True if the stealth entry should show up in the system text selection menu (ACTION_PROCESS_TEXT).
+     */
+    var stealthTextMenuEnabled by preferences.booleanPreference(R.string.pref_key_stealth_text_menu, true)
+
+    /**
+     * True if the stealth text selection menu entry should keep the original app name
+     * instead of showing as "Fulguris Stealth".
+     */
+    var stealthTextMenuOriginalName by preferences.booleanPreference(R.string.pref_key_stealth_menu_original_name, false)
+
+    /**
      * The URL of the selected homepage.
      */
     var homepage by preferences.stringPreference(HOMEPAGE, Uris.AboutBookmarks)
