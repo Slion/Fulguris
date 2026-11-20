@@ -59,6 +59,34 @@
             app:singleLineTitle="false"
             app:enumClassName="fulguris.enums.IncomingViewAction" />
 
+        <x.SwitchPreference
+            android:defaultValue="true"
+            app:key="@string/pref_key_process_text_menu"
+            app:title="@string/pref_title_process_text_menu"
+            app:summaryOn="@string/pref_summary_process_text_menu_on"
+            app:summaryOff="@string/pref_summary_process_text_menu_off"
+            app:icon="@drawable/ic_text_variant"
+            app:singleLineTitle="false" />
+
+        <x.SwitchPreference
+            android:defaultValue="true"
+            app:key="@string/pref_key_stealth_text_menu"
+            app:title="@string/pref_title_stealth_text_menu"
+            app:summaryOn="@string/pref_summary_stealth_text_menu_on"
+            app:summaryOff="@string/pref_summary_stealth_text_menu_off"
+            app:icon="@drawable/ic_incognito"
+            app:singleLineTitle="false" />
+
+        <x.SwitchPreference
+            android:defaultValue="false"
+            android:dependency="@string/pref_key_stealth_text_menu"
+            app:key="@string/pref_key_stealth_menu_original_name"
+            app:title="@string/pref_title_stealth_menu_original_name"
+            app:summaryOn="@string/pref_summary_stealth_menu_original_name_on"
+            app:summaryOff="@string/pref_summary_stealth_menu_original_name_off"
+            app:icon="@drawable/ic_eye"
+            app:singleLineTitle="false" />
+
     </x.PreferenceCategory>
 
     <x.PreferenceCategory android:title="@string/tabs">
