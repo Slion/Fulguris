@@ -46,6 +46,15 @@
     <uses-feature
         android:name="android.hardware.location"
         android:required="false" />
+    <!--
+        RECORD_AUDIO implicitly makes the microphone a required feature;
+        Android TV has no microphone, which fails the TV App Quality
+        Guidelines. WebRTC (the only mic use) is an opt-in setting,
+        default off, so the app works fine without one.
+    -->
+    <uses-feature
+        android:name="android.hardware.microphone"
+        android:required="false" />
     <uses-feature
         android:name="android.hardware.touchscreen"
         android:required="false" />
