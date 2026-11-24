@@ -21,4 +21,4 @@ On supported WebViews the fingerprint floor is "header present, empty
 value"; desktop browsers send no such header at all.
 
 Implementation details and open issues:
-[issues/x-requested-with-old-webview.md](../issues/x-requested-with-old-webview.md).
+[internals/x-requested-with.md](../internals/x-requested-with.md).

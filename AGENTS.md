@@ -12,7 +12,7 @@ APK path, and UTF-8 quirks of the Windows terminal.
 the `agent` PUBLISHER flavor's debug build, with a split-bolt launcher icon and a
 distinct application id, so agent-driven installs never clobber a developer's own
 debug install. See
-[docs/features/agent-variant.md](docs/features/agent-variant.md). Pass
+[docs/internals/agent-variant.md](docs/internals/agent-variant.md). Pass
 `--build-type agentRelease` to the build/install tools to use the release build of
 the agent flavor instead.
 
@@ -353,7 +353,7 @@ Key facts a future agent needs:
   dispatched at the cursor point via the same `ACTION_SCROLL` path as edge scroll, so you can scroll
   the page under the cursor — a gamepad has no media keys, so LB/RB are its wheel (ignored
   off-cursor; the left stick keeps its native page scroll). The full gamepad/remote key map is in
-  `docs/features/gamepad.md`.
+  `docs/features/cursor-gamepad.md`.
 - **Menu item visibility** (`isCursorAvailable()`): shown on leanback, or when a
   `SOURCE_GAMEPAD` / `SOURCE_JOYSTICK` / `SOURCE_DPAD` non-virtual device is connected. The
   menu is recomputed each time it opens, and the `InputDeviceListener` keeps it live as
