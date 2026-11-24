@@ -1,0 +1,4 @@
+📺 Gerintas Android TV suderinamumas
+🕵️ Atkurta slapta piktograma inkognito veiklai
+🔒 Gerintas X-Request-With slopinimas
+🐛 Ištaisyta paieškos rodinio būsenos problemos

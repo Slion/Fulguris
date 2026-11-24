@@ -1,0 +1,4 @@
+📺 Compatibilitate îmbunătățită cu Android TV
+🕵️ Pictogramă de furtivitate restaurată pentru activitatea incognito
+🔒 Suprimarea X-Request-With îmbunătățită
+🐛 Corectate problemele de stare ale vizualizării de căutare

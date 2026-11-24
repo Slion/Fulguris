@@ -1,0 +1,4 @@
+📺 Parannettu Android TV -yhteensopivuus
+🕵️ Palautettu stealth-ikoni incognito-toiminnalle
+🔒 Parannettu X-Request-With -salpaus
+🐛 Korjattu hakualueen tilaan liittyviä ongelmia

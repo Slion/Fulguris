@@ -1,0 +1,4 @@
+📺 Förbättrad Android TV-kompatibilitet
+🕵️ Återställd smygeikon för inkognitoläge
+🔒 Förbättrad undertryckning av X-Request-With
+🐛 Åtgärdade problem med sökvyens tillstånd

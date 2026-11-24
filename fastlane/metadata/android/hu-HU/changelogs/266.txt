@@ -1,0 +1,4 @@
+📺 Jobb Android TV-kompatibilitás
+🕵️ Visszaállította a lopakodó ikont az incognito aktivitáshoz
+🔒 Javított X-Request-With-elnyomás
+🐛 Helyesbítve a keresésmező állapotához kapcsolódó hibákat

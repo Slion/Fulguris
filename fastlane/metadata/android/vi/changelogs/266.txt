@@ -1,0 +1,4 @@
+📺 Cải thiện khả năng tương thích Android TV
+🕵️ Khôi phục biểu tượng ẩn danh cho hoạt động ẩn danh
+🔒 Cải thiện việc triệt tiêu X-Request-With
+🐛 Khắc phục sự cố trạng thái khung tìm kiếm

@@ -1,0 +1,4 @@
+📺 Android TV uyumluluğu iyileştirildi
+🕵️ Gizli etkinlik için gizlilik simgesi geri getirildi
+🔒 X-Request-With bastırması iyileştirildi
+🐛 Arama görünümü durum sorunları düzeltildi

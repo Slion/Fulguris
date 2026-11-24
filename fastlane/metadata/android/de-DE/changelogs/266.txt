@@ -1,0 +1,4 @@
+📺 Verbesserte Android-TV-Kompatibilität
+🕵️ Incognito-Spion-Icon wiederhergestellt
+🔒 Unterdrückung von X-Request-With verbessert
+🐛 Probleme im Zustand der Suchansicht behoben

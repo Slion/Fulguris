@@ -1,0 +1,4 @@
+📺 Verbeterde Android TV-compatibiliteit
+🕵️ Stealth-icoon voor incognito-activiteit hersteld
+🔒 Onderdrukking van X-Request-With verbeterd
+🐛 Problemen met de status van het zoekvenster opgelost

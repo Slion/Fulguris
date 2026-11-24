@@ -1,0 +1,4 @@
+📺 Kompatibilitas Android TV ditingkatkan
+🕵️ Ikon stealth untuk aktivitas penyamaran dipulihkan
+🔒 Penekanan X-Request-With ditingkatkan
+🐛 Perbaikan masalah status tampilan pencarian

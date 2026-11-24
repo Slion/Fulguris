@@ -1,0 +1,4 @@
+📺 Bedret Android TV-kompatibilitet
+🕵️ Gjenopprettet skikkelsesikon for inkognitotivitet
+🔒 Bedret undertrykkelse av X-Request-With
+🐛 Rettet problemer med søkevenes tilstand

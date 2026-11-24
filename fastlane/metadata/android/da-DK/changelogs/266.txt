@@ -1,0 +1,4 @@
+📺 Forbedret Android TV-kompatibilitet
+🕵️ Genskabt skikkelsesikon for incognito-aktivitet
+🔒 Forbedret undertrykkelse af X-Request-With
+🐛 Rettet problemer med søgevens tilstand

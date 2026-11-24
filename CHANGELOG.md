@@ -1,6 +1,13 @@
 Change Log
 ==========
 
+Version 2.1.3 *(2026-11-24)*
+----------------------------
+- Improved Android TV compatibility (microphone no longer required)
+- Restored stealth icon for incognito activity
+- Improved X-Request-With suppression
+- Fixed search view state issues
+
 Version 2.1.2 *(2026-10-12)*
 ----------------------------
 - Support no open tabs

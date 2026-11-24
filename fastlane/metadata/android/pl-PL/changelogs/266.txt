@@ -1,0 +1,4 @@
+📺 Poprawiona kompatybilność z Android TV
+🕵️ Przywrócono ikonę skradliwą dla aktywności w trybie incognito
+🔒 Poprawiono tłumienie X-Request-With
+🐛 Naprawiono problemy ze stanem widoku wyszukiwania

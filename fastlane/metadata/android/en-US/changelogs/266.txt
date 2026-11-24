@@ -1,0 +1,4 @@
+📺 Improved Android TV compatibility
+🕵️ Restored the stealth icon for incognito activity
+🔒 Improved X-Request-With suppression
+🐛 Fixed search view state issues

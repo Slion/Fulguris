@@ -1,0 +1,4 @@
+📺 Poboljšana kompatibilnost sa Android TV
+🕵️ Vraćena stealth ikona za inkognito aktivnost
+🔒 Poboljšano potiskivanje X-Request-With
+🐛 Ispravljeni problemi stanja prikaza pretrage

@@ -1,0 +1,4 @@
+📺 Vylepšená kompatibilita s Android TV
+🕵️ Obnovená ikona neviditelnosti pro tajnou aktivitu
+🔒 Vylepšené potlačování X-Request-With
+🐛 Opraveny problémy se stavem zobrazení vyhledávání

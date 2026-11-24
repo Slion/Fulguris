@@ -1,0 +1,4 @@
+📺 Compatibilité Android TV améliorée
+🕵️ Icône furtive rétablie pour l’activité en navigation privée
+🔒 Suppression de X-Request-With améliorée
+🐛 Correction de problèmes d’état de la vue de recherche
