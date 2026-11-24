@@ -1041,9 +1041,11 @@ class WebPageClient(
         return when {
             headers.isEmpty() -> false
             else -> {
-                // I reckon this is what breaks page history when using custom headers
-                // See: https://github.com/Slion/Fulguris/issues/414
-                // TODO: There must be a way to make custom headers work without calling loadUrl from here
+                // Re-issuing loadUrl for a navigation in flight is what breaks the
+                // page history (#414 / #743). On WebViews with the profile
+                // custom-header feature the requestHeaders map is always empty, so
+                // this branch is only reached on older WebViews (DNT/Save-Data
+                // fallback).
                 webView.loadUrl(url, headers)
                 Timber.w("$ihs : Load URL with headers")
                 true

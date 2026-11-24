@@ -36,7 +36,7 @@
 
         <x.SwitchPreference
             android:defaultValue="false"
-            android:key="clear_cache_exit"
+            android:key="@string/pref_key_clear_cache_exit"
             android:title="@string/cache"
             app:icon="@drawable/ic_cache"
             app:singleLineTitle="false"
@@ -44,7 +44,7 @@
 
         <x.SwitchPreference
             android:defaultValue="false"
-            android:key="clear_history_exit"
+            android:key="@string/pref_key_clear_history_exit"
             android:title="@string/clear_history_exit"
             app:icon="@drawable/ic_history"
             app:singleLineTitle="false"
@@ -52,7 +52,7 @@
 
         <x.SwitchPreference
             android:defaultValue="false"
-            android:key="clear_cookies_exit"
+            android:key="@string/pref_key_clear_cookies_exit"
             android:title="@string/clear_cookies_exit"
             app:icon="@drawable/ic_cookie_remove"
             app:singleLineTitle="false"
@@ -60,7 +60,7 @@
 
         <x.SwitchPreference
             android:defaultValue="false"
-            android:key="clear_webstorage_exit"
+            android:key="@string/pref_key_clear_webstorage_exit"
             android:title="@string/clear_web_storage_exit"
             app:icon="@drawable/ic_earth_remove"
             app:singleLineTitle="false"
@@ -110,7 +110,7 @@
 
         <x.SwitchPreference
             android:defaultValue="true"
-            android:key="password"
+            android:key="@string/pref_key_save_passwords"
             android:summary="@string/recommended"
             android:title="@string/password"
             app:icon="@drawable/ic_password"
@@ -124,7 +124,7 @@
 
         <x.SwitchPreference
             android:defaultValue="false"
-            android:key="do_not_track"
+            android:key="@string/pref_key_do_not_track"
             android:title="@string/do_not_track"
             app:icon="@drawable/ic_eye_off"
             app:singleLineTitle="false"
@@ -132,7 +132,7 @@
 
         <x.SwitchPreference
             android:defaultValue="false"
-            android:key="remove_identifying_headers"
+            android:key="@string/pref_key_remove_identifying_headers"
             android:title="@string/remove_identifying_headers"
             app:icon="@drawable/ic_header"
             app:singleLineTitle="false"

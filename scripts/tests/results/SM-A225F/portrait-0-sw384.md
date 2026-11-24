@@ -1,11 +1,11 @@
 # Test run — SM-A225F · portrait-0-sw384
 
-- **When:** 2026-10-27T21:56:06+00:00
+- **When:** 2026-11-24T13:41:52+00:00
 - **Device:** Galaxy A22 5G (Samsung SM-A225F) — Android 13
 - **Config:** portrait, rotation 0°, smallest width 384dp
 - **Package:** `net.slions.fulguris.full.agent.debug`
-- **Options:** restart=False, keep_tabs=False, orientation=default, filter=field_resets_to_label_when_focus_moved_away
-- **Result:** 100/113 passed in 29.0s (1 ran, 112 carried forward)
+- **Options:** restart=False, keep_tabs=False, orientation=default, filter=all
+- **Result:** 100/113 passed in 36.2s (5 ran, 108 carried forward)
 
 | Test | Description | Result | Duration |
 |---|---|---|---|
@@ -49,11 +49,11 @@
 | | _tab B (short) should show the button_ | | |
 | `test_reload_button_tracks_tab_via_tab_menu` | Tab switch via the tab list drawer updates the reload button | ❌ fail ⏸ | 50.0s |
 | | _short tab should show the button_ | | |
-| `test_smoke_launch` | The app launches and reaches the main browser UI in the foreground | ✅ pass ⏸ | 2.7s |
-| `test_smoke_open_website` | Navigating to a web site loads and the address bar shows its label | ✅ pass ⏸ | 12.3s |
-| `test_smoke_open_settings` | The settings activity opens via its component and renders its content | ✅ pass ⏸ | 7.7s |
-| `test_smoke_background_app_switch` | KEYCODE_APP_SWITCH backgrounds the app; launching brings it back to the front | ✅ pass ⏸ | 6.1s |
-| `test_smoke_background_home` | KEYCODE_HOME backgrounds the app; the activity intent brings it back to the front | ✅ pass ⏸ | 6.1s |
+| `test_smoke_launch` | The app launches and reaches the main browser UI in the foreground | ✅ pass | 3.3s |
+| `test_smoke_open_website` | Navigating to a web site loads and the address bar shows its label | ✅ pass | 11.7s |
+| `test_smoke_open_settings` | The settings activity opens via its component and renders its content | ✅ pass | 7.7s |
+| `test_smoke_background_app_switch` | KEYCODE_APP_SWITCH backgrounds the app; launching brings it back to the front | ✅ pass | 6.0s |
+| `test_smoke_background_home` | KEYCODE_HOME backgrounds the app; the activity intent brings it back to the front | ✅ pass | 6.0s |
 | `test_cursor_toggle_hotkey_shows_and_hides_overlay` | Long-press play/pause toggles the cursor overlay on and off | ✅ pass ⏸ | 28.3s |
 | `test_cursor_toggle_exit_focuses_menu_button` | Turning the cursor off moves focus to the toolbar menu button | ✅ pass ⏸ | 28.1s |
 | `test_cursor_survives_options_sheet_dismiss` | Opening then dismissing the options bottom sheet does not leave the cursor suspended (resumes on sheet close) | ✅ pass ⏸ | 43.1s |
@@ -134,4 +134,4 @@
 | `test_in_tab_back_not_confused_with_field_edit` | Back with in-page history and an unfocused address field still steps the page history (the two-stage edit exit does not swallow it) | ❌ fail ⏸ | 106.8s |
 | | _page A did not load_ | | |
 | `test_bookmarks_page_folder_longpress_no_crash` | Long-pressing a folder box on the bookmarks page shows the folder menu instead of crashing (regression: StringIndexOutOfBoundsException in showLongPressedDialogForBookmarkUrl) | ✅ pass ⏸ | 182.4s |
-| `test_field_resets_to_label_when_focus_moved_away` | Moving focus off the address field (after typing) resets it to the label, not the typed text | ✅ pass | 27.9s |
+| `test_field_resets_to_label_when_focus_moved_away` | Moving focus off the address field (after typing) resets it to the label, not the typed text | ✅ pass ⏸ | 27.9s |

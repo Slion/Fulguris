@@ -72,38 +72,38 @@ class PrivacySettingsFragment : AbstractSettingsFragment() {
         // See Settings > Domain settings for per-domain geolocation control
 
         switchPreference(
-            preference = SETTINGS_SAVEPASSWORD,
+            preference = getString(R.string.pref_key_save_passwords),
             isChecked = userPreferences.savePasswordsEnabled,
             onCheckChange = { userPreferences.savePasswordsEnabled = it }
         // From Android O auto-fill framework is used instead
         ).isVisible = Build.VERSION.SDK_INT < Build.VERSION_CODES.O
 
         switchPreference(
-            preference = SETTINGS_CACHEEXIT,
+            preference = getString(R.string.pref_key_clear_cache_exit),
             isChecked = userPreferences.clearCacheExit,
             onCheckChange = { userPreferences.clearCacheExit = it }
         )
 
         switchPreference(
-            preference = SETTINGS_HISTORYEXIT,
+            preference = getString(R.string.pref_key_clear_history_exit),
             isChecked = userPreferences.clearHistoryExitEnabled,
             onCheckChange = { userPreferences.clearHistoryExitEnabled = it }
         )
 
         switchPreference(
-            preference = SETTINGS_COOKIEEXIT,
+            preference = getString(R.string.pref_key_clear_cookies_exit),
             isChecked = userPreferences.clearCookiesExitEnabled,
             onCheckChange = { userPreferences.clearCookiesExitEnabled = it }
         )
 
         switchPreference(
-            preference = SETTINGS_WEBSTORAGEEXIT,
+            preference = getString(R.string.pref_key_clear_webstorage_exit),
             isChecked = userPreferences.clearWebStorageExitEnabled,
             onCheckChange = { userPreferences.clearWebStorageExitEnabled = it }
         )
 
         switchPreference(
-            preference = SETTINGS_DONOTTRACK,
+            preference = getString(R.string.pref_key_do_not_track),
             isChecked = userPreferences.doNotTrackEnabled,
             onCheckChange = { userPreferences.doNotTrackEnabled = it }
         )
@@ -116,9 +116,9 @@ class PrivacySettingsFragment : AbstractSettingsFragment() {
         )
 
         switchPreference(
-            preference = SETTINGS_IDENTIFYINGHEADERS,
+            preference = getString(R.string.pref_key_remove_identifying_headers),
             isChecked = userPreferences.removeIdentifyingHeadersEnabled,
-            summary = "${WebPageTab.HEADER_REQUESTED_WITH}, ${WebPageTab.HEADER_WAP_PROFILE}",
+            summary = WebPageTab.HEADER_REQUESTED_WITH,
             onCheckChange = { userPreferences.removeIdentifyingHeadersEnabled = it }
         )
     }
@@ -189,17 +189,10 @@ class PrivacySettingsFragment : AbstractSettingsFragment() {
     }
 
     companion object {
-        private const val SETTINGS_SAVEPASSWORD = "password"
-        private const val SETTINGS_CACHEEXIT = "clear_cache_exit"
-        private const val SETTINGS_HISTORYEXIT = "clear_history_exit"
-        private const val SETTINGS_COOKIEEXIT = "clear_cookies_exit"
         private const val SETTINGS_CLEARCACHE = "clear_cache"
         private const val SETTINGS_CLEARHISTORY = "clear_history"
         private const val SETTINGS_CLEARCOOKIES = "clear_cookies"
         private const val SETTINGS_CLEARWEBSTORAGE = "clear_webstorage"
-        private const val SETTINGS_WEBSTORAGEEXIT = "clear_webstorage_exit"
-        private const val SETTINGS_DONOTTRACK = "do_not_track"
-        private const val SETTINGS_IDENTIFYINGHEADERS = "remove_identifying_headers"
     }
 
 }

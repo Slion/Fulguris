@@ -341,7 +341,7 @@ dependencies {
     implementation libs.androidx.drawerlayout
     implementation libs.androidx.preference.ktx
     // Webkit: https://developer.android.com/jetpack/androidx/releases/webkit
-    implementation 'androidx.webkit:webkit:1.10.0'
+    implementation 'androidx.webkit:webkit:1.18.0'
 
     //def lifecycle_version = "2.4.0"
     //implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version"

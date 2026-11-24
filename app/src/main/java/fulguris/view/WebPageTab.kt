@@ -50,7 +50,10 @@ import android.webkit.WebSettings.LayoutAlgorithm
 import android.webkit.WebView
 import androidx.annotation.RequiresApi
 import androidx.collection.ArrayMap
+import androidx.webkit.CustomHeader
+import androidx.webkit.Profile
 import androidx.webkit.WebSettingsCompat
+import androidx.webkit.WebViewCompat
 import androidx.webkit.WebViewFeature
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.EntryPointAccessors
@@ -292,10 +295,12 @@ class WebPageTab(
     private val webViewHandler = WebViewHandler(this)
 
     /**
-     * This method gets the additional headers that should be added with each request the browser
-     * makes.
-     *
-     * @return a non null Map of Strings with the additional request headers.
+     * Additional headers for the loadUrl navigation map. EMPTY on WebViews with the
+     * profile custom-header feature (DNT, Save-Data and X-Requested-With are set at
+     * the profile level there, covering all requests). Only populated as a
+     * navigation-only fallback for older WebViews (DNT/Save-Data) — re-issuing
+     * loadUrl(url, headers) for a navigation in flight broke the page history
+     * (#414 / #743), which is why XRW never goes through this map.
      */
     internal val requestHeaders = ArrayMap<String, String>()
 
@@ -632,29 +637,44 @@ class WebPageTab(
         webPageClient.updatePreferences()
 
 
-        val modifiesHeaders = userPreferences.doNotTrackEnabled
-            || userPreferences.saveDataEnabled
-            || userPreferences.removeIdentifyingHeadersEnabled
-
-        if (userPreferences.doNotTrackEnabled) {
-            requestHeaders[HEADER_DNT] = "1"
+        // Outgoing request headers are set at the profile level (DNT, Save-Data and
+        // X-Requested-With alike) so they cover every request in the profile —
+        // navigations, XHR/fetch, subresources, popups — and, crucially, so the
+        // requestHeaders map below stays EMPTY: re-issuing loadUrl(url, headers) for
+        // a navigation in flight (WebPageClient.shouldStopUrlLoading) is what broke
+        // the page history (#414 / #743). The map is only used as a fallback on
+        // WebViews that lack the profile custom-header feature.
+        if (WebViewFeature.isFeatureSupported(WebViewFeature.CUSTOM_REQUEST_HEADERS) &&
+            WebViewFeature.isFeatureSupported(WebViewFeature.MULTI_PROFILE)) {
+            val profile = WebViewCompat.getProfile(webView!!)
+            setProfileHeader(profile, HEADER_DNT, "1", userPreferences.doNotTrackEnabled)
+            setProfileHeader(profile, HEADER_SAVEDATA, "on", userPreferences.saveDataEnabled)
+            // The WebView deliberately adds "X-Requested-With: <package name>" to
+            // every request (AwProxyingURLLoaderFactory::SetRequestedWithHeader) and
+            // there is no API to remove the header — the old
+            // REQUESTED_WITH_HEADER_ALLOW_LIST is a dead no-op since the XRW origin
+            // trial ended. An empty-valued custom header preempts the package-name
+            // injection (which skips the header if already present), so every
+            // request in the profile goes out with an empty value instead of the
+            // package name.
+            setProfileHeader(profile, HEADER_REQUESTED_WITH, "", userPreferences.removeIdentifyingHeadersEnabled)
         } else {
-            requestHeaders.remove(HEADER_DNT)
+            // Fallback for WebViews without the custom-header feature: navigation-
+            // only headers via the loadUrl map. XRW is intentionally NOT set here —
+            // the map path is what broke page history and the feature is
+            // unsupported on these WebViews anyway.
+            if (userPreferences.doNotTrackEnabled) {
+                requestHeaders[HEADER_DNT] = "1"
+            } else {
+                requestHeaders.remove(HEADER_DNT)
+            }
+            if (userPreferences.saveDataEnabled) {
+                requestHeaders[HEADER_SAVEDATA] = "on"
+            } else {
+                requestHeaders.remove(HEADER_SAVEDATA)
+            }
         }
-
-        if (userPreferences.saveDataEnabled) {
-            requestHeaders[HEADER_SAVEDATA] = "on"
-        } else {
-            requestHeaders.remove(HEADER_SAVEDATA)
-        }
-
-        if (userPreferences.removeIdentifyingHeadersEnabled) {
-            requestHeaders[HEADER_REQUESTED_WITH] = ""
-            requestHeaders[HEADER_WAP_PROFILE] = ""
-        } else {
-            requestHeaders.remove(HEADER_REQUESTED_WITH)
-            requestHeaders.remove(HEADER_WAP_PROFILE)
-        }
+        val modifiesHeaders = requestHeaders.isNotEmpty()
 
         settings.defaultTextEncodingName = userPreferences.textEncoding
         layerType = userPreferences.layerType
@@ -696,7 +716,10 @@ class WebPageTab(
         }
 
         settings.blockNetworkImage = !userPreferences.loadImages
-        // Modifying headers causes SEGFAULTS, so disallow multi window if headers are enabled.
+        // Modifying the loadUrl request headers used to cause SEGFAULTS, so multi
+        // window (popups) was disabled while the map was in use. Profile-level
+        // custom headers don't go through that path, so on supported WebViews
+        // modifiesHeaders is false and popups are unaffected.
         settings.setSupportMultipleWindows(userPreferences.popupsEnabled && !modifiesHeaders)
 
         settings.loadWithOverviewMode = userPreferences.overviewModeEnabled
@@ -708,6 +731,21 @@ class WebPageTab(
 
 
         applyDarkMode();
+    }
+
+    /**
+     * Set a profile-level custom header for all origins when [enabled] is true,
+     * remove it otherwise. Profile headers attach to every request in the profile
+     * (navigations, XHR/fetch, subresources) as long as the page doesn't send the
+     * header itself. Re-adding the same name+value is idempotent (the profile
+     * merges the origin rules), so calling this on every resume is safe.
+     */
+    private fun setProfileHeader(profile: Profile, name: String, value: String, enabled: Boolean) {
+        if (enabled) {
+            profile.addCustomHeader(CustomHeader(name, value, setOf("*")))
+        } else {
+            profile.clearCustomHeader(name)
+        }
     }
 
     /**
@@ -1617,7 +1655,6 @@ class WebPageTab(
         public const val KHtmlMetaThemeColorInvalid: Int = Color.TRANSPARENT
 
         const val HEADER_REQUESTED_WITH = "X-Requested-With"
-        const val HEADER_WAP_PROFILE = "X-Wap-Profile"
         private const val HEADER_DNT = "DNT"
         private const val HEADER_SAVEDATA = "Save-Data"
 

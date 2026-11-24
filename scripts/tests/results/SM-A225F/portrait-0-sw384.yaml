@@ -1,5 +1,5 @@
 # UI test run — SM-A225F · portrait-0-sw384
-timestamp: '2026-10-27T21:56:06+00:00'
+timestamp: '2026-11-24T13:41:52+00:00'
 device:
   model: SM-A225F
   brand: Samsung
@@ -15,14 +15,14 @@ options:
   restart: false
   keep_tabs: false
   orientation: null
-  test_filter: field_resets_to_label_when_focus_moved_away
-  group: null
+  test_filter: null
+  group: smoke
 summary:
   passed: 100
   failed: 13
   total: 113
-  ran: 1
-  duration_s: 29.0
+  ran: 5
+  duration_s: 36.2
 tests:
 - name: test_cursor_click_hover_fires_mouseover
   status: fail
@@ -165,24 +165,24 @@ tests:
   ran: false
 - name: test_smoke_launch
   status: pass
-  duration_s: 2.7
-  ran: false
+  duration_s: 3.3
+  ran: true
 - name: test_smoke_open_website
   status: pass
-  duration_s: 12.3
-  ran: false
+  duration_s: 11.7
+  ran: true
 - name: test_smoke_open_settings
   status: pass
   duration_s: 7.7
-  ran: false
+  ran: true
 - name: test_smoke_background_app_switch
   status: pass
-  duration_s: 6.1
-  ran: false
+  duration_s: 6.0
+  ran: true
 - name: test_smoke_background_home
   status: pass
-  duration_s: 6.1
-  ran: false
+  duration_s: 6.0
+  ran: true
 - name: test_cursor_toggle_hotkey_shows_and_hides_overlay
   status: pass
   duration_s: 28.3
@@ -488,4 +488,4 @@ tests:
 - name: test_field_resets_to_label_when_focus_moved_away
   status: pass
   duration_s: 27.9
-  ran: true
+  ran: false

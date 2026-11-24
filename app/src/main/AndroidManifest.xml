@@ -4,10 +4,12 @@
     android:installLocation="auto">
 
     <!-- Play Billing Library 8 (and its play-services-basement dependency) declare
-         minSdk 23; we keep supporting API 21 (the billing feature only ships in the
-         playstore flavor). May lead to runtime failures on API 21-22 devices if the
-         libraries use newer APIs. -->
-    <uses-sdk tools:overrideLibrary="com.android.billingclient,com.google.android.gms.common" />
+         minSdk 23, and androidx.webkit 1.16+ declares minSdk 24; we keep supporting
+         API 21. All the APIs we use from them are runtime feature-gated (e.g.
+         CUSTOM_REQUEST_HEADERS), so on API 21-23 devices the checks simply return
+         false. May lead to runtime failures on older devices if the libraries use
+         newer APIs. -->
+    <uses-sdk tools:overrideLibrary="com.android.billingclient,com.google.android.gms.common,androidx.webkit" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />

@@ -114,7 +114,7 @@ class UserPreferences @Inject constructor(
     /**
      * True if the browser should clear the browser cache when the app is exited, false otherwise.
      */
-    var clearCacheExit by preferences.booleanPreference(CLEAR_CACHE_EXIT, false)
+    var clearCacheExit by preferences.booleanPreference(R.string.pref_key_clear_cache_exit, false)
 
     /**
      * True if the browser should allow websites to store and access cookies, false otherwise.
@@ -200,7 +200,7 @@ class UserPreferences @Inject constructor(
     /**
      * True if the browser should save form input, false otherwise.
      */
-    var savePasswordsEnabled by preferences.booleanPreference(SAVE_PASSWORDS, true)
+    var savePasswordsEnabled by preferences.booleanPreference(R.string.pref_key_save_passwords, true)
 
     /**
      * The index of the chosen search engine.
@@ -241,12 +241,12 @@ class UserPreferences @Inject constructor(
     /**
      * True if the browser should clear the navigation history on app exit, false otherwise.
      */
-    var clearHistoryExitEnabled by preferences.booleanPreference(CLEAR_HISTORY_EXIT, false)
+    var clearHistoryExitEnabled by preferences.booleanPreference(R.string.pref_key_clear_history_exit, false)
 
     /**
      * True if the browser should clear the browser cookies on app exit, false otherwise.
      */
-    var clearCookiesExitEnabled by preferences.booleanPreference(CLEAR_COOKIES_EXIT, false)
+    var clearCookiesExitEnabled by preferences.booleanPreference(R.string.pref_key_clear_cookies_exit, false)
 
     /**
      * Determine if we use hardware acceleration and WebGL.
@@ -316,13 +316,13 @@ class UserPreferences @Inject constructor(
     /**
      * True if the web page storage should be cleared when the app exits, false otherwise.
      */
-    var clearWebStorageExitEnabled by preferences.booleanPreference(CLEAR_WEB_STORAGE_EXIT, false)
+    var clearWebStorageExitEnabled by preferences.booleanPreference(R.string.pref_key_clear_webstorage_exit, false)
 
     /**
      * True if the browser should send a do not track (DNT) header with every GET request, false
      * otherwise.
      */
-    var doNotTrackEnabled by preferences.booleanPreference(DO_NOT_TRACK, false)
+    var doNotTrackEnabled by preferences.booleanPreference(R.string.pref_key_do_not_track, false)
 
     /**
      * True if the browser should save form data, false otherwise.
@@ -333,7 +333,7 @@ class UserPreferences @Inject constructor(
      * True if the browser should attempt to remove identifying headers in GET requests, false if
      * the default headers should be left along.
      */
-    var removeIdentifyingHeadersEnabled by preferences.booleanPreference(IDENTIFYING_HEADERS, false)
+    var removeIdentifyingHeadersEnabled by preferences.booleanPreference(R.string.pref_key_remove_identifying_headers, true)
 
     /**
      * True if the bookmarks tab should be on the opposite side of the screen, false otherwise. If
@@ -508,20 +508,13 @@ class UserPreferences @Inject constructor(
 // TODO: Remove those at some point and put new keys in resources
 // TODO: That does not make sense, we need to sort this out
 private const val BLOCK_ADS = "AdBlock"
-private const val CLEAR_CACHE_EXIT = "cache"
 private const val DOWNLOAD_DIRECTORY = "downloadLocation"
 private const val HOMEPAGE = "home"
 private const val INCOGNITO = "incognito"
-private const val SAVE_PASSWORDS = "passwords"
 private const val SEARCH = "search"
 private const val SEARCH_URL = "searchurl"
 private const val USER_AGENT_STRING = "userAgentString"
-private const val CLEAR_HISTORY_EXIT = "clearHistoryExit"
-private const val CLEAR_COOKIES_EXIT = "clearCookiesExit"
 private const val INVERT_COLORS = "invertColors"
 private const val READING_TEXT_SIZE = "readingTextSize"
-private const val CLEAR_WEB_STORAGE_EXIT = "clearWebStorageExit"
-private const val DO_NOT_TRACK = "doNotTrack"
-private const val IDENTIFYING_HEADERS = "removeIdentifyingHeaders"
 private const val BOOKMARKS_CHANGED = "bookmarksChanged"
 private const val SEARCH_SUGGESTIONS = "searchSuggestionsChoice"
