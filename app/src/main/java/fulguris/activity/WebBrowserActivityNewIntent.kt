@@ -128,6 +128,18 @@ fun WebBrowserActivity.doOnNewIntent(aIntent: Intent?, aIncognitoStartup: Boolea
         } else {
             null
         }
+    } else if (aIntent?.action == Intent.ACTION_PROCESS_TEXT) {
+        // Text selected in another app: open it as a URL, or search for it if it isn't one.
+        // The entry that was tapped (normal vs stealth) decides which window handles it,
+        // since each entry resolves to its own activity/alias.
+        // getCharSequenceExtra: the system may store the extra as either String or CharSequence
+        val text = aIntent.getCharSequenceExtra(Intent.EXTRA_PROCESS_TEXT)?.toString()
+        if (text.isNullOrBlank()) {
+            null
+        } else {
+            val searchUrl = "${searchEngineProvider.provideSearchEngine().queryUrl}$QUERY_PLACE_HOLDER"
+            smartUrlFilter(text, true, searchUrl).first
+        }
     } else {
         // Most likely Intent.ACTION_VIEW
         aIntent?.dataString

@@ -184,12 +184,6 @@
             </intent-filter>
 
             <intent-filter>
-                <action android:name="android.intent.action.PROCESS_TEXT" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <data android:mimeType="text/plain" />
-            </intent-filter>
-
-            <intent-filter>
                 <action android:name="info.guardianproject.panic.action.TRIGGER" />
 
                 <category android:name="android.intent.category.DEFAULT" />
@@ -280,12 +274,6 @@
             </intent-filter>
 
             <intent-filter>
-                <action android:name="android.intent.action.PROCESS_TEXT" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <data android:mimeType="text/plain" />
-            </intent-filter>
-
-            <intent-filter>
                 <action android:name="info.guardianproject.panic.action.TRIGGER" />
 
                 <category android:name="android.intent.category.DEFAULT" />
@@ -350,6 +338,55 @@
                 <data android:scheme="javascript" />
                 <data android:scheme="fulguris" />
 
+            </intent-filter>
+        </activity-alias>
+
+        <!--
+            Registers Fulguris in the system text selection menu (ACTION_PROCESS_TEXT).
+            The filters used to sit directly on MainActivity and IncognitoActivity; they now
+            live on aliases so settings can toggle each entry at runtime:
+            - processText: normal-window entry, shows the app name.
+            - processText.stealth: stealth-window entry shown as "Fulguris Stealth".
+            - processText.stealthOriginal: stealth-window entry shown with the original
+              app name, for users who turned the normal entry off.
+            Exactly one stealth alias is enabled at a time, driven by preferences.
+        -->
+        <activity-alias
+            android:name="fulguris.alias.processText"
+            android:targetActivity="fulguris.activity.MainActivity"
+            android:exported="true"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.PROCESS_TEXT" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name="fulguris.alias.processText.stealth"
+            android:targetActivity="fulguris.activity.IncognitoActivity"
+            android:label="@string/pref_label_stealth_menu_entry"
+            android:icon="@mipmap/ic_launcher_incognito"
+            android:exported="true"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.PROCESS_TEXT" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name="fulguris.alias.processText.stealthOriginal"
+            android:targetActivity="fulguris.activity.IncognitoActivity"
+            android:icon="@mipmap/ic_launcher_incognito"
+            android:exported="true"
+            android:enabled="false">
+            <intent-filter>
+                <action android:name="android.intent.action.PROCESS_TEXT" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
             </intent-filter>
         </activity-alias>
 

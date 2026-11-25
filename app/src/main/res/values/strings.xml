@@ -600,6 +600,16 @@
     <string name="pref_summary_ssl_error">What to do when an SSL error is detected</string>
     <string name="pref_title_incoming_url_action">Incoming link action</string>
     <string name="pref_summary_incoming_url_action">How to handle links from other apps</string>
+    <string name="pref_title_process_text_menu">Text selection menu</string>
+    <string name="pref_summary_process_text_menu_on">Fulguris appears in the text selection menu of other apps</string>
+    <string name="pref_summary_process_text_menu_off">Fulguris is hidden from the text selection menu of other apps</string>
+    <string name="pref_title_stealth_text_menu">Stealth text selection menu</string>
+    <string name="pref_summary_stealth_text_menu_on">A stealth entry appears in the text selection menu of other apps</string>
+    <string name="pref_summary_stealth_text_menu_off">The stealth entry is hidden from the text selection menu of other apps</string>
+    <string name="pref_title_stealth_menu_original_name">Keep original name for stealth entry</string>
+    <string name="pref_summary_stealth_menu_original_name_on">The stealth entry shows as Fulguris</string>
+    <string name="pref_summary_stealth_menu_original_name_off">The stealth entry shows as Fulguris Stealth</string>
+    <string name="pref_label_stealth_menu_entry">Fulguris Stealth</string>
     <string name="checkbox_remember_domain_choice">Remember for this site</string>
     <string name="pref_title_third_party_cookies">Third-party cookies</string>
     <string name="pref_summary_on_third_party_cookies">Accept cookies used to track your activities across websites</string>

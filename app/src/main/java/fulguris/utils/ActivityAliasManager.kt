@@ -35,6 +35,9 @@ object ActivityAliasManager {
 
     private const val ALIAS_BROWSER_ACTIVITY = "fulguris.alias.default.BrowserActivity"
     private const val ALIAS_INCOGNITO_ACTIVITY = "fulguris.alias.default.IncognitoActivity"
+    private const val ALIAS_PROCESS_TEXT = "fulguris.alias.processText"
+    private const val ALIAS_PROCESS_TEXT_STEALTH = "fulguris.alias.processText.stealth"
+    private const val ALIAS_PROCESS_TEXT_STEALTH_ORIGINAL = "fulguris.alias.processText.stealthOriginal"
     private const val SELECT_BROWSER_ACTIVITY = "fulguris.activity.SelectBrowserActivity"
 
     /**
@@ -72,6 +75,25 @@ object ActivityAliasManager {
                 Timber.d("Enabled SelectBrowserActivity for incoming VIEW intents")
             }
         }
+    }
+
+    /**
+     * Enable/disable the aliases that register the app in the system text selection menu.
+     * The PROCESS_TEXT intent-filters live on those aliases so they can be toggled at runtime.
+     * Two stealth aliases carry the same filter with different labels; exactly one of them is
+     * enabled while the stealth entry is on, depending on the original-name preference.
+     */
+    fun updateProcessTextAliases(
+        context: Context,
+        normalEnabled: Boolean,
+        stealthEnabled: Boolean,
+        originalName: Boolean
+    ) {
+        Timber.d("updateProcessTextAliases: normal=$normalEnabled stealth=$stealthEnabled originalName=$originalName")
+        val packageManager = context.packageManager
+        setComponentEnabled(packageManager, context, ALIAS_PROCESS_TEXT, normalEnabled)
+        setComponentEnabled(packageManager, context, ALIAS_PROCESS_TEXT_STEALTH, stealthEnabled && !originalName)
+        setComponentEnabled(packageManager, context, ALIAS_PROCESS_TEXT_STEALTH_ORIGINAL, stealthEnabled && originalName)
     }
 
     /**
